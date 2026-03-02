@@ -11,8 +11,12 @@ import { HowManyGame } from './components/HowManyGame';
 import { HowManyPlayer } from './components/HowManyPlayer';
 import { TeamFeudGame } from './components/TeamFeudGame';
 import { CodeNamesGame } from './components/CodeNamesGame';
-import { BombRelayGame } from './components/BombRelayGame';
-import { TeamPlayer } from './components/TeamPlayer';
+  import { BombRelayGame } from './components/BombRelayGame';
+  import { BankRobberyGame } from './components/BankRobberyGame';
+  import { ChatRoyaleGame } from './components/ChatRoyaleGame';
+  import { TurfWarsGame } from './components/TurfWarsGame';
+  import { RussianRouletteChatGame } from './components/RussianRouletteChatGame';
+  import { TeamPlayer } from './components/TeamPlayer';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
@@ -145,7 +149,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
     description: 'مهمة تعاونية كبرى. خطط مع الدردشة لتجاوز أنظمة الأمن وفتح الخزنة والهروب بالكنز قبل وصول الشرطة.',
     tutorial: 'تعاون مع الدردشة عبر كتابة الأوامر لتجاوز العقبات. الدقة والتوقيت هما مفتاح النجاح.',
     image: '/bankrobbery.png',
-    status: 'coming_soon',
+    status: 'testing',
     type: 'strategy',
     color: 'yellow'
   },
@@ -158,7 +162,37 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
     status: 'coming_soon',
     type: 'action',
     color: 'green'
-  }
+  },
+  {
+      id: 'chatroyale',
+      name: 'المعركة الملكية',
+      description: 'لعبة بقاء على قيد الحياة. اجمع الأسلحة واقضِ على اللاعبين الآخرين في الشات وتفادى الكوارث الطبيعية!',
+      tutorial: 'اكتب !join للانضمام، !loot للبحث عن الأسلحة، واكتب !attack @username للهجوم.',
+      image: '/battleroyal.png',
+      status: 'testing',
+      type: 'strategy',
+      color: 'yellow'
+    },
+    {
+      id: 'turfwars',
+      name: 'حرب العصابات',
+      description: 'اختر عصابتك، وهاجم العصابات الأخرى أو عالج فريقك في معركة طاحنة في الشوارع.',
+      tutorial: 'اكتب !join [لون] للانضمام لعصابة، !shoot للهجوم الموجع، أو !heal لعلاج فريقك.',
+      image: '/turfwars.png',
+      status: 'testing',
+      type: 'strategy',
+      color: 'blue'
+    },
+    {
+      id: 'russianroulette',
+      name: 'الروليت الروسي',
+      description: 'لعبة أعصاب مشدودة وفرص ضئيلة. اسحب الزناد إذا كنت جريئاً وورط غيرك قبل أن تنتهي فرصك.',
+      tutorial: 'اكتب !join للعب، في دورك اكتب !pull لإطلاق النار، وإذا نجوت اكتب !pass @username.',
+      image: '/russianroulette.png',
+      status: 'testing',
+      type: 'strategy',
+      color: 'green'
+    },
 ];
 
 function MainApp() {
@@ -734,8 +768,72 @@ function MainApp() {
           </div>
         </div>
 
-        <div className="relative z-10 h-full w-full">
+          <div className="relative z-10 h-full w-full">
           <PriceIsRightGame messages={messages} onLeave={leaveGame} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeGame === 'bankrobbery') {
+    return (
+      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+
+        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
+          <BankRobberyGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeGame === 'chatroyale') {
+    return (
+      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+
+        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
+          <ChatRoyaleGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeGame === 'turfwars') {
+    return (
+      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+
+        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
+          <TurfWarsGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeGame === 'russianroulette') {
+    return (
+      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+
+        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
+          <RussianRouletteChatGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
         </div>
       </div>
     );
@@ -858,7 +956,14 @@ function MainApp() {
                       const matchesStatus = statusFilter === 'all' || game.status === statusFilter;
                       const matchesType = typeFilter === 'all' || game.type === typeFilter;
                       return matchesStatus && matchesType;
-                    }).map(game => (
+                    })
+                    .sort((a, b) => {
+                      const statusOrder: Record<string, number> = { 'active': 1, 'testing': 2, 'coming_soon': 3 };
+                      // If statuses are equal, maintain original order (stability not guaranteed but good enough)
+                      // Or we could sort by name as a secondary sort
+                      return (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99);
+                    })
+                    .map(game => (
                       <div 
                         key={game.id}
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
