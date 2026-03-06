@@ -32,6 +32,7 @@ interface Bullet {
 export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
   const [status, setStatus] = useState<'setup' | 'playing' | 'gameover'>('setup');
   const [score, setScore] = useState(0);
+  const [activePlayers, setActivePlayers] = useState<Invader[]>([]); // New State
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   const gameState = useRef({
@@ -46,6 +47,15 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
 
   const processedMessageIds = useRef<Set<string>>(new Set());
   const animationFrameRef = useRef<number | null>(null);
+
+  // Sync active players for UI
+  useEffect(() => {
+    if (status !== 'playing') return;
+    const interval = setInterval(() => {
+      setActivePlayers([...gameState.current.invaders]);
+    }, 500);
+    return () => clearInterval(interval);
+  }, [status]);
 
   // Handle new messages -> Spawn invaders
   useEffect(() => {
@@ -227,10 +237,12 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
   };
 
   return (
-    <div className="flex flex-col h-full max-w-4xl mx-auto bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic" dir="rtl">
+    <div className="flex h-full w-full max-w-7xl mx-auto gap-8 p-4" dir="rtl">
+      {/* Main Game Area */}
+      <div className="flex-1 flex flex-col bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic relative">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/40 relative z-10">
+      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/40 relative z-10 shrink-0">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
@@ -259,7 +271,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
         )}
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-8 relative">
+      <div className="flex-1 flex items-center justify-center p-8 relative min-h-0">
         {status === 'setup' && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -281,12 +293,12 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
         )}
 
         {status === 'playing' && (
-          <div className="relative w-full max-w-[800px] aspect-[4/3] bg-black/80 rounded-2xl overflow-hidden border border-brand-gold/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+          <div className="relative w-full h-full flex items-center justify-center">
             <canvas 
               ref={canvasRef} 
               width={800} 
               height={600} 
-              className="w-full h-full object-contain"
+              className="max-w-full max-h-full object-contain bg-black/80 rounded-2xl border border-brand-gold/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
             />
           </div>
         )}
@@ -310,6 +322,34 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
             </button>
           </motion.div>
         )}
+      </div>
+      </div>
+
+      {/* Sidebar - Active Invaders */}
+      <div className="w-80 flex flex-col gap-4 shrink-0">
+        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic">
+           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 relative z-10">
+             <Skull className="w-5 h-5 text-brand-gold" />
+             الغزاة ({activePlayers.length})
+           </h3>
+           
+           <div className="flex-1 overflow-y-auto space-y-2 relative z-10 custom-scrollbar pr-2">
+             {activePlayers.slice().reverse().map(inv => (
+               <div key={inv.id} className="bg-black/40 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+                 <div className="flex items-center gap-3 overflow-hidden">
+                    <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: inv.color }} />
+                    <span className="font-medium text-zinc-200 truncate">{inv.username}</span>
+                 </div>
+               </div>
+             ))}
+             {activePlayers.length === 0 && (
+               <div className="text-center text-zinc-500 py-8">
+                 لا يوجد غزاة حالياً
+               </div>
+             )}
+           </div>
+        </div>
       </div>
     </div>
   );

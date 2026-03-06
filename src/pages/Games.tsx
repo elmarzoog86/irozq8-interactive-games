@@ -32,10 +32,10 @@ const games = [
   {
     id: 'guess-song',
     title: 'خمن الأغنية',
-    description: 'قريباً - لعبة مثيرة جديدة',
+    description: 'لعبة تخمين الأغاني مع الشات',
     icon: '🎵',
-    path: '#',
-    status: 'coming_soon',
+    path: '/games/guess-song',
+    status: 'active',
   },
 ];
 

@@ -213,7 +213,28 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
       </div>
     </div>
 
-    {/* Sidebar */}
+    {/* Active Players List */}
+    <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col">
+      <div className="p-4 border-b border-zinc-800">
+        <h3 className="text-brand-gold font-bold flex items-center gap-2">
+          <Users className="w-5 h-5" />
+          الفريق النشط ({state.players.length})
+        </h3>
+      </div>
+      <div className="flex-1 overflow-y-auto p-2 space-y-2">
+        {state.players.map(p => (
+          <div key={p.id} className="bg-black/40 p-2 rounded-lg border border-white/5 flex items-center justify-between">
+            <span className="text-zinc-200 text-sm truncate">{p.name}</span>
+            {p.team === 'gold' && <Shield className="w-4 h-4 text-brand-gold" />}
+          </div>
+        ))}
+        {state.players.length === 0 && (
+          <div className="text-zinc-500 text-center text-sm py-4">لا يوجد لاعبين</div>
+        )}
+      </div>
+    </div>
+
+      {/* Sidebar */}
       <ChatSidebar 
         messages={messages} 
         instructions={[

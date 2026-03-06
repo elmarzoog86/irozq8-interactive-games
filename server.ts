@@ -1,6 +1,22 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import fs from "fs";
+import path from "path";
+import yts from "yt-search";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const normalizeArabic = (text: string) => {
+  return text
+    .trim()
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/^ال/, ''); // Remove definite article for matching
+};
 
 const app = express();
 const httpServer = createServer(app);
@@ -14,6 +30,49 @@ const io = new Server(httpServer, {
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
+
+// Music Game API
+app.get('/api/music/playlist', async (req, res) => {
+  try {
+    const musicFile = path.join(__dirname, 'music-songs.json');
+    if (!fs.existsSync(musicFile)) {
+      return res.json([]);
+    }
+
+    const content = fs.readFileSync(musicFile, 'utf-8');
+    let songs = JSON.parse(content);
+    let updated = false;
+
+    for (const song of songs) {
+      if (!song.id || !song.url) {
+        console.log(`Searching for song: ${song.name}`);
+        try {
+          const r = await yts(song.name);
+          const video = r.videos.length > 0 ? r.videos[0] : null;
+          if (video) {
+            song.id = video.videoId;
+            song.url = video.url;
+            song.duration = video.duration; // Store full object or seconds if available
+            // standard yt-search video has duration { seconds: number, timestamp: string }
+            // let's just store the whole thing for flexibility, client can parse
+            updated = true;
+          }
+        } catch (e) {
+          console.error(`Error searching for ${song.name}:`, e);
+        }
+      }
+    }
+
+    if (updated) {
+      fs.writeFileSync(musicFile, JSON.stringify(songs, null, 2));
+    }
+
+    res.json(songs);
+  } catch (error) {
+    console.error('Error in music playlist:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 
 // How Many Can You Name Game State
@@ -145,7 +204,7 @@ io.on("connection", (socket) => {
   socket.on("place_bid", ({ roomId, amount }) => {
     const state = howManyRooms.get(roomId);
     if (!state || state.status !== 'gambling') return;
-    state.bid = amount;
+    state.bid = Number(amount);
     state.turn = state.currentMatch!.find(id => id !== state.turn)!;
     io.to(roomId).emit("howmany_state", state);
   });
@@ -495,7 +554,8 @@ io.on("connection", (socket) => {
 
       if (room.status !== 'playing') return;
       if (action === 'guess') {
-        const answer = room.data.answers.find((a: any) => a.text === payload.guess);
+        const guessNormalized = normalizeArabic(payload.guess);
+        const answer = room.data.answers.find((a: any) => normalizeArabic(a.text) === guessNormalized);
         if (answer && !answer.revealed) {
           answer.revealed = true;
           room.data.roundPoints += answer.points;
@@ -682,4 +742,7 @@ async function startServer() {
 
 export default app;
 
-startServer();
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});

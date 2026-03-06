@@ -200,10 +200,10 @@ export const CodeNamesGame: React.FC<{
                       }                    return (
                       <button
                         key={i}
-                        disabled={true}
-                        className={`relative min-h-[140px] rounded-3xl border-b-[6px] transition-all flex items-center justify-center p-4 text-center font-black text-3xl md:text-4xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(212,175,55,0.1)]'}`}
+                        onClick={() => revealCard(i)}
+                        className={`relative min-h-[140px] rounded-3xl border-b-[6px] transition-all flex items-center justify-center p-4 text-center font-black text-3xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(212,175,55,0.1)] hover:scale-105 hover:bg-black/80'}`}
                       >
-                        {card.word}
+                        <span className="break-words px-2 leading-tight">{card.word}</span>
                         {!card.revealed && card.votes?.length > 0 && (
                           <div className="absolute -top-3 -right-3 bg-brand-gold text-black rounded-full min-w-[32px] h-8 px-2 flex items-center justify-center text-lg font-black shadow-[0_0_15px_rgba(212,175,55,0.5)] border-2 border-yellow-200 z-10 animate-bounce">
                             {card.votes.length}
@@ -237,6 +237,49 @@ export const CodeNamesGame: React.FC<{
             )}
           </AnimatePresence>
           </div>
+        </div>
+      </div>
+
+      {/* Teams Sidebar */}
+      <div className="w-64 flex flex-col gap-4 shrink-0">
+        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col p-4">
+           <h3 className="text-brand-gold font-bold mb-4 flex items-center gap-2">
+             <Shield className="w-5 h-5" /> الفرق ({state.players.length})
+           </h3>
+           
+           <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
+             {/* Gold Team */}
+             <div>
+               <h4 className="text-brand-gold text-sm font-bold mb-2 flex justify-between">
+                 الذهبي
+                 <span className="bg-brand-gold/20 px-2 rounded">{state.players.filter(p => p.team === 'gold').length}</span>
+               </h4>
+               <div className="space-y-1">
+                 {state.players.filter(p => p.team === 'gold').map(p => (
+                   <div key={p.id} className="text-sm bg-brand-gold/5 p-2 rounded text-zinc-300 flex items-center gap-2">
+                     {state.data?.spymasters?.gold === p.id && <Eye className="w-3 h-3 text-brand-gold" />}
+                     <span className="truncate">{p.name}</span>
+                   </div>
+                 ))}
+               </div>
+             </div>
+
+             {/* Black Team */}
+             <div>
+               <h4 className="text-zinc-400 text-sm font-bold mb-2 flex justify-between">
+                 الأسود
+                 <span className="bg-zinc-800 px-2 rounded">{state.players.filter(p => p.team === 'black').length}</span>
+               </h4>
+               <div className="space-y-1">
+                 {state.players.filter(p => p.team === 'black').map(p => (
+                   <div key={p.id} className="text-sm bg-zinc-900 p-2 rounded text-zinc-400 flex items-center gap-2">
+                     {state.data?.spymasters?.black === p.id && <Eye className="w-3 h-3 text-white" />}
+                     <span className="truncate">{p.name}</span>
+                   </div>
+                 ))}
+               </div>
+             </div>
+           </div>
         </div>
       </div>
       

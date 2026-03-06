@@ -11,12 +11,14 @@ import { HowManyGame } from './components/HowManyGame';
 import { HowManyPlayer } from './components/HowManyPlayer';
 import { TeamFeudGame } from './components/TeamFeudGame';
 import { CodeNamesGame } from './components/CodeNamesGame';
+import { MusicGuesserGame } from './components/MusicGuesserGame';
   import { BombRelayGame } from './components/BombRelayGame';
   import { BankRobberyGame } from './components/BankRobberyGame';
   import { ChatRoyaleGame } from './components/ChatRoyaleGame';
   import { TurfWarsGame } from './components/TurfWarsGame';
   import { RussianRouletteChatGame } from './components/RussianRouletteChatGame';
   import { TeamPlayer } from './components/TeamPlayer';
+import { SnakesAndLaddersGame } from './components/SnakesAndLaddersGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
@@ -27,6 +29,26 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       <Routes>
         <Route path="/howmany/:roomId" element={<HowManyPlayer />} />
         <Route path="/team/:roomId" element={<TeamPlayer />} />
+        <Route path="/games/guess-song" element={
+          <div className="relative">
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="absolute top-4 left-4 z-50"
+              >
+                <div 
+                  onClick={() => window.location.href = '/'}
+                  className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
+                >
+                  <ArrowLeft size={24} />
+                </div>
+              </motion.div>
+            </AnimatePresence>
+            <MusicGuesserGame />
+          </div>
+        } />
         <Route path="*" element={<MainApp />} />
       </Routes>
     );
@@ -191,6 +213,16 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       image: '/russianroulette.png',
       status: 'testing',
       type: 'strategy',
+      color: 'green'
+    },
+  {
+      id: 'snakes',
+      name: 'سلالم وثعابين',
+      description: 'لعبة كلاسيكية بلمسة تفاعلية! تنافس مع الدردشة للوصول للقمة، واحذر من الثعابين!',
+      tutorial: 'اكتب !join للانضمام، وعندما يأتي دورك اكتب !roll لرمي النرد.',
+      image: '/snakesandladder.png',
+      status: 'active',
+      type: 'puzzles',
       color: 'green'
     },
 ];
@@ -720,6 +752,12 @@ function MainApp() {
     );
   }
 
+  if (activeGame === 'guessmusic') {
+    return (
+      <MusicGuesserGame onLeave={leaveGame} />
+    );
+  }
+
   if (activeGame === 'priceisright') {
     return (
       <div className="min-h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
@@ -834,6 +872,22 @@ function MainApp() {
 
         <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
           <RussianRouletteChatGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeGame === 'snakes') {
+    return (
+      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+
+        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
+          <SnakesAndLaddersGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
         </div>
       </div>
     );

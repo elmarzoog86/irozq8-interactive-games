@@ -76,6 +76,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
   const [votes, setVotes] = useState<Record<string, string>>({}); // voter -> target fruit name
   const [eliminatedThisRound, setEliminatedThisRound] = useState<Player | null>(null);
   const [showRoundResult, setShowRoundResult] = useState(false);
+  const [killers, setKillers] = useState<string[]>([]); // New state for tracking who voted for the elimination
 
   // Roulette State
   const [rouletteState, setRouletteState] = useState<'idle' | 'spinning' | 'waiting'>('idle');
@@ -155,9 +156,10 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
 
   const startVotingRound = () => {
     setVotes({});
-    setTimeLeft(30);
+    setTimeLeft(45);
     setShowRoundResult(false);
     setEliminatedThisRound(null);
+    setKillers([]);
   };
 
   const handleVotingRoundEnd = () => {
@@ -181,6 +183,12 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
       const playerToEliminate = activePlayers.find(p => p.fruit.name === eliminatedFruitName);
       if (playerToEliminate) {
         setEliminatedThisRound(playerToEliminate);
+        // Find who voted for this elimination
+        const voterNames = Object.entries(votes)
+          .filter(([_, fruit]) => fruit === eliminatedFruitName)
+          .map(([voter]) => voter);
+        setKillers(voterNames);
+        
         eliminatePlayer(playerToEliminate.username);
       }
     } else {
@@ -188,6 +196,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
       if (activePlayers.length > 0) {
         const randomPlayer = activePlayers[Math.floor(Math.random() * activePlayers.length)];
         setEliminatedThisRound(randomPlayer);
+        setKillers([]); // Random elimination has no specific killers
         eliminatePlayer(randomPlayer.username);
       }
     }
@@ -369,8 +378,11 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                 <div className="text-center">
                   <Skull className="w-16 h-16 text-brand-gold/50 mx-auto mb-4" />
                   <h3 className="text-3xl font-bold text-white mb-2">
-                    تم إقصاء {eliminatedThisRound?.fruit.emoji} {eliminatedThisRound?.fruit.name}!
+                    تم إقصاء {eliminatedThisRound?.username}!
                   </h3>
+                   <p className="text-xl text-brand-gold mb-4 font-bold">
+                     كان يحمل فاكهة {eliminatedThisRound?.fruit.emoji} {eliminatedThisRound?.fruit.name}
+                  </p>
                   <p className="text-zinc-400 mb-6">لقد حصلوا على أكبر عدد من الأصوات.</p>
                   <button 
                     onClick={startVotingRound}
@@ -380,11 +392,17 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                   </button>
                 </div>
               ) : (
-                <div className="text-center">
+                <div className="text-center flex flex-col items-center">
                   <h3 className="text-3xl font-bold text-white mb-4">صوت للإقصاء!</h3>
-                  <p className="text-xl text-zinc-400">
+                  <p className="text-xl text-zinc-400 mb-6">
                     اكتب <span className="text-brand-gold font-bold">اسم الفاكهة</span> أو <span className="text-brand-gold font-bold">الرمز التعبيري</span> في الدردشة للتصويت.
                   </p>
+                  <button
+                    onClick={handleVotingRoundEnd}
+                    className="bg-red-500/20 hover:bg-red-500/30 text-red-500 border border-red-500/50 px-6 py-2 rounded-lg font-bold text-sm transition-colors"
+                  >
+                    إنهاء الجولة يدوياً
+                  </button>
                 </div>
               )
             ) : (
@@ -535,6 +553,45 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         
         <div className="h-full w-full pt-12 flex flex-col relative z-10">
           {renderPhase()}
+        </div>
+      </div>
+
+       {/* Active Players Sidebar */}
+       <div className="w-80 flex flex-col gap-4">
+        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
+           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
+             <Trophy className="w-6 h-6 text-brand-gold" />
+             المحاربين ({Object.values(players).length})
+           </h3>
+           
+           <div className="flex-1 overflow-y-auto space-y-2 relative z-10 custom-scrollbar pr-2">
+             {Object.values(players).map(player => (
+               <div 
+                 key={player.username}
+                 className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
+                   player.isAlive 
+                     ? 'bg-black/40 border-white/5 hover:border-brand-gold/30' 
+                     : 'bg-red-900/10 border-red-500/20 opacity-60'
+                 }`}
+               >
+                 <div className="flex items-center gap-3 overflow-hidden">
+                    <span className="text-2xl">{player.fruit.emoji}</span>
+                    <span className={`font-medium truncate ${player.isAlive ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
+                      {player.username}
+                    </span>
+                 </div>
+                 {!player.isAlive && (
+                    <span className="text-xs text-red-500 font-bold">إقصاء</span>
+                 )}
+               </div>
+             ))}
+             {Object.keys(players).length === 0 && (
+               <div className="text-center text-zinc-500 py-8">
+                 لا يوجد محاربين بعد
+               </div>
+             )}
+           </div>
         </div>
       </div>
 

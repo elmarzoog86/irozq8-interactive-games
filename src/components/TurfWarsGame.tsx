@@ -14,6 +14,13 @@ interface GameProps {
 
 type Mode = 'lobby' | 'playing' | 'game_over';
 
+interface PlayerStats {
+  username: string;
+  damageDealt: number;
+  healingDone: number;
+  lastActionTime: number;
+}
+
 interface Gang {
   id: string;
   name: string;
@@ -22,12 +29,12 @@ interface Gang {
   borderColor: string;
   hp: number;
   maxHp: number;
-  members: Set<string>;
+  members: Record<string, PlayerStats>;
 }
 
 const INITIAL_GANGS: Gang[] = [
-  { id: 'red', name: 'العصابة الحمراء', color: 'text-red-500', bgColor: 'bg-red-500', borderColor: 'border-red-500', hp: 10000, maxHp: 10000, members: new Set() },
-  { id: 'blue', name: 'العصابة الزرقاء', color: 'text-blue-500', bgColor: 'bg-blue-500', borderColor: 'border-blue-500', hp: 10000, maxHp: 10000, members: new Set() }
+  { id: 'red', name: 'العصابة الحمراء', color: 'text-red-500', bgColor: 'bg-red-500', borderColor: 'border-red-500', hp: 10000, maxHp: 10000, members: {} },
+  { id: 'blue', name: 'العصابة الزرقاء', color: 'text-blue-500', bgColor: 'bg-blue-500', borderColor: 'border-blue-500', hp: 10000, maxHp: 10000, members: {} }
 ];
 
 const playSound = (type: 'shoot' | 'heal' | 'raid' | 'win' | 'click', volume = 0.5) => {
@@ -95,6 +102,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
   const processedMessageIds = useRef<Set<string>>(new Set());
   const timerRef = useRef<number | null>(null);
   const driveByRef = useRef<Record<string, { count: number, lastTime: number }>>({});
+  const gameStartTime = useRef<number>(0);
 
   const addLog = useCallback((text: string, type: 'shoot'|'heal'|'raid') => {
     setActionFeed(p => [{id: Math.random().toString(), text, type}, ...p].slice(0, 10));
@@ -103,9 +111,44 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
   const startGame = () => {
     if (soundEnabled) playSound('click');
     setMode('playing');
+    gameStartTime.current = Date.now();
     processedMessageIds.current.clear();
     setWinner(null);
-    setGangs(INITIAL_GANGS.map(g => ({...g, members: new Set(g.members)})));
+    setGangs(prev => prev.map(g => ({
+      ...g,
+      hp: g.maxHp,
+      members: Object.fromEntries(
+        Object.entries(g.members).map(([name, stats]) => [name, { ...stats, damageDealt: 0, healingDone: 0, lastActionTime: 0 }])
+      )
+    })));
+  };
+
+  const movePlayer = (username: string, targetGangId: string) => {
+      setGangs(prev => {
+          let playerStats: PlayerStats | null = null;
+          let sourceGangId: string | null = null;
+          
+          for (const g of prev) {
+             if (g.members[username]) {
+                playerStats = g.members[username];
+                sourceGangId = g.id;
+                break;
+             }
+          }
+          
+          if (!playerStats || !sourceGangId || sourceGangId === targetGangId) return prev;
+
+          return prev.map(g => {
+              if (g.id === sourceGangId) {
+                  const { [username]: removed, ...rest } = g.members;
+                  return { ...g, members: rest };
+              }
+              if (g.id === targetGangId) {
+                  return { ...g, members: { ...g.members, [username]: playerStats! } };
+              }
+              return g;
+          });
+      });
   };
 
   useEffect(() => {
@@ -119,7 +162,8 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
               if (g.hp > maxHpGang.hp) maxHpGang = g;
            });
            
-           if (Math.random() < 0.05 && maxHpGang.hp > 2000 && allHp > 5000) {  // 5% chance of raid every second
+           // Raid Logic: Only after 30s, 5% chance.
+           if (Date.now() - gameStartTime.current > 30000 && Math.random() < 0.05 && maxHpGang.hp > 2000 && allHp > 5000) {
               setRaidActive(true);
               setTimeout(() => setRaidActive(false), 3000);
               if (soundEnabled) playSound('raid');
@@ -165,30 +209,33 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
     setGangs(prev => {
       let nextGangs = [...prev];
       let madeChanges = false;
+      const now = Date.now();
       
       newMsgs.forEach(msg => {
         const text = msg.message.trim().toLowerCase();
         const uname = msg.username;
         
-        let playerGangId = null;
-        for (let i = 0; i < nextGangs.length; i++) {
-           if (nextGangs[i].members.has(uname)) {
-              playerGangId = nextGangs[i].id;
+        let playerGangId: string | null = null;
+        let playerStats: PlayerStats | null = null;
+
+        for (const g of nextGangs) {
+           if (g.members[uname]) {
+              playerGangId = g.id;
+              playerStats = g.members[uname];
               break;
            }
         }
 
-        if (mode === 'lobby' || mode === 'playing') {
+        if (mode === 'lobby') {
            if (text.startsWith('!join ')) {
               const targetColor = text.replace('!join ', '').trim();
               if (['red', 'blue'].includes(targetColor) && !playerGangId) {
                  nextGangs = nextGangs.map(g => {
                     if (g.id === targetColor) {
-                       const newSet = new Set(g.members);
-                       newSet.add(uname);
+                       const newMembers = { ...g.members, [uname]: { username: uname, damageDealt: 0, healingDone: 0, lastActionTime: 0 } };
                        madeChanges = true;
-                       if (soundEnabled && mode === 'lobby') playSound('click');
-                       return { ...g, members: newSet };
+                       if (soundEnabled) playSound('click');
+                       return { ...g, members: newMembers };
                     }
                     return g;
                  });
@@ -196,63 +243,104 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
            }
         }
 
-        if (mode === 'playing' && playerGangId) {
+        if (mode === 'playing' && playerGangId && playerStats) {
+           // Cooldown check (10s) for actions except join/betray
+           const onCooldown = (now - playerStats.lastActionTime) < 10000;
+
            if (text === '!shoot') {
-               const targetGangs = nextGangs.filter(g => g.id !== playerGangId && g.hp > 0);
-               if (targetGangs.length > 0) {
-                  const targetGang = targetGangs[Math.floor(Math.random() * targetGangs.length)];
-                  const dmg = 50 + Math.floor(Math.random() * 50);
-                  
-                  nextGangs = nextGangs.map(g => {
-                     if (g.id === targetGang.id) {
-                        return { ...g, hp: Math.max(0, g.hp - dmg) };
-                     }
-                     return g;
-                  });
-                  madeChanges = true;
-                  if (Math.random() > 0.7) {
-                     addLog(`🔫 ${uname} أطلق النار على ${targetGang.name} (-${dmg})`, 'shoot');
-                     if (soundEnabled) playSound('shoot');
-                  }
+               if (!onCooldown) {
+                   const targetGangs = nextGangs.filter(g => g.id !== playerGangId && g.hp > 0);
+                   if (targetGangs.length > 0) {
+                      const targetGang = targetGangs[Math.floor(Math.random() * targetGangs.length)];
+                      const dmg = 50 + Math.floor(Math.random() * 50);
+                      
+                      nextGangs = nextGangs.map(g => {
+                         if (g.id === targetGang.id) {
+                            return { ...g, hp: Math.max(0, g.hp - dmg) };
+                         }
+                         if (g.id === playerGangId) {
+                             // Update player stats
+                             const p = g.members[uname];
+                             return { 
+                                 ...g, 
+                                 members: { 
+                                     ...g.members, 
+                                     [uname]: { ...p, damageDealt: p.damageDealt + dmg, lastActionTime: now } 
+                                 } 
+                             };
+                         }
+                         return g;
+                      });
+                      madeChanges = true;
+                      if (Math.random() > 0.7) {
+                         addLog(`🔫 ${uname} أطلق النار على ${targetGang.name} (-${dmg})`, 'shoot');
+                         if (soundEnabled) playSound('shoot');
+                      }
+                   }
                }
            } else if (text === '!heal') {
-               const heal = 30 + Math.floor(Math.random() * 30);
-               nextGangs = nextGangs.map(g => {
-                  if (g.id === playerGangId) {
-                     return { ...g, hp: Math.min(g.maxHp, g.hp + heal) };
-                  }
-                  return g;
-               });
-               madeChanges = true;
-               if (Math.random() > 0.8) {
-                  addLog(`💉 ${uname} عالج عصابته (+${heal})`, 'heal');
-                  if (soundEnabled) playSound('heal');
+               if (!onCooldown) {
+                   const heal = 30 + Math.floor(Math.random() * 30);
+                   nextGangs = nextGangs.map(g => {
+                      if (g.id === playerGangId) {
+                         const p = g.members[uname];
+                         return { 
+                             ...g, 
+                             hp: Math.min(g.maxHp, g.hp + heal),
+                             members: {
+                                 ...g.members,
+                                 [uname]: { ...p, healingDone: p.healingDone + heal, lastActionTime: now }
+                             }
+                         };
+                      }
+                      return g;
+                   });
+                   madeChanges = true;
+                   if (Math.random() > 0.8) {
+                      addLog(`💉 ${uname} عالج عصابته (+${heal})`, 'heal');
+                      if (soundEnabled) playSound('heal');
+                   }
                }
            } else if (text.startsWith('!driveby ')) {
+              // DriveBy logic remains similar but relies on group effort, individual cooldown? 
+              // driveByRef is global per gang. Let's keep it per gang for now as it's a "combo" move.
               const targetColor = text.replace('!driveby ', '').trim();
               if (['red', 'blue'].includes(targetColor) && targetColor !== playerGangId) {
-                  const now = Date.now();
-                  const gangDriveBy = driveByRef.current[playerGangId] || { count: 0, lastTime: 0 };
-                  if (now - gangDriveBy.lastTime > 5000) {
-                      gangDriveBy.count = 1;
-                  } else {
-                      gangDriveBy.count += 1;
-                  }
-                  gangDriveBy.lastTime = now;
-                  driveByRef.current[playerGangId] = gangDriveBy;
+                  // Only count if not on cooldown? Or maybe driveby doesn't follow normal cooldown?
+                  // Let's say driveby is separate, but maybe check cooldown too?
+                  // User didn't specify, but let's apply cooldown to be safe or it's spammy.
+                  if (!onCooldown) {
+                      const gangDriveBy = driveByRef.current[playerGangId] || { count: 0, lastTime: 0 };
+                      if (now - gangDriveBy.lastTime > 5000) {
+                          gangDriveBy.count = 1;
+                      } else {
+                          gangDriveBy.count += 1;
+                      }
+                      gangDriveBy.lastTime = now;
+                      driveByRef.current[playerGangId] = gangDriveBy;
 
-                  if (gangDriveBy.count >= 3) {
-                     gangDriveBy.count = 0;
-                     const dmg = 1000;
-                     nextGangs = nextGangs.map(g => {
-                        if (g.id === targetColor) {
-                           return { ...g, hp: Math.max(0, g.hp - dmg) };
-                        }
-                        return g;
-                     });
-                     madeChanges = true;
-                     addLog(`🚗💨 هجوم قاسي بالسيارة من ${playerGangId} على ${targetColor}! (-${dmg})`, 'shoot');
-                     if (soundEnabled) playSound('shoot');
+                      // Update player lastActionTime to prevent spamming !driveby to trigger it alone
+                      nextGangs = nextGangs.map(g => {
+                          if (g.id === playerGangId) {
+                              const p = g.members[uname];
+                              return { ...g, members: { ...g.members, [uname]: { ...p, lastActionTime: now } } };
+                          }
+                          return g;
+                      });
+
+                      if (gangDriveBy.count >= 3) {
+                         gangDriveBy.count = 0;
+                         const dmg = 1000;
+                         nextGangs = nextGangs.map(g => {
+                            if (g.id === targetColor) {
+                               return { ...g, hp: Math.max(0, g.hp - dmg) };
+                            }
+                            return g;
+                         });
+                         addLog(`🚗💨 هجوم قاسي بالسيارة من ${playerGangId} على ${targetColor}! (-${dmg})`, 'shoot');
+                         if (soundEnabled) playSound('shoot');
+                      }
+                      madeChanges = true;
                   }
               }
            } else if (text.startsWith('!betray ')) {
@@ -260,14 +348,13 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
               if (['red', 'blue'].includes(targetColor) && targetColor !== playerGangId) {
                   const dmg = 400;
                   nextGangs = nextGangs.map(g => {
-                     let newMembers = new Set(g.members);
                      if (g.id === playerGangId) {
-                        newMembers.delete(uname);
-                        return { ...g, hp: Math.max(0, g.hp - dmg), members: newMembers };
+                        const { [uname]: removed, ...rest } = g.members;
+                        return { ...g, hp: Math.max(0, g.hp - dmg), members: rest };
                      }
                      if (g.id === targetColor) {
-                        newMembers.add(uname);
-                        return { ...g, members: newMembers };
+                        // Reset stats on betray? Or keep them? "Betrayal resets your honor" -> resets stats seems fair.
+                        return { ...g, members: { ...g.members, [uname]: { username: uname, damageDealt: 0, healingDone: 0, lastActionTime: 0 } } };
                      }
                      return g;
                   });
@@ -278,23 +365,32 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
            } else if (text === '!bribe') {
                const myGang = nextGangs.find(g => g.id === playerGangId);
                if (myGang && myGang.hp > 1000) {
-                  let maxHpGang: Gang | null = null;
-                  nextGangs.forEach(g => {
-                     if (g.id !== playerGangId && g.hp > 0) {
-                        if (!maxHpGang || g.hp > maxHpGang.hp) maxHpGang = g;
-                     }
-                  });
-                  if (maxHpGang) {
-                     nextGangs = nextGangs.map(g => {
-                        if (g.id === playerGangId) return { ...g, hp: g.hp - 500 };
-                        if (maxHpGang && g.id === maxHpGang.id) return { ...g, hp: Math.max(0, g.hp - 1500) };
-                        return g;
-                     });
-                     madeChanges = true;
-                     setRaidActive(true);
-                     setTimeout(() => setRaidActive(false), 3000);
-                     addLog(`💰 ${uname} دفع رشوة ووجه الشرطة لمداهمة ${maxHpGang.name}!`, 'raid');
-                     if (soundEnabled) playSound('raid');
+                  if (!onCooldown) {
+                      let maxHpGang: Gang | null = null;
+                      nextGangs.forEach(g => {
+                         if (g.id !== playerGangId && g.hp > 0) {
+                            if (!maxHpGang || g.hp > maxHpGang.hp) maxHpGang = g;
+                         }
+                      });
+                      if (maxHpGang) {
+                         nextGangs = nextGangs.map(g => {
+                            if (g.id === playerGangId) {
+                                const p = g.members[uname];
+                                return { 
+                                    ...g, 
+                                    hp: g.hp - 500,
+                                    members: { ...g.members, [uname]: { ...p, lastActionTime: now } }
+                                };
+                            }
+                            if (maxHpGang && g.id === maxHpGang.id) return { ...g, hp: Math.max(0, g.hp - 1500) };
+                            return g;
+                         });
+                         madeChanges = true;
+                         setRaidActive(true);
+                         setTimeout(() => setRaidActive(false), 3000);
+                         addLog(`💰 ${uname} دفع رشوة ووجه الشرطة لمداهمة ${maxHpGang.name}!`, 'raid');
+                         if (soundEnabled) playSound('raid');
+                      }
                   }
                }
            }
@@ -346,10 +442,25 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
 
               <div className="grid grid-cols-2 gap-12 w-full max-w-2xl mb-8">
                  {gangs.map(g => (
-                    <div key={g.id} className={`p-6 rounded-2xl border-2 ${g.borderColor} bg-black/50 flex flex-col items-center`}>
+                    <div key={g.id} className={`p-6 rounded-2xl border-2 ${g.borderColor} bg-black/50 flex flex-col items-center min-h-[300px]`}>
                        <span className={`text-2xl font-black mb-2 ${g.color}`}>{g.name}</span>
-                       <span className="text-4xl font-bold text-white mb-2">{g.members.size}</span>
-                       <span className="text-white/50">أعضاء</span>
+                       <span className="text-4xl font-bold text-white mb-2">{Object.keys(g.members).length}</span>
+                       <span className="text-white/50 mb-6">أعضاء</span>
+
+                       <div className="w-full flex-1 overflow-y-auto max-h-60 custom-scrollbar bg-black/30 rounded-xl p-2 gap-1 flex flex-col">
+                           {Object.values(g.members).length === 0 && <div className="text-white/30 text-center py-4">انتظار انضمام لاعبين...</div>}
+                           {Object.values(g.members).map(m => (
+                               <div key={m.username} className="flex justify-between items-center text-white/90 text-sm bg-white/10 p-2 rounded-lg border border-white/5">
+                                   <span className="font-bold truncate max-w-[120px]">{m.username}</span>
+                                   <button 
+                                      onClick={() => movePlayer(m.username, g.id === 'red' ? 'blue' : 'red')}
+                                      className="text-xs bg-white/10 hover:bg-white/20 p-1 px-3 rounded-md transition-colors cursor-pointer border border-white/10"
+                                   >
+                                       نقل
+                                   </button>
+                               </div>
+                           ))}
+                       </div>
                     </div>
                  ))}
               </div>
@@ -409,21 +520,44 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
                </div>
             )}
             
-            <div className="flex-1 grid grid-cols-2 gap-6 z-10">
+            <div className="flex-1 grid grid-cols-2 gap-6 z-10 w-full max-w-6xl mx-auto h-[600px]">
                {gangs.map((g, idx) => (
-                  <motion.div key={g.id} layout className={`p-6 rounded-3xl border-4 ${g.borderColor} bg-black/60 relative overflow-hidden flex flex-col justify-center items-center`}>
+                  <motion.div key={g.id} layout className={`p-4 rounded-3xl border-4 ${g.borderColor} bg-black/60 relative overflow-hidden flex flex-col items-center h-full`}>
                      {g.hp <= 0 && <div className="absolute inset-0 bg-black/80 z-20 flex items-center justify-center"><Skull className="w-24 h-24 text-zinc-600" /></div>}
-                     <h3 className={`text-3xl font-black mb-4 ${g.color} z-10`}>{g.name}</h3>
-                     <span className="text-xl text-white/70 mb-6 z-10">الأعضاء: {g.members.size}</span>
+                     <div className="flex flex-col items-center w-full mb-4 z-10 shrink-0">
+                        <h3 className={`text-4xl font-black mb-1 ${g.color}`}>{g.name}</h3>
+                        <span className="text-xl text-white/50">الأعضاء: {Object.keys(g.members).length}</span>
+                     </div>
                      
-                     <div className="w-full relative h-10 bg-black rounded-full border-2 border-white/20 overflow-hidden px-1 flex items-center z-10">
+                     <div className="w-full relative h-10 bg-black rounded-full border-2 border-white/20 overflow-hidden px-1 flex items-center z-10 mb-2 shrink-0">
                         <motion.div 
                            className={`h-8 rounded-full ${g.bgColor}`}
                            animate={{ width: `${Math.max(0, (g.hp / g.maxHp) * 100)}%` }}
                            transition={{ type: 'spring' }}
                         />
                      </div>
-                     <div className="mt-2 text-2xl font-mono font-bold text-white z-10">{Math.floor(g.hp)} / {g.maxHp} HP</div>
+                     <div className="text-3xl font-mono font-bold text-white z-10 mb-4 shrink-0">{Math.floor(g.hp)} / {g.maxHp} HP</div>
+
+                     <div className="w-full flex-1 overflow-y-auto custom-scrollbar bg-black/40 rounded-xl p-3 gap-2 flex flex-col min-h-0 z-10 border border-white/10">
+                         {Object.values(g.members).sort((a,b) => (b.damageDealt + b.healingDone) - (a.damageDealt + a.healingDone)).map((m, i) => (
+                             <div key={m.username} className={`flex justify-between items-center text-white/90 text-sm p-3 rounded-lg border border-white/5 ${i < 3 ? 'bg-white/10' : 'bg-white/5'}`}>
+                                 <div className="flex items-center gap-3">
+                                     <span className="opacity-50 font-mono w-4">{i+1}</span>
+                                     <span className="font-bold">{m.username}</span>
+                                 </div>
+                                 <div className="flex gap-4 font-mono">
+                                     <div className="flex items-center gap-1 text-red-300 bg-red-900/40 px-2 py-1 rounded">
+                                         <span>⚔️</span>
+                                         <span>{m.damageDealt}</span>
+                                     </div>
+                                     <div className="flex items-center gap-1 text-green-300 bg-green-900/40 px-2 py-1 rounded">
+                                         <span>❤️</span>
+                                         <span>{m.healingDone}</span>
+                                     </div>
+                                 </div>
+                             </div>
+                         ))}
+                     </div>
                   </motion.div>
                ))}
             </div>

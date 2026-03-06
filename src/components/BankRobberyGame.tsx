@@ -20,6 +20,8 @@ interface PlayerState {
   escaped: boolean;
   shields: number;
   contribs: number;
+  lastActionTime: number;
+  shieldEndTime: number;
 }
 
 // Simple Web Audio API Synthesizer for high-tier game sounds
@@ -91,6 +93,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
   const [gameType, setGameType] = useState<'coop'|'pvp'>('coop');
   const [timeLeft, setTimer] = useState(180);
   const [vaultHP, setVaultHP] = useState(1000000);
+  const [securityLevel, setSecurityLevel] = useState(0); // 0-100%
   const [players, setPlayers] = useState<Record<string, PlayerState>>({});
   const [actionFeed, setActionFeed] = useState<{id: string, text: string, type: 'good'|'bad'|'neutral'}[]>([]);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -112,6 +115,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
     setMode(selectedMode);
     setTimer(selectedMode === 'coop' ? 180 : 180);
     setVaultHP(1000000);
+    setSecurityLevel(0); // Reset Security
     setPlayers({});
     setActionFeed([]);
     processedMessageIds.current.clear();
@@ -138,16 +142,28 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
         return p - 1;
       });
 
+      if (gameType === 'coop') {
+         setSecurityLevel(l => Math.min(100, l + 0.5));
+      }
+
       setPlayers(prev => {
         let changed = false;
+        const now = Date.now();
         const next = { ...prev };
         Object.keys(next).forEach(username => {
+          // Jail Logic
           if (next[username].jailTime > 0) {
             changed = true;
             next[username] = { ...next[username], jailTime: next[username].jailTime - 1 };
             if (next[username].jailTime === 0) {
               addLog(`${username} خرج من السجن!`, 'neutral');
             }
+          }
+          // Shield Expiration Logic
+          if (next[username].shields > 0 && next[username].shieldEndTime < now) {
+              changed = true;
+              next[username] = { ...next[username], shields: 0 };
+              addLog(`🛡️ انتهى مفعول درع ${username}!`, 'neutral');
           }
         });
         return changed ? next : prev;
@@ -171,75 +187,115 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
     setPlayers(prevPlayers => {
       let currentPlayers = { ...prevPlayers };
       let vaultDamage = 0;
+      const now = Date.now();
       
       newMessages.forEach(msg => {
         const text = msg.message.trim().toLowerCase();
         const username = msg.username;
-        const pState = currentPlayers[username] || { money: 0, jailTime: 0, escaped: false, shields: 0, contribs: 0 };
+        const pState: PlayerState = currentPlayers[username] || { 
+            money: 0, 
+            jailTime: 0, 
+            escaped: false, 
+            shields: 0, 
+            contribs: 0,
+            lastActionTime: 0,
+            shieldEndTime: 0
+        };
         
         if (pState.escaped) return;
         if (pState.jailTime > 0) return;
+
+        // Cooldown Check (5 seconds)
+        if (now - pState.lastActionTime < 5000) return;
+
+        let actionTaken = false;
 
         if (gameType === 'coop') {
           let dmg = 0;
           if (text === '!hack') dmg = 5000 + Math.floor(Math.random() * 5000);
           else if (text === '!drill') dmg = 8000 + Math.floor(Math.random() * 8000);
           else if (text === '!cut') dmg = 10000 + Math.floor(Math.random() * 2000);
+          else if (text === '!distract') {
+              setSecurityLevel(l => Math.max(0, l - 5));
+              currentPlayers[username] = { ...pState, contribs: pState.contribs + 2000, lastActionTime: now };
+              actionTaken = true;
+              addLog(`🎭 ${username} شتت انتباه الحراس! (-5% أمني)`, 'good');
+              if (soundEnabled) playSound('click');
+          }
 
           if (dmg > 0) {
-            vaultDamage += dmg;
-            currentPlayers[username] = { ...pState, contribs: pState.contribs + dmg };
+            // Damage reduced by security level
+            const effectiveDmg = Math.floor(dmg * (1 - securityLevel / 100));
+            vaultDamage += effectiveDmg;
+            currentPlayers[username] = { ...pState, contribs: pState.contribs + effectiveDmg, lastActionTime: now };
+            actionTaken = true;
             if (soundEnabled && Math.random() > 0.7) playSound('hit');
           }
         }
         else if (gameType === 'pvp') {
           if (text === '!escape' && isAlarmPhase) {
-            currentPlayers[username] = { ...pState, escaped: true };
+            currentPlayers[username] = { ...pState, escaped: true, lastActionTime: now };
+            actionTaken = true;
             addLog(`وفر ${username} للهروب بـ $${pState.money}! `, 'good');
             if (soundEnabled) playSound('success');
           }
           else if (text === '!rob' && !isAlarmPhase) {
+            actionTaken = true;
             const risk = Math.random();
             if (risk < 0.15) {
                const lost = Math.floor(pState.money * 0.5);
-               currentPlayers[username] = { ...pState, money: pState.money - lost, jailTime: 15 };
+               currentPlayers[username] = { ...pState, money: pState.money - lost, jailTime: 15, lastActionTime: now };
                addLog(` ألقت الشرطة القبض على ${username}! خسر $${lost}`, 'bad');
                if (soundEnabled) playSound('fail');
             } else {
                const gain = Math.floor(Math.random() * 3000) + 1000;
-               currentPlayers[username] = { ...pState, money: pState.money + gain };
+               currentPlayers[username] = { ...pState, money: pState.money + gain, lastActionTime: now };
                if (soundEnabled && Math.random() > 0.8) playSound('cash');
             }
           }
           else if (text.startsWith('!steal ') && !isAlarmPhase) {
-            const target = text.replace('!steal ', '').replace('@', '').trim();
-            if (target && target !== username && currentPlayers[target] && !currentPlayers[target].escaped) {
-               const tState = currentPlayers[target];
-               if (tState.shields > 0) {
-                 currentPlayers[target] = { ...tState, shields: 0 };
-                 currentPlayers[username] = { ...pState, jailTime: 10 };
-                 addLog(` درع ${target} صد هجوم ${username}! (${username} في السجن)`, 'neutral');
-                 if (soundEnabled) playSound('hit');
-               } else {
-                 const risk = Math.random();
-                 if (risk < 0.3) {
-                   currentPlayers[username] = { ...pState, jailTime: 10 };
-                   addLog(` فشل ${username} في سرقة ${target} ودخل السجن!`, 'bad');
-                   if (soundEnabled) playSound('fail');
-                 } else {
-                   const stolen = Math.floor(tState.money * 0.25);
-                   if (stolen > 0) {
-                     currentPlayers[target] = { ...tState, money: tState.money - stolen };
-                     currentPlayers[username] = { ...pState, money: pState.money + stolen };
-                     addLog(` سرق ${username} $${stolen} من ${target}!`, 'neutral');
-                     if (soundEnabled) playSound('cash');
+            // Robust target finding (ignore @, trim, case-insensitive check against keys)
+            const targetInput = text.replace('!steal ', '').replace('@', '').trim().toLowerCase();
+            if (!targetInput) return;
+
+            // Find target key
+            const targetKey = Object.keys(currentPlayers).find(k => k.toLowerCase() === targetInput);
+
+            if (targetKey && targetKey !== username) {
+               const tState = currentPlayers[targetKey];
+               if (!tState.escaped) {
+                   actionTaken = true;
+                   if (tState.shields > 0) {
+                     currentPlayers[targetKey] = { ...tState, shields: 0, shieldEndTime: 0 };
+                     currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
+                     addLog(`🛡️ درع ${targetKey} صد هجوم ${username}! (${username} في السجن)`, 'neutral');
+                     if (soundEnabled) playSound('hit');
+                   } else {
+                     const risk = Math.random();
+                     if (risk < 0.3) {
+                       currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
+                       addLog(` فشل ${username} في سرقة ${targetKey} ودخل السجن!`, 'bad');
+                       if (soundEnabled) playSound('fail');
+                     } else {
+                       const stolen = Math.floor(tState.money * 0.25);
+                       if (stolen > 0) {
+                         currentPlayers[targetKey] = { ...tState, money: tState.money - stolen };
+                         currentPlayers[username] = { ...pState, money: pState.money + stolen, lastActionTime: now };
+                         addLog(` سرق ${username} $${stolen} من ${targetKey}!`, 'neutral');
+                         if (soundEnabled) playSound('cash');
+                       } else {
+                           // Target has no money, still counts as action? Yes.
+                           currentPlayers[username] = { ...pState, lastActionTime: now };
+                       }
+                     }
                    }
-                 }
                }
             }
           }
           else if (text === '!defend' && !isAlarmPhase) {
-            currentPlayers[username] = { ...pState, shields: 1 };
+            actionTaken = true;
+            currentPlayers[username] = { ...pState, shields: 1, shieldEndTime: now + 15000, lastActionTime: now };
+            addLog(`🛡️ ${username} قام بتفعيل وضع الدفاع! (15 ثانية)`, 'good');
           }
         }
       });
@@ -373,13 +429,27 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                         <span>HP</span>
                         <span>{Math.floor(vaultHP).toLocaleString()} / 1,000,000</span>
                       </div>
-                      <div className="h-8 bg-black/80 rounded-full border border-brand-gold/30 p-1 overflow-hidden shadow-inner flex">
+                      <div className="h-8 bg-black/80 rounded-full border border-brand-gold/30 p-1 overflow-hidden shadow-inner flex mb-6">
                         <motion.div 
                           className="h-full bg-gradient-to-r from-red-500 via-orange-500 to-green-500 rounded-full"
                           initial={{ width: '100%' }}
                           animate={{ width: `${Math.max(0, (vaultHP / 1000000) * 100)}%` }}
                           transition={{ type: "spring" }}
                         />
+                      </div>
+                      
+                      <div className="flex flex-col items-center gap-2">
+                          <div className="flex items-center gap-3 bg-red-900/20 px-4 py-2 rounded-xl border border-red-500/30">
+                              <Siren className={`w-5 h-5 ${securityLevel > 70 ? 'text-red-500 animate-ping' : 'text-red-400'}`} />
+                              <span className="text-red-200 font-bold">مستوى التأهب الأمني</span>
+                              <div className="w-32 h-2 bg-black/50 rounded-full overflow-hidden">
+                                  <div className={`h-full transition-all ${securityLevel > 80 ? 'bg-red-500' : securityLevel > 40 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${securityLevel}%` }} />
+                              </div>
+                              <span className="font-mono text-red-300">{Math.floor(securityLevel)}%</span>
+                          </div>
+                          <p className="text-white/40 text-xs animate-pulse">
+                              {securityLevel > 50 ? 'تحذير: الحراسة مشددة! استخدم !distract' : 'الحراسة خفيفة، هاجم الآن!'}
+                          </p>
                       </div>
                     </div>
                   </>
@@ -453,8 +523,9 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                             {i + 1}
                           </div>
                           <div className="flex flex-col">
-                            <span className={`font-bold ${i === 0 ? 'text-brand-gold' : 'text-white'}`}>
-                              {p.username} {p.shields > 0 && <Shield className="w-3 h-3 inline text-blue-400 ml-1" />}
+                            <span className={`font-bold flex items-center gap-1 ${i === 0 ? 'text-brand-gold' : 'text-white'}`}>
+                              {p.username} 
+                              {p.shields > 0 && <Shield className="w-5 h-5 text-blue-400 animate-pulse drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />}
                             </span>
                             {isJailed && <span className="text-xs text-red-500 font-bold">في السجن ({p.jailTime}ث)</span>}
                             {isEscaped && <span className="text-xs text-green-400 font-bold">هرب بأمان</span>}
@@ -490,13 +561,19 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               <h2 className="text-5xl font-black text-white mb-4">
                 {gameType === 'coop' ? (vaultHP <= 0 ? 'تم اختراق الخزنة بنجاح!' : 'فشلت المهمة!') : 'انتهت العملية!'}
               </h2>
-              <div className="w-full max-w-2xl bg-white/5 border border-white/10 rounded-3xl p-6 mt-8">
+              <div className="w-full max-w-2xl bg-white/5 border border-white/10 rounded-3xl p-6 mt-8 max-h-[400px] overflow-y-auto custom-scrollbar">
                 <h3 className="text-2xl font-bold text-center mb-6 text-brand-gold">النتائج النهائية</h3>
                 <div className="space-y-3">
-                  {topPlayers.slice(0, 5).map((p, i) => (
-                    <div key={p.username} className="flex justify-between items-center bg-black/50 p-4 rounded-xl border border-brand-gold/20">
-                      <span className="font-bold text-white text-lg">#{i+1} {p.username} {(gameType === 'pvp' && !p.escaped) && '(مقبوض عليه!)'}</span>
-                      <span className="font-black text-brand-gold text-xl font-numeric">
+                  {topPlayers.slice(0, 10).map((p, i) => (
+                    <div key={p.username} className={`flex justify-between items-center p-4 rounded-xl border ${gameType === 'pvp' ? (p.escaped ? 'bg-green-900/40 border-green-500/50' : 'bg-red-900/40 border-red-500/50') : 'bg-black/50 border-brand-gold/20'}`}>
+                      <div className="flex flex-col">
+                          <span className={`${gameType === 'pvp' && !p.escaped ? 'text-red-200 line-through opacity-70' : 'text-white'} font-bold text-lg`}>
+                              #{i+1} {p.username}
+                          </span>
+                          {gameType === 'pvp' && !p.escaped && <span className="text-xs text-red-400 font-bold">لم يخرج! (تم القبض عليه)</span>}
+                          {gameType === 'pvp' && p.escaped && <span className="text-xs text-green-400 font-bold">هرب بنجاح</span>}
+                      </div>
+                      <span className={`font-black text-xl font-numeric ${gameType === 'pvp' && !p.escaped ? 'text-red-300' : 'text-brand-gold'}`}>
                         ${gameType === 'coop' ? p.contribs.toLocaleString() : (p.escaped ? p.money.toLocaleString() : Math.floor(p.money/2).toLocaleString())}
                       </span>
                     </div>

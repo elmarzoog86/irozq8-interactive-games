@@ -469,6 +469,48 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
         </div>
       </div>
 
+      {/* Active Players Sidebar */}
+      <div className="w-80 flex flex-col gap-4">
+        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
+           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+           <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
+             <Users className="w-6 h-6 text-brand-gold" />
+             اللاعبين ({Object.values(players).length})
+           </h3>
+           
+           <div className="flex-1 overflow-y-auto space-y-2 relative z-10 custom-scrollbar pr-2">
+             {Object.values(players).map(player => (
+               <div 
+                 key={player.username}
+                 className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
+                   player.isAlive 
+                     ? 'bg-black/40 border-white/5 hover:border-brand-gold/30' 
+                     : 'bg-red-900/10 border-red-500/20 opacity-60'
+                 }`}
+               >
+                 <div className="flex items-center gap-3 overflow-hidden">
+                    <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: player.color }} />
+                    <span className={`font-medium truncate ${player.isAlive ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
+                      {player.username}
+                    </span>
+                 </div>
+                 {player.chairId && (
+                   <Armchair className="w-4 h-4 text-brand-gold shrink-0" />
+                 )}
+                 {!player.isAlive && (
+                    <span className="text-xs text-red-500 font-bold">إقصاء</span>
+                 )}
+               </div>
+             ))}
+             {Object.keys(players).length === 0 && (
+               <div className="text-center text-zinc-500 py-8">
+                 لا يوجد لاعبين بعد
+               </div>
+             )}
+           </div>
+        </div>
+      </div>
+
         {/* Twitch Chat Sidebar */}
       <div className="w-[500px] flex flex-col gap-4">
           <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { motion } from 'motion/react';
-import { Users, Play, Clock, CheckCircle2, XCircle, Trophy, ArrowRight, Settings, ArrowLeft, Dices, GripHorizontal, EyeOff } from 'lucide-react';
+import { Users, Play, Clock, CheckCircle2, XCircle, Trophy, ArrowRight, Settings, ArrowLeft, Dices, GripHorizontal, EyeOff, ExternalLink } from 'lucide-react';
 import { TwitchChat } from './TwitchChat';
 
 interface ChatMessage {
@@ -289,54 +290,6 @@ const ARABIC_QUESTIONS = [
   { q: "من هو مكتشف غاز النيون؟", a: "ويليام رامزي", options: ["رذرفورد", "ويليام رامزي", "كافنديش", "بريستلي"] },
   { q: "ما هو أثقل سائل في العالم؟", a: "الزئبق", options: ["الماء", "الزيت", "الزئبق", "الحليب"] },
   { q: "كم عدد عيون الأخطبوط؟", a: "2", options: ["2", "4", "6", "8"] },
-  { q: "ما هي عاصمة سلوفاكيا؟", a: "براتيسلافا", options: ["كوشيتسه", "براتيسلافا", "بريشوف", "زيلينا"] },
-  { q: "من هو مخترع المكنسة الكهربائية؟", a: "هوبرت بوث", options: ["إديسون", "هوبرت بوث", "هوفر", "تسلا"] },
-  { q: "ما هو أطول نهر في أستراليا؟", a: "موراي", options: ["دارلينج", "موراي", "فيتزروي", "أورد"] },
-  { q: "كم عدد أسنان الحصان؟", a: "40", options: ["30", "36", "40", "44"] },
-  { q: "ما هي عاصمة سلوفينيا؟", a: "ليوبليانا", options: ["ماريبور", "ليوبليانا", "تسيليه", "كراني"] },
-  { q: "من هو مكتشف غاز الكريبتون؟", a: "ويليام رامزي", options: ["رذرفورد", "ويليام رامزي", "كافنديش", "بريستلي"] },
-  { q: "ما هو أسرع طائرة في العالم؟", a: "إكس-15", options: ["كونكورد", "إكس-15", "إس آر-71", "إف-22"] },
-  { q: "كم عدد أجنحة الخنفساء؟", a: "4", options: ["2", "4", "6", "8"] },
-  { q: "ما هي عاصمة إستونيا؟", a: "تالين", options: ["تارتو", "تالين", "نارفا", "بارنو"] },
-  { q: "من هو مخترع الثلاجة؟", a: "ويليام كولين", options: ["إديسون", "ويليام كولين", "فورد", "تسلا"] },
-  { q: "ما هو أطول جبل في أوروبا؟", a: "إلبروس", options: ["مون بلان", "إلبروس", "ماترهورن", "أوليمبوس"] },
-  { q: "كم عدد أرجل الألفية؟", a: "1000", options: ["500", "750", "1000", "1250"] },
-  { q: "ما هي عاصمة لاتفيا؟", a: "ريغا", options: ["داوجافبيلس", "ليبايا", "ريغا", "جيلجافا"] },
-  { q: "من هو مكتشف غاز الزينون؟", a: "ويليام رامزي", options: ["رذرفورد", "ويليام رامزي", "كافنديش", "بريستلي"] },
-  { q: "ما هو أثقل صخر في العالم؟", a: "البازلت", options: ["الجرانيت", "البازلت", "الرخام", "الحجر الجيري"] },
-  { q: "كم عدد عيون الذبابة المنزلية؟", a: "2", options: ["2", "4", "6", "8"] },
-  { q: "ما هي عاصمة ليتوانيا؟", a: "فيلنيوس", options: ["كاوناس", "كلايبيدا", "فيلنيوس", "شياولياي"] },
-  { q: "من هو مخترع غسالة الصحون؟", a: "جوزفين كوكرين", options: ["إديسون", "جوزفين كوكرين", "فورد", "تسلا"] },
-  { q: "ما هو أطول نهر في أمريكا الجنوبية؟", a: "الأمازون", options: ["بارانا", "الأمازون", "أورينوكو", "ساو فرانسيسكو"] },
-  { q: "كم عدد أسنان البقرة؟", a: "32", options: ["24", "28", "32", "36"] },
-  { q: "ما هي عاصمة أيسلندا؟", a: "ريكيافيك", options: ["أكورييري", "ريكيافيك", "كوبافوغور", "هافنارفجوردور"] },
-  { q: "من هو مكتشف غاز الرادون؟", a: "فريدريش دورن", options: ["رذرفورد", "فريدريش دورن", "كافنديش", "بريستلي"] },
-  { q: "ما هو أسرع سيارة في العالم؟", a: "بوغاتي شيرون", options: ["فيراري", "لامبورغيني", "بوغاتي شيرون", "كوينيجسيج"] },
-  { q: "كم عدد أجنحة الجرادة؟", a: "4", options: ["2", "4", "6", "8"] },
-  { q: "ما هي عاصمة ألبانيا؟", a: "تيرانا", options: ["دراس", "فلورا", "تيرانا", "إلباسان"] },
-  { q: "من هو مخترع التكييف؟", a: "ويليس كارير", options: ["إديسون", "ويليس كارير", "فورد", "تسلا"] },
-  { q: "ما هو أطول جبل في أوقيانوسيا؟", a: "بونتشاك جايا", options: ["كوسيوسكو", "بونتشاك جايا", "كوك", "ويلهلم"] },
-  { q: "كم عدد أرجل الروبيان؟", a: "10", options: ["6", "8", "10", "12"] },
-  { q: "ما هي عاصمة مقدونيا الشمالية؟", a: "سكوبيه", options: ["بيتولا", "أوخريد", "سكوبيه", "كومانوفو"] },
-  { q: "من هو مكتشف غاز الفلور؟", a: "هنري مويسان", options: ["بريستلي", "هنري مويسان", "كافنديش", "لافوازييه"] },
-  { q: "ما هو أثقل عنصر طبيعي؟", a: "اليورانيوم", options: ["الرصاص", "الذهب", "اليورانيوم", "البلاتين"] },
-  { q: "كم عدد عيون العقرب؟", a: "12", options: ["2", "6", "8", "12"] },
-  { q: "ما هي عاصمة الجبل الأسود؟", a: "بودغوريتسا", options: ["نيكسيتش", "بودغوريتسا", "بليفلجا", "بيجيلو بولي"] },
-  { q: "من هو مخترع الميكروويف؟", a: "بيرسي سبنسر", options: ["إديسون", "بيرسي سبنسر", "فورد", "تسلا"] },
-  { q: "ما هو أطول نهر في بريطانيا؟", a: "سيفيرن", options: ["التايمز", "سيفيرن", "ترينت", "أوز"] },
-  { q: "كم عدد أسنان الأرنب؟", a: "28", options: ["20", "24", "28", "32"] },
-  { q: "ما هي عاصمة البوسنة والهرسك؟", a: "سراييفو", options: ["بانيا لوكا", "توزلا", "سراييفو", "موستار"] },
-  { q: "من هو مكتشف غاز الكلور؟", a: "كارل شيله", options: ["بريستلي", "كارل شيله", "كافنديش", "لافوازييه"] },
-  { q: "ما هو أسرع حيوان في العالم؟", a: "الصقر الجوال", options: ["الفهد", "الصقر الجوال", "السمكة الشراعية", "اليعسوب"] },
-  { q: "كم عدد أجنحة النملة الطائرة؟", a: "4", options: ["2", "4", "6", "8"] },
-  { q: "ما هي عاصمة مولدوفا؟", a: "كيشيناو", options: ["تيراسبول", "بالتي", "كيشيناو", "بندر"] },
-  { q: "من هو مخترع ماكينة الخياطة؟", a: "إلياس هاو", options: ["إديسون", "إلياس هاو", "سينجر", "تسلا"] },
-  { q: "ما هو أطول جبل في القارة القطبية الجنوبية؟", a: "فينسون ماسيف", options: ["تاييري", "فينسون ماسيف", "كيركباتريك", "ماركهام"] },
-  { q: "كم عدد أرجل القملة؟", a: "6", options: ["4", "6", "8", "10"] },
-  { q: "ما هي عاصمة قبرص؟", a: "نيقوسيا", options: ["ليماسول", "لارنكا", "نيقوسيا", "بافوس"] },
-  { q: "من هو مكتشف غاز البروم؟", a: "أنطوان جيرار", options: ["بريستلي", "أنطوان جيرار", "كافنديش", "لافوازييه"] },
-  { q: "ما هو أثقل كوكب صخري؟", a: "الأرض", options: ["الزهرة", "المريخ", "الأرض", "عطارد"] },
-  { q: "كم عدد عيون الحبار؟", a: "2", options: ["2", "4", "6", "8"] },
   { q: "ما هي عاصمة مالطا؟", a: "فاليتا", options: ["بيرغو", "فاليتا", "سليمة", "مدينا"] },
   { q: "من هو مخترع المحرك الكهربائي؟", a: "مايكل فاراداي", options: ["إديسون", "مايكل فاراداي", "تسلا", "أمبير"] },
   { q: "ما هو أطول نهر في فرنسا؟", a: "لوار", options: ["السين", "الرون", "لوار", "غارون"] },
@@ -361,6 +314,59 @@ const ARABIC_QUESTIONS = [
   { q: "من هو مكتشف غاز الكبريت؟", a: "القدماء", options: ["لافوازييه", "القدماء", "بريستلي", "كافنديش"] }
 ];
 
+const PopoutWindow: React.FC<{ children: React.ReactNode; onClose: () => void }> = ({ children, onClose }) => {
+  const newWindow = useRef<Window | null>(null);
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    // Open a new window
+    const newWin = window.open('', 'StreamerControl', 'width=400,height=600,left=200,top=200');
+    if (newWin) {
+      newWindow.current = newWin;
+      const div = newWin.document.createElement('div');
+      newWin.document.body.appendChild(div);
+      newWin.document.body.style.margin = '0';
+      newWin.document.body.style.background = '#09090b'; // Tailwind bg-zinc-950
+      newWin.document.body.style.color = '#fff';
+      newWin.document.dir = 'rtl';
+
+      // Copy styles from main window
+      Array.from(document.styleSheets).forEach((styleSheet) => {
+        try {
+          if (styleSheet.href) {
+            const link = newWin.document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = styleSheet.href;
+            newWin.document.head.appendChild(link);
+          } else if (styleSheet.cssRules) {
+            const style = newWin.document.createElement('style');
+            Array.from(styleSheet.cssRules).forEach((rule) => {
+              style.appendChild(document.createTextNode(rule.cssText));
+            });
+            newWin.document.head.appendChild(style);
+          }
+        } catch (e) {
+          // Ignore cross-origin stylesheet errors
+        }
+      });
+
+      setContainer(div);
+
+      const handleUnload = () => {
+        onClose();
+      };
+      newWin.addEventListener('unload', handleUnload);
+
+      return () => {
+        newWin.removeEventListener('unload', handleUnload);
+        newWin.close();
+      };
+    }
+  }, []);
+
+  return container ? ReactDOM.createPortal(children, container) : null;
+};
+
 export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
   const [phase, setPhase] = useState<GamePhase>('config');
   const [settings, setSettings] = useState({ numQuestions: 10, timePerQuestion: 15 });
@@ -371,6 +377,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
   const [streamerSecretAnswer, setStreamerSecretAnswer] = useState('');
   const [lockedStreamerAnswer, setLockedStreamerAnswer] = useState('');
   const [showStreamerBox, setShowStreamerBox] = useState(true);
+  const [isPopoutOpen, setIsPopoutOpen] = useState(false);
   
   const processedMessageIds = useRef<Set<string>>(new Set());
 
@@ -380,17 +387,18 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
         processedMessageIds.current.add(msg.id);
         
         const text = msg.message.trim();
+        const userId = msg.username.toLowerCase();
         
         if (phase === 'joining' && text.toLowerCase() === '!join') {
           setPlayers(prev => {
-            if (!prev[msg.username]) {
-              return { ...prev, [msg.username]: { username: msg.username, score: 0 } };
+            if (!prev[userId]) {
+              return { ...prev, [userId]: { username: msg.username, score: 0 } };
             }
             return prev;
           });
         } else if (phase === 'playing' && timeLeft !== null && timeLeft > 0) {
           setPlayers(prev => {
-            const player = prev[msg.username];
+            const player = prev[userId];
             if (player && !player.currentAnswer) {
               // Only capture numbers from the chat message
               const numMatch = text.match(/\d+/);
@@ -399,7 +407,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
               const answer = numMatch[0];
               return {
                 ...prev,
-                [msg.username]: {
+                [userId]: {
                   ...player,
                   currentAnswer: answer,
                   answerTime: timeLeft
@@ -483,12 +491,13 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
       
       setPlayers(prev => {
         const streamerName = channelName || 'Streamer';
-        const player = prev[streamerName] || { username: streamerName, score: 0 };
+        const streamerId = streamerName.toLowerCase();
+        const player = prev[streamerId] || { username: streamerName, score: 0 };
         
         if (!player.currentAnswer) {
           return {
             ...prev,
-            [streamerName]: {
+            [streamerId]: {
               ...player,
               currentAnswer: streamerSecretAnswer.trim(),
               answerTime: timeLeft
@@ -506,7 +515,8 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
     const correctText = questionData.a.toLowerCase().trim();
     const correctIndex = (questionData.options.findIndex(o => o.toLowerCase().trim() === correctText) + 1).toString();
     
-    return ans.includes(correctText) || correctText.includes(ans) || ans === correctIndex;
+    // Stricter matching: Exact text, includes correct text (for sentences), or exact index number
+    return ans === correctText || ans.includes(correctText) || ans === correctIndex;
   };
 
   const handleRoundEnd = () => {
@@ -632,50 +642,76 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
     }
 
     if (phase === 'playing') {
+      const renderStreamerPanel = (isPopout = false) => (
+        <div className={`bg-black/90 backdrop-blur-md border-2 border-brand-gold/50 rounded-xl p-4 shadow-2xl ${isPopout ? 'w-full h-full border-0' : 'w-80'}`}>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-bold text-brand-gold flex items-center gap-2">
+              {!isPopout && <GripHorizontal className="w-4 h-4" />} تحكم الستريمر السري
+            </h3>
+            <div className="flex gap-2">
+              {!isPopout && (
+                <button 
+                  onClick={() => setIsPopoutOpen(true)} 
+                  className="text-zinc-400 hover:text-brand-gold transition-colors" 
+                  title="فتح في نافذة جديدة"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </button>
+              )}
+              <button onClick={() => { setShowStreamerBox(false); setIsPopoutOpen(false); }} className="text-zinc-500 hover:text-white transition-colors">
+                <XCircle className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+          <form onSubmit={handleSecretSubmit} className="space-y-3">
+            <div>
+              <label className="text-xs text-zinc-400 block mb-1">إجابتك (مخفية عن البث)</label>
+              <div className="relative">
+                <input
+                  type="password"
+                  value={streamerSecretAnswer}
+                  onChange={e => setStreamerSecretAnswer(e.target.value)}
+                  placeholder="اكتب إجابتك هنا..."
+                  className="w-full bg-black border border-brand-gold/30 rounded-lg pr-10 pl-4 py-2 text-white text-sm focus:ring-2 focus:ring-brand-gold outline-none"
+                  onPointerDownCapture={e => e.stopPropagation()} // Prevent drag when typing
+                />
+                <EyeOff className="w-4 h-4 text-zinc-500 absolute right-3 top-2.5" />
+              </div>
+            </div>
+            {lockedStreamerAnswer ? (
+              <div className="text-xs text-brand-gold text-center bg-brand-gold/10 py-2 rounded-lg border border-brand-gold/20">
+                تم إرسال الإجابة!
+              </div>
+            ) : (
+              <p className="text-xs text-zinc-500 leading-tight text-center">
+                اضغط Enter لإرسال إجابتك.
+              </p>
+            )}
+          </form>
+        </div>
+      );
+
       return (
         <div className="flex h-full w-full gap-6 relative font-arabic" dir="rtl">
           
           {/* Draggable Streamer Secret Box */}
-          {showStreamerBox && (
+          {showStreamerBox && !isPopoutOpen && (
             <motion.div
               drag
               dragMomentum={false}
-              className="absolute z-50 top-4 right-4 bg-black/90 backdrop-blur-md border-2 border-brand-gold/50 rounded-xl p-4 shadow-2xl w-80 cursor-move"
+              className="absolute z-50 top-4 right-4 cursor-move"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-bold text-brand-gold flex items-center gap-2">
-                  <GripHorizontal className="w-4 h-4" /> تحكم الستريمر السري
-                </h3>
-                <button onClick={() => setShowStreamerBox(false)} className="text-zinc-500 hover:text-white transition-colors">
-                  <XCircle className="w-5 h-5" />
-                </button>
-              </div>
-              <form onSubmit={handleSecretSubmit} className="space-y-3">
-                <div>
-                  <label className="text-xs text-zinc-400 block mb-1">إجابتك (مخفية عن البث)</label>
-                  <div className="relative">
-                    <input
-                      type="password"
-                      value={streamerSecretAnswer}
-                      onChange={e => setStreamerSecretAnswer(e.target.value)}
-                      placeholder="اكتب إجابتك هنا..."
-                      className="w-full bg-black border border-brand-gold/30 rounded-lg pr-10 pl-4 py-2 text-white text-sm focus:ring-2 focus:ring-brand-gold outline-none"
-                      onPointerDownCapture={e => e.stopPropagation()} // Prevent drag when typing
-                    />
-                    <EyeOff className="w-4 h-4 text-zinc-500 absolute right-3 top-2.5" />
-                  </div>
-                </div>
-                {lockedStreamerAnswer ? (
-                  <div className="text-xs text-brand-gold text-center bg-brand-gold/10 py-2 rounded-lg border border-brand-gold/20">
-                    تم إرسال الإجابة!
-                  </div>
-                ) : (
-                  <p className="text-xs text-zinc-500 leading-tight text-center">
-                    اضغط Enter لإرسال إجابتك.
-                  </p>
-                )}
-              </form>
+              {renderStreamerPanel(false)}
             </motion.div>
+          )}
+
+          {/* Popout Window */}
+          {showStreamerBox && isPopoutOpen && (
+            <PopoutWindow onClose={() => setIsPopoutOpen(false)}>
+              <div className="flex items-center justify-center h-screen bg-zinc-950 p-4" dir="rtl">
+                {renderStreamerPanel(true)}
+              </div>
+            </PopoutWindow>
           )}
 
           {!showStreamerBox && (
@@ -695,6 +731,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
               </div>
               <div className={`flex items-center gap-2 text-3xl font-bold font-mono px-6 py-3 rounded-xl border ${timeLeft !== null && timeLeft <= 5 ? 'bg-red-500/20 border-red-500/50 text-red-400 animate-pulse' : 'bg-zinc-800/80 border-zinc-700 text-white'}`} dir="ltr">
                 <Clock className="w-6 h-6" /> 00:{timeLeft?.toString().padStart(2, '0') || '00'}
+
               </div>
             </div>
 

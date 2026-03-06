@@ -22,6 +22,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
   const [gameState, setGameState] = useState<'lobby' | 'spinning' | 'action' | 'finished'>('lobby');
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
   const [winner, setWinner] = useState<Player | null>(null);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   // Auto-join from chat
   useEffect(() => {
@@ -39,6 +40,23 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     }
   }, [messages, gameState]);
 
+  useEffect(() => {
+    if (gameState === 'spinning' && timeLeft > 0) {
+      const timer = setTimeout(() => setTimeLeft(prev => prev - 1), 1000);
+      return () => clearTimeout(timer);
+    } else if (gameState === 'spinning' && timeLeft === 0) {
+      const alivePlayers = players.filter(p => p.status === 'alive');
+      if (alivePlayers.length <= 1) {
+        setWinner(alivePlayers[0] || null);
+        setGameState('finished');
+        return;
+      }
+      const randomIndex = Math.floor(Math.random() * alivePlayers.length);
+      setSelectedPlayer(alivePlayers[randomIndex]);
+      setGameState('action');
+    }
+  }, [timeLeft, gameState, players]);
+
   const startGame = () => {
     if (players.length < 2) return;
     spinWheel();
@@ -47,20 +65,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
   const spinWheel = () => {
     setGameState('spinning');
     setSelectedPlayer(null);
-    
-    const alivePlayers = players.filter(p => p.status === 'alive');
-    if (alivePlayers.length <= 1) {
-      setWinner(alivePlayers[0] || null);
-      setGameState('finished');
-      return;
-    }
-
-    // Simulate spin delay
-    setTimeout(() => {
-      const randomIndex = Math.floor(Math.random() * alivePlayers.length);
-      setSelectedPlayer(alivePlayers[randomIndex]);
-      setGameState('action');
-    }, 3000);
+    setTimeLeft(30);
   };
 
   const eliminatePlayer = (username: string) => {
@@ -118,14 +123,16 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
               <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
               <p className="text-brand-gold/70 mb-6">اللاعبون المنضمون: <span className="text-brand-gold font-bold text-xl">{players.length}</span></p>
               
-              <div className="flex flex-wrap gap-2 justify-center max-h-48 overflow-y-auto p-4 bg-black/60 rounded-xl border border-brand-gold/10">
+              <div className="flex flex-col gap-2 w-full max-h-64 overflow-y-auto custom-scrollbar p-2 bg-black/60 rounded-xl border border-brand-gold/10">
                 {players.length === 0 ? (
-                  <span className="text-zinc-500 text-sm">لا يوجد لاعبين بعد</span>
+                  <div className="text-zinc-500 text-sm text-center py-4">انتظار انضمام لاعبين...</div>
                 ) : (
                   players.map(p => (
-                    <span key={p.username} className="px-3 py-1 rounded-full text-sm font-bold bg-black/40 border border-brand-gold/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]" style={{ color: p.color }}>
-                      {p.username}
-                    </span>
+                    <div key={p.username} className="flex justify-between items-center p-3 rounded-xl bg-black/40 border border-brand-gold/20 shadow-sm relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-brand-gold/5 group-hover:bg-brand-gold/10 transition-colors" />
+                        <span className="font-bold text-lg z-10" style={{ color: p.color }}>{p.username}</span>
+                        <div className="w-3 h-3 rounded-full z-10 shadow-[0_0_10px_currentColor]" style={{ backgroundColor: p.color }} />
+                    </div>
                   ))
                 )}
               </div>
@@ -147,13 +154,25 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         )}
 
         {gameState === 'spinning' && (
-          <div className="flex flex-col items-center">
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
-              className="w-32 h-32 rounded-full border-4 border-t-brand-gold border-r-black border-b-brand-gold border-l-black mb-8"
-            />
-            <h3 className="text-3xl font-bold text-white animate-pulse">جاري اختيار الضحية...</h3>
+          <div className="flex flex-col items-center justify-center h-full">
+            <div className="relative mb-12">
+                <motion.div 
+                  className="w-64 h-64 rounded-full border-4 border-t-brand-gold border-r-transparent border-b-brand-gold border-l-transparent absolute inset-0 text-brand-gold/20"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                />
+                <motion.div 
+                  className="w-64 h-64 rounded-full border-2 border-t-transparent border-r-white/20 border-b-transparent border-l-white/20 absolute inset-0"
+                  animate={{ rotate: -180 }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                />
+                <div className="w-64 h-64 rounded-full border border-brand-gold/10 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm relative z-10 shadow-[0_0_50px_rgba(212,175,55,0.1)]">
+                    <span className="text-8xl font-black text-brand-gold font-mono tracking-tighter drop-shadow-2xl">{timeLeft}</span>
+                    <span className="text-white/40 font-bold uppercase tracking-widest text-sm mt-2">Seconds</span>
+                </div>
+            </div>
+            <h3 className="text-4xl font-bold text-white mb-2 tracking-tight">جولة الإقصاء القادمة</h3>
+            <p className="text-brand-gold/60 text-lg animate-pulse">سيتم اختيار الضحية قريباً...</p>
           </div>
         )}
 

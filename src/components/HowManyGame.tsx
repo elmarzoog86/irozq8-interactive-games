@@ -317,32 +317,29 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <span className="text-2xl font-bold text-brand-gold">الفئة: {state.selectedCategory}</span>
               </div>
 
-              <div className="text-xl text-zinc-400">ادخل العدد بهدوء من خلال التاب الصغير أسفل الشاشة.</div>
+               <div className="bg-black/40 border border-brand-gold/20 p-8 rounded-3xl min-w-[300px]">
+                  <h3 className="text-lg text-zinc-400 mb-2 font-bold">المزايدة الحالية</h3>
+                  {state.bid > 0 ? (
+                    <div>
+                      <div className="text-6xl font-black text-white glow-gold-text mb-2">{state.bid}</div>
+                      <div className="text-brand-gold text-lg">
+                        من قبل {state.players.find(p => p.id !== state.turn)?.name}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-2xl text-zinc-500 font-bold">لا توجد مزايدة بعد</div>
+                  )}
+                  
+                  <div className="mt-6 pt-6 border-t border-brand-gold/10">
+                    <p className="text-sm text-zinc-400 mb-2">الدور الحالي</p>
+                    <div className="text-2xl font-black text-brand-gold animate-pulse">
+                         {state.players.find(p => p.id === state.turn)?.name} يفكر...
+                    </div>
+                  </div>
+              </div>
 
-              <div className="mx-auto max-w-sm">
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    placeBid();
-                  }}
-                  className="bg-black/50 border border-brand-gold/20 rounded-2xl p-4 flex items-center gap-3 shadow-[0_0_20px_rgba(212,175,55,0.15)]"
-                >
-                  <input
-                    type="number"
-                    min={1}
-                    value={bidInput || ''}
-                    onChange={(e) => setBidInput(Number(e.target.value))}
-                    placeholder="اكتب العدد"
-                    className="flex-1 bg-black/60 border border-brand-gold/20 rounded-xl px-4 py-3 text-center text-lg font-bold focus:border-brand-gold outline-none"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-brand-gold text-black font-bold px-4 py-3 rounded-xl hover:bg-brand-gold-light transition-colors"
-                  >
-                    تثبيت
-                  </button>
-                </form>
-                <p className="text-[11px] text-brand-gold/60 mt-2">لن يظهر العدد للجمهور.</p>
+              <div className="text-sm text-zinc-500 mt-4 max-w-md mx-auto">
+                يقوم اللاعبون بالمزايدة على عدد الإجابات التي يمكنهم ذكرها في الفئة المختارة.
               </div>
             </motion.div>
           )}
@@ -406,8 +403,20 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               key="review"
               className="text-center space-y-10"
             >
-              <Trophy className="w-28 h-28 text-brand-gold mx-auto glow-gold" />
               <h2 className="text-5xl font-black italic">قرار النتيجة</h2>
+
+              <div className="bg-black/40 border border-brand-gold/10 p-8 rounded-[30px] max-w-4xl mx-auto">
+                <h3 className="text-zinc-400 mb-4 font-bold">الإجابات المقدمة ({state.currentCount} / {state.targetCount})</h3>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {state.answers.map((ans, i) => (
+                    <span key={i} className="bg-brand-gold/20 border border-brand-gold/30 text-brand-gold px-4 py-2 rounded-xl text-lg font-bold">
+                      {ans}
+                    </span>
+                  ))}
+                  {state.answers.length === 0 && <span className="text-zinc-500 italic">لا توجد إجابات</span>}
+                </div>
+              </div>
+
               <p className="text-zinc-400 text-xl">اختر نجاح أو فشل التحدي قبل عرض النتيجة.</p>
               <div className="flex items-center justify-center gap-6">
                 <button
@@ -465,19 +474,51 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           )}
         </AnimatePresence>
       </div>
+
+       {/* Active Players Sidebar */}
+       <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col shrink-0">
+        <div className="p-4 border-b border-zinc-800">
+          <h3 className="text-brand-gold font-bold flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            المتسابقين ({state.players.length})
+          </h3>
+        </div>
+        <div className="flex-1 overflow-y-auto p-2 space-y-2">
+          {state.players.map(p => (
+            <div 
+              key={p.id} 
+              className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                !p.isEliminated 
+                  ? 'bg-black/40 border-brand-gold/20 shadow-sm' 
+                  : 'bg-red-900/10 border-red-900/30 opacity-60'
+              }`}
+            >
+              <span className={`font-bold text-sm truncate ${!p.isEliminated ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
+                {p.name}
+              </span>
+              {p.isEliminated && <XCircle className="w-4 h-4 text-red-500/50" />}
+              {!p.isEliminated && state.status === 'matchmaking' && state.currentMatch?.includes(p.id) && (
+                <Swords className="w-4 h-4 text-brand-gold animate-pulse" />
+              )}
+            </div>
+          ))}
+          {state.players.length === 0 && (
+            <div className="text-zinc-500 text-center text-sm py-4">انتظار لاعبين...</div>
+          )}
+        </div>
+      </div>
     </div>
 
-      {/* Sidebar */}
-        <div className="w-[500px] flex flex-col gap-4 p-8 pl-0">
-            <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
-            <TwitchChat
-              channelName={channelName}
-              messages={messages}
-              isConnected={true}
-              error={null}
-            />
-          </div>
+      <div className="w-[350px] flex flex-col gap-4 p-4 pl-0 border-r border-brand-gold/10">
+        <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <TwitchChat
+            channelName={channelName}
+            messages={messages}
+            isConnected={true}
+            error={null}
+          />
         </div>
+      </div>
     </div>
   );
 };

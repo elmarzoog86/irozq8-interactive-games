@@ -22,6 +22,7 @@ interface PlayerState {
   attackCooldowns: Record<string, number>; // maps target username to timestamp
   lastAction: number;
   lastHeal: number;
+  lastLoot: number;
 }
 
 const WEAPONS = [
@@ -133,19 +134,19 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         setTimer(t => {
           const nt = t + 1;
 
-          if (nt > 0 && nt % 40 === 0 && !lootRef.current) {
+          if (nt > 0 && nt % 90 === 0 && !lootRef.current) {
              lootRef.current = true;
              addLog(`🎁 صندوق غنائم نزل في الساحة! اكتب !grab لأخذه!`, 'loot');
           }
 
-          // Safe Zone damage every 5 seconds
-          if (nt > 0 && nt % 5 === 0) {
+          // Safe Zone damage every 15 seconds (slower zone)
+          if (nt > 0 && nt % 15 === 0) {
              setPlayers(prev => {
                 let changed = false;
                 const next = { ...prev };
                 const now = Date.now();
                 Object.keys(next).forEach(uname => {
-                   if (!next[uname].isDead && now - next[uname].lastAction > 20000) {
+                   if (!next[uname].isDead && now - next[uname].lastAction > 40000) { // Increased to 40s inactivity
                       next[uname].hp -= 5;
                       changed = true;
                       if (next[uname].hp <= 0) {
@@ -155,13 +156,13 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                       }
                    }
                 });
-                if (changed && nt % 15 === 0) addLog(`🌩️ منطقة الخطر تضيق! أصحاب الخمول يتلقون ضرراً!`, 'disaster');
+                if (changed && nt % 45 === 0) addLog(`🌩️ منطقة الخطر تضيق! أصحاب الخمول يتلقون ضرراً!`, 'disaster');
                 return changed ? next : prev;
              });
           }
 
-          // Disaster every 30 seconds
-          if (nt > 0 && nt % 30 === 0) {
+          // Disaster every 60 seconds (slower game)
+          if (nt > 0 && nt % 60 === 0) {
              const disaster = DISASTERS[Math.floor(Math.random() * DISASTERS.length)];
              if (soundEnabled) playSound('disaster');
              addLog(`⚠️ كارثة! ${disaster.name} تضرب الساحة! (-${disaster.damage} HP)`, 'disaster');
@@ -219,7 +220,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         
         if (mode === 'lobby' && text === '!join') {
           if (!current[uname]) {
-            current[uname] = { hp: 100, weapon: null, kills: 0, isDead: false, attackCooldowns: {}, lastAction: Date.now(), lastHeal: 0 };
+            current[uname] = { hp: 100, weapon: null, kills: 0, isDead: false, attackCooldowns: {}, lastAction: Date.now(), lastHeal: 0, lastLoot: 0 };
             if (soundEnabled) playSound('join');
           }
         } else if (mode === 'playing') {
@@ -247,12 +248,21 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
           }
 
           if (text === '!loot') {
-             current[uname].lastAction = Date.now();
+             const now = Date.now();
+             if (now - (p.lastLoot || 0) < 10000) {
+                 return; // 10s cooldown
+             }
+             
+             current[uname].lastAction = now;
+             current[uname].lastLoot = now;
+             
              if (Math.random() > 0.3 || !p.weapon) {
                 const w = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
-                current[uname] = { ...p, weapon: w };
+                current[uname] = { ...current[uname], weapon: w };
                 addLog(`🎒 ${uname} وجد ${w.name} ${w.emoji}`, 'loot');
                 if (soundEnabled) playSound('loot');
+             } else {
+                addLog(`🕸️ ${uname} بحث ولم يجد شيئاً...`, 'loot');
              }
           } else if (text.startsWith('!attack ')) {
              const target = text.replace('!attack ', '').replace('@', '').trim();
@@ -352,6 +362,19 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
               <div className="text-2xl font-bold text-white mb-6">
                 اللاعبون المنضمون: <span className="text-orange-500">{Object.keys(players).length}</span>
+              </div>
+
+              <div className="w-full max-w-4xl bg-black/60 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
+                 {Object.keys(players).length === 0 ? (
+                    <span className="text-white/30 italic">بانتظار انضمام المحاربين...</span>
+                 ) : (
+                    Object.keys(players).map(p => (
+                       <div key={p} className="bg-orange-500/10 border border-orange-500/30 px-3 py-1 rounded-lg text-white/90 text-sm font-bold flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                          {p}
+                       </div>
+                    ))
+                 )}
               </div>
 
               <div className="flex gap-4 z-30 relative">

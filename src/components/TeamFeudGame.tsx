@@ -360,9 +360,93 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
               </div>
             </motion.div>
           )}
+
+          {state.status === 'results' && (
+            <motion.div key="results" className="w-full flex flex-col items-center gap-8 max-w-4xl mx-auto text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+              <div className="bg-black/40 border-2 border-brand-gold/20 p-8 rounded-[40px] shadow-[0_0_50px_rgba(212,175,55,0.2)] w-full">
+                <Trophy className="w-24 h-24 text-brand-gold mx-auto mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
+                <h2 className="text-4xl font-black text-white mb-6">نتائج الجولة</h2>
+                
+                <div className="flex justify-center gap-12 mb-8">
+                  <div className="text-center p-6 bg-brand-gold/10 rounded-3xl border border-brand-gold/30 min-w-[200px]">
+                    <h3 className="text-2xl font-black text-brand-gold mb-2">الذهبي</h3>
+                    <p className="text-5xl font-black text-white">{state.data.scores.gold}</p>
+                  </div>
+                  <div className="text-center p-6 bg-white/5 rounded-3xl border border-white/20 min-w-[200px]">
+                    <h3 className="text-2xl font-black text-white mb-2">الأسود</h3>
+                    <p className="text-5xl font-black text-white">{state.data.scores.black}</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4 mb-8">
+                  <h3 className="text-xl font-bold text-brand-gold/60">الإجابات الصحيحة</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {state.data.answers.map((ans, i) => (
+                      <div key={i} className="bg-black/40 p-4 rounded-xl border border-brand-gold/10 flex justify-between px-6">
+                        <span className="font-bold text-white">{ans.text}</span>
+                        <span className="font-bold text-brand-gold">{ans.points}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-4 justify-center">
+                  <button onClick={startGame} className="bg-brand-gold hover:bg-brand-gold-light text-black font-black px-8 py-4 rounded-2xl text-xl transition-all shadow-lg flex items-center gap-2">
+                    <Swords className="w-6 h-6" />
+                    جولة جديدة
+                  </button>
+                  <button onClick={resetGame} className="bg-zinc-700 hover:bg-zinc-600 text-white font-bold px-8 py-4 rounded-2xl text-xl transition-all">
+                    إنهاء اللعبة
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </div>
+
+      <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col z-10 shrink-0">
+        <div className="p-4 border-b border-zinc-800">
+          <h3 className="text-brand-gold font-bold flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            الفرق ({state.players.length})
+          </h3>
+        </div>
+        <div className="flex-1 overflow-y-auto p-2 space-y-4">
+          {/* Gold Team */}
+          <div>
+            <h4 className="text-brand-gold text-sm font-bold mb-2 flex justify-between px-2">
+              الفريق الذهبي
+              <span className="bg-brand-gold/20 px-2 rounded text-xs">{state.players.filter(p => p.team === 'gold').length}</span>
+            </h4>
+            <div className="space-y-1">
+              {state.players.filter(p => p.team === 'gold').map(p => (
+                <div key={p.id} className="bg-brand-gold/5 p-2 rounded border border-brand-gold/10 flex items-center gap-2 text-sm">
+                   {state.data.leaders.gold === p.id && <Crown className="w-3 h-3 text-brand-gold" />}
+                   <span className="text-zinc-200 truncate">{p.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Black Team */}
+          <div>
+            <h4 className="text-zinc-400 text-sm font-bold mb-2 flex justify-between px-2">
+              الفريق الأسود
+              <span className="bg-zinc-800 px-2 rounded text-xs">{state.players.filter(p => p.team === 'black').length}</span>
+            </h4>
+            <div className="space-y-1">
+              {state.players.filter(p => p.team === 'black').map(p => (
+                <div key={p.id} className="bg-zinc-900 p-2 rounded border border-zinc-800 flex items-center gap-2 text-sm">
+                   {state.data.leaders.black === p.id && <Crown className="w-3 h-3 text-zinc-400" />}
+                   <span className="text-zinc-400 truncate">{p.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
     {/* Sidebar */}
       <ChatSidebar 

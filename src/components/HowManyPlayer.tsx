@@ -146,7 +146,7 @@ export const HowManyPlayer: React.FC = () => {
       </div>
 
       {/* Game Content */}
-      <div className="flex-1 p-6 flex flex-col items-center justify-center">
+      <div className="flex-1 p-6 flex flex-col items-center justify-center overflow-y-auto min-h-0 w-full">
         <AnimatePresence mode="wait">
           {state.status === 'waiting' && (
             <motion.div key="waiting" className="text-center space-y-4">
