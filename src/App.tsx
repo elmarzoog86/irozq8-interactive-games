@@ -221,7 +221,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       description: 'لعبة كلاسيكية بلمسة تفاعلية! تنافس مع الدردشة للوصول للقمة، واحذر من الثعابين!',
       tutorial: 'اكتب !join للانضمام، وعندما يأتي دورك اكتب !roll لرمي النرد.',
       image: '/snakesandladder.png',
-      status: 'active',
+      status: 'testing',
       type: 'puzzles',
       color: 'green'
     },
