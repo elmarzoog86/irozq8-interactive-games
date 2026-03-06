@@ -1095,6 +1095,7 @@ function MainApp() {
           <span className="text-brand-gold/60 font-bold">iSari9</span>
           <span>•</span>
           <span className="text-brand-gold/60 font-bold">iMythQ8</span>
+          <span className="text-brand-gold/40 text-xs ml-2">(v1.1)</span>
         </p>
       </div>
     </div>
