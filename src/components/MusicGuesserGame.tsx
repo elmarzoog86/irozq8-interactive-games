@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useTwitchAuth } from '../contexts/TwitchAuthContext';
-import Plyr, { APITypes } from 'plyr-react';
-import 'plyr-react/plyr.css';
+import ReactPlayer from 'react-player';
 import { Music, Play, Volume2, SkipForward, Trophy, Users, X, Check, Shield, Zap, Search, ArrowLeft, RotateCcw } from 'lucide-react';
 
 
@@ -219,33 +218,24 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
         </div>
       )}
 
-      {/* Hidden Player - Switched to Plyr-react for better stability */}
+      {/* Hidden Player - Switched to ReactPlayer */}
       {currentSong?.id && (
-        <div style={{ display: 'none' }}>
-           <Plyr
+        <div style={{ position: 'absolute', top: '-9999px', left: '-9999px' }}>
+           <ReactPlayer
               ref={playerRef}
-              source={{
-                  type: 'video',
-                  sources: [
-                      {
-                          src: currentSong.id,
-                          provider: 'youtube',
-                      },
-                  ],
+              url={`https://www.youtube.com/watch?v=${currentSong.id}`}
+              playing={isPlaying}
+              volume={volume / 100}
+              width="0"
+              height="0"
+              config={{
+                youtube: {
+                   start: clipSettings.start,
+                   rel: 0,
+                   iv_load_policy: 3
+                }
               }}
-              options={{
-                  controls: [],
-                  autoplay: isPlaying,
-                  volume: volume / 100,
-                  youtube: {
-                       noCookie: true,
-                       rel: 0,
-                       showinfo: 0,
-                       iv_load_policy: 3,
-                       modestbranding: 1,
-                       start: clipSettings.start || 0
-                  }
-              }}
+              onEnded={() => setIsPlaying(false)}
            />
         </div>
       )}
