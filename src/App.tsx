@@ -23,8 +23,22 @@ import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import ComingSoon from './ComingSoon';
+
+// ==========================================
+// SETTINGS
+// ==========================================
+// Set this to true to show the "Coming Soon" page for the entire site
+// Set to false to show the main application
+const ENABLE_COMING_SOON_PAGE = false;
 
   export default function App() {
+    // If maintenance mode is enabled, show the Coming Soon page
+    // You can also add logic here to allow certain routes or query params to bypass it
+    if (ENABLE_COMING_SOON_PAGE) {
+      return <ComingSoon />;
+    }
+
     return (
       <Routes>
         <Route path="/howmany/:roomId" element={<HowManyPlayer />} />
