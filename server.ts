@@ -167,7 +167,14 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("howmany_state", state);
   });
 
-  socket.on("start_howmany", (roomId) => {
+  socket.on("force_end_round_howmany", (roomId) => {
+    const state = howManyRooms.get(roomId);
+    if (!state || state.status !== 'naming') return;
+    state.timer = 0;
+    // The interval will pick this up and transition to review
+  });
+
+  socket.on("next_round_howmany", (roomId) => {
     const state = howManyRooms.get(roomId);
     if (!state || state.players.length < 2) return;
     state.status = 'matchmaking';

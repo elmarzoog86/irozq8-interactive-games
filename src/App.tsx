@@ -171,7 +171,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
     description: 'مهمة تعاونية كبرى. خطط مع الدردشة لتجاوز أنظمة الأمن وفتح الخزنة والهروب بالكنز قبل وصول الشرطة.',
     tutorial: 'تعاون مع الدردشة عبر كتابة الأوامر لتجاوز العقبات. الدقة والتوقيت هما مفتاح النجاح.',
     image: '/bankrobbery.png',
-    status: 'testing',
+    status: 'coming_soon',
     type: 'strategy',
     color: 'yellow'
   },
@@ -191,7 +191,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       description: 'لعبة بقاء على قيد الحياة. اجمع الأسلحة واقضِ على اللاعبين الآخرين في الشات وتفادى الكوارث الطبيعية!',
       tutorial: 'اكتب !join للانضمام، !loot للبحث عن الأسلحة، واكتب !attack @username للهجوم.',
       image: '/battleroyal.png',
-      status: 'testing',
+      status: 'coming_soon',
       type: 'strategy',
       color: 'yellow'
     },
@@ -201,7 +201,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       description: 'اختر عصابتك، وهاجم العصابات الأخرى أو عالج فريقك في معركة طاحنة في الشوارع.',
       tutorial: 'اكتب !join [لون] للانضمام لعصابة، !shoot للهجوم الموجع، أو !heal لعلاج فريقك.',
       image: '/turfwars.png',
-      status: 'testing',
+      status: 'coming_soon',
       type: 'strategy',
       color: 'blue'
     },
@@ -221,7 +221,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
       description: 'لعبة كلاسيكية بلمسة تفاعلية! تنافس مع الدردشة للوصول للقمة، واحذر من الثعابين!',
       tutorial: 'اكتب !join للانضمام، وعندما يأتي دورك اكتب !roll لرمي النرد.',
       image: '/snakesandladder.png',
-      status: 'testing',
+      status: 'coming_soon',
       type: 'puzzles',
       color: 'green'
     },

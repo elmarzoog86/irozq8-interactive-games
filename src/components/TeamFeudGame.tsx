@@ -204,7 +204,11 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <span className="text-3xl font-black text-white">
                     {state.players.find(p => p.id === state.data.leaders?.gold)?.name || 'الذهبي'}
                   </span>
-                  {state.data.buzzerActive && (
+                  {state.data.buzzerActive && 
+                   (
+                    state.data.leaders?.gold === socket?.id || 
+                    (!state.data.leaders?.gold && (state.data.leaders?.black !== socket?.id))
+                   ) && (
                     <button 
                       onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'gold' } })}
                       className="mt-4 px-12 py-6 rounded-full border-8 font-black text-3xl shadow-[0_0_50px_rgba(255,0,0,0.6)] active:scale-95 transition-all bg-red-600 hover:bg-red-500 border-red-800 text-white"
@@ -230,7 +234,11 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <span className="text-3xl font-black text-white">
                     {state.players.find(p => p.id === state.data.leaders?.black)?.name || 'الأسود'}
                   </span>
-                  {state.data.buzzerActive && (
+                  {state.data.buzzerActive && 
+                   (
+                    state.data.leaders?.black === socket?.id || 
+                    (!state.data.leaders?.black && (state.data.leaders?.gold !== socket?.id))
+                   ) && (
                     <button 
                       onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'black' } })}
                       className="mt-4 px-12 py-6 rounded-full border-8 font-black text-3xl shadow-[0_0_50px_rgba(255,0,0,0.6)] active:scale-95 transition-all bg-red-600 hover:bg-red-500 border-red-800 text-white"
@@ -423,7 +431,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
             <div className="space-y-1">
               {state.players.filter(p => p.team === 'gold').map(p => (
                 <div key={p.id} className="bg-brand-gold/5 p-2 rounded border border-brand-gold/10 flex items-center gap-2 text-sm">
-                   {state.data.leaders.gold === p.id && <Crown className="w-3 h-3 text-brand-gold" />}
+                   {state.data?.leaders?.gold === p.id && <Crown className="w-3 h-3 text-brand-gold" />}
                    <span className="text-zinc-200 truncate">{p.name}</span>
                 </div>
               ))}
@@ -439,7 +447,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
             <div className="space-y-1">
               {state.players.filter(p => p.team === 'black').map(p => (
                 <div key={p.id} className="bg-zinc-900 p-2 rounded border border-zinc-800 flex items-center gap-2 text-sm">
-                   {state.data.leaders.black === p.id && <Crown className="w-3 h-3 text-zinc-400" />}
+                   {state.data?.leaders?.black === p.id && <Crown className="w-3 h-3 text-zinc-400" />}
                    <span className="text-zinc-400 truncate">{p.name}</span>
                 </div>
               ))}

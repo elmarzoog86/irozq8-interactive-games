@@ -140,6 +140,10 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     socket?.emit('call_liar_howmany', roomId);
   };
 
+  const forceEndRound = () => {
+    socket?.emit('force_end_round_howmany', roomId);
+  };
+
   const nextRound = () => {
     socket?.emit('next_round_howmany', roomId);
   };
@@ -168,6 +172,13 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             <h1 className="text-4xl font-black italic tracking-tighter text-brand-gold uppercase">كم تقدر تسمي؟</h1>
             <div className="flex items-center gap-2 text-xs text-zinc-500 font-mono">
               <Users className="w-3 h-3" /> {state.players.length} لاعبين متصلين
+            </div>
+            <div className="flex flex-wrap gap-2 mt-2 max-w-md">
+              {state.players.map(p => (
+                <span key={p.id} className="text-xs bg-zinc-800 border border-zinc-700 px-2 py-1 rounded text-zinc-400">
+                  {p.name}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -338,6 +349,51 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                   </div>
               </div>
 
+               {/* Streamer Controls for Gambling Phase */}
+               {socket && state.turn === socket.id && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-8 bg-black/80 backdrop-blur-md p-6 rounded-[30px] border border-brand-gold/30 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-20"
+                >
+                  <h3 className="text-2xl font-black text-brand-gold mb-6 italic">دورك للتحدي!</h3>
+                  
+                  <div className="flex flex-wrap gap-8 justify-center items-end">
+                    <div className="flex flex-col gap-3">
+                       <label className="text-zinc-400 text-sm font-bold">ارفع العدد إلى</label>
+                       <div className="flex gap-3">
+                          <input 
+                            type="number"
+                            min={state.bid + 1}
+                            value={bidInput || state.bid + 1}
+                            onChange={(e) => setBidInput(parseInt(e.target.value) || 0)}
+                            className="w-32 bg-zinc-900 border-2 border-brand-gold/20 p-4 rounded-xl text-center text-2xl font-black text-white focus:border-brand-gold outline-none transition-all"
+                          />
+                          <button 
+                            onClick={placeBid}
+                            disabled={bidInput <= state.bid}
+                            className="bg-brand-gold disabled:opacity-50 disabled:cursor-not-allowed text-black font-black px-8 py-4 rounded-xl text-xl hover:bg-brand-gold-light transition-colors shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                          >
+                             تأكيد
+                          </button>
+                       </div>
+                    </div>
+
+                    {state.bid > 0 && (
+                      <div className="flex flex-col gap-3 border-r-2 border-zinc-800 pr-8">
+                        <label className="text-zinc-400 text-sm font-bold">أو</label>
+                        <button 
+                          onClick={callLiar}
+                          className="bg-red-600 text-white font-black px-10 py-4 rounded-xl text-xl hover:bg-red-500 transition-all shadow-[0_0_30px_rgba(220,38,38,0.3)] hover:scale-105"
+                        >
+                          تحداه! (Liar)
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+
               <div className="text-sm text-zinc-500 mt-4 max-w-md mx-auto">
                 يقوم اللاعبون بالمزايدة على عدد الإجابات التي يمكنهم ذكرها في الفئة المختارة.
               </div>
@@ -379,7 +435,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 </AnimatePresence>
 
                 {/* Streamer Input Overlay */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4 z-20">
                   <form onSubmit={submitStreamerAnswer} className="relative">
                     <input 
                       type="text"
@@ -473,6 +529,40 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Persistent Matchup Info and Controls */}
+        {state.currentMatch && state.status !== 'waiting' && state.status !== 'game_over' && (
+          <div className="absolute top-24 left-8 z-50 flex flex-col items-start gap-4 pointer-events-auto">
+            {/* Matchup Card */}
+            <div className="bg-black/90 backdrop-blur-md border border-brand-gold/20 p-4 rounded-2xl flex items-center gap-6 shadow-2xl skew-x-[-10deg] hover:skew-x-0 transition-transform duration-300 group">
+                <div className="flex flex-col items-center skew-x-[10deg] group-hover:skew-x-0 transition-transform">
+                  <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">المنافس 1</span>
+                  <div className={`text-xl font-black ${state.currentMatch[0] === state.turn ? 'text-brand-gold animate-pulse' : 'text-white'}`}>
+                      {state.players.find(p => p.id === state.currentMatch?.[0])?.name}
+                  </div>
+                </div>
+                
+                <div className="h-8 w-[1px] bg-zinc-700 skew-x-[10deg] group-hover:skew-x-0" />
+
+                <div className="flex flex-col items-center skew-x-[10deg] group-hover:skew-x-0 transition-transform">
+                  <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">المنافس 2</span>
+                  <div className={`text-xl font-black ${state.currentMatch[1] === state.turn ? 'text-brand-gold animate-pulse' : 'text-white'}`}>
+                      {state.players.find(p => p.id === state.currentMatch?.[1])?.name}
+                  </div>
+                </div>
+            </div>
+
+            {/* Streamer Force End Round Button */}
+            {state.status === 'naming' && (
+              <button 
+                onClick={forceEndRound}
+                className="bg-red-900/80 hover:bg-red-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all border border-red-500/30 flex items-center gap-2 shadow-lg backdrop-blur-sm"
+              >
+                <Timer className="w-5 h-5" /> إنهاء الجولة فوراً
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
        {/* Active Players Sidebar */}
@@ -507,8 +597,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           )}
         </div>
       </div>
-    </div>
-
+      
       <div className="w-[350px] flex flex-col gap-4 p-4 pl-0 border-r border-brand-gold/10">
         <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl">
           <TwitchChat
@@ -520,5 +609,6 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
         </div>
       </div>
     </div>
+  </div>
   );
 };

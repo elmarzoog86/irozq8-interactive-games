@@ -79,7 +79,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
   const [deadPlayers, setDeadPlayers] = useState<string[]>([]);
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(7);
+  const [timeLeft, setTimeLeft] = useState(20);
   const [bullets, setBullets] = useState<number[]>([Math.floor(Math.random() * 6)]);
   const [currentChamber, setCurrentChamber] = useState(0);
   const [screenShake, setScreenShake] = useState(false);
@@ -98,7 +98,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
     setMode('playing');
     setDeadPlayers([]);
     setActivePlayerIndex(0);
-    setTimeLeft(7);
+    setTimeLeft(20);
     spinCylinder();
     processedMessageIds.current.clear();
   };
@@ -132,7 +132,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
         } else {
            const nextIdx = Math.floor(Math.random() * next.length);
            setActivePlayerIndex(nextIdx);
-           setTimeLeft(7);
+           setTimeLeft(20);
            setBullets([Math.floor(Math.random() * 6)]);
            setCurrentChamber(0);
            if (soundEnabled) playSound('spin');
@@ -154,7 +154,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
            if (t <= 1) {
               const cp = players[activePlayerIndex];
               eliminatePlayer(cp, 'تأخر في الإطلاق!');
-              return 7;
+              return 20;
            }
            if (soundEnabled && t <= 3) playSound('heartbeat');
            return t - 1;
@@ -203,15 +203,15 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
                } else {
                   setCurrentChamber(c => c + 1);
                   surviveTurn();
-                  setTimeLeft(7); // give time to pass
+                  setTimeLeft(20); // give time to pass
                }
             } else if (text === '!spin') {
                spinCylinder();
-               setTimeLeft(7);
+               setTimeLeft(20);
             } else if (text === '!skip') {
                const nextIdx = (activePlayerIndex + 1) % players.length;
                setActivePlayerIndex(nextIdx);
-               setTimeLeft(7);
+               setTimeLeft(20);
                spinCylinder(true);
                setMessage(`جبان! ${uname} هرب! الدور على ${players[nextIdx]}، وتم إضافة رصاصة!`);
             } else if (text.startsWith('!pass ')) {
@@ -221,7 +221,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
                   if (target && target !== uname && players.includes(target)) {
                      const targetIdx = players.indexOf(target);
                      setActivePlayerIndex(targetIdx);
-                     setTimeLeft(7);
+                     setTimeLeft(20);
                      if (soundEnabled) playSound('lobby_click');
                      setMessage(`تم تمرير المسدس إلى ${target}! اكتب !pull`);
                   }
