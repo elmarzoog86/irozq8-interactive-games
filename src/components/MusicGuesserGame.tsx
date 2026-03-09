@@ -275,6 +275,33 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
 
       {(gameState === 'playing' || gameState === 'revealed') && currentSong && (
         <div className="w-full max-w-6xl flex flex-col h-full z-10 relative">
+            <div className="absolute top-0 left-0 w-1 h-1 overflow-hidden opacity-0 pointer-events-none -z-10">
+                <YouTube
+                  key={currentSong.id}
+                  videoId={currentSong.id}
+                  opts={{
+                    height: '300',
+                    width: '300',
+                    playerVars: {
+                        autoplay: isPlaying ? 1 : 0,
+                        start: clipSettings.start,
+                        controls: 0,
+                        modestbranding: 1,
+                        rel: 0,
+                        showinfo: 0,
+                        iv_load_policy: 3
+                    }
+                  }}
+                  onReady={(e) => {
+                    playerRef.current = e.target;
+                    e.target.unMute();
+                    e.target.setVolume(volume);
+                  }}
+                  onStateChange={(e) => {
+                    if (e.data === 0) setIsPlaying(false); // ended
+                  }}
+                />
+            </div>
             {/* Header / Controls */}
             <div className="flex justify-between items-center bg-black/70 border border-brand-gold/20 p-6 rounded-2xl mb-8  shadow-[0_0_30px_rgba(212,175,55,0.05)]">
                 <div className="flex items-center gap-6 w-1/3">
@@ -397,32 +424,6 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-brand-gold rounded-full flex items-center justify-center shadow-inner overflow-hidden">
                                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-gold via-yellow-600 to-yellow-800 opacity-80"></div>
                                 <Music size={40} className="text-black relative z-10" />
-                                
-                                <div className="absolute w-[300px] h-[300px] opacity-[0.001] pointer-events-none overflow-hidden origin-center">
-                                   <YouTube
-                                      videoId={currentSong.id}
-                                      opts={{
-                                        height: '300',
-                                        width: '300',
-                                        playerVars: {
-                                            autoplay: isPlaying ? 1 : 0,
-                                            start: clipSettings.start,
-                                            controls: 0,
-                                            modestbranding: 1,
-                                            rel: 0,
-                                            showinfo: 0,
-                                            iv_load_policy: 3
-                                        }
-                                      }}
-                                      onReady={(e) => {
-                                        playerRef.current = e.target;
-                                        e.target.setVolume(volume);
-                                      }}
-                                      onStateChange={(e) => {
-                                        if (e.data === 0) setIsPlaying(false); // ended
-                                      }}
-                                   />
-                                </div>
                             </div>
                         </div>
                     </div>
