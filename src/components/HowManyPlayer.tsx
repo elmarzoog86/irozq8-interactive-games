@@ -38,6 +38,12 @@ export const HowManyPlayer: React.FC = () => {
   const [bidInput, setBidInput] = useState(0);
 
   useEffect(() => {
+    if (state?.bid !== undefined) {
+      setBidInput(state.bid + 1);
+    }
+  }, [state?.bid]);
+
+  useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
 

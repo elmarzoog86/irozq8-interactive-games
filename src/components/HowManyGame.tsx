@@ -102,11 +102,11 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     };
   }, [roomId]);
 
-  // Listen to Twitch chat for !join (simulated via local socket if needed, but here we assume the streamer view handles it)
-  // In a real scenario, the streamer's useTwitchChat hook in App.tsx would pass messages.
-  // For this implementation, we'll assume the streamer view can emit twitch_join when it sees !join.
-  // Since we don't have the messages prop here, we'll rely on the server handling it if we had a twitch integration.
-  // Let's assume the streamer manually adds players or we use a mock for now.
+  useEffect(() => {
+    if (state?.bid !== undefined) {
+      setBidInput(state.bid + 1);
+    }
+  }, [state?.bid]);
 
   const copyLink = () => {
     navigator.clipboard.writeText(playerLink);
@@ -128,9 +128,8 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
   };
 
   const placeBid = () => {
-    if (bidInput > 0) {
+    if (bidInput > (state?.bid || 0)) {
       socket?.emit('place_bid', { roomId, amount: bidInput });
-      setBidInput(0);
     }
   };
 
@@ -370,7 +369,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                           <input 
                             type="number"
                             min={state.bid + 1}
-                            value={bidInput || state.bid + 1}
+                            value={bidInput}
                             onChange={(e) => setBidInput(parseInt(e.target.value) || 0)}
                             className="w-32 bg-zinc-900 border-2 border-brand-gold/20 p-4 rounded-xl text-center text-2xl font-black text-white focus:border-brand-gold outline-none transition-all"
                           />
