@@ -166,9 +166,9 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     <div className="flex h-full w-full gap-6 p-6 font-arabic text-white" dir="rtl">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
-        <div className="flex-1 relative p-8 overflow-y-auto">
+        <div className="flex-1 relative p-8 flex flex-col overflow-y-auto">
           {/* Header */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-start mb-8 shrink-0">
           <div className="space-y-1">
             <h1 className="text-4xl font-black italic tracking-tighter text-brand-gold uppercase">كم تقدر تسمي؟</h1>
             <div className="flex items-center gap-2 text-xs text-zinc-500 font-mono">
@@ -209,7 +209,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 bg-brand-gold/10 border border-brand-gold/30 p-4 rounded-2xl flex items-center justify-between"
+            className="mb-8 shrink-0 bg-brand-gold/10 border border-brand-gold/30 p-4 rounded-2xl flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
               <div className="bg-brand-gold p-2 rounded-xl">
@@ -227,7 +227,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           </motion.div>
         )}
 
-        <div className="min-h-[calc(100%-120px)] flex flex-col items-center justify-center">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-0">
         <AnimatePresence mode="wait">
           {state.status === 'waiting' && (
             <motion.div 
