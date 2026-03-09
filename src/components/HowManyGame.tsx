@@ -78,9 +78,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     messages.forEach(msg => {
       if (msg.text && !processedMessages.current.has(msg.id)) {
         processedMessages.current.add(msg.id);
-        if (msg.text.trim().toLowerCase() === '!join') {
-          socket.emit('twitch_join', { roomId, username: msg.user });
-        }
+        // We removed !join from here based on the requirement
       }
     });
   }, [messages, socket, roomId]);
@@ -89,7 +87,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     const newSocket = io();
     setSocket(newSocket);
 
-    newSocket.emit('join_howmany_lobby', { roomId, name: 'Streamer' });
+    newSocket.emit('host_howmany_lobby', { roomId });
 
     newSocket.on('howmany_state', (newState: GameState) => {
       setState(newState);
@@ -217,12 +215,8 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               </div>
               <div>
                 <h3 className="font-black text-lg">انضم الآن للعب!</h3>
-                <p className="text-brand-gold/60 text-sm">اكتب <span className="font-black text-white">!join</span> في الدردشة للانضمام للمنافسة</p>
+                <p className="text-brand-gold/60 text-sm">استخدم الرابط أعلاه للانضمام للمنافسة</p>
               </div>
-            </div>
-            <div className="flex items-center gap-2 text-zinc-400 text-xs">
-              <Info className="w-4 h-4" />
-              <span>أو استخدم الرابط أعلاه للانضمام</span>
             </div>
           </motion.div>
         )}
@@ -241,7 +235,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <Users className="w-20 h-20 text-brand-gold mx-auto mb-6" />
                 <h2 className="text-5xl font-black mb-4 italic">ردهة الانتظار</h2>
                 <p className="text-zinc-400 text-xl max-w-md mx-auto">
-                  اكتب <span className="text-brand-gold font-bold">!join</span> في الشات للانضمام أو استخدم الرابط أعلاه.
+                  انسخ الرابط في الأعلى وشاركه مع اللاعبين للانضمام للعبة
                 </p>
                 
                 <div className="mt-12 grid grid-cols-4 gap-4 max-w-2xl mx-auto">
@@ -261,13 +255,23 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 </div>
               </div>
 
-              <button 
-                onClick={startGame}
-                disabled={state.players.length < 2}
-                className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-black px-16 py-5 rounded-2xl text-2xl transition-all uppercase italic tracking-tighter shadow-[0_0_30px_rgba(212,175,55,0.3)]"
-              >
-                ابدأ اللعبة
-              </button>
+              <div className="flex gap-4 justify-center">
+                {!state.players.find(p => p.id === socket?.id) && (
+                  <button 
+                    onClick={() => socket?.emit('join_howmany_lobby', { roomId, name: 'الستريمر' })}
+                    className="bg-zinc-800 hover:bg-zinc-700 text-white font-black px-8 py-5 rounded-2xl text-2xl transition-all uppercase italic"
+                  >
+                    انضم كلاعب
+                  </button>
+                )}
+                <button 
+                  onClick={startGame}
+                  disabled={state.players.length < 2}
+                  className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-black px-16 py-5 rounded-2xl text-2xl transition-all uppercase italic tracking-tighter shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+                >
+                  ابدأ اللعبة
+                </button>
+              </div>
             </motion.div>
           )}
 

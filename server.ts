@@ -120,6 +120,28 @@ io.on("connection", (socket) => {
 
 
   // How Many Can You Name Events
+  socket.on("host_howmany_lobby", ({ roomId }) => {
+    socket.join(roomId);
+    if (!howManyRooms.has(roomId)) {
+      howManyRooms.set(roomId, {
+        players: [],
+        status: 'waiting',
+        currentMatch: null,
+        categories: [],
+        selectedCategory: null,
+        gamblerId: null,
+        targetCount: 0,
+        currentCount: 0,
+        timer: 30,
+        answers: [],
+        winner: null,
+        turn: null,
+        bid: 0
+      });
+    }
+    io.to(roomId).emit("howmany_state", howManyRooms.get(roomId));
+  });
+
   socket.on("join_howmany_lobby", ({ roomId, name }) => {
     socket.join(roomId);
     if (!howManyRooms.has(roomId)) {
