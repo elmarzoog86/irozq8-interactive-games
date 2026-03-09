@@ -188,8 +188,11 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
     if (gameState === 'playing' && isPlaying && timeLeft > 0) {
       const timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
       return () => clearInterval(timer);
-    } else if (timeLeft === 0 && gameState === 'playing') {
+    } else if (timeLeft === 0 && gameState === 'playing' && isPlaying) {
       setIsPlaying(false);
+      if (playerRef.current && typeof playerRef.current.pauseVideo === 'function') {
+        playerRef.current.pauseVideo();
+      }
     }
   }, [gameState, isPlaying, timeLeft]);
 
