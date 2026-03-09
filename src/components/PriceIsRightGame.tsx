@@ -21,13 +21,13 @@ interface Item {
   imageUrl: string;
 }
 
-const FALLBACK_IMAGE_URL = 'https://picsum.photos/seed/price-game/800/800';
+const FALLBACK_IMAGE_URL = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iODAwIiB2aWV3Qm94PSIwIDAgODAwIDgwMCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI4MDAiIGZpbGw9IiMzMzMiLz48dGV4dCB4PSI0MDAiIHk9IjQwMCIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGFsaWdubWVudC1iYXNlbGluZT0ibWlkZGxlIj4ocGljdHVyZSB1bmF2YWlsYWJsZSk8L3RleHQ+PC9zdmc+';
 
 const RANDOM_ITEMS: Item[] = [
   { name: 'PlayStation 5', nameAr: 'بلايستيشن 5', price: 499, imageUrl: 'https://png.pngtree.com/png-vector/20200616/ourmid/pngtree-ps-5-or-playstation-5-png-set-with-game-controller-png-image_2256908.jpg' },
   { name: 'iPhone 15 Pro', nameAr: 'آيفون 15 برو', price: 999, imageUrl: 'https://www.mockupcloud.com/uploads/thumbs/images/2024/01/26/08_25-1170x780.jpg' },
   { name: 'Mechanical Keyboard', nameAr: 'لوحة مفاتيح ميكانيكية', price: 150, imageUrl: 'https://www.keychronsg.com/cdn/shop/files/Keychron-V1-QMK-VIA-custom-mechanical-keyboard-shell-white-for-Mac-Window-Linux-fully-assembled-knob-Keychron-K-Pro-brown.jpg?v=1723448903&width=1214' },
-  { name: 'Gaming Chair', nameAr: 'كرسي ألعاب', price: 350, imageUrl: 'https://media.diy.com/is/image/KingfisherDigital/gtplayer-gaming-chair-with-footrest-computer-chairs-for-adults-ergonomic-lumbar-support-height-adjustable-pu-pc-chair-white~6978281581195_02c_MP?$MOB_PREVhttps://images.unsplash.com/photo-1598550476439-6847785fce66?w=800&q=80$width=284&$height=284' },
+  { name: 'Gaming Chair', nameAr: 'كرسي ألعاب', price: 350, imageUrl: 'https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/tc100-relax/tc100-relax-leather-black/images/TC100_RELAXED_PL_BLACK_01.png' },
   { name: 'AirPods Pro', nameAr: 'إيربودز برو', price: 249, imageUrl: 'https://mightyskins.com/cdn/shop/products/APAIPO_323468a1-13bd-4189-9191-5f3c1630a8a4.png?v=1553893180' },
   { name: 'Nintendo Switch OLED', nameAr: 'نينتندو سويتش OLED', price: 349, imageUrl: 'https://m.media-amazon.com/images/I/51zjE7FRXmL.jpg' },
   { name: 'Sony WH-1000XM5', nameAr: 'سوني WH-1000XM5', price: 399, imageUrl: 'https://store.pcimage.com.my/image/shoppcimage/image/cache/data/all_product_images/product-12412/TbG11nbp1727056840-420x420.jpg' },
@@ -91,7 +91,7 @@ const RANDOM_ITEMS: Item[] = [
   { name: 'Big Green Egg (Large)', nameAr: 'شواية بيغ غرين إيغ (كبير)', price: 1200, imageUrl: 'https://coasthomepatio.com/wpcoasthomepatio/wp-content/uploads/big-green-egg-grilling-tools-prenium-tongs-01-300x300.jpg' },
   { name: 'Solo Stove Bonfire 2.0', nameAr: 'موقد سولو ستوف بونفاير 2.0', price: 299, imageUrl: 'https://elshubbo-cdn.sirv.com/bbqworld/images/SSBONSASH_4vlarge.jpg?profile=1200' },
   { name: 'Garmin fenix 7X', nameAr: 'جارمين فينيكس 7X', price: 899, imageUrl: 'https://www.zdnet.com/a/img/resize/605e5e821057a70bbdfbc1f1c7951268752799be/2023/06/13/ecb8abc1-b284-435a-b97e-255bd9844caa/img-4169.jpg?auto=webp&width=1280' },
-  { name: 'Arc\'teryx Alpha SV', nameAr: 'أركتيركس ألفا SV', price: 900, imageUrl: 'https://images.unsplash.com/photo-1544006659-f0b21f04cb1d?w=800&q=80' },
+  { name: 'Arc\'teryx Alpha SV', nameAr: 'أركتيركس ألفا SV', price: 900, imageUrl: 'https://cdn-fsly.yottaa.net/5d669b394f1bbf7cb77826ae/www.moosejaw.com/v~4b.bb1/medium/10574044x1121088_zm.jpg' },
   { name: 'Osprey Aether 65', nameAr: 'حقيبة أوسبري إيذر 65', price: 320, imageUrl: 'https://sg.boardinggate.com.sg/cdn/shop/files/Bagsmart-Blast-Quick-Access-Carry-On-Travel-Backpack-Standard-28L-Arona-1.jpg?v=1740115102' },
   { name: 'Ferrari SF90 Stradale', nameAr: 'فيراري SF90 سترادالي', price: 524000, imageUrl: 'https://vehicle-images.carscommerce.inc/115c-110007362/ZFF96NMA9R0303265/5a6c88a7464e9cdc907f9f2316b41344.jpg' },
   { name: 'Lamborghini Aventador', nameAr: 'لامبورغيني أفينتادور', price: 500000, imageUrl: 'https://hips.hearstapps.com/mtg-prod/65b79ab9271e470008b698e1/260857454.jpg?w=768&width=768&q=75&format=webp' },
@@ -247,13 +247,16 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
     setStatus('revealed');
     
     const allGuesses = { ...guesses };
-    // Streamer guess is not added to allGuesses for winner calculation as per request
+    if (streamerGuess && !isNaN(parseInt(streamerGuess))) {
+      allGuesses['أنت (الستريمر)'] = parseInt(streamerGuess);
+    }
     
       // Find closest absolute guess
       let bestGuess: { username: string; guess: number; diff: number } | null = null;
 
       Object.entries(allGuesses).forEach(([username, guess]) => {
-        const diff = Math.abs(item.price - guess);
+        if (guess > item.price) return;
+          const diff = item.price - guess;
         if (!bestGuess || diff < bestGuess.diff) {
           bestGuess = { username, guess, diff };
         }
