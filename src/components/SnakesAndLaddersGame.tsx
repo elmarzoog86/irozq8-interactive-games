@@ -540,7 +540,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
   };  return (
     <div className="flex h-full w-full max-w-[1600px] mx-auto gap-6 p-6 font-arabic" dir="rtl">
         {/* Main Board Area */}
-        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col relative">
+        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
            {/* Header */}
            <div className="h-20 border-b border-brand-gold/10 flex items-center justify-between px-8 bg-black/20">
               <div className="flex items-center gap-4">
@@ -565,7 +565,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
               {/* Controls & Status - First in DOM (Right side in RTL) */}
               <div className="w-full lg:w-80 flex flex-col gap-4 z-20 h-full overflow-y-auto custom-scrollbar pb-2 min-w-[300px]">
                  {phase === 'lobby' && (
-                    <div className="flex flex-col items-center justify-center text-center bg-black/40 p-6 rounded-3xl border border-white/5 backdrop-blur-sm shadow-xl">
+                    <div className="flex flex-col items-center justify-center text-center bg-black/70 p-6 rounded-3xl border border-white/5  shadow-xl">
                        <Dice5 className="w-24 h-24 text-brand-gold mb-6 animate-bounce" />
                        <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
                        <p className="text-zinc-400 mb-8">اكتب <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 rounded">!join</span> للانضمام</p>
@@ -599,7 +599,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
 
                  {phase === 'playing' && (
                     <div className="flex flex-col gap-4 h-full">
-                       <div className="bg-black/40 rounded-3xl p-6 border border-brand-gold/20 text-center relative overflow-hidden backdrop-blur-sm shadow-xl flex-shrink-0">
+                       <div className="bg-black/70 rounded-3xl p-6 border border-brand-gold/20 text-center relative overflow-hidden  shadow-xl flex-shrink-0">
                           <div className="absolute top-0 right-0 p-4 opacity-10">
                              <Dice5 className="w-32 h-32" />
                           </div>
@@ -634,7 +634,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                            </button>
 
                            {/* Auto Play Toggle */}
-                            <div className="flex items-center justify-between bg-black/40 p-3 rounded-xl border border-white/10">
+                            <div className="flex items-center justify-between bg-black/70 p-3 rounded-xl border border-white/10">
                                 <span className="text-zinc-400 font-bold text-sm">اللعب التلقائي</span>
                                 <button 
                                     onClick={() => setAutoPlay(!autoPlay)}
@@ -646,11 +646,11 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                        </div>
 
                        {/* Leaderboard */}
-                       <div className="flex-1 bg-black/40 rounded-3xl p-4 border border-white/5 overflow-hidden flex flex-col backdrop-blur-sm shadow-xl min-h-0">
+                       <div className="flex-1 bg-black/70 rounded-3xl p-4 border border-white/5 overflow-hidden flex flex-col  shadow-xl min-h-0">
                           <h3 className="font-bold text-zinc-400 mb-4 px-2">الترتيب</h3>
                           <div className="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-2">
                              {[...players].sort((a,b) => b.position - a.position).map((p, i) => (
-                                <div key={p.username} className={`p-3 rounded-xl flex items-center gap-3 ${p.username === players[currentPlayerIndex]?.username ? 'bg-brand-gold/20 border border-brand-gold/30' : 'bg-black/40 border border-white/5'}`}>
+                                <div key={p.username} className={`p-3 rounded-xl flex items-center gap-3 ${p.username === players[currentPlayerIndex]?.username ? 'bg-brand-gold/20 border border-brand-gold/30' : 'bg-black/70 border border-white/5'}`}>
                                    <div className="flex flex-col items-center min-w-[20px]">
                                        <span className="font-bold text-zinc-500 text-xs">#{i+1}</span>
                                    </div>
@@ -674,7 +674,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                  )}
 
                  {phase === 'game_over' && (
-                    <div className="flex-1 bg-black/40 rounded-3xl p-6 border border-brand-gold/30 flex flex-col items-center justify-center text-center backdrop-blur-sm shadow-xl">
+                    <div className="flex-1 bg-black/70 rounded-3xl p-6 border border-brand-gold/30 flex flex-col items-center justify-center text-center  shadow-xl">
                        <Trophy className="w-24 h-24 text-brand-gold mb-6 animate-bounce" />
                        <h3 className="text-4xl font-black text-white mb-2">الفائز!</h3>
                        <div className="text-2xl font-bold text-brand-gold mb-8">{winners[0]?.username}</div>
@@ -706,7 +706,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
 
         {/* Twitch Chat Sidebar */}
         <div className="w-[400px] flex flex-col gap-4">
-           <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+           <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
            <TwitchChat 
              channelName={channelName} 
              messages={messages} 
@@ -716,7 +716,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
          </div>
          
          {/* Debug/Manual Controls */}
-         <div className="bg-black/60 backdrop-blur-xl rounded-[20px] border border-brand-gold/20 p-4 shadow-xl">
+         <div className="bg-black/80  rounded-[20px] border border-brand-gold/20 p-4 shadow-xl">
             <h4 className="text-brand-gold font-bold mb-2 text-sm">تحكم يدوي (للتجربة)</h4>
             <div className="flex gap-2 mb-2">
                <button 

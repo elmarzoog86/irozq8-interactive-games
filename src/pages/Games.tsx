@@ -44,7 +44,7 @@ export function Games() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 backdrop-blur-md">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => navigate('/')}
@@ -96,7 +96,7 @@ export function Games() {
                 game.status === 'active' 
                   ? 'bg-zinc-900/50 border-yellow-500/30 hover:border-yellow-500 cursor-pointer' 
                   : 'bg-zinc-900/20 border-zinc-800 opacity-60 cursor-not-allowed'
-              } p-6 transition-all duration-300 backdrop-blur-sm overflow-hidden`}
+              } p-6 transition-all duration-300  overflow-hidden`}
               onClick={() => game.status === 'active' && navigate(game.path)}
             >
               {game.status === 'active' && (

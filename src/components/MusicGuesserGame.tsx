@@ -214,7 +214,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
         <div className="absolute top-4 left-4 z-50">
           <div 
             onClick={onLeave}
-            className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
+            className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors cursor-pointer "
           >
             <ArrowLeft size={24} />
           </div>
@@ -225,7 +225,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
       {/* Moved to central stage */}
 
       {gameState === 'setup' && (
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-black/60 backdrop-blur-xl border border-brand-gold/30 p-8 rounded-[40px] max-w-lg w-full text-center space-y-6 shadow-[0_0_50px_rgba(212,175,55,0.1)] z-10">
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-black/80  border border-brand-gold/30 p-8 rounded-[40px] max-w-lg w-full text-center space-y-6 shadow-[0_0_50px_rgba(212,175,55,0.1)] z-10">
             <div className="w-20 h-20 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
                 <Music className="w-10 h-10 text-brand-gold" />
             </div>
@@ -238,7 +238,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         type="text" 
                         value={teams[0].name}
                         onChange={(e) => setTeams(prev => [{...prev[0], name: e.target.value}, prev[1]])}
-                        className="w-full bg-black/40 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
+                        className="w-full bg-black/70 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
                         placeholder="اسم الفريق الأول"
                     />
                 </div>
@@ -249,7 +249,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         type="text" 
                         value={teams[1].name}
                         onChange={(e) => setTeams(prev => [prev[0], {...prev[1], name: e.target.value}])}
-                        className="w-full bg-black/40 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
+                        className="w-full bg-black/70 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
                         placeholder="اسم الفريق الثاني"
                     />
                 </div>
@@ -259,7 +259,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         type="number" 
                         value={pointsToWin}
                         onChange={(e) => setPointsToWin(Number(e.target.value))}
-                        className="w-20 bg-black/40 border border-brand-gold/20 p-2 rounded-lg text-center text-white font-bold outline-none focus:border-brand-gold"
+                        className="w-20 bg-black/70 border border-brand-gold/20 p-2 rounded-lg text-center text-white font-bold outline-none focus:border-brand-gold"
                     />
                 </div>
             </div>
@@ -276,7 +276,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
       {(gameState === 'playing' || gameState === 'revealed') && currentSong && (
         <div className="w-full max-w-6xl flex flex-col h-full z-10 relative">
             {/* Header / Controls */}
-            <div className="flex justify-between items-center bg-black/40 border border-brand-gold/20 p-6 rounded-2xl mb-8 backdrop-blur-xl shadow-[0_0_30px_rgba(212,175,55,0.05)]">
+            <div className="flex justify-between items-center bg-black/70 border border-brand-gold/20 p-6 rounded-2xl mb-8  shadow-[0_0_30px_rgba(212,175,55,0.05)]">
                 <div className="flex items-center gap-6 w-1/3">
                     <div className="bg-brand-gold/10 p-3 rounded-full">
                         <Volume2 className="text-brand-gold" size={24} />
@@ -338,7 +338,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             {/* Game Content */}
             <div className="flex-1 grid grid-cols-12 gap-8 items-start">
                {/* Team 1 */}
-               <div className={`col-span-3 bg-black/40 backdrop-blur-md p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
+               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
                     <h2 className="text-3xl font-black text-white">{teams[0].name}</h2>
                     <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[0].score}</div>
                     
@@ -386,7 +386,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         <div className={`absolute inset-0 bg-brand-gold/20 rounded-full blur-[60px] transition-all duration-1000 ${isPlaying ? 'opacity-50 scale-110' : 'opacity-20 scale-90'}`}></div>
                         
                         {/* Vinyl Record */}
-                        <div className={`w-72 h-72 bg-black rounded-full flex items-center justify-center border-4 border-zinc-800 relative z-10 shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-transform duration-[3s] ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
+                        <div className={`w-72 h-72 bg-black rounded-full flex items-center justify-center border-4 border-zinc-800 relative z-10 shadow-2xl transition-transform duration-[3s] ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
                             {/* Vinyl Grooves */}
                             <div className="absolute inset-2 rounded-full border border-zinc-900/50"></div>
                             <div className="absolute inset-4 rounded-full border border-zinc-900/50"></div>
@@ -429,7 +429,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                     
                     <div className="text-center w-full min-h-[160px]">
                         {gameState === 'revealed' ? (
-                            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-black/40 backdrop-blur-md rounded-3xl p-8 border border-brand-gold/20 shadow-lg mx-auto max-w-lg">
+                            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-black/70  rounded-3xl p-8 border border-brand-gold/20 shadow-lg mx-auto max-w-lg">
                                 <h3 className="text-brand-gold/60 text-lg mb-2 font-bold uppercase tracking-widest">الأغنية هي</h3>
                                 <div className="text-4xl font-black text-white leading-tight mb-4">
                                     {currentSong?.name}
@@ -471,7 +471,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                 </div>
 
                {/* Team 2 */}
-               <div className={`col-span-3 bg-black/40 backdrop-blur-md p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
+               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
                     <h2 className="text-3xl font-black text-white">{teams[1].name}</h2>
                     <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[1].score}</div>
                     

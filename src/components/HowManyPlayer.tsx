@@ -91,7 +91,7 @@ export const HowManyPlayer: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md space-y-8 text-center"
         >
-          <div className="bg-black/40 p-8 rounded-[40px] border border-brand-gold/20 shadow-[0_0_50px_rgba(212,175,55,0.1)] backdrop-blur-xl">
+          <div className="bg-black/70 p-8 rounded-[40px] border border-brand-gold/20 shadow-[0_0_50px_rgba(212,175,55,0.1)] ">
             <h1 className="text-4xl font-black italic mb-2 text-brand-gold glow-gold-text">كم تقدر تسمي؟</h1>
             <p className="text-brand-gold/60 uppercase tracking-widest text-sm mb-8">انضم للعبة الآن</p>
             
@@ -101,7 +101,7 @@ export const HowManyPlayer: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="أدخل اسمك"
-                className="w-full bg-black/40 border border-brand-gold/20 p-4 rounded-2xl text-center text-xl font-bold focus:ring-2 focus:ring-brand-gold outline-none transition-all text-white"
+                className="w-full bg-black/70 border border-brand-gold/20 p-4 rounded-2xl text-center text-xl font-bold focus:ring-2 focus:ring-brand-gold outline-none transition-all text-white"
                 required
               />
               <button 
@@ -128,7 +128,7 @@ export const HowManyPlayer: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white flex flex-col font-arabic" dir="rtl">
       {/* Header */}
-      <div className="p-6 border-b border-brand-gold/10 flex justify-between items-center bg-brand-gold/5 backdrop-blur-md sticky top-0 z-50">
+      <div className="p-6 border-b border-brand-gold/10 flex justify-between items-center bg-brand-gold/5  sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-brand-gold/10 rounded-full flex items-center justify-center border border-brand-gold/20">
             👤
@@ -159,7 +159,7 @@ export const HowManyPlayer: React.FC = () => {
           {state.status === 'matchmaking' && (
             <motion.div key="matchmaking" className="text-center space-y-6">
               <h2 className="text-3xl font-black italic text-brand-gold glow-gold-text">تجهيز الجولة</h2>
-              <div className="bg-black/40 p-8 rounded-[40px] border border-brand-gold/20 space-y-4 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+              <div className="bg-black/70 p-8 rounded-[40px] border border-brand-gold/20 space-y-4 shadow-[0_0_30px_rgba(212,175,55,0.1)]">
                 <p className="text-brand-gold/60">المواجهة القادمة:</p>
                 <div className="text-xl font-black text-white">
                   {state.players.find(p => p.id === state.currentMatch?.[0])?.name}
@@ -178,7 +178,7 @@ export const HowManyPlayer: React.FC = () => {
                 </div>
                 <h2 className="text-4xl font-black italic text-white">{state.selectedCategory}</h2>
                 {state.bid > 0 && (
-                  <div className="mt-4 p-4 bg-black/40 rounded-2xl border border-brand-gold/30">
+                  <div className="mt-4 p-4 bg-black/70 rounded-2xl border border-brand-gold/30">
                     <p className="text-xs text-brand-gold/50 uppercase">المزايدة الحالية</p>
                     <p className="text-3xl font-black text-brand-gold glow-gold-text">{state.bid}</p>
                   </div>
@@ -193,7 +193,7 @@ export const HowManyPlayer: React.FC = () => {
                       value={bidInput}
                       onChange={(e) => setBidInput(parseInt(e.target.value) || 0)}
                       placeholder="كم تقدر تسمي؟"
-                      className="w-full bg-black/40 border-2 border-brand-gold/50 p-6 rounded-3xl text-3xl font-black text-center focus:ring-4 focus:ring-brand-gold/20 outline-none transition-all text-white"
+                      className="w-full bg-black/70 border-2 border-brand-gold/50 p-6 rounded-3xl text-3xl font-black text-center focus:ring-4 focus:ring-brand-gold/20 outline-none transition-all text-white"
                       min={state.bid + 1}
                     />
                   </div>
@@ -207,14 +207,14 @@ export const HowManyPlayer: React.FC = () => {
                   {state.bid > 0 && (
                     <button 
                       onClick={callLiar}
-                      className="w-full bg-black/40 hover:bg-brand-gold/10 text-brand-gold font-black py-4 rounded-2xl text-xl transition-all border border-brand-gold/30 shadow-lg"
+                      className="w-full bg-black/70 hover:bg-brand-gold/10 text-brand-gold font-black py-4 rounded-2xl text-xl transition-all border border-brand-gold/30 shadow-lg"
                     >
                       كاذب!
                     </button>
                   )}
                 </div>
               ) : (
-                <div className="text-center p-8 bg-black/40 rounded-[40px] border border-brand-gold/10">
+                <div className="text-center p-8 bg-black/70 rounded-[40px] border border-brand-gold/10">
                   <Users className="w-12 h-12 text-brand-gold/30 mx-auto mb-4 animate-pulse" />
                   <p className="text-xl font-bold text-brand-gold/50">بانتظار دور الخصم...</p>
                 </div>
@@ -247,7 +247,7 @@ export const HowManyPlayer: React.FC = () => {
                   value={answer}
                   onChange={(e) => setAnswer(e.target.value)}
                   placeholder="اكتب إجابتك هنا..."
-                  className="w-full bg-black/40 border-2 border-brand-gold/50 p-6 rounded-3xl text-xl font-bold focus:ring-4 focus:ring-brand-gold/20 outline-none transition-all pr-16 text-white"
+                  className="w-full bg-black/70 border-2 border-brand-gold/50 p-6 rounded-3xl text-xl font-bold focus:ring-4 focus:ring-brand-gold/20 outline-none transition-all pr-16 text-white"
                   autoFocus
                 />
                 <button 
@@ -260,7 +260,7 @@ export const HowManyPlayer: React.FC = () => {
 
               <div className="flex flex-wrap gap-2 justify-center">
                 {state.answers.map((ans, i) => (
-                  <div key={i} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold">
+                  <div key={i} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold">
                     {ans}
                   </div>
                 ))}
@@ -299,7 +299,7 @@ export const HowManyPlayer: React.FC = () => {
       </div>
 
       {/* Footer Status */}
-      <div className="p-6 bg-brand-gold/5 border-t border-brand-gold/10 text-center backdrop-blur-md">
+      <div className="p-6 bg-brand-gold/5 border-t border-brand-gold/10 text-center ">
         <div className="flex items-center justify-center gap-2 text-xs text-brand-gold/50">
           <div className={`w-2 h-2 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${socket?.connected ? 'bg-emerald-500 shadow-emerald-500/50' : 'bg-red-500 shadow-red-500/50'}`} />
           {socket?.connected ? 'متصل بالخادم' : 'جاري الاتصال...'}

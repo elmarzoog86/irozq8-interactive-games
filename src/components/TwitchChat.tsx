@@ -26,7 +26,7 @@ export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, i
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full bg-black/40 backdrop-blur-xl font-arabic" dir="rtl">
+    <div className="flex flex-col h-full bg-black/70  font-arabic" dir="rtl">
       <div className="flex items-center justify-between px-6 py-4 bg-brand-gold/5 border-b border-brand-gold/10">
         <div className="flex items-center gap-3">
           <div className={`w-2.5 h-2.5 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${isConnected ? 'bg-emerald-500 shadow-emerald-500/50' : 'bg-red-500 shadow-red-500/50'}`} />

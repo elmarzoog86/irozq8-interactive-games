@@ -64,7 +64,7 @@ export const TeamPlayer: React.FC = () => {
   if (!isJoined) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-black/40 border border-brand-gold/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(212,175,55,0.1)] backdrop-blur-xl">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-black/70 border border-brand-gold/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(212,175,55,0.1)] ">
           <h1 className="text-3xl font-black mb-8 text-center text-brand-gold italic glow-gold-text">انضم للعبة الفريق</h1>
           <form onSubmit={joinGame} className="space-y-6">
             <div>
@@ -74,7 +74,7 @@ export const TeamPlayer: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="ادخل اسمك..."
-                className="w-full bg-black/40 border-2 border-brand-gold/20 p-4 rounded-2xl outline-none focus:border-brand-gold transition-all text-center font-bold text-xl text-white"
+                className="w-full bg-black/70 border-2 border-brand-gold/20 p-4 rounded-2xl outline-none focus:border-brand-gold transition-all text-center font-bold text-xl text-white"
                 required
               />
             </div>
@@ -98,7 +98,7 @@ export const TeamPlayer: React.FC = () => {
           <h2 className="text-2xl font-black italic text-brand-gold glow-gold-text">
             {state.gameType === 'teamfeud' ? 'تحدي الفرق' : state.gameType === 'codenames' ? 'لعبة الشفرة' : 'سباق القنبلة'}
           </h2>
-          <div className="flex items-center gap-2 bg-black/40 border border-brand-gold/20 px-3 py-1 rounded-full text-xs font-bold text-brand-gold/70">
+          <div className="flex items-center gap-2 bg-black/70 border border-brand-gold/20 px-3 py-1 rounded-full text-xs font-bold text-brand-gold/70">
             {state.gameType === 'teamfeud' && myPlayer?.team && state.data?.leaders?.[myPlayer.team] === myPlayer.id && (
               <Crown className="w-4 h-4 text-brand-gold" />
             )}
@@ -112,14 +112,14 @@ export const TeamPlayer: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <button 
                 onClick={() => switchTeam('gold')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-gold bg-brand-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.3)]' : 'border-brand-gold/10 bg-black/40 opacity-50 hover:opacity-80'}`}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-gold bg-brand-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.3)]' : 'border-brand-gold/10 bg-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-brand-gold" />
                 <span className="font-black text-brand-gold">ذهبي</span>
               </button>
               <button 
                 onClick={() => switchTeam('black')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'black' ? 'border-zinc-400 bg-zinc-800/50 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-black/40 opacity-50 hover:opacity-80'}`}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'black' ? 'border-zinc-400 bg-zinc-800/80 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-white" />
                 <span className="font-black text-white">أسود</span>
@@ -197,7 +197,7 @@ export const TeamPlayer: React.FC = () => {
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
                         placeholder="أنت القائد! اكتب إجابة فريقك..."
-                        className="w-full bg-black/40 border-2 border-brand-gold/20 p-4 rounded-2xl text-center font-bold focus:border-brand-gold outline-none text-white"
+                        className="w-full bg-black/70 border-2 border-brand-gold/20 p-4 rounded-2xl text-center font-bold focus:border-brand-gold outline-none text-white"
                       />
                       <button type="submit" className="w-full bg-brand-gold hover:bg-brand-gold-light text-black py-4 rounded-2xl font-black shadow-[0_0_15px_rgba(212,175,55,0.3)]">إرسال</button>
                     </form>
@@ -220,7 +220,7 @@ export const TeamPlayer: React.FC = () => {
                   </div>
                 )}
 
-                <div className="flex justify-between items-center bg-black/40 p-4 border border-brand-gold/20 rounded-2xl">
+                <div className="flex justify-between items-center bg-black/70 p-4 border border-brand-gold/20 rounded-2xl">
                   <div className={`text-sm font-bold ${state.data.currentTurn === 'gold' ? 'text-brand-gold' : 'text-zinc-500'}`}>الذهبي: {state.data.scores?.gold ?? 9}</div>
                   <div className="text-lg font-black text-white">دور {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}</div>
                   <div className={`text-sm font-bold ${state.data.currentTurn === 'black' ? 'text-white' : 'text-zinc-500'}`}>الأسود: {state.data.scores?.black ?? 8}</div>
@@ -246,7 +246,7 @@ export const TeamPlayer: React.FC = () => {
                           value={hintWord}
                           onChange={(e) => setHintWord(e.target.value)}
                           placeholder="التلميح..."
-                          className="flex-1 bg-black/60 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                          className="flex-1 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
                           required
                         />
                         <input 
@@ -256,7 +256,7 @@ export const TeamPlayer: React.FC = () => {
                           placeholder="العدد"
                           min="1"
                           max="9"
-                          className="w-20 bg-black/60 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                          className="w-20 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
                           required
                         />
                         <button type="submit" className="bg-brand-gold hover:bg-brand-gold-light text-black px-4 rounded-xl font-black transition-all">إرسال</button>
@@ -315,7 +315,7 @@ export const TeamPlayer: React.FC = () => {
                   <div className="text-6xl font-black font-mono text-brand-gold drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">{state.data.timer}s</div>
                 </div>
                 {state.data.tasks.map((task: any) => (
-                  <div key={task.id} className={`p-6 rounded-2xl border-2 ${task.completed ? 'bg-brand-gold/20 border-brand-gold' : 'bg-black/40 border-brand-gold/20'}`}>
+                  <div key={task.id} className={`p-6 rounded-2xl border-2 ${task.completed ? 'bg-brand-gold/20 border-brand-gold' : 'bg-black/70 border-brand-gold/20'}`}>
                     <h4 className="font-bold mb-4 text-white">{task.text}</h4>
                     {!task.completed && (
                       task.target ? (
@@ -324,7 +324,7 @@ export const TeamPlayer: React.FC = () => {
                         <input 
                           type="text" 
                           placeholder="الإجابة..."
-                          className="w-full bg-black/40 border border-brand-gold/20 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white"
+                          className="w-full bg-black/70 border border-brand-gold/20 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white"
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                               submitAction('task_progress', { taskId: task.id, answer: (e.target as HTMLInputElement).value });

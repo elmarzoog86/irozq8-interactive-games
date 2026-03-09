@@ -278,10 +278,10 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
     .sort(([, a], [, b]) => b - a);
 
   return (
-    <div className="flex flex-col h-full max-w-6xl mx-auto bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic" dir="rtl">
+    <div className="flex flex-col h-full max-w-6xl mx-auto bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl font-arabic" dir="rtl">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/40 relative z-10">
+      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/70 relative z-10">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
@@ -308,7 +308,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                 </div>
                 <button
                   onClick={revealPrice}
-                  className="flex items-center gap-2 px-6 py-3 bg-black/40 hover:bg-black/60 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+                  className="flex items-center gap-2 px-6 py-3 bg-black/70 hover:bg-black/80 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
                 >
                   <Square className="w-5 h-5 fill-current" />
                   إنهاء التخمين
@@ -326,7 +326,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full max-w-md bg-black/40 p-12 rounded-3xl border border-brand-gold/20 text-center relative overflow-hidden shadow-2xl"
+              className="w-full max-w-md bg-black/70 p-12 rounded-3xl border border-brand-gold/20 text-center relative overflow-hidden shadow-2xl"
             >
               {/* Game Show Background Decoration */}
               <div className="absolute inset-0 opacity-10 z-0 pointer-events-none">
@@ -355,7 +355,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                         className={`flex-1 py-3 rounded-xl font-bold border transition-all ${
                           totalRounds === num 
                           ? 'bg-brand-gold border-brand-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
-                          : 'bg-black/40 border-brand-gold/20 text-brand-gold/70 hover:bg-brand-gold/10 hover:border-brand-gold/40'
+                          : 'bg-black/70 border-brand-gold/20 text-brand-gold/70 hover:bg-brand-gold/10 hover:border-brand-gold/40'
                         }`}
                       >
                         {num}
@@ -377,7 +377,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
           {(status === 'guessing' || status === 'revealed') && (
             <div className="flex flex-col items-center w-full max-w-2xl">
-              <div className="w-full bg-black/40 border border-brand-gold/20 rounded-3xl p-8 mb-8 text-center relative overflow-hidden">
+              <div className="w-full bg-black/70 border border-brand-gold/20 rounded-3xl p-8 mb-8 text-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-b from-brand-gold/10 to-transparent z-0" />
                 <div className="relative z-10">
                   {item.imageUrl ? (
@@ -385,10 +385,10 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                       src={item.imageUrl}
                       alt={`${item.nameAr} - ${item.name}`}
                       onError={handleImageError}
-                      className="w-64 h-64 object-contain mx-auto mb-6 rounded-2xl bg-black/40 p-4 shadow-2xl border border-brand-gold/20"
+                      className="w-64 h-64 object-contain mx-auto mb-6 rounded-2xl bg-black/70 p-4 shadow-2xl border border-brand-gold/20"
                     />
                   ) : (
-                    <div className="w-64 h-64 mx-auto mb-6 rounded-2xl bg-black/40 border border-brand-gold/20 flex items-center justify-center">
+                    <div className="w-64 h-64 mx-auto mb-6 rounded-2xl bg-black/70 border border-brand-gold/20 flex items-center justify-center">
                       <ImageIcon className="w-24 h-24 text-brand-gold/50" />
                     </div>
                   )}
@@ -397,7 +397,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   <p className="text-xl text-zinc-400 mb-4">اكتب <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 py-1 rounded-lg border border-brand-gold/20">!join</span> للمشاركة، ثم خمن السعر!</p>
                   
                   {status === 'guessing' && (
-                    <div className="mt-8 bg-black/40 p-6 rounded-2xl border border-brand-gold/20 max-w-sm mx-auto">
+                    <div className="mt-8 bg-black/70 p-6 rounded-2xl border border-brand-gold/20 max-w-sm mx-auto">
                       <label className="block text-zinc-400 mb-2 text-sm font-bold uppercase tracking-wider">تخمينك (الستريمر)</label>
                       <div className="flex gap-2">
                         <input
@@ -474,11 +474,11 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
               <Trophy className="w-32 h-32 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)] glow-gold" />
               <h3 className="text-4xl font-bold text-white mb-8">انتهت اللعبة!</h3>
               
-              <div className="bg-black/40 border border-brand-gold/20 rounded-3xl p-8 mb-8">
+              <div className="bg-black/70 border border-brand-gold/20 rounded-3xl p-8 mb-8">
                 <h4 className="text-2xl font-bold text-zinc-400 mb-6 uppercase tracking-wider">الترتيب النهائي</h4>
                 <div className="space-y-4">
                   {finalScores.map(([username, score], index) => (
-                    <div key={username} className="flex items-center justify-between bg-black/40 p-4 rounded-xl border border-brand-gold/10">
+                    <div key={username} className="flex items-center justify-between bg-black/70 p-4 rounded-xl border border-brand-gold/10">
                       <div className="flex items-center gap-4">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
                           index === 0 ? 'bg-brand-gold text-black' :
@@ -511,7 +511,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
         </div>
 
         {/* Live Guesses Sidebar */}
-        <div className="w-80 bg-black/40 border-r border-brand-gold/10 p-6 flex flex-col relative z-10">
+        <div className="w-80 bg-black/70 border-r border-brand-gold/10 p-6 flex flex-col relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <UserPlus className="w-6 h-6 text-brand-gold" />
@@ -550,7 +550,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                       className={`border rounded-xl p-4 flex items-center justify-between transition-colors ${
                         isWinner ? 'bg-brand-gold/20 border-brand-gold/50' :
                         isStreamer ? 'bg-brand-gold/10 border-brand-gold/30' :
-                        'bg-black/40 border-brand-gold/10'
+                        'bg-black/70 border-brand-gold/10'
                       }`}
                     >
                       <div className="flex flex-col">
@@ -574,7 +574,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   key={username}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-black/40 border border-brand-gold/10 rounded-xl p-4 flex items-center justify-between opacity-60"
+                  className="bg-black/70 border border-brand-gold/10 rounded-xl p-4 flex items-center justify-between opacity-60"
                 >
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-zinc-500" />

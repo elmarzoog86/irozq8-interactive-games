@@ -402,7 +402,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
 
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
-      <div className="flex-1 rounded-[40px] border border-white/20 bg-black/80 backdrop-blur-xl flex flex-col relative overflow-hidden">
+      <div className="flex-1 rounded-[40px] border border-white/20 bg-black/80  flex flex-col relative overflow-hidden">
         
         <AnimatePresence>
           {mode === 'lobby' && (
@@ -486,7 +486,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
         </AnimatePresence>
 
         {mode !== 'lobby' && (
-          <div className="p-6 flex justify-between items-center z-10 border-b border-white/10 bg-black/40">
+          <div className="p-6 flex justify-between items-center z-10 border-b border-white/10 bg-black/70">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center border border-white/30">
                 <Crosshair className="w-6 h-6 text-white" />
@@ -522,7 +522,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
             
             <div className="flex-1 grid grid-cols-2 gap-6 z-10 w-full max-w-6xl mx-auto h-[600px]">
                {gangs.map((g, idx) => (
-                  <motion.div key={g.id} layout className={`p-4 rounded-3xl border-4 ${g.borderColor} bg-black/60 relative overflow-hidden flex flex-col items-center h-full`}>
+                  <motion.div key={g.id} layout className={`p-4 rounded-3xl border-4 ${g.borderColor} bg-black/80 relative overflow-hidden flex flex-col items-center h-full`}>
                      {g.hp <= 0 && <div className="absolute inset-0 bg-black/80 z-20 flex items-center justify-center"><Skull className="w-24 h-24 text-zinc-600" /></div>}
                      <div className="flex flex-col items-center w-full mb-4 z-10 shrink-0">
                         <h3 className={`text-4xl font-black mb-1 ${g.color}`}>{g.name}</h3>
@@ -538,7 +538,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
                      </div>
                      <div className="text-3xl font-mono font-bold text-white z-10 mb-4 shrink-0">{Math.floor(g.hp)} / {g.maxHp} HP</div>
 
-                     <div className="w-full flex-1 overflow-y-auto custom-scrollbar bg-black/40 rounded-xl p-3 gap-2 flex flex-col min-h-0 z-10 border border-white/10">
+                     <div className="w-full flex-1 overflow-y-auto custom-scrollbar bg-black/70 rounded-xl p-3 gap-2 flex flex-col min-h-0 z-10 border border-white/10">
                          {Object.values(g.members).sort((a,b) => (b.damageDealt + b.healingDone) - (a.damageDealt + a.healingDone)).map((m, i) => (
                              <div key={m.username} className={`flex justify-between items-center text-white/90 text-sm p-3 rounded-lg border border-white/5 ${i < 3 ? 'bg-white/10' : 'bg-white/5'}`}>
                                  <div className="flex items-center gap-3">
@@ -562,7 +562,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
                ))}
             </div>
 
-            <div className="h-48 mt-6 bg-black/40 border border-white/10 rounded-3xl p-4 flex flex-col shadow-xl z-10 overflow-hidden">
+            <div className="h-48 mt-6 bg-black/70 border border-white/10 rounded-3xl p-4 flex flex-col shadow-xl z-10 overflow-hidden">
                <h3 className="text-zinc-500 font-bold mb-2 uppercase tracking-widest text-sm flex items-center gap-2">
                  <Zap className="w-4 h-4" /> الأخبار
                </h3>
@@ -581,7 +581,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
 
         <AnimatePresence>
           {mode === 'game_over' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-8">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95  flex flex-col items-center justify-center p-8">
               {winner ? (
                  <>
                    <Flag className={`w-40 h-40 mb-6 ${winner.color} drop-shadow-[0_0_50px_currentColor]`} />
@@ -607,7 +607,7 @@ export function TurfWarsGame({ messages = [], onLeave, channelName, isConnected,
       </div>
       
       {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/60 backdrop-blur-xl rounded-[40px] border border-white/20 overflow-hidden shadow-2xl shrink-0">
+        <div className="w-80 h-full flex flex-col bg-black/80  rounded-[40px] border border-white/20 overflow-hidden shadow-2xl shrink-0">
           <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
         </div>
       )}

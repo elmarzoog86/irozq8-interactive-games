@@ -254,7 +254,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
     if (phase === 'config') {
       return (
         <div className="flex flex-col items-center justify-center h-full w-full max-w-2xl mx-auto font-arabic" dir="rtl">
-          <div className="bg-zinc-800/50 border border-zinc-700 p-8 rounded-2xl w-full">
+          <div className="bg-zinc-800/80 border border-zinc-700 p-8 rounded-2xl w-full">
             <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
               <Swords className="w-8 h-8 text-brand-gold" />
               إعدادات حرب الفواكه
@@ -312,7 +312,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             اكتب <span className="text-brand-gold font-mono bg-brand-gold/10 px-3 py-1 rounded-lg border border-brand-gold/20">!join</span> في الدردشة للحصول على فاكهتك!
           </p>
           
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
+          <div className="bg-zinc-800/80 border border-zinc-700 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
               <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-sm font-bold border border-brand-gold/30">
@@ -374,7 +374,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
           </div>
 
           {/* Main Action Area */}
-          <div className="bg-zinc-800/30 border border-zinc-700/50 rounded-2xl p-8 mb-8 flex flex-col items-center justify-center min-h-[200px]">
+          <div className="bg-zinc-800/70 border border-zinc-700/50 rounded-2xl p-8 mb-8 flex flex-col items-center justify-center min-h-[200px]">
             {mode === 'voting' ? (
               showRoundResult ? (
                 <div className="text-center">
@@ -460,16 +460,15 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ 
                       opacity: p.isAlive ? 1 : 0.3, 
-                      scale: p.isAlive ? 1 : 0.95,
-                      filter: p.isAlive ? 'grayscale(0%)' : 'grayscale(100%)'
+                      scale: p.isAlive ? 1 : 0.95
                     }}
                     key={p.username} 
-                    className={`bg-black/40 border p-4 rounded-xl flex flex-col items-center text-center relative overflow-hidden ${
-                      p.isAlive ? 'border-brand-gold/20' : 'border-white/5'
+                    className={`bg-black/70 border p-4 rounded-xl flex flex-col items-center text-center relative overflow-hidden ${
+                      p.isAlive ? 'border-brand-gold/20' : 'border-white/5 grayscale'
                     } ${mode === 'roulette' && rouletteState === 'waiting' && selectedPlayer?.username === p.username ? 'ring-2 ring-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.3)]' : ''}`}
                   >
                     {!p.isAlive && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/60 backdrop-blur-[1px]">
+                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/80 backdrop-blur-[1px]">
                         <XCircle className="w-16 h-16 text-white/20" />
                       </div>
                     )}
@@ -507,7 +506,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             <motion.div 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="bg-black/60 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+              className="bg-black/80 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
             >
               <div className="text-9xl mb-6">{winner.fruit.emoji}</div>
               <h3 className="text-4xl font-bold text-brand-gold mb-2">{winner.username}</h3>
@@ -544,7 +543,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
   return (
     <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
       {/* Main Game Area */}
-      <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic" dir="rtl">
+      <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
         <button 
           onClick={onLeave} 
@@ -560,7 +559,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
 
        {/* Active Players Sidebar */}
        <div className="w-80 flex flex-col gap-4">
-        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
+        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
            <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
              <Trophy className="w-6 h-6 text-brand-gold" />
@@ -573,7 +572,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                  key={player.username}
                  className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
                    player.isAlive 
-                     ? 'bg-black/40 border-white/5 hover:border-brand-gold/30' 
+                     ? 'bg-black/70 border-white/5 hover:border-brand-gold/30' 
                      : 'bg-red-900/10 border-red-500/20 opacity-60'
                  }`}
                >
@@ -599,7 +598,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
 
         {/* Twitch Chat Sidebar */}
       <div className="w-[500px] flex flex-col gap-4">
-          <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
           <TwitchChat 
             channelName={channelName} 
             messages={messages} 

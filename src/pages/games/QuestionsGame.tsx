@@ -65,7 +65,7 @@ export function QuestionsGame() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 backdrop-blur-md">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => navigate('/games')}
@@ -90,7 +90,7 @@ export function QuestionsGame() {
         {/* Left Column: Game Area */}
         <div className="flex-1 flex flex-col gap-6">
           {gameState === 'lobby' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
               <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mb-8 border border-yellow-500/30 glow-gold">
                 <Users className="w-12 h-12 text-yellow-500" />
               </div>
@@ -139,7 +139,7 @@ export function QuestionsGame() {
           )}
 
           {gameState === 'playing' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col ">
               <div className="flex justify-between items-center mb-8">
                 <div className="text-zinc-400 font-arabic">
                   السؤال <span className="text-yellow-500 font-bold text-xl">{currentQuestion}</span> من {totalQuestions}
@@ -191,7 +191,7 @@ export function QuestionsGame() {
           )}
 
           {gameState === 'results' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
               <Trophy className="w-24 h-24 text-yellow-500 mb-6 glow-gold-text" />
               <h2 className="text-4xl font-bold font-arabic mb-8 text-white">
                 النتائج <span className="text-yellow-500 glow-gold-text">النهائية</span>
@@ -199,7 +199,7 @@ export function QuestionsGame() {
               
               <div className="w-full max-w-md space-y-4">
                 {players.sort((a, b) => b.score - a.score).map((player, index) => (
-                  <div key={player.id} className="flex items-center justify-between bg-zinc-800/50 border border-zinc-700 rounded-xl p-4">
+                  <div key={player.id} className="flex items-center justify-between bg-zinc-800/80 border border-zinc-700 rounded-xl p-4">
                     <div className="flex items-center gap-4">
                       <span className={`text-xl font-bold ${index === 0 ? 'text-yellow-500' : 'text-zinc-400'}`}>
                         #{index + 1}
@@ -224,7 +224,7 @@ export function QuestionsGame() {
         {/* Right Column: Chat & Players */}
         <div className="w-96 flex flex-col gap-6">
           {/* Active Players */}
-          <div className="bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-6 backdrop-blur-sm flex flex-col h-1/3">
+          <div className="bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-6  flex flex-col h-1/3">
             <div className="flex items-center justify-between mb-4">
               <span className="bg-yellow-500/10 text-yellow-500 px-3 py-1 rounded-full text-sm font-bold font-mono">
                 {players.length}
@@ -239,7 +239,7 @@ export function QuestionsGame() {
                 </div>
               ) : (
                 players.map(player => (
-                  <div key={player.id} className="flex items-center justify-between bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50">
+                  <div key={player.id} className="flex items-center justify-between bg-zinc-800/80 rounded-lg p-3 border border-zinc-700/50">
                     <span className="text-yellow-500 font-mono text-sm">{player.score}</span>
                     <span className="text-zinc-200 font-medium">{player.username}</span>
                   </div>

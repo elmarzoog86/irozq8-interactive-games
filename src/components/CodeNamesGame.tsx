@@ -62,7 +62,7 @@ export const CodeNamesGame: React.FC<{
   return (
     <div className="flex h-full w-full gap-6 p-6 font-arabic" dir="rtl">
       {/* Main Game Area */}
-      <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col relative text-white">
+      <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative text-white">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
         
         <div className="flex-1 relative p-8 overflow-y-auto z-10 flex flex-col">
@@ -73,7 +73,7 @@ export const CodeNamesGame: React.FC<{
               <p className="text-brand-gold/60">ابحث عن الكلمات السرية لفريقك</p>
             </div>
             <div className="flex gap-4">
-              <div className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
+              <div className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
                 <span>{window.location.origin}/team/{roomId}</span>
                 <button 
                   onClick={() => navigator.clipboard.writeText(`${window.location.origin}/team/${roomId}`)}
@@ -83,10 +83,10 @@ export const CodeNamesGame: React.FC<{
                   <Copy className="w-4 h-4" />
                 </button>
               </div>
-              <button onClick={resetGame} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
+              <button onClick={resetGame} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
                 إعادة تعيين
               </button>
-              <button onClick={onLeave} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
+              <button onClick={onLeave} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
                 <XCircle className="w-4 h-4" /> خروج
               </button>
             </div>
@@ -115,7 +115,7 @@ export const CodeNamesGame: React.FC<{
           <AnimatePresence mode="wait">
             {state.status === 'waiting' && (
               <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
-                <div className="bg-black/40 border border-brand-gold/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                <div className="bg-black/70 border border-brand-gold/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(212,175,55,0.1)]">
                   <Shield className="w-16 h-16 text-brand-gold mx-auto mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]" />
                   <h2 className="text-3xl font-black text-brand-gold mb-6">الفريق الذهبي</h2>
                   <div className="space-y-2 min-h-[200px]">
@@ -127,19 +127,19 @@ export const CodeNamesGame: React.FC<{
                         </div>
                         <div className="flex gap-2">
                           <button onClick={() => setSpymaster(p.id, 'gold')} className="text-[10px] bg-brand-gold/20 hover:bg-brand-gold/40 px-2 py-1 rounded border border-brand-gold/30 transition-colors">Spymaster</button>
-                          <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-black/40 hover:bg-black/60 px-2 py-1 rounded border border-brand-gold/30 transition-colors">الأسود</button>
+                          <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-black/70 hover:bg-black/80 px-2 py-1 rounded border border-brand-gold/30 transition-colors">الأسود</button>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="bg-black/40 border border-brand-gold/10 p-8 rounded-[40px] text-center opacity-80">
+                <div className="bg-black/70 border border-brand-gold/10 p-8 rounded-[40px] text-center opacity-80">
                   <Shield className="w-16 h-16 text-zinc-400 mx-auto mb-4" />
                   <h2 className="text-3xl font-black text-white mb-6">الفريق الأسود</h2>
                   <div className="space-y-2 min-h-[200px]">
                     {state.players.filter(p => p.team === 'black').map(p => (
-                      <div key={p.id} className={`bg-black/40 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.black === p.id ? 'border-white border-2' : 'border-zinc-700'}`}>
+                      <div key={p.id} className={`bg-black/70 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.black === p.id ? 'border-white border-2' : 'border-zinc-700'}`}>
                         <div className="flex items-center gap-2">
                           {state.data?.spymasters?.black === p.id && <Eye className="w-4 h-4 text-white" />}
                           <span className="font-bold text-white">{p.name}</span>
@@ -181,14 +181,14 @@ export const CodeNamesGame: React.FC<{
                   <div className="text-center">
                     <h2 className="text-2xl font-black italic text-white">دور الفريق {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}</h2>
                   </div>
-                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/50' : 'border-zinc-800'}`}>
+                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80' : 'border-zinc-800'}`}>
                     <span className="text-xl font-bold text-white">الأسود: {state.data.scores.black}</span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-5 gap-3 h-full pb-8">
                   {state.data.board.map((card, i) => {
-                    let bgColor = 'bg-black/60';
+                    let bgColor = 'bg-black/80';
                     let textColor = 'text-brand-gold/40';
                     let borderColor = 'border-brand-gold/10';
 
@@ -242,7 +242,7 @@ export const CodeNamesGame: React.FC<{
 
       {/* Teams Sidebar */}
       <div className="w-64 flex flex-col gap-4 shrink-0">
-        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col p-4">
+        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col p-4">
            <h3 className="text-brand-gold font-bold mb-4 flex items-center gap-2">
              <Shield className="w-5 h-5" /> الفرق ({state.players.length})
            </h3>
@@ -284,7 +284,7 @@ export const CodeNamesGame: React.FC<{
       </div>
       
       {/* Twitch Chat Sidebar */}
-      <div className="w-[500px] h-full flex-shrink-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center">
+      <div className="w-[500px] h-full flex-shrink-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col items-center justify-center">
         <TwitchChat 
           channelName={channelName}
           messages={messages}

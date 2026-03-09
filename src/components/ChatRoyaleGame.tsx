@@ -322,7 +322,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
-      <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-black/80 backdrop-blur-xl flex flex-col relative overflow-hidden">
+      <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-black/80  flex flex-col relative overflow-hidden">
         
         <AnimatePresence>
           {mode === 'lobby' && (
@@ -364,7 +364,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                 اللاعبون المنضمون: <span className="text-orange-500">{Object.keys(players).length}</span>
               </div>
 
-              <div className="w-full max-w-4xl bg-black/60 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
+              <div className="w-full max-w-4xl bg-black/80 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
                  {Object.keys(players).length === 0 ? (
                     <span className="text-white/30 italic">بانتظار انضمام المحاربين...</span>
                  ) : (
@@ -398,7 +398,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         </AnimatePresence>
 
         {mode !== 'lobby' && (
-          <div className="p-6 flex justify-between items-center z-10 border-b border-orange-500/10 bg-black/40">
+          <div className="p-6 flex justify-between items-center z-10 border-b border-orange-500/10 bg-black/70">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center border border-orange-500/30">
                 <Crosshair className="w-6 h-6 text-orange-500" />
@@ -432,7 +432,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   <AnimatePresence>
                      {Object.entries(players).sort((a,b) => b[1].hp - a[1].hp).map(([uname, p]) => (
-                        <motion.div layout key={uname} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: p.isDead ? 0.4 : 1, scale: 1, filter: p.isDead ? 'grayscale(1)' : 'grayscale(0)' }} className={`p-4 rounded-2xl border ${p.isDead ? 'bg-black/80 border-red-900/50' : 'bg-black/60 border-orange-500/20'} relative overflow-hidden`}>
+                        <motion.div layout key={uname} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: p.isDead ? 0.4 : 1, scale: 1 }} className={`p-4 rounded-2xl border ${p.isDead ? 'bg-black/80 border-red-900/50 grayscale' : 'bg-black/80 border-orange-500/20'} relative overflow-hidden`}>
                            {p.hp <= 30 && !p.isDead && <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none" />}
                            <div className="flex justify-between items-start mb-2 relative z-10">
                               <span className="font-bold text-lg text-white truncate max-w-[70%]">{uname}</span>
@@ -455,7 +455,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
             </div>
 
             {/* Kill Feed */}
-            <div className="w-80 bg-black/40 border border-orange-500/10 rounded-3xl p-4 flex flex-col shadow-xl">
+            <div className="w-80 bg-black/70 border border-orange-500/10 rounded-3xl p-4 flex flex-col shadow-xl">
                <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm flex items-center justify-center gap-2">
                  <Zap className="w-4 h-4" /> سجل الأحداث
                </h3>
@@ -474,7 +474,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
         <AnimatePresence>
           {mode === 'game_over' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-8">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95  flex flex-col items-center justify-center p-8">
               <Crown className="w-40 h-40 text-brand-gold mb-6 drop-shadow-[0_0_50px_rgba(212,175,55,1)]" />
               <h2 className="text-3xl text-brand-gold/80 font-bold mb-2">الفائز الأخير</h2>
               <h1 className="text-7xl font-black text-white mb-8 bg-gradient-to-br from-brand-gold via-yellow-200 to-orange-500 text-transparent bg-clip-text">
@@ -491,7 +491,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
       </div>
       
       {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/60 backdrop-blur-xl rounded-[40px] border border-orange-500/20 overflow-hidden shadow-2xl shrink-0">
+        <div className="w-80 h-full flex flex-col bg-black/80  rounded-[40px] border border-orange-500/20 overflow-hidden shadow-2xl shrink-0">
           <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
         </div>
       )}

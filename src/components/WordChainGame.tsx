@@ -142,10 +142,10 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
   const sortedScores = Object.entries(scores).sort(([, a], [, b]) => b - a).slice(0, 10);
 
   return (
-    <div className="flex flex-col h-full max-w-6xl mx-auto bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic" dir="rtl">
+    <div className="flex flex-col h-full max-w-6xl mx-auto bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl font-arabic" dir="rtl">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/40 relative z-10">
+      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/70 relative z-10">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
@@ -167,7 +167,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
             </div>
             <button
               onClick={() => setStatus('finished')}
-              className="flex items-center gap-2 px-6 py-3 bg-black/40 hover:bg-black/60 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+              className="flex items-center gap-2 px-6 py-3 bg-black/70 hover:bg-black/80 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
             >
               <Square className="w-5 h-5 fill-current" />
               إنهاء اللعبة
@@ -183,7 +183,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full max-w-md bg-black/40 p-12 rounded-3xl border border-brand-gold/20 text-center relative overflow-hidden shadow-2xl"
+              className="w-full max-w-md bg-black/70 p-12 rounded-3xl border border-brand-gold/20 text-center relative overflow-hidden shadow-2xl"
             >
               {/* Chalkboard Background Decoration */}
               <div className="absolute inset-0 opacity-10 z-0 pointer-events-none">
@@ -237,13 +237,13 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                 الحرف المطلوب: <span className="text-brand-gold font-bold text-4xl mx-2">{currentWord.slice(-1)}</span>
               </div>
 
-              <div className="bg-black/40 border border-brand-gold/20 rounded-3xl p-8 w-full max-w-md text-center shadow-xl">
+              <div className="bg-black/70 border border-brand-gold/20 rounded-3xl p-8 w-full max-w-md text-center shadow-xl">
                 <div className="text-brand-gold/50 text-sm font-bold uppercase tracking-wider mb-2">دور اللاعب</div>
                 <div className="text-4xl font-bold text-white mb-4 flex items-center justify-center gap-3">
                   <User className="w-8 h-8 text-brand-gold" />
                   {activePlayers[currentPlayerIndex]}
                 </div>
-                <div className="w-full bg-black/60 h-2 rounded-full overflow-hidden border border-brand-gold/10">
+                <div className="w-full bg-black/80 h-2 rounded-full overflow-hidden border border-brand-gold/10">
                   <motion.div 
                     initial={{ width: "100%" }}
                     animate={{ width: "0%" }}
@@ -284,7 +284,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
         </div>
 
         {/* Players Sidebar */}
-        <div className="w-80 bg-black/40 border-r border-brand-gold/10 p-6 flex flex-col relative z-10">
+        <div className="w-80 bg-black/70 border-r border-brand-gold/10 p-6 flex flex-col relative z-10">
           <div className="flex items-center gap-3 mb-6">
             <Trophy className="w-6 h-6 text-brand-gold" />
             <h3 className="text-xl font-bold text-white">اللاعبون</h3>
@@ -298,7 +298,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                     key={username}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="bg-black/40 border border-brand-gold/10 rounded-xl p-4 flex items-center gap-3"
+                    className="bg-black/70 border border-brand-gold/10 rounded-xl p-4 flex items-center gap-3"
                   >
                     <div className="w-8 h-8 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-sm border border-brand-gold/30">
                       {index + 1}
@@ -313,7 +313,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className={`border rounded-xl p-4 flex items-center justify-between transition-colors ${
-                      index === currentPlayerIndex ? 'bg-brand-gold/20 border-brand-gold/50 shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-black/40 border-brand-gold/10 opacity-60'
+                      index === currentPlayerIndex ? 'bg-brand-gold/20 border-brand-gold/50 shadow-[0_0_15px_rgba(212,175,55,0.2)]' : 'bg-black/70 border-brand-gold/10 opacity-60'
                     }`}
                   >
                     <div className="flex items-center gap-3">

@@ -18,7 +18,7 @@ export function Lobby() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 backdrop-blur-md">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center border border-yellow-500/50 glow-gold">
             <Gamepad2 className="w-6 h-6 text-yellow-500" />
@@ -85,7 +85,7 @@ export function Lobby() {
               تصفح الألعاب
             </motion.button>
           ) : (
-            <div className="p-6 bg-zinc-900/50 border border-yellow-500/20 rounded-2xl max-w-md mx-auto backdrop-blur-sm">
+            <div className="p-6 bg-zinc-900/50 border border-yellow-500/20 rounded-2xl max-w-md mx-auto ">
               <p className="text-zinc-300 mb-4 font-arabic">
                 قم بتسجيل الدخول باستخدام حساب تويتش للبدء
               </p>

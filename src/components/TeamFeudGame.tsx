@@ -83,7 +83,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
   if (!state) return <div className="flex items-center justify-center h-full text-white">جاري الاتصال...</div>;
 
   return (
-    <div className="flex h-full w-full bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic text-white" dir="rtl">
+    <div className="flex h-full w-full bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl font-arabic text-white" dir="rtl">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
       {/* Main Game Area */}
       <div className="flex-1 relative p-8 overflow-y-auto z-10">
@@ -94,13 +94,13 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
             <p className="text-brand-gold/60">لعبة تخمين الإجابات الأكثر شيوعاً</p>
           </div>
           <div className="flex gap-4">
-            <div className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
+            <div className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
               <span>{window.location.origin}/team/{roomId}</span>
             </div>
-            <button onClick={resetGame} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
+            <button onClick={resetGame} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
               إعادة تعيين
             </button>
-            <button onClick={onLeave} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
+            <button onClick={onLeave} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
               <XCircle className="w-4 h-4" /> خروج
             </button>
           </div>
@@ -129,7 +129,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
         <AnimatePresence mode="wait">
           {state.status === 'waiting' && (
             <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
-              <div className="bg-black/40 border border-brand-gold/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+              <div className="bg-black/70 border border-brand-gold/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(212,175,55,0.1)]">
                 <Shield className="w-16 h-16 text-brand-gold mx-auto mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]" />
                 <h2 className="text-3xl font-black text-brand-gold mb-6">الفريق الذهبي</h2>
                 <div className="space-y-2 min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar">
@@ -145,19 +145,19 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                         ) : (
                           <button onClick={() => setLeader(p.id, 'gold')} className="text-[10px] bg-brand-gold/20 hover:bg-brand-gold/40 px-2 py-1 rounded border border-brand-gold/30 transition-colors">تعيين قائد</button>
                         )}
-                        <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-black/40 hover:bg-black/60 px-2 py-1 rounded border border-brand-gold/30 transition-colors">نقل للأسود</button>
+                        <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-black/70 hover:bg-black/80 px-2 py-1 rounded border border-brand-gold/30 transition-colors">نقل للأسود</button>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-black/40 border border-brand-gold/10 p-8 rounded-[40px] text-center opacity-80">
+              <div className="bg-black/70 border border-brand-gold/10 p-8 rounded-[40px] text-center opacity-80">
                 <Shield className="w-16 h-16 text-zinc-400 mx-auto mb-4" />
                 <h2 className="text-3xl font-black text-white mb-6">الفريق الأسود</h2>
                 <div className="space-y-2 min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar">
                   {state.players.filter(p => p.team === 'black').map(p => (
-                    <div key={p.id} className="bg-black/40 p-3 rounded-xl flex justify-between items-center border border-zinc-700">
+                    <div key={p.id} className="bg-black/70 p-3 rounded-xl flex justify-between items-center border border-zinc-700">
                       <div className="flex items-center gap-2">
                         {state.data?.leaders?.black === p.id && <Crown className="w-4 h-4 text-white" />}
                         <span className="font-bold text-white">{p.name}</span>
@@ -176,11 +176,11 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
               </div>
 
               <div className="col-span-2 flex flex-col items-center gap-6 mt-8">
-                <div className="bg-black/40 border border-brand-gold/20 p-6 rounded-2xl w-full max-w-md text-center">
+                <div className="bg-black/70 border border-brand-gold/20 p-6 rounded-2xl w-full max-w-md text-center">
                   <h3 className="text-xl font-bold mb-4 text-brand-gold">لاعبين بدون فريق</h3>
                   <div className="flex flex-wrap gap-2 justify-center">
                     {state.players.filter(p => !p.team).map(p => (
-                      <div key={p.id} className="bg-black/40 p-2 rounded-lg flex gap-2 items-center border border-brand-gold/10">
+                      <div key={p.id} className="bg-black/70 p-2 rounded-lg flex gap-2 items-center border border-brand-gold/10">
                         <span>{p.name}</span>
                         <button onClick={() => switchTeam(p.id, 'gold')} className="bg-brand-gold w-4 h-4 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]"></button>
                         <button onClick={() => switchTeam(p.id, 'black')} className="bg-zinc-400 w-4 h-4 rounded-full border border-zinc-500"></button>
@@ -229,7 +229,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   </motion.div>
                 </div>
                 
-                <div className="flex flex-col items-center gap-4 bg-black/40 p-8 rounded-[40px] border-2 border-zinc-700">
+                <div className="flex flex-col items-center gap-4 bg-black/70 p-8 rounded-[40px] border-2 border-zinc-700">
                   <Shield className="w-24 h-24 text-zinc-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
                   <span className="text-3xl font-black text-white">
                     {state.players.find(p => p.id === state.data.leaders?.black)?.name || 'الأسود'}
@@ -290,7 +290,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
 
                 <div className="text-center space-y-4">
                   <h2 className="text-5xl font-black italic text-brand-gold glow-gold-text">{state.data.question}</h2>
-                  <div className="bg-black/40 border border-brand-gold/20 p-4 rounded-2xl inline-block">
+                  <div className="bg-black/70 border border-brand-gold/20 p-4 rounded-2xl inline-block">
                     <span className="text-xl font-bold text-white">
                       {state.data.isStealOpportunity ? 'فرصة سرقة - ' : ''}دور الفريق {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}
                     </span>
@@ -302,7 +302,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   )}
                 </div>
 
-                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/50 scale-110' : 'border-zinc-800 opacity-50'}`}>
+                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80 scale-110' : 'border-zinc-800 opacity-50'}`}>
                   <h3 className="text-2xl font-black text-white">أسود: {state.data.scores.black}</h3>
                   <div className="flex gap-1 mt-2">
                     {[...Array(state.data.isStealOpportunity && state.data.currentTurn === 'black' ? 1 : 3)].map((_, i) => (
@@ -314,7 +314,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
 
               <div className="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
                 {state.data.answers.map((ans, i) => (
-                  <div key={i} className={`p-6 rounded-2xl border-2 transition-all flex justify-between items-center ${ans.revealed ? 'bg-brand-gold border-brand-gold-light text-black shadow-[0_0_20px_rgba(212,175,55,0.3)]' : 'bg-black/60 border-brand-gold/20'}`}>
+                  <div key={i} className={`p-6 rounded-2xl border-2 transition-all flex justify-between items-center ${ans.revealed ? 'bg-brand-gold border-brand-gold-light text-black shadow-[0_0_20px_rgba(212,175,55,0.3)]' : 'bg-black/80 border-brand-gold/20'}`}>
                     <span className="text-2xl font-black">{ans.revealed ? ans.text : `${i + 1} . . . . . . . . .`}</span>
                     {ans.revealed && <span className="text-xl font-bold">{ans.points}</span>}
                   </div>
@@ -328,7 +328,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                     value={guess}
                     onChange={(e) => setGuess(e.target.value)}
                     placeholder="اكتب الإجابة هنا..."
-                    className="w-full bg-black/40 border-2 border-brand-gold/20 p-6 rounded-3xl text-xl font-bold focus:border-brand-gold outline-none transition-all text-white"
+                    className="w-full bg-black/70 border-2 border-brand-gold/20 p-6 rounded-3xl text-xl font-bold focus:border-brand-gold outline-none transition-all text-white"
                   />
                   <button type="submit" className="absolute left-4 top-1/2 -translate-y-1/2 bg-brand-gold text-black p-3 rounded-2xl hover:bg-brand-gold-light">
                     <CheckCircle2 className="w-6 h-6" />
@@ -341,7 +341,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <h4 className="text-brand-gold font-bold mb-2">إدارة الفريق الذهبي</h4>
                   <div className="space-y-1 max-h-40 overflow-y-auto custom-scrollbar">
                     {state.players.filter(p => p.team === 'gold').map(p => (
-                      <div key={p.id} className="flex justify-between items-center text-xs bg-black/40 p-2 rounded-lg">
+                      <div key={p.id} className="flex justify-between items-center text-xs bg-black/70 p-2 rounded-lg">
                         <span className="flex items-center gap-1">
                           {state.data.leaders.gold === p.id && <Crown className="w-3 h-3 text-brand-gold" />}
                           {p.name}
@@ -355,7 +355,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <h4 className="text-white font-bold mb-2">إدارة الفريق الأسود</h4>
                   <div className="space-y-1 max-h-40 overflow-y-auto custom-scrollbar">
                     {state.players.filter(p => p.team === 'black').map(p => (
-                      <div key={p.id} className="flex justify-between items-center text-xs bg-black/40 p-2 rounded-lg">
+                      <div key={p.id} className="flex justify-between items-center text-xs bg-black/70 p-2 rounded-lg">
                         <span className="flex items-center gap-1">
                           {state.data.leaders.black === p.id && <Crown className="w-3 h-3 text-white" />}
                           {p.name}
@@ -371,7 +371,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
 
           {state.status === 'results' && (
             <motion.div key="results" className="w-full flex flex-col items-center gap-8 max-w-4xl mx-auto text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-              <div className="bg-black/40 border-2 border-brand-gold/20 p-8 rounded-[40px] shadow-[0_0_50px_rgba(212,175,55,0.2)] w-full">
+              <div className="bg-black/70 border-2 border-brand-gold/20 p-8 rounded-[40px] shadow-[0_0_50px_rgba(212,175,55,0.2)] w-full">
                 <Trophy className="w-24 h-24 text-brand-gold mx-auto mb-4 drop-shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
                 <h2 className="text-4xl font-black text-white mb-6">نتائج الجولة</h2>
                 
@@ -390,7 +390,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <h3 className="text-xl font-bold text-brand-gold/60">الإجابات الصحيحة</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {state.data.answers.map((ans, i) => (
-                      <div key={i} className="bg-black/40 p-4 rounded-xl border border-brand-gold/10 flex justify-between px-6">
+                      <div key={i} className="bg-black/70 p-4 rounded-xl border border-brand-gold/10 flex justify-between px-6">
                         <span className="font-bold text-white">{ans.text}</span>
                         <span className="font-bold text-brand-gold">{ans.points}</span>
                       </div>

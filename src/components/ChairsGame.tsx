@@ -225,7 +225,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
     if (phase === 'config') {
       return (
         <div className="flex flex-col items-center justify-center h-full w-full max-w-2xl mx-auto font-arabic" dir="rtl">
-          <div className="bg-black/40 backdrop-blur-md border border-brand-gold/20 p-8 rounded-2xl w-full text-center">
+          <div className="bg-black/70  border border-brand-gold/20 p-8 rounded-2xl w-full text-center">
             <h2 className="text-3xl font-bold text-white mb-6 flex items-center justify-center gap-3">
               <Armchair className="w-8 h-8 text-brand-gold" />
               لعبة الكراسي
@@ -252,7 +252,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             اكتب <span className="text-brand-gold font-mono bg-brand-gold/10 px-3 py-1 rounded-lg border border-brand-gold/20">!join</span> في الدردشة للعب
           </p>
           
-          <div className="bg-black/40 backdrop-blur-md border border-brand-gold/20 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
+          <div className="bg-black/70  border border-brand-gold/20 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
               <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-sm font-bold border border-brand-gold/30">
@@ -387,7 +387,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
                 <motion.div 
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="absolute bg-red-600/90 text-white px-8 py-4 rounded-2xl font-bold text-2xl backdrop-blur-sm z-30 shadow-2xl"
+                  className="absolute bg-red-600/90 text-white px-8 py-4 rounded-2xl font-bold text-2xl  z-30 shadow-2xl"
                   dir="rtl"
                 >
                   {eliminatedPlayer} تم إقصاؤه!
@@ -414,7 +414,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             <motion.div 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="bg-black/60 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+              className="bg-black/80 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
             >
               <div 
                 className="w-32 h-32 rounded-full flex items-center justify-center text-black font-bold text-5xl mx-auto mb-6 border-4 border-brand-gold"
@@ -455,7 +455,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
     <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
       <audio ref={audioRef} />
       {/* Main Game Area */}
-      <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] font-arabic" dir="rtl">
+      <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
         <button 
           onClick={onLeave} 
@@ -471,7 +471,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
 
       {/* Active Players Sidebar */}
       <div className="w-80 flex flex-col gap-4">
-        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
+        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
            <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
              <Users className="w-6 h-6 text-brand-gold" />
@@ -484,7 +484,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
                  key={player.username}
                  className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
                    player.isAlive 
-                     ? 'bg-black/40 border-white/5 hover:border-brand-gold/30' 
+                     ? 'bg-black/70 border-white/5 hover:border-brand-gold/30' 
                      : 'bg-red-900/10 border-red-500/20 opacity-60'
                  }`}
                >
@@ -513,7 +513,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
 
         {/* Twitch Chat Sidebar */}
       <div className="w-[500px] flex flex-col gap-4">
-          <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
           <TwitchChat 
             channelName={channelName} 
             messages={messages} 

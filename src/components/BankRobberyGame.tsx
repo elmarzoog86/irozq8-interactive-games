@@ -323,7 +323,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
 
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
-      <div className="flex-1 rounded-[40px] border border-brand-gold/20 bg-black/80 backdrop-blur-xl flex flex-col relative overflow-hidden">
+      <div className="flex-1 rounded-[40px] border border-brand-gold/20 bg-black/80  flex flex-col relative overflow-hidden">
         
         <AnimatePresence>
           {mode === 'lobby' && (
@@ -366,7 +366,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
         </AnimatePresence>
 
         {mode !== 'lobby' && (
-          <div className="p-8 pb-4 flex justify-between items-center z-10 border-b border-brand-gold/10 bg-black/40">
+          <div className="p-8 pb-4 flex justify-between items-center z-10 border-b border-brand-gold/10 bg-black/70">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30">
                 {gameType === 'coop' ? <Lock className="w-8 h-8 text-blue-400" /> : <AlertTriangle className="w-8 h-8 text-red-500" />}
@@ -466,7 +466,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               </div>
 
               {gameType === 'pvp' && (
-                <div className="w-full max-w-2xl mt-12 bg-black/60 border border-white/10 rounded-3xl p-6 relative z-10 h-64 overflow-hidden">
+                <div className="w-full max-w-2xl mt-12 bg-black/80 border border-white/10 rounded-3xl p-6 relative z-10 h-64 overflow-hidden">
                   <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm">سجل العمليات</h3>
                   <div className="flex flex-col gap-3">
                     <AnimatePresence>
@@ -491,7 +491,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               )}
             </div>
 
-            <div className="w-[400px] bg-black/40 border border-brand-gold/10 rounded-3xl p-6 flex flex-col shadow-xl z-10">
+            <div className="w-[400px] bg-black/70 border border-brand-gold/10 rounded-3xl p-6 flex flex-col shadow-xl z-10">
               <div className="flex items-center gap-3 mb-6 bg-brand-gold/10 p-4 rounded-2xl border border-brand-gold/20">
                 <Trophy className="w-6 h-6 text-brand-gold" />
                 <h3 className="text-xl font-black text-brand-gold tracking-wider">
@@ -550,7 +550,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
 
         <AnimatePresence>
           {mode === 'game_over' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center p-8">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/90  flex flex-col items-center justify-center p-8">
               <div className="mb-8">
                 {gameType === 'coop' ? (
                    vaultHP <= 0 ? <Trophy className="w-40 h-40 text-brand-gold drop-shadow-[0_0_50px_rgba(212,175,55,1)]" /> : <Lock className="w-40 h-40 text-red-500 drop-shadow-[0_0_50px_rgba(239,68,68,1)]" />
@@ -589,7 +589,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
       </div>
       
       {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl shrink-0">
+        <div className="w-80 h-full flex flex-col bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl shrink-0">
           <TwitchChat
             channelName={channelName}
             messages={messages}

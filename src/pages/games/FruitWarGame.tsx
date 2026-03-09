@@ -57,7 +57,7 @@ export function FruitWarGame() {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 backdrop-blur-md">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => navigate('/games')}
@@ -82,7 +82,7 @@ export function FruitWarGame() {
         {/* Left Column: Game Area */}
         <div className="flex-1 flex flex-col gap-6">
           {gameState === 'lobby' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
               <div className="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center mb-8 border border-red-500/30 glow-gold">
                 <span className="text-5xl">🍎</span>
               </div>
@@ -95,7 +95,7 @@ export function FruitWarGame() {
               </p>
 
               <div className="flex flex-col items-center gap-6 mb-12 w-full max-w-md">
-                <div className="flex items-center justify-between w-full bg-zinc-800/50 p-4 rounded-xl border border-zinc-700">
+                <div className="flex items-center justify-between w-full bg-zinc-800/80 p-4 rounded-xl border border-zinc-700">
                   <span className="text-zinc-300 font-arabic font-bold">نمط اللعب</span>
                   <div className="flex gap-2">
                     <button 
@@ -117,7 +117,7 @@ export function FruitWarGame() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between w-full bg-zinc-800/50 p-4 rounded-xl border border-zinc-700">
+                <div className="flex items-center justify-between w-full bg-zinc-800/80 p-4 rounded-xl border border-zinc-700">
                   <span className="text-zinc-300 font-arabic font-bold">عدد الأرواح</span>
                   <input 
                     type="number" 
@@ -143,7 +143,7 @@ export function FruitWarGame() {
           )}
 
           {gameState === 'roulette' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
               <h2 className="text-3xl font-bold font-arabic mb-8 text-white">
                 عجلة <span className="text-yellow-500 glow-gold-text">الروليت</span>
               </h2>
@@ -163,7 +163,7 @@ export function FruitWarGame() {
           )}
 
           {gameState === 'voting' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col ">
               <div className="flex justify-between items-center mb-8">
                 <h2 className="text-3xl font-bold font-arabic text-white">
                   مرحلة <span className="text-yellow-500 glow-gold-text">التصويت</span>
@@ -175,7 +175,7 @@ export function FruitWarGame() {
 
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 flex-1 overflow-y-auto p-2 custom-scrollbar">
                 {players.filter(p => p.isActive).map(player => (
-                  <div key={player.id} className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 flex flex-col items-center gap-3 relative overflow-hidden group hover:border-yellow-500/50 transition-colors">
+                  <div key={player.id} className="bg-zinc-800/80 border border-zinc-700 rounded-xl p-4 flex flex-col items-center gap-3 relative overflow-hidden group hover:border-yellow-500/50 transition-colors">
                     <div className="absolute top-2 right-2 flex gap-1">
                       {Array.from({ length: player.lives }).map((_, i) => (
                         <div key={i} className="w-2 h-2 rounded-full bg-red-500" />
@@ -195,7 +195,7 @@ export function FruitWarGame() {
           )}
 
           {gameState === 'results' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center backdrop-blur-sm">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
               <Trophy className="w-24 h-24 text-yellow-500 mb-6 glow-gold-text" />
               <h2 className="text-4xl font-bold font-arabic mb-8 text-white">
                 الفائز <span className="text-yellow-500 glow-gold-text">النهائي</span>
@@ -220,7 +220,7 @@ export function FruitWarGame() {
         {/* Right Column: Chat & Players */}
         <div className="w-96 flex flex-col gap-6">
           {/* Active Players */}
-          <div className="bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-6 backdrop-blur-sm flex flex-col h-1/3">
+          <div className="bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-6  flex flex-col h-1/3">
             <div className="flex items-center justify-between mb-4">
               <span className="bg-yellow-500/10 text-yellow-500 px-3 py-1 rounded-full text-sm font-bold font-mono">
                 {players.filter(p => p.isActive).length}
@@ -235,7 +235,7 @@ export function FruitWarGame() {
                 </div>
               ) : (
                 players.map(player => (
-                  <div key={player.id} className={`flex items-center justify-between bg-zinc-800/50 rounded-lg p-3 border ${player.isActive ? 'border-zinc-700/50' : 'border-red-500/30 opacity-50'}`}>
+                  <div key={player.id} className={`flex items-center justify-between bg-zinc-800/80 rounded-lg p-3 border ${player.isActive ? 'border-zinc-700/50' : 'border-red-500/30 opacity-50'}`}>
                     <div className="flex items-center gap-2">
                       <span className="text-xl">🍎</span>
                       <span className="text-zinc-200 font-medium text-sm">{player.username}</span>

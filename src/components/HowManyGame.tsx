@@ -186,11 +186,11 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             <div className="flex gap-2">
               <button 
                 onClick={onLeave}
-                className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-zinc-400 hover:text-white transition-all flex items-center gap-2"
+                className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-zinc-400 hover:text-white transition-all flex items-center gap-2"
               >
                 <XCircle className="w-4 h-4" /> خروج
               </button>
-              <div className="bg-black/40 border border-brand-gold/20 p-2 rounded-xl flex items-center gap-3">
+              <div className="bg-black/70 border border-brand-gold/20 p-2 rounded-xl flex items-center gap-3">
                 <code className="text-brand-gold font-bold px-2">{window.location.origin}/howmany/{roomId}</code>
                 <button 
                   onClick={copyLink}
@@ -249,7 +249,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                       key={p.id}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="bg-black/40 border border-brand-gold/10 p-4 rounded-2xl flex flex-col items-center gap-2"
+                      className="bg-black/70 border border-brand-gold/10 p-4 rounded-2xl flex flex-col items-center gap-2"
                     >
                       <div className="w-12 h-12 bg-brand-gold/20 rounded-full flex items-center justify-center text-xl">
                         👤
@@ -280,12 +280,12 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             >
               <h2 className="text-6xl font-black italic text-brand-gold">من سيواجه من؟</h2>
               <div className="flex items-center gap-12">
-                <div className="bg-black/40 border-2 border-brand-gold/50 p-12 rounded-[40px] w-80 shadow-2xl">
+                <div className="bg-black/70 border-2 border-brand-gold/50 p-12 rounded-[40px] w-80 shadow-2xl">
                   <div className="text-8xl mb-6">👤</div>
                   <h3 className="text-3xl font-black">{state.players.find(p => p.id === state.currentMatch?.[0])?.name}</h3>
                 </div>
                 <Swords className="w-24 h-24 text-brand-gold animate-pulse" />
-                <div className="bg-black/40 border-2 border-brand-gold/50 p-12 rounded-[40px] w-80 shadow-2xl">
+                <div className="bg-black/70 border-2 border-brand-gold/50 p-12 rounded-[40px] w-80 shadow-2xl">
                   <div className="text-8xl mb-6">👤</div>
                   <h3 className="text-3xl font-black">{state.players.find(p => p.id === state.currentMatch?.[1])?.name}</h3>
                 </div>
@@ -310,7 +310,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                   <button 
                     key={cat}
                     onClick={() => chooseCategory(cat)}
-                    className="bg-black/40 border-2 border-brand-gold/10 hover:border-brand-gold p-12 rounded-[40px] transition-all group"
+                    className="bg-black/70 border-2 border-brand-gold/10 hover:border-brand-gold p-12 rounded-[40px] transition-all group"
                   >
                     <span className="text-3xl font-black group-hover:text-brand-gold">{cat}</span>
                   </button>
@@ -328,7 +328,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <span className="text-2xl font-bold text-brand-gold">الفئة: {state.selectedCategory}</span>
               </div>
 
-               <div className="bg-black/40 border border-brand-gold/20 p-8 rounded-3xl min-w-[300px]">
+               <div className="bg-black/70 border border-brand-gold/20 p-8 rounded-3xl min-w-[300px]">
                   <h3 className="text-lg text-zinc-400 mb-2 font-bold">المزايدة الحالية</h3>
                   {state.bid > 0 ? (
                     <div>
@@ -354,7 +354,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mt-8 bg-black/80 backdrop-blur-md p-6 rounded-[30px] border border-brand-gold/30 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-20"
+                  className="mt-8 bg-black/80  p-6 rounded-[30px] border border-brand-gold/30 shadow-[0_0_40px_rgba(0,0,0,0.5)] z-20"
                 >
                   <h3 className="text-2xl font-black text-brand-gold mb-6 italic">دورك للتحدي!</h3>
                   
@@ -406,7 +406,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               className="text-center space-y-8 w-full max-w-4xl"
             >
               <div className="flex justify-between items-center mb-12">
-                <div className="bg-black/40 p-8 rounded-3xl border border-brand-gold/20 w-64">
+                <div className="bg-black/70 p-8 rounded-3xl border border-brand-gold/20 w-64">
                   <Timer className="w-12 h-12 text-brand-gold mx-auto mb-2" />
                   <span className="text-6xl font-black font-mono">{state.timer}</span>
                 </div>
@@ -414,13 +414,13 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                   <h2 className="text-4xl font-black mb-2">{state.selectedCategory}</h2>
                   <p className="text-zinc-500 uppercase tracking-widest">الهدف: {state.targetCount}</p>
                 </div>
-                <div className="bg-black/40 p-8 rounded-3xl border border-brand-gold/20 w-64">
+                <div className="bg-black/70 p-8 rounded-3xl border border-brand-gold/20 w-64">
                   <CheckCircle2 className="w-12 h-12 text-brand-gold mx-auto mb-2" />
                   <span className="text-6xl font-black font-mono">{state.currentCount}</span>
                 </div>
               </div>
 
-              <div className="bg-black/40 border border-brand-gold/10 p-12 rounded-[40px] min-h-[300px] flex flex-wrap gap-4 justify-center content-start relative">
+              <div className="bg-black/70 border border-brand-gold/10 p-12 rounded-[40px] min-h-[300px] flex flex-wrap gap-4 justify-center content-start relative">
                 <AnimatePresence>
                   {state.answers.map((ans, i) => (
                     <motion.div 
@@ -461,7 +461,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             >
               <h2 className="text-5xl font-black italic">قرار النتيجة</h2>
 
-              <div className="bg-black/40 border border-brand-gold/10 p-8 rounded-[30px] max-w-4xl mx-auto">
+              <div className="bg-black/70 border border-brand-gold/10 p-8 rounded-[30px] max-w-4xl mx-auto">
                 <h3 className="text-zinc-400 mb-4 font-bold">الإجابات المقدمة ({state.currentCount} / {state.targetCount})</h3>
                 <div className="flex flex-wrap gap-3 justify-center">
                   {state.answers.map((ans, i) => (
@@ -534,7 +534,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
         {state.currentMatch && state.status !== 'waiting' && state.status !== 'game_over' && (
           <div className="absolute top-24 left-8 z-50 flex flex-col items-start gap-4 pointer-events-auto">
             {/* Matchup Card */}
-            <div className="bg-black/90 backdrop-blur-md border border-brand-gold/20 p-4 rounded-2xl flex items-center gap-6 shadow-2xl skew-x-[-10deg] hover:skew-x-0 transition-transform duration-300 group">
+            <div className="bg-black/90  border border-brand-gold/20 p-4 rounded-2xl flex items-center gap-6 shadow-2xl skew-x-[-10deg] hover:skew-x-0 transition-transform duration-300 group">
                 <div className="flex flex-col items-center skew-x-[10deg] group-hover:skew-x-0 transition-transform">
                   <span className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mb-1">المنافس 1</span>
                   <div className={`text-xl font-black ${state.currentMatch[0] === state.turn ? 'text-brand-gold animate-pulse' : 'text-white'}`}>
@@ -556,7 +556,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             {state.status === 'naming' && (
               <button 
                 onClick={forceEndRound}
-                className="bg-red-900/80 hover:bg-red-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all border border-red-500/30 flex items-center gap-2 shadow-lg backdrop-blur-sm"
+                className="bg-red-900/80 hover:bg-red-800 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all border border-red-500/30 flex items-center gap-2 shadow-lg "
               >
                 <Timer className="w-5 h-5" /> إنهاء الجولة فوراً
               </button>
@@ -579,7 +579,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               key={p.id} 
               className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
                 !p.isEliminated 
-                  ? 'bg-black/40 border-brand-gold/20 shadow-sm' 
+                  ? 'bg-black/70 border-brand-gold/20 shadow-sm' 
                   : 'bg-red-900/10 border-red-900/30 opacity-60'
               }`}
             >
@@ -599,7 +599,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
       </div>
       
       <div className="w-[350px] flex flex-col gap-4 p-4 pl-0 border-r border-brand-gold/10">
-        <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+        <div className="flex-1 min-h-0 bg-black/80  rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl">
           <TwitchChat
             channelName={channelName}
             messages={messages}

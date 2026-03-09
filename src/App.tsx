@@ -53,7 +53,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               >
                 <div 
                   onClick={() => window.location.href = '/'}
-                  className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors cursor-pointer backdrop-blur-sm"
+                  className="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors cursor-pointer "
                 >
                   <ArrowLeft size={24} />
                 </div>
@@ -234,7 +234,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -243,7 +243,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -252,7 +252,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -263,7 +263,7 @@ function MainApp() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md bg-black/80 backdrop-blur-xl border border-brand-gold/20 rounded-[40px] p-10 shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10 relative overflow-hidden"
+          className="w-full max-w-md bg-black/80  border border-brand-gold/20 rounded-[40px] p-10 shadow-2xl z-10 relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
           
@@ -351,7 +351,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -360,7 +360,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -369,7 +369,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -406,7 +406,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -415,7 +415,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -424,7 +424,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -461,7 +461,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -470,7 +470,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -479,7 +479,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -516,7 +516,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -525,7 +525,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -534,7 +534,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -571,7 +571,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -580,7 +580,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -589,7 +589,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -664,7 +664,7 @@ function MainApp() {
               href="https://www.twitch.tv/irozq8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
             >
               <Twitch className="w-4 h-4 text-[#9146FF]" />
               <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -673,7 +673,7 @@ function MainApp() {
               href="https://streamlabs.com/irozq8/tip" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
             >
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
@@ -682,7 +682,7 @@ function MainApp() {
               href="https://discord.com/users/StigQ8" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
               <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -719,7 +719,7 @@ function MainApp() {
         <source src="/background.webm" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-black/40 z-0" />
+      <div className="absolute inset-0 bg-black/70 z-0" />
 
       {/* Top Bar */}
   <div className="w-full max-w-[96vw] flex items-center justify-between mb-4 relative z-20">
@@ -734,7 +734,7 @@ function MainApp() {
             href="https://www.twitch.tv/irozq8" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
+            className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm "
           >
             <Twitch className="w-4 h-4 text-[#9146FF]" />
             <span className="hidden sm:inline">قناتي في تويتش</span>
@@ -743,7 +743,7 @@ function MainApp() {
             href="https://streamlabs.com/irozq8/tip" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
+            className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm "
           >
             <Heart className="w-4 h-4 text-emerald-500" />
             <span className="hidden sm:inline">دعم القناة</span>
@@ -752,7 +752,7 @@ function MainApp() {
             href="https://discord.com/users/StigQ8" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
+            className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
           >
             <MessageCircle className="w-4 h-4 text-[#5865F2]" />
             <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
@@ -763,7 +763,7 @@ function MainApp() {
   <div className="w-full max-w-[96vw] flex gap-8 h-[96vh] relative z-10">
         
         {/* Main Content Area */}
-        <div className="flex-1 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
           
           <div className="relative z-10 w-full h-full flex flex-col">
@@ -783,7 +783,7 @@ function MainApp() {
                   
                   {/* Filters */}
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-black/40 p-1.5 rounded-2xl border border-brand-gold/10">
+                    <div className="flex items-center gap-2 bg-black/70 p-1.5 rounded-2xl border border-brand-gold/10">
                       <button 
                         onClick={() => setStatusFilter('all')}
                         className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'all' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
@@ -802,7 +802,7 @@ function MainApp() {
                       >تجريبي</button>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-black/40 p-1.5 rounded-2xl border border-brand-gold/10">
+                    <div className="flex items-center gap-2 bg-black/70 p-1.5 rounded-2xl border border-brand-gold/10">
                       <button 
                         onClick={() => setTypeFilter('all')}
                         className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'all' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
@@ -841,11 +841,11 @@ function MainApp() {
                       <div 
                         key={game.id}
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
-                        className={`group relative bg-black/40 backdrop-blur-md border-2 border-brand-gold/10 hover:border-brand-gold/50 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-gold/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
+                        className={`group relative bg-black/70  border-2 border-brand-gold/10 hover:border-brand-gold/50 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-gold/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
                         
-                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-gold/20 bg-black/40 flex items-center justify-center relative shadow-inner">
+                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-gold/20 bg-black/70 flex items-center justify-center relative shadow-inner">
                           <img 
                             src={game.image} 
                             alt={game.name} 
@@ -858,7 +858,7 @@ function MainApp() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
                           
                           {game.isNew && <div className="absolute top-4 right-4 bg-brand-gold text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">جديد</div>}
-                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-black/60 text-brand-gold/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-gold/20">قريباً</div>}
+                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-black/80 text-brand-gold/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-gold/20">قريباً</div>}
                           {game.status === 'testing' && <div className="absolute top-4 right-4 bg-brand-gold/20 text-brand-gold text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg border border-brand-gold/30">تجريبي</div>}
                         </div>
 
@@ -895,7 +895,7 @@ function MainApp() {
 
           {/* Sidebar Chat */}
           <div className="w-[500px] flex flex-col gap-4">
-            <div className="flex-1 min-h-0 bg-black/60 backdrop-blur-xl rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
             <TwitchChat 
               channelName={activeChannel} 
               messages={messages}

@@ -11,7 +11,7 @@ interface ChatSidebarProps {
 
 export const ChatSidebar: React.FC<ChatSidebarProps> = ({ messages, instructions }) => {
   return (
-    <div className="w-80 bg-black/60 backdrop-blur-xl border-l border-brand-gold/20 flex flex-col h-full font-arabic" dir="rtl">
+    <div className="w-80 bg-black/80  border-l border-brand-gold/20 flex flex-col h-full font-arabic" dir="rtl">
       <div className="p-4 border-b border-brand-gold/10 flex items-center gap-2 bg-brand-gold/5">
         <MessageSquare className="w-5 h-5 text-brand-gold" />
         <h3 className="font-black text-lg text-white">الدردشة</h3>

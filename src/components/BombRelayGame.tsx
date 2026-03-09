@@ -76,13 +76,13 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
             <p className="text-brand-gold/60">تعاون مع فريقك لتفكيك القنبلة</p>
           </div>
           <div className="flex gap-4">
-            <div className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
+            <div className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/50 flex items-center gap-2">
               <span>{window.location.origin}/team/{roomId}</span>
             </div>
-            <button onClick={resetGame} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
+            <button onClick={resetGame} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
               إعادة تعيين
             </button>
-            <button onClick={onLeave} className="bg-black/40 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
+            <button onClick={onLeave} className="bg-black/70 border border-brand-gold/20 px-4 py-2 rounded-xl text-sm font-bold text-brand-gold/70 hover:text-brand-gold transition-all flex items-center gap-2">
               <XCircle className="w-4 h-4" /> خروج
             </button>
           </div>
@@ -144,11 +144,11 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
 
               <div className="grid grid-cols-1 gap-6">
                 {state.data.tasks.map((task) => (
-                  <div key={task.id} className={`p-8 rounded-[32px] border-2 transition-all flex justify-between items-center ${task.completed ? 'bg-brand-gold/20 border-brand-gold' : 'bg-black/40 border-brand-gold/20'}`}>
+                  <div key={task.id} className={`p-8 rounded-[32px] border-2 transition-all flex justify-between items-center ${task.completed ? 'bg-brand-gold/20 border-brand-gold' : 'bg-black/70 border-brand-gold/20'}`}>
                     <div className="text-right">
                       <h3 className="text-2xl font-bold mb-2 text-white">{task.text}</h3>
                       {task.target && (
-                        <div className="w-64 h-4 bg-black/40 rounded-full overflow-hidden border border-brand-gold/10">
+                        <div className="w-64 h-4 bg-black/70 rounded-full overflow-hidden border border-brand-gold/10">
                           <div 
                             className="h-full bg-brand-gold transition-all" 
                             style={{ width: `${(task.count! / task.target!) * 100}%` }}
@@ -171,7 +171,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
                             <input 
                               type="text" 
                               placeholder="الإجابة..."
-                              className="bg-black/40 border border-brand-gold/20 p-4 rounded-xl outline-none focus:border-brand-gold text-white"
+                              className="bg-black/70 border border-brand-gold/20 p-4 rounded-xl outline-none focus:border-brand-gold text-white"
                               onKeyDown={(e) => {
                                 if (e.key === 'Enter') {
                                   submitTask(task.id, (e.target as HTMLInputElement).value);
@@ -204,7 +204,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
                   <h2 className="text-6xl font-black text-red-500">انفجرت القنبلة!</h2>
                 </>
               )}
-              <button onClick={resetGame} className="bg-black/40 border border-brand-gold/20 px-12 py-4 rounded-2xl font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
+              <button onClick={resetGame} className="bg-black/70 border border-brand-gold/20 px-12 py-4 rounded-2xl font-bold text-brand-gold hover:bg-brand-gold/10 transition-all">
                 العودة للردهة
               </button>
             </motion.div>
@@ -223,7 +223,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
       </div>
       <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {state.players.map(p => (
-          <div key={p.id} className="bg-black/40 p-2 rounded-lg border border-white/5 flex items-center justify-between">
+          <div key={p.id} className="bg-black/70 p-2 rounded-lg border border-white/5 flex items-center justify-between">
             <span className="text-zinc-200 text-sm truncate">{p.name}</span>
             {p.team === 'gold' && <Shield className="w-4 h-4 text-brand-gold" />}
           </div>
