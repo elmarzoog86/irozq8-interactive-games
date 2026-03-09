@@ -38,7 +38,7 @@ export function useTwitchChat({ channelName, accessToken }: UseTwitchChatProps) 
         color: tags.color || '#818cf8',
       };
 
-      setMessages((prev) => [...prev, newMessage].slice(-100));
+      setMessages((prev) => [...prev, newMessage].slice(-30));
     });
 
     client.on('connected', () => {
