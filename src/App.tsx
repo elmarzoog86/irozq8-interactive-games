@@ -174,7 +174,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       description: 'لعبة كلاسيكية بلمسة تفاعلية! تنافس مع الدردشة للوصول للقمة، واحذر من الثعابين!',
       tutorial: 'اكتب !join للانضمام، وعندما يأتي دورك اكتب !roll لرمي النرد.',
       image: '/snakesandladder.png',
-      status: 'coming_soon',
+      status: 'active',
       type: 'puzzles',
       color: 'green'
     },
