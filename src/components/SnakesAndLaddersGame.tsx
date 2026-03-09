@@ -570,7 +570,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
 
               {/* Board */}
               <div className="flex-1 flex flex-col items-center justify-center min-w-0 h-full p-4">
-                  <div className="relative aspect-square w-full max-h-[85vh] rounded-2xl border-[4px] border-[#4A3728] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-10 grid-rows-10 transform bg-[url('/snakes-board.png')] bg-cover bg-center bg-no-repeat">
+                  <div className="relative aspect-square w-full max-h-[85vh] rounded-2xl border-[4px] border-[#4A3728] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-10 grid-rows-10 transform bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/snakes-board.png')" }}>
                        {/* Grid Cells */}
                        {renderBoard()}
                     </div>
