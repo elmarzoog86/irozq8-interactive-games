@@ -22,20 +22,21 @@ const COLS = 10;
 
 // Classic Snakes and Ladders positions - Adjusted for cleaner visualization
 const SNAKES: SnakeOrLadder[] = [
-  { start: 32, end: 8 },
   { start: 43, end: 17 },
-  { start: 56, end: 15 },
-  { start: 68, end: 26 },
-  { start: 84, end: 57 },
-  { start: 98, end: 41 }
+  { start: 56, end: 8 },
+  { start: 50, end: 5 },
+  { start: 73, end: 15 },
+  { start: 84, end: 58 },
+  { start: 98, end: 40 }
 ];
 
 const LADDERS: SnakeOrLadder[] = [
-  { start: 12, end: 29 },
-  { start: 22, end: 40 },
-  { start: 34, end: 67 },
+  { start: 2, end: 23 },
+  { start: 8, end: 29 },
+  { start: 22, end: 41 },
+  { start: 28, end: 75 },
   { start: 71, end: 92 },
-  { start: 79, end: 100 }
+  { start: 80, end: 99 }
 ];
 
 const COLORS = [
