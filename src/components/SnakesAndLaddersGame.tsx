@@ -195,7 +195,7 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
     }
 
     let currentPlayer = { ...currentPlayers[playerIndex] };
-    let currentPos = currentPlayer.position === 0 ? 1 : currentPlayer.position;
+    let currentPos = currentPlayer.position;
 
     // Step-by-step movement
     for (let i = 0; i < roll; i++) {
@@ -260,8 +260,8 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
     setPhase('playing');
     setCurrentPlayerIndex(0);
     setWinners([]);
-    // Reset positions to 1
-    setPlayers(prev => prev.map(p => ({ ...p, position: 1, isFinished: false, rank: 0 }))); 
+    // Reset positions to 0 (off board)
+    setPlayers(prev => prev.map(p => ({ ...p, position: 0, isFinished: false, rank: 0 }))); 
   };
 
   const resetGame = () => {
@@ -364,11 +364,13 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
         const effectiveRow = 9 - row; // 0 at bottom, 9 at top
         let number;
         if (effectiveRow % 2 === 0) {
-             // Right to Left
-             number = effectiveRow * 10 + (10 - col);
-        } else {
-             // Left to Right
+             // Even rows (0: 1-10, 2: 21-30, etc.)
+             // Due to dir="rtl", pushing 1, 2, 3 places 1 on the far Right.
              number = effectiveRow * 10 + col + 1;
+        } else {
+             // Odd rows (1: 11-20, 3: 31-40, etc.)
+             // Due to dir="rtl", pushing 20, 19, 18 places 20 on the far Right.
+             number = effectiveRow * 10 + (10 - col);
         }
 
         cells.push(
