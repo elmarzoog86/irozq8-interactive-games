@@ -111,13 +111,15 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             return prev;
           });
         } else if (phase === 'playing' && mode === 'voting' && timeLeft !== null && timeLeft > 0 && !showRoundResult) {
-          // Voting mode: players type fruit name or emoji to vote
-          const targetFruit = ALL_FRUITS.find(f => text.includes(f.name.toLowerCase()) || text.includes(f.emoji));
-          if (targetFruit) {
-            // Check if target is alive
-            const targetPlayer = activePlayers.find(p => p.fruit.name === targetFruit.name);
-            if (targetPlayer) {
-              setVotes(prev => ({ ...prev, [msg.username]: targetFruit.name }));
+          // Voting mode: only players who joined (alive or eliminated) can vote
+          if (players[msg.username]) {
+            const targetFruit = ALL_FRUITS.find(f => text.includes(f.name.toLowerCase()) || text.includes(f.emoji));
+            if (targetFruit) {
+              // Check if target is alive (you can only vote out alive players)
+              const targetPlayer = activePlayers.find(p => p.fruit.name === targetFruit.name);
+              if (targetPlayer) {
+                setVotes(prev => ({ ...prev, [msg.username]: targetFruit.name }));
+              }
             }
           }
         } else if (phase === 'playing' && mode === 'roulette' && rouletteState === 'waiting' && selectedPlayer?.username === msg.username) {
@@ -576,7 +578,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                  }`}
                >
                  <div className="flex items-center gap-3 overflow-hidden">
-                    <span className="text-2xl">{player.fruit.emoji}</span>
+                    <span className="text-2xl">{player.isAlive && phase !== 'winner' ? '❓' : player.fruit.emoji}</span>
                     <span className={`font-medium truncate ${player.isAlive ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
                       {player.username}
                     </span>
