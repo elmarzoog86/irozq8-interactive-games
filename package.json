@@ -30,6 +30,7 @@
     "react-dom": "^19.0.0",
     "react-player": "^3.4.0",
     "react-router-dom": "^7.13.0",
+    "react-youtube": "^10.1.0",
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
     "soundfont-player": "^0.12.0",
@@ -48,6 +49,7 @@
     "@types/yt-search": "^2.10.3",
     "autoprefixer": "^10.4.21",
     "basic-ftp": "^5.2.0",
+    "replace-in-file": "^8.4.0",
     "tailwindcss": "^4.1.14",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"

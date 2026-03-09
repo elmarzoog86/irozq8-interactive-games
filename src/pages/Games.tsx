@@ -22,14 +22,6 @@ const games = [
     status: 'active',
   },
   {
-    id: 'bank-robbery',
-    title: 'سرقة البنوك',
-    description: 'قريباً - لعبة مثيرة جديدة',
-    icon: '🏦',
-    path: '#',
-    status: 'coming_soon',
-  },
-  {
     id: 'guess-song',
     title: 'خمن الأغنية',
     description: 'لعبة تخمين الأغاني مع الشات',

@@ -15,8 +15,7 @@ import { MusicGuesserGame } from './components/MusicGuesserGame';
   import { BombRelayGame } from './components/BombRelayGame';
   import { BankRobberyGame } from './components/BankRobberyGame';
   import { ChatRoyaleGame } from './components/ChatRoyaleGame';
-  import { TurfWarsGame } from './components/TurfWarsGame';
-  import { RussianRouletteChatGame } from './components/RussianRouletteChatGame';
+ import { TurfWarsGame } from './components/TurfWarsGame';
   import { TeamPlayer } from './components/TeamPlayer';
 import { SnakesAndLaddersGame } from './components/SnakesAndLaddersGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
@@ -159,75 +158,15 @@ const ENABLE_COMING_SOON_PAGE = false;
     type: 'puzzles',
     color: 'blue'
   },
-  {
-    id: 'chatinvaders',
-    name: 'غزاة الشات',
-    description: 'حول الدردشة إلى معركة فضائية! كل رسالة هي عدو جديد. دافع عن سفينتك ودمر الغزاة قبل أن يصلوا إليك.',
-    tutorial: 'استخدم الأسهم للحركة و Space لإطلاق النار. كل رسالة في الدردشة تظهر كعدو يحاول تدميرك.',
-    image: '/chatinvaders.png',
-    status: 'coming_soon',
-    type: 'action',
-    color: 'red'
-  },
-  {
-    id: 'guessmusic',
-    name: 'خمن الموسيقى',
-    description: 'لمحبي الألحان! استمع للمقاطع الموسيقية وكن الأول في تخمين اسم الأغنية أو الفنان في الدردشة.',
-    tutorial: 'استمع للمقطع الموسيقي واكتب اسم الأغنية أو الفنان في الدردشة بأسرع ما يمكن.',
-    image: '/guessmusic.png',
-    status: 'coming_soon',
-    type: 'puzzles',
-    color: 'yellow'
-  },
-  {
-    id: 'bankrobbery',
-    name: 'سطو على البنك',
-    description: 'مهمة تعاونية كبرى. خطط مع الدردشة لتجاوز أنظمة الأمن وفتح الخزنة والهروب بالكنز قبل وصول الشرطة.',
-    tutorial: 'تعاون مع الدردشة عبر كتابة الأوامر لتجاوز العقبات. الدقة والتوقيت هما مفتاح النجاح.',
-    image: '/bankrobbery.png',
-    status: 'coming_soon',
-    type: 'strategy',
-    color: 'yellow'
-  },
-  {
-    id: 'bombrelay',
-    name: 'سباق القنبلة',
-    description: 'الضغط يزداد! تعاون مع فريقك لتمرير القنبلة وتفكيك رموزها المعقدة قبل أن تنفجر في وجه الجميع.',
-    tutorial: 'اكتب الرموز المطلوبة في الدردشة لتفكيك القنبلة قبل انتهاء الوقت. السرعة هي كل شيء!',
-    image: '/bombrelay.png',
-    status: 'coming_soon',
-    type: 'action',
-    color: 'green'
-  },
-  {
-      id: 'chatroyale',
-      name: 'المعركة الملكية',
-      description: 'لعبة بقاء على قيد الحياة. اجمع الأسلحة واقضِ على اللاعبين الآخرين في الشات وتفادى الكوارث الطبيعية!',
-      tutorial: 'اكتب !join للانضمام، !loot للبحث عن الأسلحة، واكتب !attack @username للهجوم.',
-      image: '/battleroyal.png',
-      status: 'coming_soon',
-      type: 'strategy',
+    {
+      id: 'guessmusic',
+      name: 'خمن الموسيقى',
+      description: 'لمحبي الألحان! استمع للمقاطع الموسيقية وكن الأول في تخمين اسم الأغنية أو الفنان في الدردشة.',
+      tutorial: 'استمع للمقطع الموسيقي واكتب اسم الأغنية أو الفنان في الدردشة بأسرع ما يمكن.',
+      image: '/guessmusic.png',
+      status: 'active',
+      type: 'puzzles',
       color: 'yellow'
-    },
-    {
-      id: 'turfwars',
-      name: 'حرب العصابات',
-      description: 'اختر عصابتك، وهاجم العصابات الأخرى أو عالج فريقك في معركة طاحنة في الشوارع.',
-      tutorial: 'اكتب !join [لون] للانضمام لعصابة، !shoot للهجوم الموجع، أو !heal لعلاج فريقك.',
-      image: '/turfwars.png',
-      status: 'coming_soon',
-      type: 'strategy',
-      color: 'blue'
-    },
-    {
-      id: 'russianroulette',
-      name: 'الروليت الروسي',
-      description: 'لعبة أعصاب مشدودة وفرص ضئيلة. اسحب الزناد إذا كنت جريئاً وورط غيرك قبل أن تنتهي فرصك.',
-      tutorial: 'اكتب !join للعب، في دورك اكتب !pull لإطلاق النار، وإذا نجوت اكتب !pass @username.',
-      image: '/russianroulette.png',
-      status: 'testing',
-      type: 'strategy',
-      color: 'green'
     },
   {
       id: 'snakes',
@@ -663,64 +602,7 @@ function MainApp() {
         </div>
       </div>
     );
-  }
-
-  if (activeGame === 'chatinvaders') {
-    return (
-      <div className="min-h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
-        
-        {/* Top Bar */}
-        <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-              <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
-            </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <a 
-              href="https://www.twitch.tv/irozq8" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm backdrop-blur-md"
-            >
-              <Twitch className="w-4 h-4 text-[#9146FF]" />
-              <span className="hidden sm:inline">قناتي في تويتش</span>
-            </a>
-            <a 
-              href="https://streamlabs.com/irozq8/tip" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/40 text-white px-4 py-2 rounded-xl border border-emerald-500/50 transition-all font-bold text-sm backdrop-blur-md"
-            >
-              <Heart className="w-4 h-4 text-emerald-500" />
-              <span className="hidden sm:inline">دعم القناة</span>
-            </a>
-            <a 
-              href="https://discord.com/users/StigQ8" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm backdrop-blur-md"
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
-            </a>
-          </div>
-        </div>
-
-        <div className="relative z-10 h-full w-full">
-          <ChatInvadersGame messages={messages} onLeave={leaveGame} />
-        </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'howmany') {
+  }if (activeGame === 'howmany') {
     return (
       <div className="min-h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
         <div className="relative z-10 h-full w-full">
@@ -754,19 +636,7 @@ function MainApp() {
         </div>
       </div>
     );
-  }
-
-  if (activeGame === 'bombrelay') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
-        <div className="relative z-10 h-full w-full">
-          <BombRelayGame onLeave={leaveGame} messages={messages} />
-        </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'guessmusic') {
+  }if (activeGame === 'guessmusic') {
     return (
       <MusicGuesserGame onLeave={leaveGame} />
     );
@@ -825,72 +695,8 @@ function MainApp() {
         </div>
       </div>
     );
-  }
-
-  if (activeGame === 'bankrobbery') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
-
-        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
-          <BankRobberyGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
-        </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'chatroyale') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
-
-        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
-          <ChatRoyaleGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
-        </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'turfwars') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
-
-        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
-          <TurfWarsGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
-        </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'russianroulette') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
-
-        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
-          <RussianRouletteChatGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
-        </div>
-      </div>
-    );
-  }
-
+  }// Removed RussianRouletteGame support
+  
   if (activeGame === 'snakes') {
     return (
       <div className="min-h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
