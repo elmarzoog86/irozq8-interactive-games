@@ -163,10 +163,11 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
   if (!state) return <div className="flex items-center justify-center h-full text-white">جاري الاتصال...</div>;
 
   return (
-    <div className="flex h-full w-full bg-[#050505] overflow-hidden font-arabic text-white" dir="rtl">
+    <div className="flex h-full w-full gap-6 p-6 font-arabic text-white" dir="rtl">
       {/* Main Game Area */}
-      <div className="flex-1 relative p-8 overflow-y-auto">
-        {/* Header */}
+      <div className="flex-1 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
+        <div className="flex-1 relative p-8 overflow-y-auto">
+          {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div className="space-y-1">
             <h1 className="text-4xl font-black italic tracking-tighter text-brand-gold uppercase">كم تقدر تسمي؟</h1>
@@ -563,43 +564,46 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
             )}
           </div>
         )}
+      </div></div>
       </div>
 
-       {/* Active Players Sidebar */}
-       <div className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col shrink-0">
-        <div className="p-4 border-b border-zinc-800">
-          <h3 className="text-brand-gold font-bold flex items-center gap-2">
-            <Users className="w-5 h-5" />
-            المتسابقين ({state.players.length})
-          </h3>
+      {/* Sidebar (Players + Chat) */}
+      <div className="w-[400px] flex flex-col gap-6 shrink-0">
+        {/* Active Players Sidebar */}
+        <div className="bg-black/80 rounded-[30px] border border-brand-gold/20 flex flex-col shrink-0 overflow-hidden max-h-[35%] shadow-2xl">
+          <div className="p-4 border-b border-brand-gold/10 bg-brand-gold/5 flex items-center justify-between">
+            <h3 className="text-brand-gold font-bold flex items-center gap-2">
+              <Users className="w-5 h-5" />
+              المتسابقين ({state.players.length})
+            </h3>
+          </div>
+          <div className="flex-1 overflow-y-auto p-4 space-y-2">
+            {state.players.map(p => (
+              <div 
+                key={p.id} 
+                className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
+                  !p.isEliminated 
+                    ? 'bg-black/70 border-brand-gold/20 shadow-sm' 
+                    : 'bg-red-900/10 border-red-900/30 opacity-60'
+                }`}
+              >
+                <span className={`font-bold text-sm truncate ${!p.isEliminated ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
+                  {p.name}
+                </span>
+                {p.isEliminated && <XCircle className="w-4 h-4 text-red-500/50" />}
+                {!p.isEliminated && state.status === 'matchmaking' && state.currentMatch?.includes(p.id) && (
+                  <Swords className="w-4 h-4 text-brand-gold animate-pulse" />
+                )}
+              </div>
+            ))}
+            {state.players.length === 0 && (
+              <div className="text-zinc-500 text-center text-sm py-4">انتظار لاعبين...</div>
+            )}
+          </div>
         </div>
-        <div className="flex-1 overflow-y-auto p-2 space-y-2">
-          {state.players.map(p => (
-            <div 
-              key={p.id} 
-              className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
-                !p.isEliminated 
-                  ? 'bg-black/70 border-brand-gold/20 shadow-sm' 
-                  : 'bg-red-900/10 border-red-900/30 opacity-60'
-              }`}
-            >
-              <span className={`font-bold text-sm truncate ${!p.isEliminated ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
-                {p.name}
-              </span>
-              {p.isEliminated && <XCircle className="w-4 h-4 text-red-500/50" />}
-              {!p.isEliminated && state.status === 'matchmaking' && state.currentMatch?.includes(p.id) && (
-                <Swords className="w-4 h-4 text-brand-gold animate-pulse" />
-              )}
-            </div>
-          ))}
-          {state.players.length === 0 && (
-            <div className="text-zinc-500 text-center text-sm py-4">انتظار لاعبين...</div>
-          )}
-        </div>
-      </div>
-      
-      <div className="w-[350px] flex flex-col gap-4 p-4 pl-0 border-r border-brand-gold/10">
-        <div className="flex-1 min-h-0 bg-black/80  rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+        
+        {/* Twitch Chat */}
+        <div className="flex-1 min-h-0 bg-black/80 rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col">
           <TwitchChat
             channelName={channelName}
             messages={messages}
@@ -609,6 +613,5 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
         </div>
       </div>
     </div>
-  </div>
   );
 };
