@@ -447,13 +447,35 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
            <div className="flex-1 p-2 lg:p-4 flex flex-col lg:flex-row gap-6 overflow-hidden">
               {/* Controls & Status - First in DOM (Right side in RTL) */}
               <div className="w-full lg:w-80 flex flex-col gap-4 z-20 h-full overflow-y-auto custom-scrollbar pb-2 min-w-[300px]">
-                 {phase === 'lobby' && (
-                    <div className="flex flex-col items-center justify-center text-center bg-black/70 p-6 rounded-3xl border border-white/5  shadow-xl">
-                       <Dice5 className="w-24 h-24 text-brand-gold mb-6 animate-bounce" />
-                       <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
-                       <p className="text-zinc-400 mb-8">اكتب <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 rounded">!join</span> للانضمام</p>
-                       <div className="flex flex-col gap-3 w-full max-w-xs">
-                           <button 
+                  {phase === 'lobby' && (
+                     <div className="flex flex-col items-center justify-center text-center bg-black/70 p-6 rounded-3xl border border-white/5  shadow-xl w-full h-full flex-1 min-h-0">
+                        <Dice5 className="w-24 h-24 text-brand-gold mb-6 animate-bounce shrink-0" />
+                        <h3 className="text-2xl font-bold text-white mb-2 shrink-0">في انتظار اللاعبين...</h3>
+                        <p className="text-zinc-400 mb-4 shrink-0">اكتب <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 rounded">!join</span> للانضمام</p>
+                        
+                        <div className="flex-1 w-full bg-black/50 rounded-2xl border border-white/5 mb-4 overflow-hidden flex flex-col min-h-[150px]">
+                           <div className="bg-white/5 p-3 border-b border-white/5 font-bold text-zinc-300 flex justify-between shrink-0">
+                              <span>اللاعبين المنضمين</span>
+                              <span className="text-brand-gold">{players.length}</span>
+                           </div>
+                           <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar">
+                              {players.map((p, i) => (
+                                 <div key={p.username} className="flex items-center gap-3 bg-white/5 p-2 rounded-xl border border-white/5">
+                                    <div className="font-bold text-zinc-500 text-xs w-5">#{i+1}</div>
+                                    <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden shrink-0" style={{ backgroundColor: p.color }}>
+                                       <img src={p.avatar} alt="av" />
+                                    </div>
+                                    <div className="font-bold text-white text-sm truncate">{p.username}</div>
+                                 </div>
+                              ))}
+                              {players.length === 0 && (
+                                 <div className="text-zinc-500 text-sm h-full flex items-center justify-center italic">لا يوجد لاعبين بعد</div>
+                              )}
+                           </div>
+                        </div>
+
+                        <div className="flex flex-col gap-3 w-full max-w-xs shrink-0">
+                            <button
                              onClick={startGame} 
                              disabled={players.length < 2}
                              className="bg-brand-gold hover:bg-brand-gold-light disabled:opacity-50 disabled:cursor-not-allowed text-black font-black px-8 py-4 rounded-xl text-xl transition-all shadow-lg w-full"

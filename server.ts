@@ -192,12 +192,15 @@ io.on("connection", (socket) => {
   socket.on("start_howmany", (roomId) => {
     const state = howManyRooms.get(roomId);
     if (!state || state.players.length < 2) return;
-    
+
     const active = state.players.filter(p => !p.isEliminated);
     if (active.length < 2) return;
-    
+
+    // Pick two random players
+    const shuffled = [...active].sort(() => 0.5 - Math.random());
+
     state.status = 'matchmaking';
-    state.currentMatch = [active[0].id, active[1].id];
+    state.currentMatch = [shuffled[0].id, shuffled[1].id];
     io.to(roomId).emit("howmany_state", state);
   });
 
@@ -212,19 +215,18 @@ io.on("connection", (socket) => {
     const state = howManyRooms.get(roomId);
     if (!state || state.players.length < 2) return;
     state.status = 'matchmaking';
-    
-    // Simple 1v1 matchmaking
+
+    // Simple random matchmaking
     const active = state.players.filter(p => !p.isEliminated);
     if (active.length >= 2) {
-      state.currentMatch = [active[0].id, active[1].id];
+      const shuffled = [...active].sort(() => 0.5 - Math.random());
+      state.currentMatch = [shuffled[0].id, shuffled[1].id];
     } else {
       state.status = 'game_over';
       state.winner = active[0]?.name || "No one";
     }
     io.to(roomId).emit("howmany_state", state);
-  });
-
-  socket.on("select_categories", ({ roomId, categories }) => {
+  });  socket.on("select_categories", ({ roomId, categories }) => {
     const state = howManyRooms.get(roomId);
     if (!state) return;
     state.categories = categories;
@@ -306,21 +308,6 @@ io.on("connection", (socket) => {
       state.currentCount++;
       io.to(roomId).emit("howmany_state", state);
     }
-  });
-
-  socket.on("next_round_howmany", (roomId) => {
-    const state = howManyRooms.get(roomId);
-    if (!state) return;
-    
-    const active = state.players.filter(p => !p.isEliminated);
-    if (active.length <= 1) {
-      state.status = 'game_over';
-      state.winner = active[0]?.name || "No one";
-    } else {
-      state.status = 'matchmaking';
-      state.currentMatch = [active[0].id, active[1].id];
-    }
-    io.to(roomId).emit("howmany_state", state);
   });
 
   // --- Team Games Handlers ---
@@ -477,7 +464,14 @@ io.on("connection", (socket) => {
             ]
           }
         ];
-        const selected = questions[Math.floor(Math.random() * questions.length)];
+        if (!room.data.usedQuestions) room.data.usedQuestions = [];
+        let availableQuestions = questions.filter(q => !room.data.usedQuestions.includes(q.question));
+        if (availableQuestions.length === 0) {
+          room.data.usedQuestions = [];
+          availableQuestions = questions;
+        }
+        const selected = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
+        room.data.usedQuestions.push(selected.question);
         const currentLeaders = room.data.leaders || { gold: null, black: null };
         room.data = {
           question: selected.question,

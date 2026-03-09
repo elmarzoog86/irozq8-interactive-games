@@ -602,17 +602,15 @@ function MainApp() {
         </div>
       </div>
     );
-  }if (activeGame === 'howmany') {
-    return (
-      <div className="min-h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
-        <div className="relative z-10 h-full w-full">
-          <HowManyGame onLeave={leaveGame} channelName={activeChannel} messages={messages} />
+    }if (activeGame === 'howmany') {
+      return (
+        <div className="h-screen w-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+          <div className="relative z-10 h-full w-full flex-1">
+            <HowManyGame onLeave={leaveGame} channelName={activeChannel} messages={messages} />
+          </div>
         </div>
-      </div>
-    );
-  }
-
-  if (activeGame === 'teamfeud') {
+      );
+    }  if (activeGame === 'teamfeud') {
     return (
       <div className="min-h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
         <div className="relative z-10 h-full w-full">
