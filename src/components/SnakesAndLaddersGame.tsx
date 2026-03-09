@@ -22,23 +22,20 @@ const COLS = 10;
 
 // Classic Snakes and Ladders positions - Adjusted for cleaner visualization
 const SNAKES: SnakeOrLadder[] = [
+  { start: 32, end: 8 },
   { start: 43, end: 17 },
-  { start: 50, end: 5 },
-  { start: 56, end: 8 },
-  { start: 73, end: 15 },
-  { start: 84, end: 58 },
-  { start: 87, end: 49 },
-  { start: 98, end: 40 }
+  { start: 56, end: 15 },
+  { start: 68, end: 26 },
+  { start: 84, end: 57 },
+  { start: 98, end: 41 }
 ];
 
 const LADDERS: SnakeOrLadder[] = [
-  { start: 2, end: 23 },
-  { start: 8, end: 29 },
-  { start: 22, end: 41 },
-  { start: 28, end: 77 },
-  { start: 52, end: 67 },
+  { start: 12, end: 29 },
+  { start: 22, end: 40 },
+  { start: 34, end: 67 },
   { start: 71, end: 92 },
-  { start: 80, end: 99 }
+  { start: 79, end: 100 }
 ];
 
 const COLORS = [
@@ -280,7 +277,7 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
     if (position < 1) position = 1;
     if (position > 100) position = 100;
 
-    const row = Math.floor((position - 1) / 10); // 0 at bottom, 9 at top? No wait.
+    const row = Math.floor((position - 1) / 10); // 0 at bottom, 9 at top
     
     // My rendering logic:
     // visual row 0 is top. visual row 9 is bottom.
@@ -307,8 +304,6 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
       y: (9 - logicalRow) * 10 + 5
     };
   };
-
-  
 
 // Custom Bezier Path Generator for Wavy Snakes
 const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number}) => {
@@ -369,25 +364,20 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
         const effectiveRow = 9 - row; // 0 at bottom, 9 at top
         let number;
         if (effectiveRow % 2 === 0) {
-             // Left to Right
-             number = effectiveRow * 10 + col + 1;
-        } else {
              // Right to Left
              number = effectiveRow * 10 + (10 - col);
+        } else {
+             // Left to Right
+             number = effectiveRow * 10 + col + 1;
         }
 
-        const isBlack = (effectiveRow + col) % 2 !== 0;
-
         cells.push(
-          <div key={number} className={`relative flex items-center justify-center border border-[#8B4513]/30
-            ${isBlack ? 'bg-[#D2B48C]' : 'bg-[#E6CCB2]'}
-            `}>
-             <span className="absolute top-1 left-2 text-[#5D4037] font-serif font-bold text-lg opacity-60">{number}</span>
-             
+          <div key={number} className="relative flex items-center justify-center">
+
              {/* Render Players */}
              <div className="flex flex-wrap items-center justify-center gap-1 z-10 relative">
                {players.filter(p => !p.isFinished && p.position === number).map(p => (
-                   <motion.div 
+                   <motion.div
                    layoutId={`player-${p.username}`}
                    layout
                    transition={{ 
@@ -408,7 +398,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                ))}
                {/* Start Position Players handled separately or mapped to 1 */}
                {number === 1 && players.filter(p => p.position === 0).map(p => (
-                 <motion.div 
+                 <motion.div
                    layoutId={`player-${p.username}`}
                    layout
                    key={p.username}
@@ -420,125 +410,15 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                  </motion.div>
                ))}
              </div>
-             
-             {number === 100 && <span className="absolute inset-0 flex items-center justify-center text-4xl opacity-50">🏆</span>}
-             {number === 1 && <span className="absolute bottom-1 right-1 text-xs font-bold text-[#8B4513]">START</span>}
-          </div>
-        );
+            </div>
+          );
+        }
       }
-    }
-    return cells;
-  };
-  
-  // Render SVG Lines and Images
-  const renderOverlays = () => {
+      return cells;
+    };
+
     return (
-      <svg className="absolute inset-0 w-full h-full pointer-events-none z-10 overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="ladderGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#8B4513" />
-            <stop offset="30%" stopColor="#D2691E" />
-            <stop offset="70%" stopColor="#D2691E" />
-            <stop offset="100%" stopColor="#8B4513" />
-          </linearGradient>
-           
-           <pattern id="snakeSkin" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <rect width="4" height="4" fill="#2E8B57" />
-            <circle cx="2" cy="2" r="1.5" fill="#228B22" opacity="0.8" />
-            <circle cx="0" cy="0" r="1" fill="#006400" opacity="0.5" />
-          </pattern>
-          
-          <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-             <feDropShadow dx="2" dy="2" stdDeviation="1.5" floodColor="#000" floodOpacity="0.4" />
-          </filter>
-        </defs>
-
-        {LADDERS.map((l, i) => {
-          const start = getCoordinates(l.start);
-          const end = getCoordinates(l.end);
-          
-          // Ladder styling
-          return (
-            <g key={`ladder-${i}`} filter="url(#shadow)">
-               {/* Left Rail */}
-               <line x1={start.x - 2} y1={start.y} x2={end.x - 2} y2={end.y} stroke="url(#ladderGradient)" strokeWidth="1.5" strokeLinecap="square" />
-               {/* Right Rail */}
-               <line x1={start.x + 2} y1={start.y} x2={end.x + 2} y2={end.y} stroke="url(#ladderGradient)" strokeWidth="1.5" strokeLinecap="square" />
-               
-               {/* Rungs */}
-               {Array.from({ length: 12 }).map((_, step) => {
-                 const t = (step + 1) / 13;
-                 // Interpolate center positions
-                 const cx = start.x + (end.x - start.x) * t;
-                 const cy = start.y + (end.y - start.y) * t;
-                 
-                 return <line key={step} 
-                    x1={cx - 2} y1={cy} 
-                    x2={cx + 2} y2={cy} 
-                    stroke="#5D4037" 
-                    strokeWidth="1" 
-                    strokeLinecap="butt" 
-                />;
-               })}
-            </g>
-          );
-        })}
-
-        {SNAKES.map((s, i) => {
-          const start = getCoordinates(s.start); // Head (High number)
-          const end = getCoordinates(s.end);     // Tail (Low number)
-          
-          // Generate Wavy Path
-          const pathD = getWavyPath(start, end);
-          
-          return (
-             <g key={`snake-${i}`} filter="url(#shadow)">
-               {/* Body Outline/Border */}
-                <path 
-                 d={pathD} 
-                 stroke="#004d00" 
-                 strokeWidth="4.5" 
-                 fill="none" 
-                 strokeLinecap="round"
-                 strokeLinejoin="round"
-               />
-
-               {/* Main Body */}
-               <path 
-                 d={pathD}
-                 stroke="url(#snakeSkin)" 
-                 strokeWidth="3.5" 
-                 fill="none" 
-                 strokeLinecap="round"
-                 strokeLinejoin="round"
-               />
-               
-               {/* Snake Head Group */}
-               <g transform={`translate(${start.x}, ${start.y})`}>
-                   {/* Head Shape */}
-                   <ellipse cx="0" cy="0" rx="3.5" ry="4" fill="#228B22" stroke="#004d00" strokeWidth="0.5" />
-                   
-                   {/* Eyes */}
-                   <circle cx="-1.5" cy="-1" r="1.2" fill="white" />
-                   <circle cx="1.5" cy="-1" r="1.2" fill="white" />
-                   <circle cx="-1.5" cy="-1" r="0.5" fill="black" />
-                   <circle cx="1.5" cy="-1" r="0.5" fill="black" />
-                   
-                   {/* Tongue */}
-                   <path d="M 0 2 L 0 4 L -1 5.5 M 0 4 L 1 5.5" stroke="#CC0000" strokeWidth="0.8" fill="none" />
-               </g>
-
-                {/* Snake Tail Tip */}
-               <g transform={`translate(${end.x}, ${end.y})`}>
-                   <circle r="1.5" fill="#2E8B57" />
-               </g>
-             </g>
-          );
-        })}
-      </svg>
-    );
-  };  return (
-    <div className="flex h-full w-full max-w-[1600px] mx-auto gap-6 p-6 font-arabic" dir="rtl">
+      <div className="flex h-full w-full max-w-[1600px] mx-auto gap-6 p-6 font-arabic" dir="rtl">
         {/* Main Board Area */}
         <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
            {/* Header */}
@@ -686,26 +566,17 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
               </div>
 
               {/* Board */}
-              <div className="flex-1 flex items-center justify-center min-w-0">
-                  <div className="relative aspect-square w-full max-h-full bg-[#F5DEB3] rounded-sm border-[16px] border-[#5d4037] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-10 grid-rows-10 transform perspective-1000 rotate-x-1">
-                     {/* Texture Overlay */}
-                     <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] pointer-events-none z-0 mix-blend-multiply"></div>
-                     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)] pointer-events-none z-0"></div>
+              <div className="flex-1 flex flex-col items-center justify-center min-w-0 h-full p-4">
+                  <div className="relative aspect-square w-full max-h-[85vh] rounded-2xl border-[4px] border-[#4A3728] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden grid grid-cols-10 grid-rows-10 transform bg-[url('/snakes-board.png')] bg-cover bg-center bg-no-repeat">
+                       {/* Grid Cells */}
+                       {renderBoard()}
+                    </div>
+                </div>
+             </div>
+          </div>
 
-                     {/* Background SVGs for Snakes and Ladders */}
-                     <div className="absolute inset-0 z-10 pointer-events-none drop-shadow-xl">
-                       {renderOverlays()}
-                     </div>
-                     
-                     {/* Grid Cells */}
-                     {renderBoard()}
-                  </div>
-              </div>
-           </div>
-        </div>
-
-        {/* Twitch Chat Sidebar */}
-        <div className="w-[400px] flex flex-col gap-4">
+          {/* Twitch Chat Sidebar */}
+          <div className="w-[400px] flex flex-col gap-4">
            <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
            <TwitchChat 
              channelName={channelName} 
