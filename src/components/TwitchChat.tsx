@@ -62,3 +62,4 @@ export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, i
     </div>
   );
 };
+

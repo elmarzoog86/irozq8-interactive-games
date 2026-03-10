@@ -169,13 +169,14 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
     if (status !== 'guessing') return;
 
-    // Only accept guesses from joined players
-    if (!joinedPlayers.has(latestMessage.username)) return;
+      // Only accept guesses from joined players
+      if (!joinedPlayers.has(latestMessage.username)) return;
 
-    // Extract number from message
-    const match = text.match(/\d+/);
-    if (match) {
-      const guess = parseInt(match[0], 10);
+      // Extract standalone number from message, converting Arabic numerals if any
+      const englishText = text.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+      const match = englishText.match(/\b\d+\b/);
+      if (match) {
+        const guess = parseInt(match[0], 10);
       if (!isNaN(guess) && guess > 0) {
         setGuesses(prev => ({
           ...prev,
@@ -599,3 +600,4 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
     </div>
   );
 };
+

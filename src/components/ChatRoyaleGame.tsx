@@ -1,6 +1,6 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Timer, Crosshair, Skull, Heart, Sword, Zap, Flame, Crown, XCircle, Volume2, VolumeX } from 'lucide-react';
+import { Shield, Timer, Crosshair, Skull, Heart, Sword, Zap, Flame, Crown, XCircle, Volume2, VolumeX , MessageSquare, MessageSquareOff} from "lucide-react";
 import { ChatMessage } from '../types';
 import { TwitchChat } from './TwitchChat';
 
@@ -26,17 +26,17 @@ interface PlayerState {
 }
 
 const WEAPONS = [
-  { name: 'ملعقة صدئة', damage: 5, emoji: '🥄' },
-  { name: 'مضرب بيسبول', damage: 15, emoji: '🏏' },
-  { name: 'سيف', damage: 25, emoji: '🗡️' },
-  { name: 'قناصة', damage: 40, emoji: '🎯' },
-  { name: 'بازوكا', damage: 60, emoji: '🚀' },
+  { name: '????? ????', damage: 5, emoji: '??' },
+  { name: '???? ??????', damage: 15, emoji: '??' },
+  { name: '???', damage: 25, emoji: '???' },
+  { name: '?????', damage: 40, emoji: '??' },
+  { name: '??????', damage: 60, emoji: '??' },
 ];
 
 const DISASTERS = [
-  { name: 'عاصفة نيزكية', damage: 30, emoji: '☄️' },
-  { name: 'غاز سام', damage: 20, emoji: '☢️' },
-  { name: 'هجوم فضائي', damage: 45, emoji: '🛸' },
+  { name: '????? ??????', damage: 30, emoji: '??' },
+  { name: '??? ???', damage: 20, emoji: '??' },
+  { name: '???? ?????', damage: 45, emoji: '??' },
 ];
 
 const playSound = (type: 'join' | 'hit' | 'loot' | 'disaster' | 'death' | 'win' | 'click', volume = 0.5) => {
@@ -102,6 +102,7 @@ const playSound = (type: 'join' | 'hit' | 'loot' | 'disaster' | 'death' | 'win' 
 };
 
 export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnected, error }: GameProps) {
+  const [showChat, setShowChat] = useState(true);
   const [mode, setMode] = useState<Mode>('lobby');
   const [players, setPlayers] = useState<Record<string, PlayerState>>({});
   const [actionFeed, setActionFeed] = useState<{id: string, text: string, type: 'kill'|'loot'|'disaster'}[]>([]);
@@ -119,7 +120,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
   const startGame = () => {
     if (Object.keys(players).length < 2) {
-       addLog('نحتاج لاعبين على الأقل للبدء!', 'disaster');
+       addLog('????? ?????? ??? ????? ?????!', 'disaster');
        return;
     }
     if (soundEnabled) playSound('click');
@@ -136,7 +137,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
           if (nt > 0 && nt % 90 === 0 && !lootRef.current) {
              lootRef.current = true;
-             addLog(`🎁 صندوق غنائم نزل في الساحة! اكتب !grab لأخذه!`, 'loot');
+             addLog(`?? ????? ????? ??? ?? ??????! ???? !grab ?????!`, 'loot');
           }
 
           // Safe Zone damage every 15 seconds (slower zone)
@@ -152,11 +153,11 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                       if (next[uname].hp <= 0) {
                          next[uname].hp = 0;
                          next[uname].isDead = true;
-                         addLog(`💀 ${uname} مات بسبب منطقة الخطر! (خمول)`, 'kill');
+                         addLog(`?? ${uname} ??? ???? ????? ?????! (????)`, 'kill');
                       }
                    }
                 });
-                if (changed && nt % 45 === 0) addLog(`🌩️ منطقة الخطر تضيق! أصحاب الخمول يتلقون ضرراً!`, 'disaster');
+                if (changed && nt % 45 === 0) addLog(`??? ????? ????? ????! ????? ?????? ?????? ?????!`, 'disaster');
                 return changed ? next : prev;
              });
           }
@@ -165,7 +166,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
           if (nt > 0 && nt % 60 === 0) {
              const disaster = DISASTERS[Math.floor(Math.random() * DISASTERS.length)];
              if (soundEnabled) playSound('disaster');
-             addLog(`⚠️ كارثة! ${disaster.name} تضرب الساحة! (-${disaster.damage} HP)`, 'disaster');
+             addLog(`?? ?????! ${disaster.name} ???? ??????! (-${disaster.damage} HP)`, 'disaster');
              
              setPlayers(prev => {
                 const next = { ...prev };
@@ -175,7 +176,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                      if (next[uname].hp <= 0) {
                         next[uname].hp = 0;
                         next[uname].isDead = true;
-                        addLog(`💀 ${uname} مات بسبب الكارثة!`, 'kill');
+                        addLog(`?? ${uname} ??? ???? ???????!`, 'kill');
                      }
                    }
                 });
@@ -196,7 +197,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
     if (mode === 'playing') {
        const alive = Object.entries(players).filter(([u, p]) => !p.isDead).map(([u]) => u);
        if (alive.length === 1 || alive.length === 0) {
-          setWinner(alive[0] || 'لا أحد');
+          setWinner(alive[0] || '?? ???');
           setMode('game_over');
           if (soundEnabled) playSound('win');
        }
@@ -231,7 +232,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
              lootRef.current = false;
              const w = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
              current[uname] = { ...p, weapon: w, attackCooldowns: {}, lastAction: Date.now() };
-             addLog(`🎒 ${uname} التقط الغنائم: ${w.name} ${w.emoji}! (تم تصفير وقت الانتظار)`, 'loot');
+             addLog(`?? ${uname} ????? ???????: ${w.name} ${w.emoji}! (?? ????? ??? ????????)`, 'loot');
              if (soundEnabled) playSound('loot');
              return;
           }
@@ -242,7 +243,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                  return; // 30s cooldown
              }
              current[uname] = { ...p, hp: Math.min(100, p.hp + 25), lastHeal: now, lastAction: now };
-             addLog(`💊 ${uname} عالج نفسه! (+25 HP)`, 'loot');
+             addLog(`?? ${uname} ???? ????! (+25 HP)`, 'loot');
              if (soundEnabled) playSound('loot');
              return;
           }
@@ -259,10 +260,10 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
              if (Math.random() > 0.3 || !p.weapon) {
                 const w = WEAPONS[Math.floor(Math.random() * WEAPONS.length)];
                 current[uname] = { ...current[uname], weapon: w };
-                addLog(`🎒 ${uname} وجد ${w.name} ${w.emoji}`, 'loot');
+                addLog(`?? ${uname} ??? ${w.name} ${w.emoji}`, 'loot');
                 if (soundEnabled) playSound('loot');
              } else {
-                addLog(`🕸️ ${uname} بحث ولم يجد شيئاً...`, 'loot');
+                addLog(`??? ${uname} ??? ??? ??? ?????...`, 'loot');
              }
           } else if (text.startsWith('!attack ')) {
              const target = text.replace('!attack ', '').replace('@', '').trim();
@@ -278,7 +279,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                 // Miss chance
                 if (Math.random() < 0.25) { // 25% miss chance
                    current[uname].attackCooldowns[target] = now;
-                   addLog(`💨 أخطأ ${uname} هدفه ${target}! (متاح بعد 15ث)`, 'loot');
+                   addLog(`?? ???? ${uname} ???? ${target}! (???? ??? 15?)`, 'loot');
                    return;
                 }
 
@@ -299,14 +300,14 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                 if (soundEnabled) playSound('hit');
 
                 if (isCrit) {
-                   addLog(`💥 ضربة حرجة! ${uname} ضرب ${target} بقوة مرعبة! (-${finalDmg})`, 'kill');
+                   addLog(`?? ???? ????! ${uname} ??? ${target} ???? ?????! (-${finalDmg})`, 'kill');
                 }
                 
                 if (current[target].hp <= 0) {
                    current[target].hp = 0;
                    current[target].isDead = true;
                    current[uname].kills += 1;
-                   addLog(`⚔️ ${uname} قتل ${target}! (${p.weapon?.emoji || '👊'})`, 'kill');
+                   addLog(`?? ${uname} ??? ${target}! (${p.weapon?.emoji || '??'})`, 'kill');
                    if (soundEnabled) playSound('death');
                 }
              }
@@ -323,50 +324,55 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
       <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-black/80  flex flex-col relative overflow-hidden">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? '????? ?????' : '????? ?????'}
+        </button>
+
         
         <AnimatePresence>
           {mode === 'lobby' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-black/90 to-black overflow-y-auto">
               <Skull className="w-24 h-24 text-orange-500 mb-6 drop-shadow-[0_0_30px_rgba(249,115,22,0.5)]" />
-              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">المعركة <span className="text-orange-500">الملكية</span></h1>
+              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">??????? <span className="text-orange-500">???????</span></h1>
               <p className="text-orange-200/60 text-xl font-medium mb-8 max-w-3xl text-center">
-                مرحباً بك في ساحة المعركة! الهدف هو أن تكون آخر من يبقى حياً. البقاء للأقوى!
+                ?????? ?? ?? ???? ???????! ????? ?? ?? ???? ??? ?? ???? ????. ?????? ??????!
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mb-8 w-full">
                 <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!join</div>
-                   <div className="text-white/80 text-sm">للانضمام إلى اللعبة (100 نقطة صحة).</div>
+                   <div className="text-white/80 text-sm">???????? ??? ?????? (100 ???? ???).</div>
                 </div>
                 <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!loot</div>
-                   <div className="text-white/80 text-sm">للبحث عن أسلحة أفضل من يديك.</div>
+                   <div className="text-white/80 text-sm">????? ?? ????? ???? ?? ????.</div>
                 </div>
                 <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
-                   <div className="font-bold text-orange-400 mb-1 text-lg">!attack @اسم</div>
-                   <div className="text-white/80 text-sm">لمهاجمة لاعب آخر. (15 ثانية انتظار). يمكن أن تفوت الهدف بنسبة 25٪ وضربة حرجة بنسبة 10٪.</div>
+                   <div className="font-bold text-orange-400 mb-1 text-lg">!attack @???</div>
+                   <div className="text-white/80 text-sm">??????? ???? ???. (15 ????? ??????). ???? ?? ???? ????? ????? 25% ????? ???? ????? 10%.</div>
                 </div>
                 <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!heal</div>
-                   <div className="text-white/80 text-sm">لتعافي 25 نقطة صحة. (30 ثانية انتظار).</div>
+                   <div className="text-white/80 text-sm">?????? 25 ???? ???. (30 ????? ??????).</div>
                 </div>
                 <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!grab</div>
-                   <div className="text-white/80 text-sm">لالتقاط الإمدادات العشوائية عند ظهورها (تُصفر الانتظار).</div>
+                   <div className="text-white/80 text-sm">??????? ????????? ????????? ??? ?????? (????? ????????).</div>
                 </div>
                 <div className="bg-orange-900/30 border border-orange-500/30 p-4 rounded-2xl">
-                   <div className="font-bold text-orange-400 mb-1 text-lg">تنبيهات هامة</div>
-                   <div className="text-white/80 text-sm">هناك كوارث تصيب الجميع كل 30 ثانية. والجلوس بدون حركة لـ 20 ثانية يسبب ضرر المنطقة الخضراء!</div>
+                   <div className="font-bold text-orange-400 mb-1 text-lg">??????? ????</div>
+                   <div className="text-white/80 text-sm">???? ????? ???? ?????? ?? 30 ?????. ??????? ???? ???? ?? 20 ????? ???? ??? ??????? ???????!</div>
                 </div>
               </div>
 
               <div className="text-2xl font-bold text-white mb-6">
-                اللاعبون المنضمون: <span className="text-orange-500">{Object.keys(players).length}</span>
+                ???????? ????????: <span className="text-orange-500">{Object.keys(players).length}</span>
               </div>
 
               <div className="w-full max-w-4xl bg-black/80 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
                  {Object.keys(players).length === 0 ? (
-                    <span className="text-white/30 italic">بانتظار انضمام المحاربين...</span>
+                    <span className="text-white/30 italic">??????? ?????? ?????????...</span>
                  ) : (
                     Object.keys(players).map(p => (
                        <div key={p} className="bg-orange-500/10 border border-orange-500/30 px-3 py-1 rounded-lg text-white/90 text-sm font-bold flex items-center gap-2">
@@ -379,7 +385,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
               <div className="flex gap-4 z-30 relative">
                  <button onClick={startGame} className="bg-orange-600 hover:bg-orange-500 text-white font-black px-12 py-4 rounded-full text-2xl transition-all shadow-[0_0_40px_rgba(234,88,12,0.4)] cursor-pointer hover:scale-105">
-                   بدء المعركة الطاحنة
+                   ??? ??????? ???????
                  </button>
               </div>
 
@@ -390,7 +396,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
               </div>
               <div className="absolute top-8 right-8">
                 <button onClick={onLeave} className="text-white/50 hover:text-white flex items-center gap-2 font-bold px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <XCircle className="w-5 h-5" /> خروج
+                  <XCircle className="w-5 h-5" /> ????
                 </button>
               </div>
             </motion.div>
@@ -404,8 +410,8 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                 <Crosshair className="w-6 h-6 text-orange-500" />
               </div>
               <div>
-                <h2 className="text-2xl font-black text-white tracking-tight">ساحة المعركة</h2>
-                <div className="text-orange-500/70 font-bold text-sm">الأحياء: {alivePlayers.length} / الأموات: {deadPlayers.length}</div>
+                <h2 className="text-2xl font-black text-white tracking-tight">???? ???????</h2>
+                <div className="text-orange-500/70 font-bold text-sm">???????: {alivePlayers.length} / ???????: {deadPlayers.length}</div>
               </div>
             </div>
             
@@ -436,7 +442,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                            {p.hp <= 30 && !p.isDead && <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none" />}
                            <div className="flex justify-between items-start mb-2 relative z-10">
                               <span className="font-bold text-lg text-white truncate max-w-[70%]">{uname}</span>
-                              <span className="text-2xl">{p.isDead ? '💀' : (p.weapon?.emoji || '👊')}</span>
+                              <span className="text-2xl">{p.isDead ? '??' : (p.weapon?.emoji || '??')}</span>
                            </div>
                            <div className="flex items-center gap-2 mb-2 relative z-10">
                               <Heart className={`w-4 h-4 ${p.isDead ? 'text-zinc-600' : 'text-red-500'}`} />
@@ -446,7 +452,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                               <span className="text-xs font-mono font-bold w-8 text-right text-white/70">{Math.floor(p.hp)}</span>
                            </div>
                            <div className="text-xs font-bold text-orange-500/50 relative z-10">
-                              تصفيات: {p.kills} | {p.weapon ? p.weapon.name : 'بدون سلاح'}
+                              ??????: {p.kills} | {p.weapon ? p.weapon.name : '???? ????'}
                            </div>
                         </motion.div>
                      ))}
@@ -457,7 +463,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
             {/* Kill Feed */}
             <div className="w-80 bg-black/70 border border-orange-500/10 rounded-3xl p-4 flex flex-col shadow-xl">
                <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm flex items-center justify-center gap-2">
-                 <Zap className="w-4 h-4" /> سجل الأحداث
+                 <Zap className="w-4 h-4" /> ??? ???????
                </h3>
                <div className="flex-1 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-2">
                   <AnimatePresence>
@@ -476,13 +482,13 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
           {mode === 'game_over' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95  flex flex-col items-center justify-center p-8">
               <Crown className="w-40 h-40 text-brand-gold mb-6 drop-shadow-[0_0_50px_rgba(212,175,55,1)]" />
-              <h2 className="text-3xl text-brand-gold/80 font-bold mb-2">الفائز الأخير</h2>
+              <h2 className="text-3xl text-brand-gold/80 font-bold mb-2">?????? ??????</h2>
               <h1 className="text-7xl font-black text-white mb-8 bg-gradient-to-br from-brand-gold via-yellow-200 to-orange-500 text-transparent bg-clip-text">
                 {winner}
               </h1>
               <div className="flex gap-4">
                  <button onClick={() => { setMode('lobby'); setPlayers({}); }} className="mt-8 bg-brand-gold text-black font-black px-12 py-4 rounded-full hover:scale-105 transition-transform text-xl shadow-[0_0_30px_rgba(212,175,55,0.4)] cursor-pointer">
-                   إعادة المباراة
+                   ????? ????????
                  </button>
               </div>
             </motion.div>
@@ -490,11 +496,14 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         </AnimatePresence>
       </div>
       
-      {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/80  rounded-[40px] border border-orange-500/20 overflow-hidden shadow-2xl shrink-0">
-          <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
+      {showChat && mode !== 'lobby' && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
+          </div>
         </div>
       )}
     </div>
   );
 }
+

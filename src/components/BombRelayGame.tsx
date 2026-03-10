@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Trophy, Timer, MessageSquare, XCircle, Bomb, Zap, Activity, Shield, CheckCircle2, Info } from 'lucide-react';
+import { Users, Trophy, Timer, MessageSquare, XCircle, Bomb, Zap, Activity, Shield, CheckCircle2, Info, MessageSquareOff } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { ChatSidebar } from './ChatSidebar';
 
@@ -22,6 +22,7 @@ interface GameState {
 }
 
 export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> = ({ onLeave, messages }) => {
+  const [showChat, setShowChat] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
@@ -67,6 +68,15 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
 
   return (
     <div className="flex h-full w-full bg-black overflow-hidden font-arabic text-white" dir="rtl">
+
+      <button 
+        onClick={() => setShowChat(!showChat)}
+        className="absolute top-6 left-6 z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2"
+      >
+        {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+        <span className="font-bold">{showChat ? 'إخفاء' : 'إظهار'}</span>
+      </button>
+  
       {/* Main Game Area */}
       <div className="flex-1 relative p-8 overflow-y-auto">
         {/* Header */}
@@ -235,13 +245,20 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
     </div>
 
       {/* Sidebar */}
-      <ChatSidebar 
-        messages={messages} 
-        instructions={[
+      {showChat && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300 p-6 z-[80]">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative backdrop-blur-md">
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-gold/5 via-transparent to-black/60 pointer-events-none" />
+            <div className="relative h-full flex flex-col">
+              <ChatSidebar messages={messages} instructions={[
           "اكتب !join للانضمام لفريق التفكيك",
           "انضم عبر الرابط للعب",
-        ]} 
-      />
+        ]} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+

@@ -336,3 +336,4 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     </div>
   );
 };
+

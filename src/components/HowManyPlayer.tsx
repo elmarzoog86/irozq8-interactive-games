@@ -91,7 +91,7 @@ export const HowManyPlayer: React.FC = () => {
 
   if (!joined) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6 font-arabic" dir="rtl">
+      <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center p-6 font-arabic" dir="rtl">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -124,7 +124,7 @@ export const HowManyPlayer: React.FC = () => {
     );
   }
 
-  if (!state) return <div className="min-h-screen bg-black text-white flex items-center justify-center">جاري التحميل...</div>;
+  if (!state) return <div className="h-screen w-full bg-black text-white flex items-center justify-center">جاري التحميل...</div>;
 
   const me = state.players.find(p => p.id === socket?.id);
   const isMyTurn = state.turn === socket?.id;
@@ -132,7 +132,7 @@ export const HowManyPlayer: React.FC = () => {
   const isNaming = state.status === 'naming' && state.gamblerId === socket?.id;
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col font-arabic" dir="rtl">
+    <div className="h-screen w-full bg-black text-white flex flex-col font-arabic" dir="rtl">
       {/* Header */}
       <div className="p-6 border-b border-brand-gold/10 flex justify-between items-center bg-brand-gold/5  sticky top-0 z-50">
         <div className="flex items-center gap-3">
@@ -314,3 +314,4 @@ export const HowManyPlayer: React.FC = () => {
     </div>
   );
 };
+

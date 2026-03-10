@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Play, Clock, Trophy, ArrowRight, Settings, ArrowLeft, Swords, Dices, Skull, XCircle } from 'lucide-react';
+import { Users, Play, Clock, Trophy, ArrowRight, Settings, ArrowLeft, Swords, Dices, Skull, XCircle , MessageSquare, MessageSquareOff} from "lucide-react";
 import { TwitchChat } from './TwitchChat';
 
 interface ChatMessage {
@@ -67,6 +67,7 @@ const ALL_FRUITS: Fruit[] = [
 ];
 
 export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
+  const [showChat, setShowChat] = useState(true);
   const [phase, setPhase] = useState<GamePhase>('config');
   const [mode, setMode] = useState<GameMode>('voting');
   const [players, setPlayers] = useState<Record<string, Player>>({});
@@ -544,6 +545,11 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
     <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+        </button>
+
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
         <button 
           onClick={onLeave} 
@@ -597,16 +603,19 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
       </div>
 
         {/* Twitch Chat Sidebar */}
-      <div className="w-[500px] flex flex-col gap-4">
-          <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
-          <TwitchChat 
+      {showChat && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat 
             channelName={channelName} 
             messages={messages} 
             isConnected={isConnected} 
             error={error} 
           />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+

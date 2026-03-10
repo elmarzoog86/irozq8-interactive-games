@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Timer, MessageSquare, XCircle, Search, Key, Shield, Eye, EyeOff, Info, Users, Copy } from 'lucide-react';
+import { Trophy, Timer, MessageSquare, XCircle, Search, Key, Shield, Eye, EyeOff, Info, Users, Copy, MessageSquareOff } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { TwitchChat } from './TwitchChat';
 
@@ -30,6 +30,7 @@ export const CodeNamesGame: React.FC<{
   isConnected: boolean;
   error: string | null;
 }> = ({ onLeave, messages, channelName, isConnected, error }) => {
+  const [showChat, setShowChat] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
@@ -63,6 +64,11 @@ export const CodeNamesGame: React.FC<{
     <div className="flex h-full w-full gap-6 p-6 font-arabic" dir="rtl">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative text-white">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+        </button>
+
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
         
         <div className="flex-1 relative p-8 overflow-y-auto z-10 flex flex-col">
@@ -284,14 +290,19 @@ export const CodeNamesGame: React.FC<{
       </div>
       
       {/* Twitch Chat Sidebar */}
-      <div className="w-[500px] h-full flex-shrink-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col items-center justify-center">
-        <TwitchChat 
+      {showChat && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat 
           channelName={channelName}
           messages={messages}
           isConnected={isConnected}
           error={error}
         />
-      </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
+

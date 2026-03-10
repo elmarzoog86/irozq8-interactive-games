@@ -1,6 +1,6 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Timer, Lock, Unlock, AlertTriangle, Users, Trophy, Crosshair, Bomb, Banknote, XCircle, HandCoins, Activity, Siren, DoorClosed, Volume2, VolumeX } from 'lucide-react';
+import { Shield, Timer, Lock, Unlock, AlertTriangle, Users, Trophy, Crosshair, Bomb, Banknote, XCircle, HandCoins, Activity, Siren, DoorClosed, Volume2, VolumeX , MessageSquare, MessageSquareOff} from "lucide-react";
 import { ChatMessage } from '../types';
 import { TwitchChat } from './TwitchChat';
 
@@ -89,6 +89,7 @@ const playSound = (type: 'alarm' | 'success' | 'fail' | 'hit' | 'cash' | 'click'
 };
 
 export function BankRobberyGame({ messages = [], onLeave, channelName, isConnected, error }: BankRobberyProps) {
+  const [showChat, setShowChat] = useState(true);
   const [mode, setMode] = useState<Mode>('lobby');
   const [gameType, setGameType] = useState<'coop'|'pvp'>('coop');
   const [timeLeft, setTimer] = useState(180);
@@ -156,14 +157,14 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
             changed = true;
             next[username] = { ...next[username], jailTime: next[username].jailTime - 1 };
             if (next[username].jailTime === 0) {
-              addLog(`${username} خرج من السجن!`, 'neutral');
+              addLog(`${username} ??? ?? ?????!`, 'neutral');
             }
           }
           // Shield Expiration Logic
           if (next[username].shields > 0 && next[username].shieldEndTime < now) {
               changed = true;
               next[username] = { ...next[username], shields: 0 };
-              addLog(`🛡️ انتهى مفعول درع ${username}!`, 'neutral');
+              addLog(`??? ????? ????? ??? ${username}!`, 'neutral');
           }
         });
         return changed ? next : prev;
@@ -219,7 +220,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               setSecurityLevel(l => Math.max(0, l - 5));
               currentPlayers[username] = { ...pState, contribs: pState.contribs + 2000, lastActionTime: now };
               actionTaken = true;
-              addLog(`🎭 ${username} شتت انتباه الحراس! (-5% أمني)`, 'good');
+              addLog(`?? ${username} ??? ?????? ??????! (-5% ????)`, 'good');
               if (soundEnabled) playSound('click');
           }
 
@@ -236,7 +237,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
           if (text === '!escape' && isAlarmPhase) {
             currentPlayers[username] = { ...pState, escaped: true, lastActionTime: now };
             actionTaken = true;
-            addLog(`وفر ${username} للهروب بـ $${pState.money}! `, 'good');
+            addLog(`??? ${username} ?????? ?? $${pState.money}! `, 'good');
             if (soundEnabled) playSound('success');
           }
           else if (text === '!rob' && !isAlarmPhase) {
@@ -245,7 +246,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
             if (risk < 0.15) {
                const lost = Math.floor(pState.money * 0.5);
                currentPlayers[username] = { ...pState, money: pState.money - lost, jailTime: 15, lastActionTime: now };
-               addLog(` ألقت الشرطة القبض على ${username}! خسر $${lost}`, 'bad');
+               addLog(` ???? ?????? ????? ??? ${username}! ??? $${lost}`, 'bad');
                if (soundEnabled) playSound('fail');
             } else {
                const gain = Math.floor(Math.random() * 3000) + 1000;
@@ -268,20 +269,20 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                    if (tState.shields > 0) {
                      currentPlayers[targetKey] = { ...tState, shields: 0, shieldEndTime: 0 };
                      currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
-                     addLog(`🛡️ درع ${targetKey} صد هجوم ${username}! (${username} في السجن)`, 'neutral');
+                     addLog(`??? ??? ${targetKey} ?? ???? ${username}! (${username} ?? ?????)`, 'neutral');
                      if (soundEnabled) playSound('hit');
                    } else {
                      const risk = Math.random();
                      if (risk < 0.3) {
                        currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
-                       addLog(` فشل ${username} في سرقة ${targetKey} ودخل السجن!`, 'bad');
+                       addLog(` ??? ${username} ?? ???? ${targetKey} ???? ?????!`, 'bad');
                        if (soundEnabled) playSound('fail');
                      } else {
                        const stolen = Math.floor(tState.money * 0.25);
                        if (stolen > 0) {
                          currentPlayers[targetKey] = { ...tState, money: tState.money - stolen };
                          currentPlayers[username] = { ...pState, money: pState.money + stolen, lastActionTime: now };
-                         addLog(` سرق ${username} $${stolen} من ${targetKey}!`, 'neutral');
+                         addLog(` ??? ${username} $${stolen} ?? ${targetKey}!`, 'neutral');
                          if (soundEnabled) playSound('cash');
                        } else {
                            // Target has no money, still counts as action? Yes.
@@ -295,7 +296,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
           else if (text === '!defend' && !isAlarmPhase) {
             actionTaken = true;
             currentPlayers[username] = { ...pState, shields: 1, shieldEndTime: now + 15000, lastActionTime: now };
-            addLog(`🛡️ ${username} قام بتفعيل وضع الدفاع! (15 ثانية)`, 'good');
+            addLog(`??? ${username} ??? ?????? ??? ??????! (15 ?????)`, 'good');
           }
         }
       });
@@ -324,6 +325,11 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
       <div className="flex-1 rounded-[40px] border border-brand-gold/20 bg-black/80  flex flex-col relative overflow-hidden">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? '????? ?????' : '????? ?????'}
+        </button>
+
         
         <AnimatePresence>
           {mode === 'lobby' && (
@@ -331,9 +337,9 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               <div className="w-32 h-32 mb-6 bg-brand-gold/10 rounded-3xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_50px_rgba(212,175,55,0.3)]">
                 <Banknote className="w-16 h-16 text-brand-gold" />
               </div>
-              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">سرقة <span className="text-brand-gold">البنوك</span></h1>
+              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">???? <span className="text-brand-gold">??????</span></h1>
               <p className="text-brand-gold/60 text-xl font-medium mb-12 max-w-2xl text-center">
-                اختار نوع العملية: هل ستتعاونون لاختراق الخزنة الكبرى أم تتصارعون لسرقة بعضكم البعض قبل وصول الشرطة
+                ????? ??? ???????: ?? ????????? ??????? ?????? ?????? ?? ???????? ????? ????? ????? ??? ???? ??????
               </p>
               
               <div className="grid grid-cols-2 gap-8 w-full max-w-4xl">
@@ -341,15 +347,15 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                   <div className="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <Users className="w-10 h-10 text-blue-400" />
                   </div>
-                  <h2 className="text-3xl font-black text-white mb-2">المهمة التعاونية</h2>
-                  <p className="text-blue-200/50 text-center font-medium">كسر الخزنة معا باستخدام !hack و !drill</p>
+                  <h2 className="text-3xl font-black text-white mb-2">?????? ?????????</h2>
+                  <p className="text-blue-200/50 text-center font-medium">??? ?????? ??? ???????? !hack ? !drill</p>
                 </button>
                 <button onClick={() => startGame('pvp')} className="group flex flex-col items-center p-8 rounded-[40px] bg-gradient-to-b from-red-900/40 to-black border-2 border-red-500/20 hover:border-red-400 hover:shadow-[0_0_40px_rgba(239,68,68,0.3)] transition-all cursor-pointer">
                   <div className="w-20 h-20 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                     <Crosshair className="w-10 h-10 text-red-400" />
                   </div>
-                  <h2 className="text-3xl font-black text-white mb-2">صراع اللصوص</h2>
-                  <p className="text-red-200/50 text-center font-medium">اسرق البنك أو اصدقائك باستخدام !rob و !steal</p>
+                  <h2 className="text-3xl font-black text-white mb-2">???? ??????</h2>
+                  <p className="text-red-200/50 text-center font-medium">???? ????? ?? ??????? ???????? !rob ? !steal</p>
                 </button>
               </div>
 
@@ -358,7 +364,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                   {soundEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
                 </button>
                 <button onClick={onLeave} className="text-white/50 hover:text-white flex items-center gap-2 font-bold px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <XCircle className="w-5 h-5" /> إلغاء
+                  <XCircle className="w-5 h-5" /> ?????
                 </button>
               </div>
             </motion.div>
@@ -373,12 +379,12 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               </div>
               <div>
                 <h2 className="text-3xl font-black text-white tracking-tight">
-                  {gameType === 'coop' ? 'اختراق الخزنة' : 'صراع اللصوص (PvP)'}
+                  {gameType === 'coop' ? '?????? ??????' : '???? ?????? (PvP)'}
                 </h2>
                 <div className="flex items-center gap-2 mt-1">
                   <Activity className="w-4 h-4 text-brand-gold/50" />
                   <span className="text-brand-gold/70 font-semibold text-lg">
-                    {mode === 'game_over' ? 'انتهت العملية' : 'جاري التنفيذ...'}
+                    {mode === 'game_over' ? '????? ???????' : '???? ???????...'}
                   </span>
                 </div>
               </div>
@@ -410,7 +416,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/20 via-transparent to-transparent animate-ping" />
                   <div className="absolute top-8 left-1/2 -translate-x-1/2 bg-red-600 border border-red-400 text-white font-black px-12 py-3 rounded-full flex items-center gap-4 shadow-[0_0_30px_rgba(220,38,38,0.8)] z-10">
                     <Siren className="w-8 h-8 animate-spin" />
-                    الشرطة في الطريق! اكتب !escape للهروب!
+                    ?????? ?? ??????! ???? !escape ??????!
                     <Siren className="w-8 h-8 animate-spin" />
                   </div>
                 </div>
@@ -441,14 +447,14 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                       <div className="flex flex-col items-center gap-2">
                           <div className="flex items-center gap-3 bg-red-900/20 px-4 py-2 rounded-xl border border-red-500/30">
                               <Siren className={`w-5 h-5 ${securityLevel > 70 ? 'text-red-500 animate-ping' : 'text-red-400'}`} />
-                              <span className="text-red-200 font-bold">مستوى التأهب الأمني</span>
+                              <span className="text-red-200 font-bold">????? ?????? ??????</span>
                               <div className="w-32 h-2 bg-black/50 rounded-full overflow-hidden">
                                   <div className={`h-full transition-all ${securityLevel > 80 ? 'bg-red-500' : securityLevel > 40 ? 'bg-yellow-500' : 'bg-green-500'}`} style={{ width: `${securityLevel}%` }} />
                               </div>
                               <span className="font-mono text-red-300">{Math.floor(securityLevel)}%</span>
                           </div>
                           <p className="text-white/40 text-xs animate-pulse">
-                              {securityLevel > 50 ? 'تحذير: الحراسة مشددة! استخدم !distract' : 'الحراسة خفيفة، هاجم الآن!'}
+                              {securityLevel > 50 ? '?????: ??????? ?????! ?????? !distract' : '??????? ?????? ???? ????!'}
                           </p>
                       </div>
                     </div>
@@ -467,7 +473,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
 
               {gameType === 'pvp' && (
                 <div className="w-full max-w-2xl mt-12 bg-black/80 border border-white/10 rounded-3xl p-6 relative z-10 h-64 overflow-hidden">
-                  <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm">سجل العمليات</h3>
+                  <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm">??? ????????</h3>
                   <div className="flex flex-col gap-3">
                     <AnimatePresence>
                       {actionFeed.map(feed => (
@@ -495,7 +501,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
               <div className="flex items-center gap-3 mb-6 bg-brand-gold/10 p-4 rounded-2xl border border-brand-gold/20">
                 <Trophy className="w-6 h-6 text-brand-gold" />
                 <h3 className="text-xl font-black text-brand-gold tracking-wider">
-                  {gameType === 'coop' ? 'أفضل المخترقين' : 'أغنى اللصوص'}
+                  {gameType === 'coop' ? '???? ?????????' : '???? ??????'}
                 </h3>
               </div>
               <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-3">
@@ -527,8 +533,8 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                               {p.username} 
                               {p.shields > 0 && <Shield className="w-5 h-5 text-blue-400 animate-pulse drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />}
                             </span>
-                            {isJailed && <span className="text-xs text-red-500 font-bold">في السجن ({p.jailTime}ث)</span>}
-                            {isEscaped && <span className="text-xs text-green-400 font-bold">هرب بأمان</span>}
+                            {isJailed && <span className="text-xs text-red-500 font-bold">?? ????? ({p.jailTime}?)</span>}
+                            {isEscaped && <span className="text-xs text-green-400 font-bold">??? ?????</span>}
                           </div>
                         </div>
                         <span className={`font-black text-lg font-numeric ${
@@ -540,7 +546,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                     );
                   })}
                   {topPlayers.length === 0 && (
-                    <div className="text-center text-white/30 py-8 font-medium">لا يوجد أي نشاط حتى الآن...</div>
+                    <div className="text-center text-white/30 py-8 font-medium">?? ???? ?? ???? ??? ????...</div>
                   )}
                 </AnimatePresence>
               </div>
@@ -559,10 +565,10 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                 )}
               </div>
               <h2 className="text-5xl font-black text-white mb-4">
-                {gameType === 'coop' ? (vaultHP <= 0 ? 'تم اختراق الخزنة بنجاح!' : 'فشلت المهمة!') : 'انتهت العملية!'}
+                {gameType === 'coop' ? (vaultHP <= 0 ? '?? ?????? ?????? ?????!' : '???? ??????!') : '????? ???????!'}
               </h2>
               <div className="w-full max-w-2xl bg-white/5 border border-white/10 rounded-3xl p-6 mt-8 max-h-[400px] overflow-y-auto custom-scrollbar">
-                <h3 className="text-2xl font-bold text-center mb-6 text-brand-gold">النتائج النهائية</h3>
+                <h3 className="text-2xl font-bold text-center mb-6 text-brand-gold">??????? ????????</h3>
                 <div className="space-y-3">
                   {topPlayers.slice(0, 10).map((p, i) => (
                     <div key={p.username} className={`flex justify-between items-center p-4 rounded-xl border ${gameType === 'pvp' ? (p.escaped ? 'bg-green-900/40 border-green-500/50' : 'bg-red-900/40 border-red-500/50') : 'bg-black/50 border-brand-gold/20'}`}>
@@ -570,8 +576,8 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                           <span className={`${gameType === 'pvp' && !p.escaped ? 'text-red-200 line-through opacity-70' : 'text-white'} font-bold text-lg`}>
                               #{i+1} {p.username}
                           </span>
-                          {gameType === 'pvp' && !p.escaped && <span className="text-xs text-red-400 font-bold">لم يخرج! (تم القبض عليه)</span>}
-                          {gameType === 'pvp' && p.escaped && <span className="text-xs text-green-400 font-bold">هرب بنجاح</span>}
+                          {gameType === 'pvp' && !p.escaped && <span className="text-xs text-red-400 font-bold">?? ????! (?? ????? ????)</span>}
+                          {gameType === 'pvp' && p.escaped && <span className="text-xs text-green-400 font-bold">??? ?????</span>}
                       </div>
                       <span className={`font-black text-xl font-numeric ${gameType === 'pvp' && !p.escaped ? 'text-red-300' : 'text-brand-gold'}`}>
                         ${gameType === 'coop' ? p.contribs.toLocaleString() : (p.escaped ? p.money.toLocaleString() : Math.floor(p.money/2).toLocaleString())}
@@ -581,23 +587,26 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                 </div>
               </div>
               <button onClick={() => setMode('lobby')} className="mt-10 bg-brand-gold text-black font-black px-12 py-4 rounded-full hover:scale-105 transition-transform text-xl shadow-[0_0_30px_rgba(212,175,55,0.4)] cursor-pointer">
-                العودة للقائمة
+                ?????? ???????
               </button>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
       
-      {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl shrink-0">
-          <TwitchChat
+      {showChat && mode !== 'lobby' && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat
             channelName={channelName}
             messages={messages}
             isConnected={isConnected}
             error={error}
           />
+          </div>
         </div>
       )}
     </div>
   );
 }
+

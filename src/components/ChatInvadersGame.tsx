@@ -354,3 +354,4 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
     </div>
   );
 };
+

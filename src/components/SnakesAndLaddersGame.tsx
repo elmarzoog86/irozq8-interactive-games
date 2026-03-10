@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Play, Trophy, Dice5, ArrowRight, XCircle, RotateCcw } from 'lucide-react';
+import { Users, Play, Trophy, Dice5, ArrowRight, XCircle, RotateCcw , MessageSquare, MessageSquareOff} from "lucide-react";
 import { TwitchChat } from './TwitchChat';
 
 interface Player {
@@ -53,6 +53,7 @@ interface Props {
 }
 
 export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, channelName, isConnected, error }) => {
+  const [showChat, setShowChat] = useState(true);
   const [phase, setPhase] = useState<'lobby' | 'playing' | 'game_over'>('lobby');
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
@@ -424,6 +425,11 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
       <div className="flex h-full w-full max-w-[1600px] mx-auto gap-6 p-6 font-arabic" dir="rtl">
         {/* Main Board Area */}
         <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+        </button>
+
            {/* Header */}
            <div className="h-20 border-b border-brand-gold/10 flex items-center justify-between px-8 bg-black/20">
               <div className="flex items-center gap-4">
@@ -601,17 +607,17 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
           </div>
 
           {/* Twitch Chat Sidebar */}
-          <div className="w-[400px] flex flex-col gap-4">
-           <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
-           <TwitchChat 
-             channelName={channelName} 
-             messages={messages} 
-             isConnected={isConnected} 
-             error={error} 
-           />
-         </div>
-         
-         {/* Debug/Manual Controls */}
+          <div className="w-[400px] flex flex-col gap-4 shrink-0">
+           {showChat && (
+             <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl transition-all duration-300">
+               <TwitchChat 
+                 channelName={channelName}
+                 messages={messages}
+                 isConnected={isConnected}
+                 error={error}
+               />
+             </div>
+           )}         {/* Debug/Manual Controls */}
          <div className="bg-black/80  rounded-[20px] border border-brand-gold/20 p-4 shadow-xl">
             <h4 className="text-brand-gold font-bold mb-2 text-sm">تحكم يدوي (للتجربة)</h4>
             <div className="flex gap-2 mb-2">
@@ -652,3 +658,4 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
     </div>
   );
 };
+

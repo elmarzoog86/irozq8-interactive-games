@@ -204,7 +204,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
   }, [volume]);
 
   return (
-    <div className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center p-8 relative overflow-hidden font-arabic">
+    <div className="h-screen w-full w-full bg-black text-white flex flex-col items-center justify-center p-8 relative overflow-hidden font-arabic">
       {/* Dynamic Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[700px] h-[700px] bg-brand-gold/5 rounded-full blur-[120px] animate-pulse"></div>
@@ -540,3 +540,4 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
     </div>
   );
 }
+

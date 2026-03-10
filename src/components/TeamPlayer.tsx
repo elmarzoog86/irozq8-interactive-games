@@ -63,7 +63,7 @@ export const TeamPlayer: React.FC = () => {
 
   if (!isJoined) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
+      <div className="h-screen w-full bg-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-black/70 border border-brand-gold/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(212,175,55,0.1)] ">
           <h1 className="text-3xl font-black mb-8 text-center text-brand-gold italic glow-gold-text">انضم للعبة الفريق</h1>
           <form onSubmit={joinGame} className="space-y-6">
@@ -87,12 +87,12 @@ export const TeamPlayer: React.FC = () => {
     );
   }
 
-  if (!state) return <div className="min-h-screen bg-black text-white flex items-center justify-center">جاري التحميل...</div>;
+  if (!state) return <div className="h-screen w-full bg-black text-white flex items-center justify-center">جاري التحميل...</div>;
 
   const myPlayer = state.players.find(p => p.id === socket?.id || p.name === name);
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 font-arabic" dir="rtl">
+    <div className="h-screen w-full bg-black text-white p-6 font-arabic" dir="rtl">
       <div className="max-w-md mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-black italic text-brand-gold glow-gold-text">
@@ -344,3 +344,4 @@ export const TeamPlayer: React.FC = () => {
     </div>
   );
 };
+

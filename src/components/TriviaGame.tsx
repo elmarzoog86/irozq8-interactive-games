@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { motion } from 'motion/react';
-import { Users, Play, Clock, CheckCircle2, XCircle, Trophy, ArrowRight, Settings, ArrowLeft, Dices, GripHorizontal, EyeOff, ExternalLink } from 'lucide-react';
+import { Users, Play, Clock, CheckCircle2, XCircle, Trophy, ArrowRight, Settings, ArrowLeft, Dices, GripHorizontal, EyeOff, ExternalLink , MessageSquare, MessageSquareOff} from "lucide-react";
 import { TwitchChat } from './TwitchChat';
 
 interface ChatMessage {
@@ -368,6 +368,7 @@ const PopoutWindow: React.FC<{ children: React.ReactNode; onClose: () => void }>
 };
 
 export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
+  const [showChat, setShowChat] = useState(true);
   const [phase, setPhase] = useState<GamePhase>('config');
   const [settings, setSettings] = useState({ numQuestions: 10, timePerQuestion: 15 });
   const [players, setPlayers] = useState<Record<string, Player>>({});
@@ -397,14 +398,13 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
             return prev;
           });
         } else if (phase === 'playing' && timeLeft !== null && timeLeft > 0) {
-          setPlayers(prev => {
-            const player = prev[userId];
-            if (player && !player.currentAnswer) {
-              // Only capture numbers from the chat message
-              const numMatch = text.match(/\d+/);
-              if (!numMatch) return prev;
-              
-              const answer = numMatch[0];
+            setPlayers(prev => {
+              const player = prev[userId];
+              if (player && !player.currentAnswer) {
+                // Convert Arabic numerals to English and capture only standalone numbers
+                const englishText = text.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
+                const numMatch = englishText.match(/\b\d+\b/);
+                if (!numMatch) return prev;              const answer = numMatch[0];
               return {
                 ...prev,
                 [userId]: {
@@ -937,6 +937,11 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
     <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
       {/* Main Trivia Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+        </button>
+
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
         <button 
           onClick={onLeave} 
@@ -950,17 +955,20 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
         </div>
       </div>
 
-        {/* Twitch Chat Sidebar */}
-      <div className="w-[500px] flex flex-col gap-4">
-          <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
-          <TwitchChat 
-            channelName={channelName} 
-            messages={messages} 
-            isConnected={isConnected} 
-            error={error} 
-          />
+      {/* Twitch Chat Sidebar */}
+      {showChat && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat 
+              channelName={channelName}
+              messages={messages}
+              isConnected={isConnected}
+              error={error}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+

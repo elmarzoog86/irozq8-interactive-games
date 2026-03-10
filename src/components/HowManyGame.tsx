@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Play, Trophy, Timer, Swords, MessageSquare, Share2, Copy, CheckCircle2, XCircle, ArrowRight, Info } from 'lucide-react';
+import { Users, Play, Trophy, Timer, Swords, MessageSquare, Share2, Copy, CheckCircle2, XCircle, ArrowRight, Info, MessageSquareOff } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 import { TwitchChat } from './TwitchChat';
@@ -43,6 +43,7 @@ const SOUNDS = {
 };
 
 export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; messages: any[] }> = ({ onLeave, channelName, messages }) => {
+  const [showChat, setShowChat] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [roomId] = useState(() => uuidv4().slice(0, 6));
   const [state, setState] = useState<GameState | null>(null);
@@ -163,6 +164,11 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
     <div className="flex h-full w-full gap-6 p-6 font-arabic text-white" dir="rtl">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
+          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+          {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+        </button>
+
         <div className="flex-1 relative p-8 flex flex-col overflow-y-auto">
           {/* Header */}
         <div className="flex justify-between items-start mb-8 shrink-0">
@@ -606,15 +612,20 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
         </div>
         
         {/* Twitch Chat */}
-        <div className="flex-1 min-h-0 bg-black/80 rounded-[30px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col">
-          <TwitchChat
+        {showChat && (
+        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
+          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <TwitchChat
             channelName={channelName}
             messages={messages}
             isConnected={true}
             error={null}
           />
+          </div>
         </div>
+      )}
       </div>
     </div>
   );
 };
+
