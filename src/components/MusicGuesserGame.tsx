@@ -393,7 +393,23 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         )}
                         <h2 className="text-3xl font-black text-white">{teams[0].name}</h2>
                     </div>
-                    <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[0].score}</div>
+                    <div className="flex items-center justify-center my-4 gap-6">
+                        <button onClick={() => {
+                            const newTeams = [...teams];
+                            newTeams[0].score += 1;
+                            setTeams(newTeams);
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                           <span className="text-3xl font-black mb-1">+</span>
+                        </button>
+                        <div className="text-7xl font-black text-brand-gold glow-gold-text drop-shadow-2xl leading-none w-16 text-center">{teams[0].score}</div>
+                        <button onClick={() => {
+                            const newTeams = [...teams];
+                            newTeams[0].score = Math.max(0, newTeams[0].score - 1);
+                            setTeams(newTeams);
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                           <span className="text-3xl font-black mb-1">-</span>
+                        </button>
+                    </div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
                         <h3 className="text-xs text-brand-gold/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
@@ -522,7 +538,23 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         )}
                         <h2 className="text-3xl font-black text-white">{teams[1].name}</h2>
                     </div>
-                    <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[1].score}</div>
+                    <div className="flex items-center justify-center my-4 gap-6">
+                        <button onClick={() => {
+                            const newTeams = [...teams];
+                            newTeams[1].score += 1;
+                            setTeams(newTeams);
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                           <span className="text-3xl font-black mb-1">+</span>
+                        </button>
+                        <div className="text-7xl font-black text-brand-gold glow-gold-text drop-shadow-2xl leading-none w-16 text-center">{teams[1].score}</div>
+                        <button onClick={() => {
+                            const newTeams = [...teams];
+                            newTeams[1].score = Math.max(0, newTeams[1].score - 1);
+                            setTeams(newTeams);
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                           <span className="text-3xl font-black mb-1">-</span>
+                        </button>
+                    </div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
                         <h3 className="text-xs text-brand-gold/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
