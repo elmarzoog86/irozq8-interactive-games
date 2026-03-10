@@ -30,7 +30,6 @@ export const CodeNamesGame: React.FC<{
   isConnected: boolean;
   error: string | null;
 }> = ({ onLeave, messages, channelName, isConnected, error }) => {
-  const [showChat, setShowChat] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
@@ -64,14 +63,9 @@ export const CodeNamesGame: React.FC<{
     <div className="flex h-full w-full gap-6 p-6 min-h-0 font-arabic" dir="rtl">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative text-white">
-        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
-            {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
-            {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
-          </button>
-
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
         
-        <div className="flex-1 relative p-8 overflow-y-auto z-10 flex flex-col">
+        <div className="flex-1 relative p-4 md:p-8 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] z-10 flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div className="space-y-1">
@@ -167,9 +161,9 @@ export const CodeNamesGame: React.FC<{
               </motion.div>
             )}
 
-            {state.status === 'playing' && (
-              <motion.div key="playing" className="w-full max-w-6xl space-y-6">
-                {state.data.currentHint && (
+              {state.status === 'playing' && (
+                <motion.div key="playing" className="w-full max-w-6xl flex flex-col h-full flex-1 min-h-0 space-y-4">
+                  {state.data.currentHint && (
                   <div className="bg-brand-gold/10 border-2 border-brand-gold p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(212,175,55,0.2)]">
                     <h3 className="text-xl text-brand-gold/80 mb-2">تلميح Spymaster الحالي</h3>
                     <div className="text-5xl font-black text-brand-gold flex items-center justify-center gap-4">
@@ -189,11 +183,11 @@ export const CodeNamesGame: React.FC<{
                   </div>
                   <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80' : 'border-zinc-800'}`}>
                     <span className="text-xl font-bold text-white">الأسود: {state.data.scores.black}</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-5 gap-3 h-full pb-8">
-                  {state.data.board.map((card, i) => {
+                  <div className="grid grid-cols-5 grid-rows-5 gap-2 flex-1 min-h-0">
+                    {state.data.board.map((card, i) => {
                     let bgColor = 'bg-black/80';
                     let textColor = 'text-brand-gold/40';
                     let borderColor = 'border-brand-gold/10';
@@ -204,11 +198,11 @@ export const CodeNamesGame: React.FC<{
                         else if (card.type === 'assassin') { bgColor = 'bg-zinc-950'; textColor = 'text-red-500'; borderColor = 'border-red-900'; }
                         else { bgColor = 'bg-black/80'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
                       }                    return (
-                      <button
-                        key={i}
-                        onClick={() => revealCard(i)}
-                        className={`relative min-h-[140px] rounded-3xl border-b-[6px] transition-all flex items-center justify-center p-4 text-center font-black text-3xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(212,175,55,0.1)] hover:scale-105 hover:bg-black/80'}`}
-                      >
+                        <button
+                          key={i}
+                          onClick={() => revealCard(i)}
+                          className={`relative w-full h-full rounded-2xl border-b-[6px] transition-all flex items-center justify-center p-2 md:p-4 text-center font-black text-xl md:text-2xl 2xl:text-3xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(212,175,55,0.1)] hover:scale-105 hover:bg-black/80'}`}
+                        >
                         <span className="break-words px-2 leading-tight">{card.word}</span>
                         {!card.revealed && card.votes?.length > 0 && (
                           <div className="absolute -top-3 -right-3 bg-brand-gold text-black rounded-full min-w-[32px] h-8 px-2 flex items-center justify-center text-lg font-black shadow-[0_0_15px_rgba(212,175,55,0.5)] border-2 border-yellow-200 z-10 animate-bounce">
@@ -290,18 +284,7 @@ export const CodeNamesGame: React.FC<{
       </div>
       
       {/* Twitch Chat Sidebar */}
-      {showChat && (
-        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
-            <TwitchChat 
-          channelName={channelName}
-          messages={messages}
-          isConnected={isConnected}
-          error={error}
-        />
-          </div>
-        </div>
-      )}
+      
     </div>
   );
 };

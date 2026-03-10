@@ -53,6 +53,9 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
   const [isDoublePointsActive, setIsDoublePointsActive] = useState(false);
   const [isHintActive, setIsHintActive] = useState(false);
   const [playedSongIds, setPlayedSongIds] = useState<Set<string>>(new Set());
+  const [roundNum, setRoundNum] = useState(0);
+  const [currentTurnIndex, setCurrentTurnIndex] = useState<0 | 1>(0);
+  const [isSteal, setIsSteal] = useState(false);
 
   // Fetch playlist
   useEffect(() => {
@@ -62,32 +65,31 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
       .catch(err => console.error(err));
   }, []);
 
-  const startGame = () => {
-    const validSongs = songs.filter(s => s.id);
+  const startGame = async () => {
+    let validSongs = songs.filter(s => s.id);
     if (validSongs.length === 0) {
-        // alert("لا توجد أغاني جاهزة للتشغيل (جاري البحث عن المعرفات...)");
-        // Reload playlist just in case
-        fetch('/api/music/playlist')
-            .then(res => res.json())
-            .then(data => {
-                setSongs(data);
-                const newDataValid = data.filter((s: Song) => s.id);
-                if (newDataValid.length > 0) {
-                    // alert("تم تحديث القائمة! اضغط بدء اللعبة مرة أخرى.");
-                    setCurrentSong(newDataValid[Math.floor(Math.random() * newDataValid.length)]);
-                    setGameState('playing');
-                    nextRound(data);
-                } else {
-                    alert("قائمة الأغاني فارغة أو لا يوجد لها معرفات يوتيوب.");
-                }
-            });
-        return;
+        try {
+            const res = await fetch('/api/music/playlist');
+            const data = await res.json();
+            setSongs(data);
+            validSongs = data.filter((s: Song) => s.id);
+            if (validSongs.length === 0) {
+                alert('قائمة الأغاني فارغة أو لا يوجد لها معرفات.');
+                return;
+            }
+        } catch (err) {
+            console.error(err);
+            alert('حدث خطأ أثناء جلب الأغاني. يرجى المحاولة مرة أخرى.');
+            return;
+        }
     }
     setGameState('playing');
-    nextRound();
-  };
-
-  const parseDuration = (d: any): number => {
+    setRoundNum(0);
+    setCurrentTurnIndex(0);
+    setIsSteal(false);
+    setPlayedSongIds(new Set());
+    nextRound(validSongs);
+  };  const parseDuration = (d: any): number => {
     if (typeof d === 'object' && d?.seconds) return d.seconds;
     if (typeof d === 'string') {
         const parts = d.split(':').map(Number);
@@ -99,26 +101,26 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
 
   const nextRound = (overrideSongs?: Song[]) => {
     setIsPlaying(false);
-    
+
     // Slight delay to ensure player is torn down before building new one
     setTimeout(() => {
         const songList = overrideSongs || songs;
         const validSongs = songList.filter(s => s.id && !playedSongIds.has(s.id));
-        
-        if (validSongs.length === 0) {
-            if (songList.filter(s => s.id).length === 0) return; 
-            setPlayedSongIds(new Set()); 
-            const randomSong = songList.filter(s => s.id)[Math.floor(Math.random() * songList.filter(s => s.id).length)];
-            setupRoundWithSong(randomSong);
-            return;
+
+        let targetSong = validSongs.length > 0 ? validSongs[Math.floor(Math.random() * validSongs.length)] : null;
+        if (!targetSong) {
+            if (songList.filter(s => s.id).length === 0) return;
+            setPlayedSongIds(new Set());
+            const fallback = songList.filter(s => s.id);
+            targetSong = fallback[Math.floor(Math.random() * fallback.length)];
         }
-
-        const randomSong = validSongs[Math.floor(Math.random() * validSongs.length)];
-        setupRoundWithSong(randomSong);
+        
+        setRoundNum(prev => prev + 1);
+        setupRoundWithSong(targetSong);
     }, 50);
-  };
-
-  const setupRoundWithSong = (song: Song) => {
+  };  const setupRoundWithSong = (song: Song) => {
+    setCurrentTurnIndex((roundNum % 2) === 0 ? 0 : 1);
+    setIsSteal(false);
     if (song.id) {
         setPlayedSongIds(prev => new Set(prev).add(song.id!));
     }
@@ -154,6 +156,17 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
         playerRef.current.seekTo(clipSettings.start, true);
         playerRef.current.playVideo();
     }
+  };
+
+  const handleWrong = (teamIndex: number) => {
+      if (teamIndex === currentTurnIndex && !isSteal) {
+          // Pass turn to the other team
+          setIsSteal(true);
+          setCurrentTurnIndex(teamIndex === 0 ? 1 : 0);
+      } else {
+          // If the stealer gets it wrong, or it was just clicked manually
+          setGameState('revealed');
+      }
   };
 
   const handleCorrect = (teamIndex: number) => {
@@ -232,7 +245,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             <div className="w-20 h-20 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
                 <Music className="w-10 h-10 text-brand-gold" />
             </div>
-            <h1 className="text-4xl font-black mb-4 text-brand-gold glow-gold-text">خمن الموسيقى</h1>
+            <h1 className="text-4xl font-black mb-1 text-brand-gold glow-gold-text">خمن الموسيقى</h1>
+            <p className="text-brand-gold/60 text-sm mb-4 font-bold flex items-center justify-center gap-2">
+                <Music size={14} /> مجموع الأغاني: {songs.filter(s => s.id).length} أغنية
+            </p>
             
             <div className="space-y-4">
                 <div className="space-y-2">
@@ -368,8 +384,15 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             {/* Game Content */}
             <div className="flex-1 grid grid-cols-12 gap-8 items-start">
                {/* Team 1 */}
-               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
-                    <h2 className="text-3xl font-black text-white">{teams[0].name}</h2>
+               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 0 ? (isSteal ? 'border-amber-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-gold/80 shadow-[0_0_40px_rgba(212,175,55,0.4)] scale-[1.02]') : 'border-brand-gold/20 opacity-80'}`}>
+                    <div className="flex flex-col items-center w-full min-h-[48px]">
+                        {currentTurnIndex === 0 && gameState === 'playing' && (
+                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-amber-400/20 text-amber-500 border border-amber-400/50' : 'bg-brand-gold/20 text-brand-gold border border-brand-gold/50'}`}>
+                               {isSteal ? 'فرصة سرقة' : 'دورك الآن'}
+                           </div>
+                        )}
+                        <h2 className="text-3xl font-black text-white">{teams[0].name}</h2>
+                    </div>
                     <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[0].score}</div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
@@ -399,12 +422,27 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </div>
                     </div>
 
-                    <div className="flex w-full gap-3 mt-auto">
-                        <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95">
-                            <X className="mx-auto" size={32} />
-                        </button>
-                        <button onClick={() => handleCorrect(0)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border ${roundWinner !== null ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
-                            <Check className="mx-auto" size={32} />
+                    <div className="flex w-full gap-2 mt-auto">
+                        {currentTurnIndex === 0 && !isSteal ? (
+                            <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border border-orange-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg">
+                                تمت الإجابة
+                            </button>
+                        ) : currentTurnIndex === 0 && isSteal ? (
+                            <>
+                                <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                    <X size={32} />
+                                </button>
+                                <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border border-gray-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center">
+                                    تخطي
+                                </button>
+                            </>
+                        ) : (
+                            <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                <X size={32} />
+                            </button>
+                        )}
+                        <button onClick={() => handleCorrect(0)} disabled={roundWinner !== null || gameState !== 'playing'} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null || gameState !== 'playing' ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
+                            <Check size={32} />
                         </button>
                     </div>
                </div>
@@ -464,7 +502,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                                         <div className="bg-emerald-500/10 text-emerald-400 px-6 py-3 rounded-xl border border-emerald-500/20 font-bold flex items-center gap-3">
                                             <Search size={18} />
                                             <span>
-                                                بداية: {(currentSong.name || '').substring(0, 3)}...
+                                                بداية الأغنية: {((currentSong.name || '').split('-').pop() || currentSong.name || '').trim().substring(0, 4)}...
                                             </span>
                                         </div>
                                     )}
@@ -475,8 +513,15 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                 </div>
 
                {/* Team 2 */}
-               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : 'border-brand-gold/20'}`}>
-                    <h2 className="text-3xl font-black text-white">{teams[1].name}</h2>
+               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 1 ? (isSteal ? 'border-amber-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-gold/80 shadow-[0_0_40px_rgba(212,175,55,0.4)] scale-[1.02]') : 'border-brand-gold/20 opacity-80'}`}>
+                    <div className="flex flex-col items-center w-full min-h-[48px]">
+                        {currentTurnIndex === 1 && gameState === 'playing' && (
+                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-amber-400/20 text-amber-500 border border-amber-400/50' : 'bg-brand-gold/20 text-brand-gold border border-brand-gold/50'}`}>
+                               {isSteal ? 'فرصة سرقة' : 'دورك الآن'}
+                           </div>
+                        )}
+                        <h2 className="text-3xl font-black text-white">{teams[1].name}</h2>
+                    </div>
                     <div className="text-8xl font-black my-4 text-brand-gold glow-gold-text drop-shadow-2xl">{teams[1].score}</div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
@@ -506,12 +551,27 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </div>
                     </div>
 
-                    <div className="flex w-full gap-3 mt-auto">
-                        <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95">
-                            <X className="mx-auto" size={32} />
-                        </button>
-                        <button onClick={() => handleCorrect(1)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border ${roundWinner !== null ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
-                            <Check className="mx-auto" size={32} />
+                    <div className="flex w-full gap-2 mt-auto">
+                        {currentTurnIndex === 1 && !isSteal ? (
+                            <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border border-orange-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg">
+                                تمت الإجابة
+                            </button>
+                        ) : currentTurnIndex === 1 && isSteal ? (
+                            <>
+                                <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                    <X size={32} />
+                                </button>
+                                <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border border-gray-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center">
+                                    تخطي
+                                </button>
+                            </>
+                        ) : (
+                            <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                <X size={32} />
+                            </button>
+                        )}
+                        <button onClick={() => handleCorrect(1)} disabled={roundWinner !== null || gameState !== 'playing'} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null || gameState !== 'playing' ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
+                            <Check size={32} />
                         </button>
                     </div>
                </div>

@@ -249,13 +249,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -366,13 +366,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -421,13 +421,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -476,13 +476,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -531,13 +531,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -586,13 +586,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -677,13 +677,13 @@ function MainApp() {
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
             <a 
-              href="https://discord.com/users/StigQ8" 
+              href="https://discord.com/users/M86" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
             >
               <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+              <span className="hidden sm:inline">Support (M86)</span>
             </a>
           </div>
         </div>
@@ -747,13 +747,13 @@ function MainApp() {
             <span className="hidden sm:inline">دعم القناة</span>
           </a>
           <a 
-            href="https://discord.com/users/StigQ8" 
+            href="https://discord.com/users/M86" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
           >
             <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-            <span className="hidden sm:inline">الدعم الفني (StigQ8)</span>
+            <span className="hidden sm:inline">Support (M86)</span>
           </a>
         </div>
       </div>
