@@ -934,7 +934,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
   };
 
   return (
-    <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
+    <div className="flex gap-8 h-full bg-black w-full max-w-[1600px] mx-auto">
       {/* Main Trivia Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
         <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">

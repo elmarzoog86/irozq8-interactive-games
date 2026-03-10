@@ -207,7 +207,7 @@ function MainApp() {
 
   if (!activeChannel) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center p-4 font-arabic relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col flex flex-col items-center justify-center p-4 font-arabic relative overflow-hidden bg-black" dir="rtl">
         {/* Video Background */}
         <video 
           autoPlay 
@@ -331,7 +331,7 @@ function MainApp() {
   // Full screen games
   if (activeGame === 'trivia') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -386,7 +386,7 @@ function MainApp() {
 
   if (activeGame === 'fruitwar') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -441,7 +441,7 @@ function MainApp() {
 
   if (activeGame === 'chairs') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -496,7 +496,7 @@ function MainApp() {
 
   if (activeGame === 'roulette') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -551,7 +551,7 @@ function MainApp() {
 
   if (activeGame === 'wordchain') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -604,7 +604,7 @@ function MainApp() {
     );
     }if (activeGame === 'howmany') {
       return (
-        <div className="h-screen w-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+        <div className="h-screen overflow-hidden flex flex-col w-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
           <div className="relative z-10 h-full w-full flex-1">
             <HowManyGame onLeave={leaveGame} channelName={activeChannel} messages={messages} />
           </div>
@@ -612,7 +612,7 @@ function MainApp() {
       );
     }  if (activeGame === 'teamfeud') {
     return (
-      <div className="h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
         <div className="relative z-10 h-full w-full">
           <TeamFeudGame onLeave={leaveGame} messages={messages} />
         </div>
@@ -622,7 +622,7 @@ function MainApp() {
 
   if (activeGame === 'codenames') {
     return (
-      <div className="h-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
         <div className="relative z-10 h-full w-full">
           <CodeNamesGame 
             onLeave={leaveGame} 
@@ -642,7 +642,7 @@ function MainApp() {
 
   if (activeGame === 'priceisright') {
     return (
-      <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -697,7 +697,7 @@ function MainApp() {
   
   if (activeGame === 'snakes') {
     return (
-      <div className="h-screen text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -712,7 +712,7 @@ function MainApp() {
   }
 
   return (
-    <div className="h-screen text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+    <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
         <source src="/background.webm" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
@@ -758,7 +758,7 @@ function MainApp() {
         </div>
       </div>
 
-  <div className="w-full max-w-[96vw] flex gap-8 h-[96vh] relative z-10">
+  <div className="w-full max-w-[96vw] flex gap-8 h-[75vh] relative z-10 pb-8 flex-1 min-h-0">
         
         {/* Main Content Area */}
         <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl">

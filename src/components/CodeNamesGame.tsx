@@ -61,7 +61,7 @@ export const CodeNamesGame: React.FC<{
   if (!state) return <div className="flex items-center justify-center h-full text-white">جاري الاتصال...</div>;
 
   return (
-    <div className="flex h-full w-full gap-6 p-6 font-arabic" dir="rtl">
+    <div className="flex h-full w-full gap-6 p-6 min-h-0 font-arabic" dir="rtl">
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative text-white">
         <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">

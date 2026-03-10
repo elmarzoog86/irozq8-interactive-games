@@ -455,7 +455,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
   };
 
   return (
-    <div className="flex gap-8 h-[85vh] w-full max-w-[1600px] mx-auto">
+    <div className="flex gap-8 h-full bg-black w-full max-w-[1600px] mx-auto">
       <audio ref={audioRef} />
       {/* Main Game Area */}
       <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
