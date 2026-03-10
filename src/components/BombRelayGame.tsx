@@ -69,13 +69,10 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
   return (
     <div className="flex h-full w-full bg-black overflow-hidden font-arabic text-white" dir="rtl">
 
-      <button 
-        onClick={() => setShowChat(!showChat)}
-        className="absolute top-6 left-6 z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all flex items-center gap-2"
-      >
-        {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
-        <span className="font-bold">{showChat ? 'إخفاء' : 'إظهار'}</span>
-      </button>
+      <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
+            {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+            {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+          </button>
   
       {/* Main Game Area */}
       <div className="flex-1 relative p-8 overflow-y-auto">

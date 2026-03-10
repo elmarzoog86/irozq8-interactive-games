@@ -324,10 +324,10 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
   return (
     <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
       <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-black/80  flex flex-col relative overflow-hidden">
-        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl z-[90]">
-          {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
-          {showChat ? '????? ?????' : '????? ?????'}
-        </button>
+        <button onClick={() => setShowChat(!showChat)} className="absolute top-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
+            {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
+            {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
+          </button>
 
         
         <AnimatePresence>

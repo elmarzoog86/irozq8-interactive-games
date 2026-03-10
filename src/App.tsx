@@ -614,7 +614,7 @@ function MainApp() {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
         <div className="relative z-10 h-full w-full">
-          <TeamFeudGame onLeave={leaveGame} messages={messages} />
+          <TeamFeudGame onLeave={leaveGame} messages={messages} channelName={activeChannel} isConnected={isConnected} error={error} />
         </div>
       </div>
     );
