@@ -22,7 +22,10 @@ import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
+
+import { socket } from './socket';
 
 // ==========================================
 // SETTINGS
@@ -40,6 +43,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
     return (
       <Routes>
+        <Route path="/admin" element={<AdminControlBoard />} />
         <Route path="/howmany/:roomId" element={<HowManyPlayer />} />
         <Route path="/team/:roomId" element={<TeamPlayer />} />
         <Route path="/games/guess-song" element={
@@ -197,7 +201,9 @@ function MainApp() {
   const handleConnect = (e: React.FormEvent) => {
     e.preventDefault();
     if (channelNameInput.trim()) {
-      setActiveChannel(channelNameInput.trim().toLowerCase());
+      const formattedChannel = channelNameInput.trim().toLowerCase();
+      setActiveChannel(formattedChannel);
+      socket.emit('streamer_online', formattedChannel);
     }
   };
 

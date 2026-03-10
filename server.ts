@@ -115,8 +115,33 @@ interface TeamGameState {
 
 const teamRooms = new Map<string, TeamGameState>();
 
+interface StreamerInfo {
+  socketId: string;
+  username: string;
+}
+const connectedStreamers = new Map<string, StreamerInfo>();
+
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
+
+  socket.on("streamer_online", (username) => {
+    connectedStreamers.set(socket.id, { socketId: socket.id, username });
+    io.emit("streamers_list", Array.from(connectedStreamers.values()));
+  });
+
+  socket.on("get_streamers", () => {
+    socket.emit("streamers_list", Array.from(connectedStreamers.values()));
+  });
+
+  // --- ADMIN CONTROLS ---
+  socket.on("admin_action", (payload) => {
+    console.log("Admin broadcasting action: ", payload.actionType);
+    if (payload.targetStreamerId) {
+      io.to(payload.targetStreamerId).emit("admin_event", payload);
+    } else {
+      io.emit("admin_event", payload);
+    }
+  });
 
 
   // How Many Can You Name Events
@@ -704,6 +729,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
+    if (connectedStreamers.has(socket.id)) {
+      connectedStreamers.delete(socket.id);
+      io.emit("streamers_list", Array.from(connectedStreamers.values()));
+    }
   });
 });
 
