@@ -438,26 +438,26 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </div>
                     </div>
 
-                    <div className="flex w-full gap-2 mt-auto">
-                        {currentTurnIndex === 0 && !isSteal ? (
-                            <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border border-orange-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg">
+                    <div className="flex w-full gap-2 mt-auto translate-y-10">
+                        {currentTurnIndex === 0 && !isSteal && gameState === 'playing' ? (
+                            <button onClick={() => handleWrong(0)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border-orange-500/20'}`}>
                                 تمت الإجابة
                             </button>
-                        ) : currentTurnIndex === 0 && isSteal ? (
+                        ) : currentTurnIndex === 0 && isSteal && gameState === 'playing' ? (
                             <>
-                                <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                <button onClick={() => handleWrong(0)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20'}`}>
                                     <X size={32} />
                                 </button>
-                                <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border border-gray-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center">
+                                <button onClick={() => setGameState('revealed')} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border-gray-500/20'}`}>
                                     تخطي
                                 </button>
                             </>
                         ) : (
-                            <button onClick={() => handleWrong(0)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                            <button onClick={() => handleWrong(0)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20'}`}>
                                 <X size={32} />
                             </button>
                         )}
-                        <button onClick={() => handleCorrect(0)} disabled={roundWinner !== null || gameState !== 'playing'} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null || gameState !== 'playing' ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
+                        <button onClick={() => handleCorrect(0)} disabled={roundWinner !== null} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
                             <Check size={32} />
                         </button>
                     </div>
@@ -583,26 +583,26 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </div>
                     </div>
 
-                    <div className="flex w-full gap-2 mt-auto">
-                        {currentTurnIndex === 1 && !isSteal ? (
-                            <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border border-orange-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg">
+                    <div className="flex w-full gap-2 mt-auto translate-y-10">
+                        {currentTurnIndex === 1 && !isSteal && gameState === 'playing' ? (
+                            <button onClick={() => handleWrong(1)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold text-lg border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 border-orange-500/20'}`}>
                                 تمت الإجابة
                             </button>
-                        ) : currentTurnIndex === 1 && isSteal ? (
+                        ) : currentTurnIndex === 1 && isSteal && gameState === 'playing' ? (
                             <>
-                                <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                                <button onClick={() => handleWrong(1)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20'}`}>
                                     <X size={32} />
                                 </button>
-                                <button onClick={() => setGameState('revealed')} disabled={gameState !== 'playing'} className="flex-1 bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border border-gray-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center">
+                                <button onClick={() => setGameState('revealed')} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 font-bold flex justify-center items-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-gray-500/10 hover:bg-gray-500/20 text-gray-400 border-gray-500/20'}`}>
                                     تخطي
                                 </button>
                             </>
                         ) : (
-                            <button onClick={() => handleWrong(1)} disabled={gameState !== 'playing'} className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center">
+                            <button onClick={() => handleWrong(1)} disabled={roundWinner !== null} className={`flex-1 p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 flex justify-center border ${roundWinner !== null ? 'bg-zinc-900/50 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-red-500/10 hover:bg-red-500/20 text-red-500 border-red-500/20'}`}>
                                 <X size={32} />
                             </button>
                         )}
-                        <button onClick={() => handleCorrect(1)} disabled={roundWinner !== null || gameState !== 'playing'} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null || gameState !== 'playing' ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
+                        <button onClick={() => handleCorrect(1)} disabled={roundWinner !== null} className={`flex-[1.5] p-4 rounded-2xl cursor-pointer transition-all hover:scale-105 active:scale-95 border flex justify-center ${roundWinner !== null ? 'bg-zinc-900 text-gray-600 border-zinc-800 cursor-not-allowed' : 'bg-green-500/10 hover:bg-green-500/20 text-green-500 border-green-500/20'}`}>
                             <Check size={32} />
                         </button>
                     </div>
