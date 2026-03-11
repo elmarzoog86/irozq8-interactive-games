@@ -596,15 +596,13 @@ io.on("connection", (socket) => {
     const room = teamRooms.get(roomId);
     if (!room) return;
 
-    if (room.gameType === 'teamfeud') {
-      if (action === 'set_leader') {
-        if (!room.data.leaders) room.data.leaders = { gold: null, black: null };
-        room.data.leaders[payload.team] = payload.playerId;
-        io.to(roomId).emit("team_game_state", room);
-        return;
-      }
-
-      if (action === 'buzz' && room.status === 'buzzer' && room.data.buzzerActive) {
+      if (room.gameType === 'teamfeud') {
+        if (action === 'set_leader') {
+          if (!room.data.leaders) room.data.leaders = { gold: null, black: null };
+          room.data.leaders[payload.team] = payload.playerName;
+          io.to(roomId).emit("team_game_state", room);
+          return;
+        }      if (action === 'buzz' && room.status === 'buzzer' && room.data.buzzerActive) {
         room.status = 'playing';
         room.data.currentTurn = payload.team;
         room.data.buzzerActive = false;
@@ -650,41 +648,57 @@ io.on("connection", (socket) => {
           }
         }
       }
-    } else if (room.gameType === 'codenames') {
-      if (action === 'set_spymaster') {
-        if (!room.data.spymasters) room.data.spymasters = { gold: null, black: null };
-        room.data.spymasters[payload.team] = payload.playerId;
-        io.to(roomId).emit("team_game_state", room);
-        return;
-      }
-
-      if (action === 'give_hint') {
-        room.data.currentHint = { word: payload.word, count: payload.count };
-        io.to(roomId).emit("team_game_state", room);
-        return;
-      }
-      
-      if (action === 'vote') {
-        const card = room.data.board[payload.index];
-        if (!card.revealed) {
-          if (!card.votes) card.votes = [];
-          const voteIndex = card.votes.indexOf(payload.playerId);
-          if (voteIndex === -1) {
-            card.votes.push(payload.playerId);
-          } else {
-            card.votes.splice(voteIndex, 1);
-          }
+      } else if (room.gameType === 'codenames') {
+        if (action === 'set_spymaster') {
+          if (!room.data.spymasters) room.data.spymasters = { gold: null, black: null };
+          room.data.spymasters[payload.team] = payload.playerName;
           io.to(roomId).emit("team_game_state", room);
+          return;
         }
-        return;
-      }
 
-      if (action === 'reveal') {
-        const card = room.data.board[payload.index];
-        if (!card.revealed) {
-          card.revealed = true;
-          
-          if (card.type === 'gold' || card.type === 'black') {
+        if (action === 'give_hint') {
+          room.data.currentHint = { word: payload.word, count: payload.count };
+          room.data.guessesLeft = payload.count + 1; // +1 extra guess rule
+          if (!room.data.history) room.data.history = [];
+          room.data.history.push({ type: 'hint', team: room.data.currentTurn, word: payload.word, count: payload.count, playerName: payload.playerName, timestamp: Date.now() });
+          io.to(roomId).emit("team_game_state", room);
+          return;
+        }
+
+        if (action === 'pass_turn') {
+          if (room.data.currentTurn === payload.team && !room.data.spymasters?.[payload.team]) {
+               // well wait, anyone can pass.
+               room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+               room.data.currentHint = null;
+               room.data.guessesLeft = 0;
+               if (!room.data.history) room.data.history = [];
+               room.data.history.push({ type: 'pass', team: payload.team, playerName: payload.playerName, timestamp: Date.now() });
+               io.to(roomId).emit("team_game_state", room);
+          }
+          return;
+        }
+
+        if (action === 'vote') {
+          const card = room.data.board[payload.index];
+          if (!card.revealed) {
+            if (!card.votes) card.votes = [];
+            const voteIndex = card.votes.indexOf(payload.playerName);
+            if (voteIndex === -1) {
+              card.votes.push(payload.playerName);
+            } else {
+              card.votes.splice(voteIndex, 1);
+            }
+            io.to(roomId).emit("team_game_state", room);
+          }
+          return;
+        }
+
+        if (action === 'reveal') {
+          const card = room.data.board[payload.index];
+          if (!card.revealed) {
+            card.revealed = true;
+            if (!room.data.history) room.data.history = [];
+            room.data.history.push({ type: 'reveal', team: room.data.currentTurn, cardWord: card.word, playerName: payload.playerName, cardType: card.type, timestamp: Date.now() });          if (card.type === 'gold' || card.type === 'black') {
             room.data.scores[card.type]--;
           }
           
@@ -700,6 +714,17 @@ io.on("connection", (socket) => {
           } else if (card.type !== room.data.currentTurn) {
             room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
             room.data.currentHint = null; // Clear hint on turn change
+            room.data.guessesLeft = 0;
+          } else {
+            // Correct guess
+            if (typeof room.data.guessesLeft === 'number') {
+              room.data.guessesLeft--;
+              if (room.data.guessesLeft <= 0) {
+                room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+                room.data.currentHint = null;
+                room.data.guessesLeft = 0;
+              }
+            }
           }
         }
       }

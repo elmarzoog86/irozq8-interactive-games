@@ -12,7 +12,21 @@ export function AdminOverlay() {
 
   useEffect(() => {
     if (user) {
-      socket.emit('streamer_online', user.display_name || user.login);
+      const username = user.display_name || user.login;
+      
+      const onConnect = () => {
+        socket.emit('streamer_online', username);
+      };
+
+      socket.on('connect', onConnect);
+      
+      if (socket.connected) {
+        socket.emit('streamer_online', username);
+      }
+
+      return () => {
+        socket.off('connect', onConnect);
+      };
     }
   }, [user]);
 

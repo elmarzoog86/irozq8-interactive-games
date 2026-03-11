@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { io, Socket } from 'socket.io-client';
+import { socket } from '../socket';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Swords, CheckCircle2, XCircle, Bomb, Key, Crown } from 'lucide-react';
+import { Shield, Swords, CheckCircle2, XCircle, Bomb, Key, Crown, MessageSquare, Eye } from 'lucide-react';
 
 interface Player {
   id: string;
@@ -20,44 +20,43 @@ interface GameState {
 export const TeamPlayer: React.FC = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [name, setName] = useState('');
   const [isJoined, setIsJoined] = useState(false);
   const [answer, setAnswer] = useState('');
   const [hintWord, setHintWord] = useState('');
   const [hintCount, setHintCount] = useState('');
+  const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
-    const newSocket = io();
-    setSocket(newSocket);
-
-    newSocket.on('team_game_state', (newState: GameState) => {
+    const handleGameState = (newState: GameState) => {
       setState(newState);
-    });
+    };
+    
+    socket.on('team_game_state', handleGameState);
 
     return () => {
-      newSocket.disconnect();
+      socket.off('team_game_state', handleGameState);
     };
   }, []);
 
   const joinGame = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim() && roomId) {
-      socket?.emit('join_team_game', { roomId, name: name.trim() });
+      socket.emit('join_team_game', { roomId, name: name.trim() });
       setIsJoined(true);
     }
   };
 
   const switchTeam = (team: 'gold' | 'black') => {
     if (roomId) {
-      socket?.emit('switch_team', { roomId, playerId: socket.id, team, name });
+      socket.emit('switch_team', { roomId, playerId: socket.id, team, name });
     }
   };
 
   const submitAction = (action: string, payload: any) => {
     if (roomId) {
-      socket?.emit('submit_team_action', { roomId, action, payload });
+      socket.emit('submit_team_action', { roomId, action, payload: { ...payload, playerName: name } });
     }
   };
 
@@ -216,7 +215,10 @@ export const TeamPlayer: React.FC = () => {
                 {state.data.currentHint && (
                   <div className="bg-brand-gold/20 border-2 border-brand-gold p-4 rounded-2xl text-center shadow-[0_0_15px_rgba(212,175,55,0.3)] animate-pulse">
                     <p className="text-sm text-brand-gold/80 mb-1">تلميح Spymaster الجديد:</p>
-                    <p className="text-2xl font-black text-brand-gold">{state.data.currentHint.word} - {state.data.currentHint.count}</p>
+                    <p className="text-2xl font-black text-brand-gold mb-2">{state.data.currentHint.word} - {state.data.currentHint.count}</p>
+                    {state.data.guessesLeft !== undefined && (
+                      <p className="text-xs font-bold text-white bg-black/50 inline-block px-3 py-1 rounded-full">الخيارات المتبقية: {state.data.guessesLeft}</p>
+                    )}
                   </div>
                 )}
 
@@ -226,69 +228,153 @@ export const TeamPlayer: React.FC = () => {
                   <div className={`text-sm font-bold ${state.data.currentTurn === 'black' ? 'text-white' : 'text-zinc-500'}`}>الأسود: {state.data.scores?.black ?? 8}</div>
                 </div>
 
-                {state.data.spymasters?.[myPlayer?.team!] === myPlayer?.id && (
+                {state.data.currentTurn === myPlayer?.team && state.data.currentHint && state.data.guessesLeft !== undefined && state.data.guessesLeft > 0 && !(myPlayer?.team && state.data.spymasters?.[myPlayer.team] === myPlayer.name) && (
+                  <button
+                    onClick={() => submitAction('pass_turn', { team: myPlayer?.team, playerName: myPlayer?.name })}
+                    className="w-full bg-red-900/50 hover:bg-red-800 transition-colors border-2 border-red-500/50 text-white font-bold p-3 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+                  >
+                    إنهاء الدور الآن
+                  </button>
+                )}
+
+                {/* Floating button for History */}
+                <button
+                  onClick={() => setShowHistory(!showHistory)}
+                  className="fixed bottom-20 left-4 z-40 flex justify-center items-center gap-2 p-3 rounded-full bg-black/80 border-2 border-brand-gold text-brand-gold text-sm font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-brand-gold/20 backdrop-blur-sm transition-all"
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  <span className="hidden sm:inline">سجل الحركات</span>
+                </button>
+
+                <AnimatePresence>
+                  {showHistory && (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+                        onClick={() => setShowHistory(false)}
+                      />
+                      <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+                        className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0a] border-l border-brand-gold/30 p-5 z-50 overflow-y-auto shadow-2xl flex flex-col gap-4"
+                      >
+                        <div className="flex items-center justify-between border-b border-brand-gold/20 pb-4">
+                          <h3 className="text-xl font-bold text-brand-gold flex items-center gap-2">
+                            <MessageSquare className="w-5 h-5" />
+                            سجل الحركات
+                          </h3>
+                          <button onClick={() => setShowHistory(false)} className="text-zinc-400 hover:text-white transition-colors">
+                            <XCircle className="w-6 h-6" />
+                          </button>
+                        </div>
+                        
+                        {state.data.history && state.data.history.length > 0 ? (
+                          <div className="space-y-3">
+                            {state.data.history.map((entry: any, idx: number) => (
+                              <div key={idx} className={`p-3 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-gold/5 border-brand-gold/20 text-brand-gold' : 'bg-zinc-800/50 border-zinc-700 text-zinc-300'}`}>
+                                <div className="flex justify-between items-center text-[10px] opacity-70">
+                                  <span>{entry.team === 'gold' ? 'الفريق الذهبي' : 'الفريق الأسود'}</span>
+                                  <span>{new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                                </div>
+                                {entry.type === 'hint' ? (
+                                  <div className="flex items-center gap-2 text-sm">
+                                    <Key className="w-4 h-4 shrink-0" />
+                                    <span>{entry.playerName ? `تلميح من ${entry.playerName}:` : 'تلميح:'} <strong className="text-base text-white">«{entry.word}» ({entry.count})</strong></span>
+                                  </div>
+                                ) : entry.type === 'pass' ? (
+                                  <div className="flex items-center gap-2 text-sm text-red-400">
+                                    <XCircle className="w-4 h-4 shrink-0" />
+                                    <span>إنهاء الدور ({entry.playerName || 'لاعب'})</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-2 text-sm">
+                                    <Eye className="w-4 h-4 shrink-0" />
+                                    <span>{entry.playerName || 'لاعب'} اختار: <strong className="text-white">{entry.cardWord}</strong></span>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-center text-zinc-500 mt-10 text-sm">
+                            لا توجد حركات مسجلة بعد
+                          </div>
+                        )}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+
+                {state.data.spymasters?.[myPlayer?.team!] === myPlayer?.name && (
                   <div className="bg-brand-gold/10 border border-brand-gold p-4 rounded-xl space-y-4">
                     <div className="text-center">
                       <p className="font-bold text-brand-gold text-lg">أنت قائد الفريق!</p>
                       <p className="text-sm text-brand-gold/70 mt-1">اكتب التلميح (كلمة واحدة) وعدد الكلمات المرتبطة به.</p>
                     </div>
-                    {state.data.currentTurn === myPlayer?.team && (
-                      <form onSubmit={(e) => {
+
+                    <form 
+                      className="flex gap-2"
+                      onSubmit={(e) => {
                         e.preventDefault();
-                        if (hintWord.trim() && hintCount.trim()) {
-                          submitAction('give_hint', { word: hintWord.trim(), count: parseInt(hintCount.trim()) });
+                        if (hintWord.trim() && hintCount) {
+                          submitAction('give_hint', { word: hintWord.trim(), count: parseInt(hintCount) });
                           setHintWord('');
                           setHintCount('');
                         }
-                      }} className="flex gap-2">
-                        <input 
-                          type="text" 
-                          value={hintWord}
-                          onChange={(e) => setHintWord(e.target.value)}
-                          placeholder="التلميح..."
-                          className="flex-1 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
-                          required
-                        />
-                        <input 
-                          type="number" 
-                          value={hintCount}
-                          onChange={(e) => setHintCount(e.target.value)}
-                          placeholder="العدد"
-                          min="1"
-                          max="9"
-                          className="w-20 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
-                          required
-                        />
-                        <button type="submit" className="bg-brand-gold hover:bg-brand-gold-light text-black px-4 rounded-xl font-black transition-all">إرسال</button>
-                      </form>
-                    )}
+                      }}
+                    >
+                      <input
+                        type="text"
+                        value={hintWord}
+                        onChange={(e) => setHintWord(e.target.value)}
+                        placeholder="التلميح..."
+                        className="flex-1 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                        required
+                      />
+                      <input
+                        type="number"
+                        value={hintCount}
+                        onChange={(e) => setHintCount(e.target.value)}
+                        placeholder="العدد"
+                        min="1"
+                        max="9"
+                        className="w-20 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                        required
+                      />
+                      <button type="submit" className="bg-brand-gold hover:bg-brand-gold-light text-black px-4 rounded-xl font-black transition-all">إرسال</button>
+                    </form>
                   </div>
                 )}
 
                 <div className="grid grid-cols-5 gap-2">
                   {state.data.board.map((card: any, i: number) => {
-                    const isSpymaster = myPlayer?.team && state.data.spymasters?.[myPlayer.team] === myPlayer.id;
+                    const isSpymaster = myPlayer?.team && state.data.spymasters?.[myPlayer.team] === myPlayer.name;
                     let bgColor = 'bg-black/80';
                     let textColor = 'text-white';
                     let borderColor = 'border-brand-gold/20';
 
-                      if (card.revealed || isSpymaster) {
-                        if (card.type === 'gold') { bgColor = 'bg-[#D4AF37]'; textColor = 'text-black'; borderColor = 'border-[#FFE55C]'; }
-                        else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.4)]'; }
-                        else if (card.type === 'assassin') { bgColor = 'bg-red-950'; textColor = 'text-red-500'; borderColor = 'border-red-600'; }
-                        else { bgColor = 'bg-zinc-900'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
-                      }                    return (
+                    if (card.revealed || isSpymaster) {
+                      if (card.type === 'gold') { bgColor = 'bg-[#D4AF37]'; textColor = 'text-black'; borderColor = 'border-[#FFE55C]'; }
+                      else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.4)]'; }
+                      else if (card.type === 'assassin') { bgColor = 'bg-red-950'; textColor = 'text-red-500'; borderColor = 'border-red-600'; }
+                      else { bgColor = 'bg-zinc-900'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
+                    }                    return (
                       <button
                         key={i}
                         onClick={() => {
-                          if (!card.revealed && state.data.currentTurn === myPlayer?.team && !isSpymaster) {
-                            const hasVoted = card.votes?.includes(myPlayer?.id);
-                            if (hasVoted) {
-                              submitAction('reveal', { index: i });
-                            } else {
-                              submitAction('vote', { index: i, playerId: myPlayer?.id });
+                            if (!card.revealed && state.data.currentTurn === myPlayer?.team && !isSpymaster) {
+                              const hasVoted = card.votes?.includes(myPlayer?.name);
+                              if (hasVoted) {
+                                submitAction('reveal', { index: i, playerName: myPlayer?.name });
+                              } else {
+                                submitAction('vote', { index: i, playerName: myPlayer?.name });
+                              }
                             }
-                          }
                         }}
                         disabled={card.revealed || isSpymaster || state.data.currentTurn !== myPlayer?.team}
                         className={`relative aspect-square sm:h-24 rounded-xl border-b-[4px] transition-all flex items-center justify-center p-1 text-center font-bold text-xs sm:text-base leading-tight shadow-md ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-30' : 'hover:scale-105 active:scale-95'}`}
@@ -299,7 +385,7 @@ export const TeamPlayer: React.FC = () => {
                             {card.votes.length}
                           </span>
                         )}
-                        {!card.revealed && card.votes?.includes(myPlayer?.id) && (
+                        {!card.revealed && card.votes?.includes(myPlayer?.name) && (
                           <span className="absolute bottom-1 left-0 right-0 text-[8px] sm:text-[10px] text-brand-gold font-bold opacity-80 pointer-events-none">تأكيد؟</span>
                         )}
                       </button>

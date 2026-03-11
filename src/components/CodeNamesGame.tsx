@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Trophy, Timer, MessageSquare, XCircle, Search, Key, Shield, Eye, EyeOff, Info, Users, Copy, MessageSquareOff } from 'lucide-react';
-import { io, Socket } from 'socket.io-client';
+import { socket } from '../socket';
 import { TwitchChat } from './TwitchChat';
 
 interface Player {
@@ -20,6 +20,16 @@ interface GameState {
     winner?: 'gold' | 'black';
     spymasters?: { gold: string | null; black: string | null };
     currentHint?: { word: string; count: number } | null;
+    history?: {
+      type: 'hint' | 'reveal';
+      team: 'gold' | 'black';
+      word?: string;
+      count?: number;
+      cardWord?: string;
+      cardType?: string;
+      playerName?: string;
+      timestamp: number;
+    }[];
   };
 }
 
@@ -30,31 +40,36 @@ export const CodeNamesGame: React.FC<{
   isConnected: boolean;
   error: string | null;
 }> = ({ onLeave, messages, channelName, isConnected, error }) => {
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
-  const [isSpymaster, setIsSpymaster] = useState(true);  useEffect(() => {
-    const newSocket = io();
-    setSocket(newSocket);
-    newSocket.emit('join_team_game', { roomId, name: 'Streamer', gameType: 'codenames' });
-    newSocket.on('team_game_state', (newState: GameState) => setState(newState));
-    return () => { newSocket.disconnect(); };
+  const [isSpymaster, setIsSpymaster] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
+
+  useEffect(() => {
+    socket.emit('join_team_game', { roomId, name: 'Streamer', gameType: 'codenames' });
+    
+    const handleGameState = (newState: GameState) => setState(newState);
+    socket.on('team_game_state', handleGameState);
+    
+    return () => { 
+      socket.off('team_game_state', handleGameState);
+    };
   }, [roomId]);
 
   const switchTeam = (playerId: string, team: 'gold' | 'black' | null) => {
-    socket?.emit('switch_team', { roomId, playerId, team });
+    socket.emit('switch_team', { roomId, playerId, team });
   };
 
-  const setSpymaster = (playerId: string, team: 'gold' | 'black') => {
-    socket?.emit('submit_team_action', { roomId, action: 'set_spymaster', payload: { playerId, team } });
+  const setSpymaster = (playerName: string, team: 'gold' | 'black') => {
+    socket.emit('submit_team_action', { roomId, action: 'set_spymaster', payload: { playerName, team } });
   };
 
-  const startGame = () => socket?.emit('start_team_game', roomId);
+  const startGame = () => socket.emit('start_team_game', roomId);
 
-  const resetGame = () => socket?.emit('reset_team_game', roomId);
+  const resetGame = () => socket.emit('reset_team_game', roomId);
 
   const revealCard = (index: number) => {
-    socket?.emit('submit_team_action', { roomId, action: 'reveal', payload: { index } });
+    socket.emit('submit_team_action', { roomId, action: 'reveal', payload: { index } });
   };
 
   if (!state) return <div className="flex items-center justify-center h-full text-white">جاري الاتصال...</div>;
@@ -120,13 +135,13 @@ export const CodeNamesGame: React.FC<{
                   <h2 className="text-3xl font-black text-brand-gold mb-6">الفريق الذهبي</h2>
                   <div className="space-y-2 min-h-[200px]">
                     {state.players.filter(p => p.team === 'gold').map(p => (
-                      <div key={p.id} className={`bg-brand-gold/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.gold === p.id ? 'border-brand-gold border-2' : 'border-brand-gold/20'}`}>
+                      <div key={p.id} className={`bg-brand-gold/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.gold === p.name ? 'border-brand-gold border-2' : 'border-brand-gold/20'}`}>
                         <div className="flex items-center gap-2">
-                          {state.data?.spymasters?.gold === p.id && <Eye className="w-4 h-4 text-brand-gold" />}
+                          {state.data?.spymasters?.gold === p.name && <Eye className="w-4 h-4 text-brand-gold" />}
                           <span className="font-bold">{p.name}</span>
                         </div>
                         <div className="flex gap-2">
-                          <button onClick={() => setSpymaster(p.id, 'gold')} className="text-[10px] bg-brand-gold/20 hover:bg-brand-gold/40 px-2 py-1 rounded border border-brand-gold/30 transition-colors">Spymaster</button>
+                          <button onClick={() => setSpymaster(p.name, 'gold')} className="text-[10px] bg-brand-gold/20 hover:bg-brand-gold/40 px-2 py-1 rounded border border-brand-gold/30 transition-colors">Spymaster</button>
                           <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-black/70 hover:bg-black/80 px-2 py-1 rounded border border-brand-gold/30 transition-colors">الأسود</button>
                         </div>
                       </div>
@@ -139,13 +154,13 @@ export const CodeNamesGame: React.FC<{
                   <h2 className="text-3xl font-black text-white mb-6">الفريق الأسود</h2>
                   <div className="space-y-2 min-h-[200px]">
                     {state.players.filter(p => p.team === 'black').map(p => (
-                      <div key={p.id} className={`bg-black/70 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.black === p.id ? 'border-white border-2' : 'border-zinc-700'}`}>
+                      <div key={p.id} className={`bg-black/70 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.black === p.name ? 'border-white border-2' : 'border-zinc-700'}`}>
                         <div className="flex items-center gap-2">
-                          {state.data?.spymasters?.black === p.id && <Eye className="w-4 h-4 text-white" />}
+                          {state.data?.spymasters?.black === p.name && <Eye className="w-4 h-4 text-white" />}
                           <span className="font-bold text-white">{p.name}</span>
                         </div>
                         <div className="flex gap-2">
-                          <button onClick={() => setSpymaster(p.id, 'black')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">Spymaster</button>
+                          <button onClick={() => setSpymaster(p.name, 'black')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">Spymaster</button>
                           <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-gold/10 hover:bg-brand-gold/20 px-2 py-1 rounded border border-brand-gold/20 transition-colors">الذهبي</button>
                         </div>
                       </div>
@@ -166,11 +181,17 @@ export const CodeNamesGame: React.FC<{
                   {state.data.currentHint && (
                   <div className="bg-brand-gold/10 border-2 border-brand-gold p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(212,175,55,0.2)]">
                     <h3 className="text-xl text-brand-gold/80 mb-2">تلميح Spymaster الحالي</h3>
-                    <div className="text-5xl font-black text-brand-gold flex items-center justify-center gap-4">
+                    <div className="text-5xl font-black text-brand-gold flex items-center justify-center gap-4 mb-4">
                       <span>{state.data.currentHint.word}</span>
                       <span className="text-brand-gold/50">-</span>
                       <span>{state.data.currentHint.count}</span>
                     </div>
+                    {state.data.guessesLeft !== undefined && (
+                      <div className="inline-block bg-black/50 border border-brand-gold/30 px-6 py-2 rounded-full">
+                        <span className="text-white font-bold">الخيارات المتبقية: </span>
+                        <span className="text-brand-gold font-black mx-1">{state.data.guessesLeft}</span>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -178,13 +199,75 @@ export const CodeNamesGame: React.FC<{
                   <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'gold' ? 'border-brand-gold bg-brand-gold/10' : 'border-brand-gold/10'}`}>
                     <span className="text-xl font-bold text-brand-gold">الذهبي: {state.data.scores.gold}</span>
                   </div>
-                  <div className="text-center">
-                    <h2 className="text-2xl font-black italic text-white">دور الفريق {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}</h2>
-                  </div>
+
+                  <button
+                    onClick={() => setShowHistory(!showHistory)}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-bold transition-all ${showHistory ? 'bg-brand-gold text-black border-brand-gold' : 'bg-black/50 text-brand-gold border-brand-gold/30 hover:bg-brand-gold/10 hover:border-brand-gold'}`}
+                  >
+                    <MessageSquare className="w-5 h-5" />
+                    <span>{showHistory ? 'إخفاء السجل' : 'سجل التلميحات'}</span>
+                  </button>
+
                   <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80' : 'border-zinc-800'}`}>
                     <span className="text-xl font-bold text-white">الأسود: {state.data.scores.black}</span>
                     </div>
                   </div>
+                  
+                  <AnimatePresence>
+                    {showHistory && state.data.history && state.data.history.length > 0 && (
+                      <motion.div
+                        initial={{ x: '-100%', opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: '-100%', opacity: 0 }}
+                        transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
+                        className="fixed top-0 left-0 h-full w-80 max-w-sm bg-black/90 border-r-2 border-brand-gold/50 p-6 z-50 overflow-y-auto shadow-[20px_0_50px_rgba(0,0,0,0.8)] flex flex-col gap-4 backdrop-blur-md"
+                      >
+                        <div className="flex justify-between items-center border-b border-brand-gold/30 pb-4">
+                          <h3 className="text-xl font-bold text-brand-gold flex items-center gap-2">
+                            <MessageSquare className="w-6 h-6" />
+                            سجل الحركات
+                          </h3>
+                          <button
+                            onClick={() => setShowHistory(false)}
+                            className="text-zinc-400 hover:text-white transition-colors"
+                          >
+                            <XCircle className="w-6 h-6" />
+                          </button>
+                        </div>
+                        <div className="flex-1 space-y-3 mt-4">
+                          {state.data.history.map((entry: any, idx: number) => (
+                            <div key={idx} className={`p-4 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-gold/10 border-brand-gold/30 text-brand-gold' : 'bg-zinc-800/80 border-zinc-600 text-zinc-300'}`}>
+                              <span className="text-xs opacity-50 font-mono self-end">
+                                {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                              {entry.type === 'hint' ? (
+                                <div className="flex flex-col gap-1 text-sm text-center">
+                                  <span className="opacity-70">{entry.playerName ? `القائد (${entry.playerName}) أعطى تلميح:` : 'القائد أعطى تلميح:'}</span>
+                                  <span className="font-black text-2xl tracking-wide">«{entry.word}» ({entry.count})</span>
+                                </div>
+                              ) : entry.type === 'pass' ? (
+                                <div className="flex flex-col gap-1 text-sm text-center">
+                                  <span className="font-bold text-red-400">أنهى {entry.playerName || 'الفريق'} الدور</span>
+                                </div>
+                              ) : (
+                                <div className="flex flex-col gap-1 text-sm text-center">
+                                  <span className="opacity-70">{entry.playerName || 'لاعب'} اختار:</span>
+                                  <span className={`font-bold px-3 py-1 rounded-lg text-lg ${
+                                    entry.cardType === 'gold' ? 'bg-brand-gold text-black shadow-[0_0_10px_rgba(212,175,55,0.5)]' :
+                                    entry.cardType === 'black' ? 'bg-zinc-900 border border-zinc-700 text-white' :
+                                    entry.cardType === 'assassin' ? 'bg-red-800 text-red-100 shadow-[0_0_15px_rgba(153,27,27,0.5)]' :
+                                    'bg-zinc-700 text-zinc-300'
+                                  }`}>
+                                    {entry.cardWord}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   <div className="grid grid-cols-5 grid-rows-5 gap-2 flex-1 min-h-0">
                     {state.data.board.map((card, i) => {
@@ -250,30 +333,29 @@ export const CodeNamesGame: React.FC<{
            <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
              {/* Gold Team */}
              <div>
-               <h4 className="text-brand-gold text-sm font-bold mb-2 flex justify-between">
-                 الذهبي
+               <h4 className="text-brand-gold font-bold mb-2 flex items-center justify-between">
+                 <span>الفريق الذهبي</span>
                  <span className="bg-brand-gold/20 px-2 rounded">{state.players.filter(p => p.team === 'gold').length}</span>
                </h4>
                <div className="space-y-1">
                  {state.players.filter(p => p.team === 'gold').map(p => (
                    <div key={p.id} className="text-sm bg-brand-gold/5 p-2 rounded text-zinc-300 flex items-center gap-2">
-                     {state.data?.spymasters?.gold === p.id && <Eye className="w-3 h-3 text-brand-gold" />}
+                     {state.data?.spymasters?.gold === p.name && <Eye className="w-3 h-3 text-brand-gold" />}
                      <span className="truncate">{p.name}</span>
                    </div>
                  ))}
                </div>
              </div>
-
-             {/* Black Team */}
-             <div>
-               <h4 className="text-zinc-400 text-sm font-bold mb-2 flex justify-between">
-                 الأسود
+             
+             <div className="bg-black/70 border border-zinc-800 p-4 rounded-xl">
+               <h4 className="text-white font-bold mb-2 flex items-center justify-between">
+                 <span>الفريق الأسود</span>
                  <span className="bg-zinc-800 px-2 rounded">{state.players.filter(p => p.team === 'black').length}</span>
                </h4>
                <div className="space-y-1">
                  {state.players.filter(p => p.team === 'black').map(p => (
                    <div key={p.id} className="text-sm bg-zinc-900 p-2 rounded text-zinc-400 flex items-center gap-2">
-                     {state.data?.spymasters?.black === p.id && <Eye className="w-3 h-3 text-white" />}
+                     {state.data?.spymasters?.black === p.name && <Eye className="w-3 h-3 text-white" />}
                      <span className="truncate">{p.name}</span>
                    </div>
                  ))}

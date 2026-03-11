@@ -256,8 +256,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
       let bestGuess: { username: string; guess: number; diff: number } | null = null;
 
       Object.entries(allGuesses).forEach(([username, guess]) => {
-        if (guess > item.price) return;
-          const diff = item.price - guess;
+        const diff = Math.abs(item.price - guess);
         if (!bestGuess || diff < bestGuess.diff) {
           bestGuess = { username, guess, diff };
         }

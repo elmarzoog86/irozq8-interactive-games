@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TwitchChat } from './components/TwitchChat';
 import { TriviaGame } from './components/TriviaGame';
 import { FruitWar } from './components/FruitWar';
@@ -194,9 +194,27 @@ function MainApp() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { messages, isConnected, error } = useTwitchChat({ 
-    channelName: activeChannel 
+  const { messages, isConnected, error } = useTwitchChat({
+    channelName: activeChannel
   });
+
+  useEffect(() => {
+    if (activeChannel) {
+      const onConnect = () => {
+        socket.emit('streamer_online', activeChannel);
+      };
+      
+      socket.on('connect', onConnect);
+      
+      if (socket.connected) {
+        socket.emit('streamer_online', activeChannel);
+      }
+
+      return () => {
+        socket.off('connect', onConnect);
+      };
+    }
+  }, [activeChannel]);
 
   const handleConnect = (e: React.FormEvent) => {
     e.preventDefault();
