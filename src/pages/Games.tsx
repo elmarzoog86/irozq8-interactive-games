@@ -29,6 +29,14 @@ const games = [
     path: '/games/guess-song',
     status: 'active',
   },
+  {
+    id: 'typing-derby',
+    title: 'سباق الكتابة',
+    description: 'تحدي وسرعة كتابة بين جمهورك! من سيكون الأسرع؟',
+    icon: '⌨️',
+    path: '/games/typing-derby',
+    status: 'active',
+  }
 ];
 
 export function Games() {

@@ -18,9 +18,11 @@ import { MusicGuesserGame } from './components/MusicGuesserGame';
  import { TurfWarsGame } from './components/TurfWarsGame';
   import { TeamPlayer } from './components/TeamPlayer';
 import { SnakesAndLaddersGame } from './components/SnakesAndLaddersGame';
+import { TypingDerbyGame } from './components/TypingDerbyGame';
+import { TypingRoyaleGame } from './components/TypingRoyaleGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
+import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
@@ -182,11 +184,32 @@ const ENABLE_COMING_SOON_PAGE = false;
       type: 'puzzles',
       color: 'green'
     },
+    {
+      id: 'typingderby',
+      name: 'سباق الكتابة',
+      description: 'لعبة السرعة الانعكاسية! كن أول من يكتب الجملة المعروضة على الشاشة للانطلاق نحو خط النهاية.',
+      tutorial: 'اكتب !join للانضمام. وعندما تظهر الجملة على الشاشه، اكتبها في الشات حرفيا بأسرع مايمكن.',
+      image: '/typingderby.png',
+      status: 'testing',
+      type: 'action',
+      color: 'blue'
+    },
+    {
+      id: 'typingroyale',
+      name: 'معركة الكلمات',
+      description: 'باتل رويال الكتابة! بطولات من 3 جولات، الأبطأ سيتم إقصاؤه حتى يبقى ناجٍ واحد.',
+      tutorial: 'اكتب الكلمة بأقصر وقت ممكن، تجنب أن تكون الأبطأ بين الجميع للنجاة من الإقصاء!',
+      image: '/typingroyale.png',
+      status: 'testing',
+      type: 'action',
+      color: 'red'
+    }
 ];
 
 function MainApp() {
   const [channelNameInput, setChannelNameInput] = useState('');
   const [activeChannel, setActiveChannel] = useState('');
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [activeGame, setActiveGame] = useState<string | null>(null);
   const [tutorialGame, setTutorialGame] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'coming_soon' | 'testing'>('all');
@@ -222,6 +245,7 @@ function MainApp() {
       const formattedChannel = channelNameInput.trim().toLowerCase();
       setActiveChannel(formattedChannel);
       socket.emit('streamer_online', formattedChannel);
+      setShowUpdateModal(true);
     }
   };
 
@@ -272,15 +296,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -389,15 +405,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -444,15 +452,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -499,15 +499,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -554,15 +546,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -609,15 +593,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -700,15 +676,7 @@ function MainApp() {
               <Heart className="w-4 h-4 text-emerald-500" />
               <span className="hidden sm:inline">دعم القناة</span>
             </a>
-            <a 
-              href="https://discord.com/users/M86" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-            >
-              <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-              <span className="hidden sm:inline">Support (M86)</span>
-            </a>
+            
           </div>
         </div>
 
@@ -721,22 +689,42 @@ function MainApp() {
   
   if (activeGame === 'snakes') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white font-arabic flex flex-col items-center justify-center relative overflow-hidden bg-black w-full" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-          <source src="/background.webm" type="video/webm" />
-          <source src="/background.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+      <SnakesAndLaddersGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+        isConnected={isConnected}
+        error={error}
+      />
+    );
+  }
 
-        <div className="relative z-10 w-full max-w-[96vw] h-[95vh] flex">
-          <SnakesAndLaddersGame messages={messages} onLeave={leaveGame} channelName={activeChannel} isConnected={isConnected} error={error} />
-        </div>
-      </div>
+  if (activeGame === 'typingderby') {
+    return (
+      <TypingDerbyGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+        isConnected={isConnected}
+        error={error}
+      />
+    );
+  }
+
+  if (activeGame === 'typingroyale') {
+    return (
+      <TypingRoyaleGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+        isConnected={isConnected}
+        error={error}
+      />
     );
   }
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
+    <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
         <source src="/background.webm" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
@@ -770,15 +758,7 @@ function MainApp() {
             <Heart className="w-4 h-4 text-emerald-500" />
             <span className="hidden sm:inline">دعم القناة</span>
           </a>
-          <a 
-            href="https://discord.com/users/M86" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-[#5865F2]/20 hover:bg-[#5865F2]/40 text-white px-4 py-2 rounded-xl border border-[#5865F2]/50 transition-all font-bold text-sm "
-          >
-            <MessageCircle className="w-4 h-4 text-[#5865F2]" />
-            <span className="hidden sm:inline">Support (M86)</span>
-          </a>
+          
         </div>
       </div>
 
@@ -928,6 +908,76 @@ function MainApp() {
         </div>
       </div>
 
+      {/* Update Modal */}
+      <AnimatePresence>
+        {showUpdateModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-black/90 border border-brand-gold/30 rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+            >
+              <button 
+                onClick={() => setShowUpdateModal(false)}
+                className="absolute top-4 left-4 text-brand-gold/50 hover:text-brand-gold transition-colors"
+               >
+                 <ArrowLeft className="w-6 h-6 rotate-180" />
+              </button>
+
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center border border-brand-gold/30">
+                  <Sparkles className="w-8 h-8 text-brand-gold" />
+                </div>
+              </div>
+
+              <h2 className="text-3xl font-black text-white text-center mb-2 tracking-tight">
+                تحديث <span className="text-brand-gold">جديد!</span>
+              </h2>
+              <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
+
+              
+              <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5">
+                <div className="flex items-start gap-3">
+                   <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">سباق الكتابة</h3>
+                     <p className="text-sm text-zinc-400">لعبة السرعة الانعكاسية! كن أول من يكتب الجملة بدقة.</p>
+                   </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Crown className="w-5 h-5 text-red-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">معركة الكلمات (Royale)</h3>
+                     <p className="text-sm text-zinc-400">باتل رويال الكتابة! الأبطأ يتم إقصاؤه حتى يبقى ناجٍ واحد.</p>
+                   </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 mb-8 bg-brand-gold/5 border border-brand-gold/10 p-4 rounded-xl">
+                 <Info className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
+                 <p className="text-xs text-brand-gold/80 leading-relaxed text-right">
+                   هذه الألعاب حالياً في <span className="font-bold text-brand-gold">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:StigQ8@iRozQ8.com" className="text-white hover:underline transition-colors hover:text-brand-gold" dir="ltr">StigQ8@iRozQ8.com</a>.
+                 </p>
+              </div>
+
+              <button 
+                onClick={() => setShowUpdateModal(false)}
+                className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-black py-4 rounded-xl transition-all shadow-lg text-lg"
+              >
+                حسناً، فلنلعب!
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Credits */}
       <div className="absolute bottom-4 left-0 right-0 text-center z-20 pointer-events-none">
         <p className="text-brand-gold/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
@@ -938,6 +988,9 @@ function MainApp() {
           <span>•</span>
           <span className="text-brand-gold/60 font-bold">iMythQ8</span>
           <span className="text-brand-gold/40 text-xs ml-2">(v1.1)</span>
+        </p>
+        <p className="text-brand-gold/40 text-xs mt-1 pointer-events-auto">
+          Support: <a href="mailto:StigQ8@iRozQ8.com" className="hover:text-brand-gold transition-colors">StigQ8@iRozQ8.com</a>
         </p>
       </div>
     </div>

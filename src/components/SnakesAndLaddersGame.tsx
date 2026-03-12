@@ -72,11 +72,12 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
   // Handle Join in Lobby
   useEffect(() => {
     if (phase === 'lobby') {
-      messages.forEach(msg => {
+      messages.forEach(async msg => {
         if (!processedMessageIds.current.has(msg.id)) {
           processedMessageIds.current.add(msg.id);
           const text = msg.message.trim().toLowerCase();
           if (text === '!join' || text === 'join' || text === 'join!') {
+            // Initially add player with a loading/fallback avatar
             setPlayers(prev => {
               if (prev.find(p => p.username === msg.username)) return prev;
               return [...prev, {
@@ -88,6 +89,19 @@ export const SnakesAndLaddersGame: React.FC<Props> = ({ messages, onLeave, chann
                 avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.username}`
               }];
             });
+
+            // Fetch the actual Twitch avatar URL
+            try {
+              const res = await fetch(`https://decapi.me/twitch/avatar/${msg.username}`);
+              const avatarText = await res.text();
+              if (avatarText && avatarText.startsWith('http')) {
+                setPlayers(prev => prev.map(p => 
+                  p.username === msg.username ? { ...p, avatar: avatarText } : p
+                ));
+              }
+            } catch (err) {
+              console.error('Failed to fetch avatar:', err);
+            }
           }
         }
       });
@@ -393,7 +407,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                    key={p.username}
                    initial={{ scale: 0 }}
                    animate={{ scale: 1 }}
-                   className="w-8 h-8 lg:w-12 lg:h-12 rounded-full border-[3px] border-white shadow-[0_4px_8px_rgba(0,0,0,0.4)] overflow-hidden relative z-50 transform hover:scale-110 transition-transform"
+                   className="w-6 h-6 lg:w-10 lg:h-10 rounded-full border-[3px] border-white shadow-[0_4px_8px_rgba(0,0,0,0.4)] overflow-hidden relative z-50 transform hover:scale-110 transition-transform"
                    style={{ backgroundColor: p.color }}
                    title={p.username}
                  >
@@ -406,7 +420,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                    layoutId={`player-${p.username}`}
                    layout
                    key={p.username}
-                   className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-white shadow-xl overflow-hidden opacity-50 relative z-20"
+                   className="w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-white shadow-xl overflow-hidden opacity-50 relative z-20"
                    style={{ backgroundColor: p.color }}
                    title={p.username}
                  >
@@ -468,8 +482,8 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                               {players.map((p, i) => (
                                  <div key={p.username} className="flex items-center gap-3 bg-white/5 p-2 rounded-xl border border-white/5">
                                     <div className="font-bold text-zinc-500 text-xs w-5">#{i+1}</div>
-                                    <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden shrink-0" style={{ backgroundColor: p.color }}>
-                                       <img src={p.avatar} alt="av" />
+                                    <div className="w-6 h-6 rounded-full border border-white/20 overflow-hidden shrink-0" style={{ backgroundColor: p.color }}>
+                                       <img src={p.avatar} alt={p.username} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="font-bold text-white text-sm truncate">{p.username}</div>
                                  </div>
@@ -565,8 +579,8 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                                    <div className="flex flex-col items-center min-w-[20px]">
                                        <span className="font-bold text-zinc-500 text-xs">#{i+1}</span>
                                    </div>
-                                   <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden flex-shrink-0" style={{ backgroundColor: p.color }}>
-                                      <img src={p.avatar} alt="av" />
+                                   <div className="w-6 h-6 rounded-full border border-white/20 overflow-hidden flex-shrink-0" style={{ backgroundColor: p.color }}>
+                                      <img src={p.avatar} alt={p.username} className="w-full h-full object-cover" />
                                    </div>
                                    <div className="flex-1 min-w-0">
                                       <div className="flex justify-between items-center mb-1">
