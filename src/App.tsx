@@ -20,6 +20,9 @@ import { MusicGuesserGame } from './components/MusicGuesserGame';
 import { SnakesAndLaddersGame } from './components/SnakesAndLaddersGame';
 import { TypingDerbyGame } from './components/TypingDerbyGame';
 import { TypingRoyaleGame } from './components/TypingRoyaleGame';
+import { MissingLinkGame } from './components/MissingLinkGame';
+import { ScattergoriesGame } from './components/ScattergoriesGame';
+import CategoryAuctionGame from './components/CategoryAuctionGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
@@ -203,6 +206,36 @@ const ENABLE_COMING_SOON_PAGE = false;
       status: 'testing',
       type: 'action',
       color: 'red'
+    },
+    {
+      id: 'missinglink',
+      name: 'الرابط العجيب',
+      description: 'استنتج الرابط بين الكلمات والصور المعروضة أمامك بأسرع وقت ممكن.',
+      tutorial: 'اكتب !join للانضمام. وعندما تظهر مجموعة صور، اكتب التصنيف الذي يجمعهم للحصول على نقطة.',
+      image: '/missinglink.png',
+      status: 'testing',
+      type: 'puzzles',
+      color: 'yellow'
+    },
+    {
+      id: 'scattergories',
+      name: 'حرف وفئة',
+      description: 'فئة معينة يبدأ بحرف محدد؟ أسرع شخص يكتب الإجابة في الشات يفوز!',
+      tutorial: 'بدون الحاجة للانضمام! فقط اكتب الكلمة الصحيحة التي تنطبق على الحرف والفئة بأسرع وقت في الشات.',
+      image: '/scattergories.png',
+      status: 'testing',
+      type: 'puzzles',
+      color: 'blue'
+    },
+    {
+      id: 'categoryauction',
+      name: 'مزاد الفئات',
+      description: 'راهن على عدد الإجابات التي يمكنك تذكرها لفئة معينة... وأثبت ذلك!',
+      tutorial: 'يظهر تصنيف معين، وتكتب رقم بالشات للمزايدة. أعلى مزايد يجب أن يكتب الإجابات المطلوبة قبل انتهاء الوقت.',
+      image: '/categoryauction.png',
+      status: 'testing',
+      type: 'strategy',
+      color: 'yellow'
     }
 ];
 
@@ -223,6 +256,8 @@ function MainApp() {
 
   useEffect(() => {
     if (activeChannel) {
+      window.scrollTo(0, 0);
+      
       const onConnect = () => {
         socket.emit('streamer_online', activeChannel);
       };
@@ -246,6 +281,9 @@ function MainApp() {
       setActiveChannel(formattedChannel);
       socket.emit('streamer_online', formattedChannel);
       setShowUpdateModal(true);
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }, 50);
     }
   };
 
@@ -723,6 +761,36 @@ function MainApp() {
     );
   }
 
+  if (activeGame === 'missinglink') {
+    return (
+      <MissingLinkGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+      />
+    );
+  }
+
+  if (activeGame === 'scattergories') {
+    return (
+      <ScattergoriesGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+      />
+    );
+  }
+
+  if (activeGame === 'categoryauction') {
+    return (
+      <CategoryAuctionGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
@@ -942,22 +1010,48 @@ function MainApp() {
               <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
 
               
-              <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5">
+              <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
+
                 <div className="flex items-start gap-3">
                    <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
                    <div>
-                     <h3 className="font-bold text-white mb-1">سباق الكتابة</h3>
-                     <p className="text-sm text-zinc-400">لعبة السرعة الانعكاسية! كن أول من يكتب الجملة بدقة.</p>
+                     <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
+                     <p className="text-sm text-zinc-400">اربط 4 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
                    </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                    <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Crown className="w-5 h-5 text-red-500" /></div>
                    <div>
+                     <h3 className="font-bold text-white mb-1">حرف وفئة</h3>
+                     <p className="text-sm text-zinc-400">أسرع بالإجابة بكلمة تبدأ بالحرف المطلوب وتطابق الفئة!</p>
+                   </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-blue-500/20 p-2 rounded-lg mt-1 shrink-0"><Tag className="w-5 h-5 text-blue-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">مزاد الفئات</h3>
+                     <p className="text-sm text-zinc-400">راهن على عدد الإجابات التي يمكنك تذكرها لفئة معينة... وأثبت ذلك!</p>
+                   </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-purple-500/20 p-2 rounded-lg mt-1 shrink-0"><Swords className="w-5 h-5 text-purple-500" /></div>
+                   <div>
                      <h3 className="font-bold text-white mb-1">معركة الكلمات (Royale)</h3>
                      <p className="text-sm text-zinc-400">باتل رويال الكتابة! الأبطأ يتم إقصاؤه حتى يبقى ناجٍ واحد.</p>
                    </div>
                 </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Rocket className="w-5 h-5 text-green-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">سباق الكتابة</h3>
+                     <p className="text-sm text-zinc-400">لعبة السرعة الانعكاسية! كن أول من يكتب الجملة بدقة.</p>
+                   </div>
+                </div>
+
               </div>
 
               <div className="flex items-start gap-3 mb-8 bg-brand-gold/5 border border-brand-gold/10 p-4 rounded-xl">
