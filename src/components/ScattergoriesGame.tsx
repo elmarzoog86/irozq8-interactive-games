@@ -56,60 +56,78 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
   const [maxRounds, setMaxRounds] = useState(5);
   const [countdown, setCountdown] = useState(3);
   const [timeLeft, setTimeLeft] = useState(30);
-  const [roundWinner, setRoundWinner] = useState<{ player: Player, word: string } | null>(null);
+  const [roundWinner, setRoundWinner] = useState<{ player: Player, word: string, timeTaken: number } | null>(null);
+  const [fastestRecords, setFastestRecords] = useState<{player: Player, timeTaken: number, word: string}[]>([]);
   const [showChat, setShowChat] = useState(true);
+  const [isProcessingWin, setIsProcessingWin] = useState(false);
 
   const processedMessageIds = useRef<Set<string>>(new Set());
 
   // Handle Gameplay chat (No explicit JOIN needed)
   useEffect(() => {
-    if (phase === 'playing' && questions.length > 0) {
+    if (phase === 'playing' && questions.length > 0 && !isProcessingWin) {
       const currentQuestion = questions[currentRoundIndex];
+      let wonInThisBatch = false;
       
-      messages.forEach(async msg => {
-        if (!processedMessageIds.current.has(msg.id)) {
-          processedMessageIds.current.add(msg.id);
-          const text = msg.message.trim().toLowerCase();
+      const processMessages = async () => {
+        for (const msg of messages) {
+          if (wonInThisBatch || isProcessingWin) break;
           
-          // Check if answer is correctly in the category list
-          const isCorrect = currentQuestion.answers.some(ans => text === ans || text.includes(ans));
-          
-          if (isCorrect) {
-             // Handle adding score instantly to player or creating them
-             let winnerArr = [...players];
-             let playerIndex = winnerArr.findIndex(p => p.username === msg.username);
-             
-             let playerToUpdate: Player;
-
-             if (playerIndex === -1) {
-                // New player answered correctly on the fly!
-                const avatarRaw = await fetch(`https://decapi.me/twitch/avatar/${msg.username}`).then(r => r.text()).catch(() => '');
-                const avatar = avatarRaw && avatarRaw.startsWith('http') ? avatarRaw : `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.username}`;
-                
-                playerToUpdate = { username: msg.username, score: 1, avatar };
-                winnerArr.push(playerToUpdate);
-             } else {
-                winnerArr[playerIndex].score += 1;
-                playerToUpdate = winnerArr[playerIndex];
-             }
-
-            setPlayers(winnerArr);
-            setRoundWinner({ player: playerToUpdate, word: text });
-            setPhase('round_winner');
+          if (!processedMessageIds.current.has(msg.id)) {
+            processedMessageIds.current.add(msg.id);
+            const text = msg.message.trim().toLowerCase();
             
-            setTimeout(() => {
-              if (currentRoundIndex + 1 >= questions.length) {
-                setPhase('game_over');
+            // Check if answer is correctly in the category list
+            const isCorrect = currentQuestion.answers.some(ans => text === ans || text.includes(ans));
+            
+            if (isCorrect) {
+              wonInThisBatch = true;
+              setIsProcessingWin(true);
+              
+              // Handle adding score instantly to player or creating them
+              let winnerArr = [...players];
+              let playerIndex = winnerArr.findIndex(p => p.username === msg.username);
+              
+              let playerToUpdate: Player;
+
+              if (playerIndex === -1) {
+                  // New player answered correctly on the fly!
+                  const avatarRaw = await fetch(`https://decapi.me/twitch/avatar/${msg.username}`).then(r => r.text()).catch(() => '');
+                  const avatar = avatarRaw && avatarRaw.startsWith('http') ? avatarRaw : `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.username}`;
+                  
+                  playerToUpdate = { username: msg.username, score: 1, avatar };
+                  winnerArr.push(playerToUpdate);
               } else {
-                setCurrentRoundIndex(prev => prev + 1);
-                setPhase('countdown');
+                  winnerArr[playerIndex].score += 1;
+                  playerToUpdate = winnerArr[playerIndex];
               }
-            }, 5000);
+
+              setPlayers(winnerArr);
+              const timeTaken = 30 - timeLeft;
+              setRoundWinner({ player: playerToUpdate, word: text, timeTaken });
+              setFastestRecords(prev => {
+                const newRecs = [...prev, { player: playerToUpdate, timeTaken, word: text }];
+                return newRecs.sort((a,b) => a.timeTaken - b.timeTaken).slice(0, 5);
+              });
+              setPhase('round_winner');
+              
+              setTimeout(() => {
+                setIsProcessingWin(false);
+                if (currentRoundIndex + 1 >= questions.length) {
+                  setPhase('game_over');
+                } else {
+                  setCurrentRoundIndex(prev => prev + 1);
+                  setPhase('countdown');
+                }
+              }, 5000);
+            }
           }
         }
-      });
+      };
+      
+      processMessages();
     }
-  }, [messages, phase, questions, currentRoundIndex, players]);
+  }, [messages, phase, questions, currentRoundIndex, players, isProcessingWin, timeLeft]);
 
   // Round Timer
   useEffect(() => {
@@ -325,12 +343,15 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                     <CheckCircle2 className="w-8 h-8" />
                   </motion.div>
                 </div>
-                <h3 className="text-4xl font-black text-white mb-2">{roundWinner.player.username}</h3>
-                <p className="text-brand-gold font-bold text-xl">إجابة صحيحة! وحصل على النقطة</p>
-              </motion.div>
-            )}
-
-            {phase === 'game_over' && (
+                  <h3 className="text-4xl font-black text-white mb-2">{roundWinner.player.username}</h3>
+                  <p className="text-brand-gold font-bold text-xl">إجابة صحيحة! وحصل على النقطة</p>
+                  
+                  <div className="mt-4 bg-brand-gold/20 px-6 py-3 rounded-2xl flex items-center justify-center gap-3 border border-brand-gold/30">
+                     <Timer className="w-6 h-6 text-brand-gold" />
+                     <span className="text-white font-bold text-lg">أجاب في {roundWinner.timeTaken} ثانية!</span>
+                  </div>
+                </motion.div>
+              )}            {phase === 'game_over' && (
               <motion.div
                 key="game_over"
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -403,22 +424,38 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-bold text-white text-sm truncate">{p.username}</div>
-                  <div className="text-brand-gold/70 text-xs font-bold mt-0.5">{p.score} نقاط</div>
+                  <div className="font-bold text-white truncate">{p.username}</div>
+                  <div className="text-sm text-brand-gold">{p.score} نقطة</div>
                 </div>
               </motion.div>
             ))}
-            
-            {players.length === 0 && (
-              <div className="h-full flex flex-col items-center justify-center text-zinc-500 opacity-50 text-center gap-4">
-                <Languages className="w-12 h-12 mb-2" />
-                <div>
-                   <p className="font-bold mb-1">الردهة مفتوحة</p>
-                   <p className="text-xs">المشاركين سيدخلون للقائمة تلقائياً بمجرد إجابتهم بشكل صحيح</p>
-                </div>
-              </div>
-            )}
           </div>
+          
+          {/* Fastest Players Container */}
+          {fastestRecords.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-white/10 relative z-10 hidden md:block">
+              <h4 className="text-sm font-black text-brand-gold mb-3 flex items-center gap-2">
+                <Timer className="w-4 h-4" />
+                أسرع الإجابات
+              </h4>
+              <div className="space-y-2">
+                {fastestRecords.map((record, idx) => (
+                  <div key={idx} className="flex items-center justify-between bg-white/5 p-2 rounded-xl text-xs">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
+                        <img src={record.player.avatar} alt="" className="w-full h-full object-cover" />
+                      </div>
+                      <span className="text-white truncate max-w-[80px] font-bold">{record.player.username}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-brand-gold font-bold">
+                      <span>{record.timeTaken}</span>
+                      <span className="text-[10px] opacity-75">ث</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {showChat && (
@@ -440,8 +477,16 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                     className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <div className="w-6 h-6 rounded-full bg-brand-gold/20 flex items-center justify-center text-xs">
-                        {msg.username.charAt(0).toUpperCase()}
+                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 flex items-center justify-center text-xs relative">
+                        <img 
+                          src={`https://decapi.me/twitch/avatar/${msg.username}`} 
+                          alt={msg.username}
+                          className="w-full h-full object-cover absolute inset-0 z-10"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <span className="relative z-0">{msg.username.charAt(0).toUpperCase()}</span>
                       </div>
                       <span className="font-bold text-sm" style={{ color: msg.color || '#fff' }}>
                         {msg.username}

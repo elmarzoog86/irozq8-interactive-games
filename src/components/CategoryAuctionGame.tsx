@@ -407,8 +407,16 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                       className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
                     >
                       <div className="flex items-center gap-2 mb-1">
-                        <div className="w-6 h-6 rounded-full bg-brand-gold/20 flex items-center justify-center text-xs">
-                          {msg.username.charAt(0).toUpperCase()}
+                        <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 flex items-center justify-center text-xs relative">
+                          <img 
+                            src={`https://decapi.me/twitch/avatar/${msg.username}`} 
+                            alt={msg.username}
+                            className="w-full h-full object-cover absolute inset-0 z-10"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                          <span className="relative z-0">{msg.username.charAt(0).toUpperCase()}</span>
                         </div>
                         <span className="font-bold text-sm" style={{ color: msg.color || '#fff' }}>
                           {msg.username}

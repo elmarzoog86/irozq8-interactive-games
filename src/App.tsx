@@ -639,8 +639,7 @@ function MainApp() {
           <WordChainGame messages={messages} onLeave={leaveGame} />
         </div>
       </div>
-    );
-    }if (activeGame === 'howmany') {
+    );}if (activeGame === 'howmany') {
       return (
         <div className="h-screen overflow-hidden flex flex-col w-screen text-white font-arabic flex flex-col items-center relative overflow-hidden" dir="rtl">
           <div className="relative z-10 h-full w-full flex-1">
@@ -1016,7 +1015,7 @@ function MainApp() {
                    <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
-                     <p className="text-sm text-zinc-400">اربط 4 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
+                     <p className="text-sm text-zinc-400">اربط 3 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
                    </div>
                 </div>
 

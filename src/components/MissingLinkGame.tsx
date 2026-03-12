@@ -22,59 +22,97 @@ const ROUNDS: Round[] = [
   {
     answer: ['فواكه', 'فاكهة', 'فواكة'],
     items: [
-      { text: 'تفاح', image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cb6c?auto=format&fit=crop&q=80&w=400' },
-      { text: 'برتقال', image: 'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&q=80&w=400' },
-      { text: 'موز', image: 'https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&q=80&w=400' },
-      { text: 'فراولة', image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&q=80&w=400' }
+      { text: 'تفاح', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pink_lady_and_cross_section.jpg/500px-Pink_lady_and_cross_section.jpg' },
+      { text: 'برتقال', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Oranges_-_whole-halved-segment.jpg/500px-Oranges_-_whole-halved-segment.jpg' },
+      { text: 'موز', image: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }
     ]
   },
   {
     answer: ['تواصل اجتماعي', 'سوشيال ميديا', 'برامج', 'تطبيقات'],
     items: [
-      { text: 'تويتر', image: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Twitter-logo.svg' },
-      { text: 'فيسبوك', image: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg' },
-      { text: 'انستغرام', image: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg' }
+      { text: 'تويتر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/X_%28formerly_Twitter%29_logo_late_2025.svg/500px-X_%28formerly_Twitter%29_logo_late_2025.svg.png' },
+      { text: 'يوتيوب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Youtube_interface%2C_showing_search_results_of_Burger_Recipe.png/500px-Youtube_interface%2C_showing_search_results_of_Burger_Recipe.png' },
+      { text: 'انستغرام', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/500px-Instagram_logo_2022.svg.png' }
     ]
   },
   {
     answer: ['عملات', 'عملة', 'فلوس', 'اموال', 'مال'],
     items: [
-      { text: 'دولار', image: 'https://images.unsplash.com/photo-1554522800-4b2a3d077c5e?auto=format&fit=crop&q=80&w=400' },
-      { text: 'يورو', image: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Euro_symbol.svg' },
-      { text: 'دينار', image: 'https://images.unsplash.com/photo-1577705445203-3d02636a0fb4?auto=format&fit=crop&q=80&w=400' }
+      { text: 'دولار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/USDnotesNew.png/500px-USDnotesNew.png' },
+      { text: 'يورو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/500px-Flag_of_Europe.svg.png' },
+      { text: 'بتكوين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/500px-Bitcoin.svg.png' }
     ]
   },
   {
     answer: ['عواصم', 'عاصمة', 'مدن', 'مدينة'],
     items: [
-      { text: 'لندن', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&q=80&w=400' },
-      { text: 'باريس', image: 'https://images.unsplash.com/photo-1502602898657-3e9076006e00?auto=format&fit=crop&q=80&w=400' },
-      { text: 'طوكيو', image: 'https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?auto=format&fit=crop&q=80&w=400' }
+      { text: 'لندن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/London_Skyline_%28125508655%29.jpeg/500px-London_Skyline_%28125508655%29.jpeg' },
+      { text: 'باريس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/500px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg' },
+      { text: 'طوكيو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/500px-Skyscrapers_of_Shinjuku_2009_January.jpg' }
     ]
   },
   {
     answer: ['مطاعم', 'وجبات سريعة', 'فاست فود'],
     items: [
-      { text: 'ماكدونالدز', image: 'https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg' },
-      { text: 'برجر كينج', image: 'https://upload.wikimedia.org/wikipedia/commons/c/cc/Burger_King_2020.svg' },
-      { text: 'كنتاكي', image: 'https://upload.wikimedia.org/wikipedia/en/b/bf/KFC_logo.svg' }
+      { text: 'برجر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/500px-RedDot_Burger.jpg' },
+      { text: 'بطاطس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/French_Fries.JPG/500px-French_Fries.JPG' },
+      { text: 'بيتزا', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/500px-Pizza-3007395.jpg' }
     ]
   },
   {
     answer: ['كواكب', 'كوكب', 'فضاء'],
     items: [
-      { text: 'المريخ', image: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80&w=400' },
-      { text: 'زحل', image: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&q=80&w=400' }, // Reusing generic space as placeholders
-      { text: 'المشتري', image: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?auto=format&fit=crop&q=80&w=400' }
+      { text: 'المريخ', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png/500px-Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png' },
+      { text: 'القمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/500px-FullMoon2010.jpg' },
+      { text: 'الارض', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Meteosat-12-after-eqnx_04-b.jpg/500px-Meteosat-12-after-eqnx_04-b.jpg' }
     ]
   },
   {
     answer: ['مركبات', 'سيارات', 'مواصلات', 'وسائل نقل'],
     items: [
-      { text: 'سيارة', image: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=400' },
-      { text: 'دراجة', image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=400' },
-      { text: 'قطار', image: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&q=80&w=400' },
-      { text: 'طائرة', image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=400' }
+      { text: 'سيارة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/1925_Ford_Model_T_touring.jpg/500px-1925_Ford_Model_T_touring.jpg' },
+      { text: 'دراجة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Left_side_of_Flying_Pigeon.jpg/500px-Left_side_of_Flying_Pigeon.jpg' },
+      { text: 'قطار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg/500px-%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg' }
+    ]
+  },
+  {
+    answer: ['حيوانات', 'حيوان', 'حيوانات اليفة'],
+    items: [
+      { text: 'قطة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/500px-Cat_August_2010-4.jpg' },
+      { text: 'كلب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/500px-Huskiesatrest.jpg' },
+      { text: 'ارنب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/500px-Oryctolagus_cuniculus_Rcdo.jpg' }
+    ]
+  },
+  {
+    answer: ['رياضات', 'رياضة', 'العاب رياضية'],
+    items: [
+      { text: 'كرة قدم', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Football_in_Bloomington%2C_Indiana%2C_1995.jpg/500px-Football_in_Bloomington%2C_Indiana%2C_1995.jpg' },
+      { text: 'سلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Steph_Curry_%2851915116957%29.jpg/500px-Steph_Curry_%2851915116957%29.jpg' },
+      { text: 'تنس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/2013_Australian_Open_-_Guillaume_Rufin.jpg/500px-2013_Australian_Open_-_Guillaume_Rufin.jpg' }
+    ]
+  },
+  {
+    answer: ['ملابس', 'ملبس', 'ازياء', 'أزياء'],
+    items: [
+      { text: 'قميص', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Leipzig2012.jpg/500px-Leipzig2012.jpg' },
+      { text: 'بنطال', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Trousers-colourisolated.jpg/500px-Trousers-colourisolated.jpg' },
+      { text: 'حذاء', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Skor_fr%C3%A5n_1700-_till_1960-talet_-_Nordiska_Museet_-_NMA.0056302.jpg/500px-Skor_fr%C3%A5n_1700-_till_1960-talet_-_Nordiska_Museet_-_NMA.0056302.jpg' }
+    ]
+  },
+  {
+    answer: ['مشروبات', 'مشروب', 'سوائل'],
+    items: [
+      { text: 'قهوة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latte_and_dark_coffee.jpg/500px-Latte_and_dark_coffee.jpg' },
+      { text: 'شاي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Longjing_tea_steeping_in_gaiwan.jpg/500px-Longjing_tea_steeping_in_gaiwan.jpg' },
+      { text: 'عصير', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Orange_juice_1.jpg/500px-Orange_juice_1.jpg' }
+    ]
+  },
+  {
+    answer: ['ادوات مدرسية', 'مدرسة', 'قرطاسية', 'أدوات مكتبية'],
+    items: [
+      { text: 'قلم', image: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Carandache_Ecridor.jpg' },
+      { text: 'دفتر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Notebooks.jpg/500px-Notebooks.jpg' },
+      { text: 'شنطة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Rucksack1.jpg/500px-Rucksack1.jpg' }
     ]
   }
 ];
@@ -262,16 +300,16 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 <h1 className="text-5xl font-black text-white mb-4 tracking-tight">ابحث عن الرابط المشترك!</h1>
                 
                 <div className="bg-brand-gold/5 border border-brand-gold/20 rounded-2xl p-6 text-right mb-8 w-full">
-                    <h3 className="text-brand-gold font-bold mb-2 flex items-center gap-2">
-                        <Tag className="w-5 h-5" /> طريقة اللعب:
-                    </h3>
-                    <ul className="text-zinc-300 space-y-2 text-sm">
-                        <li>1. اكتب <span className="text-brand-gold font-bold">!join</span> لدخول الردهة الآن.</li>
-                        <li>2. ستظهر مجموعة من الكلمات والصور على الشاشة تبدو مختلفة.</li>
-                        <li>3. فكر بسرعة! ما هو <span className="text-brand-gold font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
-                        <li>4. أول شخص يكتب الإجابة المطلوبة الصحيحة في الشات سيفوز بنقطة الجولة!</li>
-                    </ul>
-                </div>
+                    <h3 className="text-xl font-bold text-brand-gold mb-3 flex items-center gap-2">
+                          <Tag className="w-5 h-5" /> كيف تلعب؟
+                      </h3>
+                      <ul className="text-zinc-300 space-y-2 text-sm">
+                          <li>1. اكتب <span className="text-brand-gold font-bold">!join</span> لدخول الردهة الآن.</li>
+                          <li>2. ستظهر مجموعة من الكلمات والصور على الشاشة تبدو مختلفة (3 صور).</li>
+                          <li>3. فكر بسرعة! ما هو <span className="text-brand-gold font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
+                          <li>4. أول شخص يكتب الإجابة المطلوبة الصحيحة في الشات سيفوز بنقطة الجولة!</li>
+                      </ul>
+                  </div>
                 
                 <div className="flex items-center gap-6 mb-12">
                   <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">
@@ -502,20 +540,28 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 {messages.slice().reverse().map((msg) => (
                   <motion.div
                     key={msg.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="mb-4"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-brand-gold flex-shrink-0">
-                        <img src={msg.avatar} alt={msg.username} className="w-full h-full object-cover" />
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 flex items-center justify-center text-xs relative">
+                        <img 
+                          src={`https://decapi.me/twitch/avatar/${msg.username}`} 
+                          alt={msg.username}
+                          className="w-full h-full object-cover absolute inset-0 z-10"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <span className="relative z-0">{msg.username.charAt(0).toUpperCase()}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-white font-bold text-sm">{msg.username}</div>
-                        <p className="text-zinc-300 text-sm pl-8 font-arabic break-words">{msg.message}</p>
-                      </div>
+                      <span className="font-bold text-sm" style={{ color: msg.color || '#fff' }}>
+                        {msg.username}
+                      </span>
                     </div>
+                    <p className="text-zinc-300 text-sm pl-8 font-arabic break-words">{msg.message}</p>
                   </motion.div>
                 ))}
               </AnimatePresence>
