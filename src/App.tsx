@@ -163,7 +163,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'اختبار لسرعة البديهة والمفردات. ابدأ بكلمة، وعلى اللاعب التالي أن يأتي بكلمة تبدأ بآخر حرف. لا تتوقف!',
     tutorial: 'اكتب كلمة تبدأ بآخر حرف من الكلمة السابقة. لديك وقت محدود للرد قبل أن تخسر.',
     image: '/wordchain.png',
-    status: 'new',
+    status: 'testing',
     type: 'puzzles',
     color: 'blue'
   },
@@ -1021,6 +1021,14 @@ function MainApp() {
                    <div>
                      <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
                      <p className="text-sm text-zinc-400">اربط 3 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
+                   </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-purple-500/20 p-2 rounded-lg mt-1 shrink-0"><MessageCircle className="w-5 h-5 text-purple-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">سلسلة الكلمات</h3>
+                     <p className="text-sm text-zinc-400">اختبار لسرعة البديهة! ابدأ بكلمة وعلى اللاعب التالي أن يبدأ بآخر حرف.</p>
                    </div>
                 </div>
 
