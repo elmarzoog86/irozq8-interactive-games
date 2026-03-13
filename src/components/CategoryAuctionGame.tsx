@@ -41,6 +41,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
   
   const [guessedAnswers, setGuessedAnswers] = useState<string[]>([]);
   const [winner, setWinner] = useState<Player | null>(null);
+  const processedMessagesRef = useRef<Set<string>>(new Set());
 
   const startGame = () => {
     setGameState('idle');
@@ -110,45 +111,68 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
 
   useEffect(() => {
     if (messages.length === 0) return;
-    const msg = messages[messages.length - 1];
-    const text = msg.message.trim();
-    const username = msg.username;
 
-    if (gameState === 'bidding') {
-      const num = parseInt(text);
-      if (!isNaN(num) && num > 0) {
-        if (!highestBidder || num > highestBidder.amount) {
-          setHighestBidder({ username, amount: num });
-          setBids(prev => [{username, amount: num}, ...prev].slice(0, 5));
-          
-          setPlayers(prev => {
-            if (!prev.find(p => p.username === username)) {
-              return [...prev, { username, score: 0 }];
+    // Arabic normalization helper
+    const normalizeArabic = (str: string) => {
+      return str.replace(/[أإآا]/g, 'ا')
+                 .replace(/ة/g, 'ه')
+                 .replace(/[ىي]/g, 'ي')
+                 .trim();
+    };
+
+    messages.forEach(msg => {
+      if (processedMessagesRef.current.has(msg.id)) return;
+      processedMessagesRef.current.add(msg.id);
+
+      const text = msg.message.trim();
+      const normalizedText = normalizeArabic(text);
+      const username = msg.username;
+
+      if (gameState === 'bidding') {
+        const num = parseInt(text);
+        if (!isNaN(num) && num > 0 && text === num.toString()) {
+          if (!highestBidder || num > highestBidder.amount) {
+            setHighestBidder({ username, amount: num });
+            setBids(prev => [{username, amount: num}, ...prev].slice(0, 5));
+            
+            setPlayers(prev => {
+              if (!prev.find(p => p.username === username)) {
+                return [...prev, { username, score: 0 }];
+              }
+              return prev;
+            });
+          }
+        }
+      } else if (gameState === 'playing' && highestBidder && currentCategory) {
+        if (username === highestBidder.username) {
+          setGuessedAnswers(prev => {
+            let newGuessed = [...prev];
+            let changed = false;
+
+            currentCategory.answers.forEach(ans => {
+              const normalizedAns = normalizeArabic(ans);
+              if (normalizedText.includes(normalizedAns)) {
+                if (!newGuessed.includes(ans)) {
+                  newGuessed.push(ans);
+                  changed = true;
+                }
+              }
+            });
+
+            if (changed && newGuessed.length >= highestBidder.amount && prev.length < highestBidder.amount) {
+              // Won! Only trigger once
+              setPlayers(p => p.map(player => 
+                player.username === username ? { ...player, score: player.score + highestBidder.amount * 10 } : player
+              ));
+              setTimeout(startRound, 4000);
             }
-            return prev;
+
+            return changed ? newGuessed : prev;
           });
         }
       }
-    } else if (gameState === 'playing' && highestBidder && currentCategory) {
-      if (username === highestBidder.username) {
-        // Check if answer is valid
-        const isCorrect = currentCategory.answers.includes(text);
-        const isAlreadyGuessed = guessedAnswers.includes(text);
-        
-        if (isCorrect && !isAlreadyGuessed) {
-          setGuessedAnswers(prev => [...prev, text]);
-          
-          if (guessedAnswers.length + 1 >= highestBidder.amount) {
-            // Won!
-            setPlayers(prev => prev.map(p => 
-              p.username === username ? { ...p, score: p.score + highestBidder.amount * 10 } : p
-            ));
-            setTimeout(startRound, 4000);
-          }
-        }
-      }
-    }
-  }, [messages, gameState, highestBidder, currentCategory, guessedAnswers, startRound]);
+    });
+  }, [messages, gameState, highestBidder, currentCategory, startRound]);
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-8 bg-black/95 relative">
