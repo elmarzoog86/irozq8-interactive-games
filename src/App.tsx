@@ -1077,7 +1077,7 @@ function MainApp() {
               <div className="flex items-start gap-3 mb-8 bg-brand-gold/5 border border-brand-gold/10 p-4 rounded-xl">
                  <Info className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
                  <p className="text-xs text-brand-gold/80 leading-relaxed text-right">
-                   هذه الألعاب حالياً في <span className="font-bold text-brand-gold">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:StigQ8@iRozQ8.com" className="text-white hover:underline transition-colors hover:text-brand-gold" dir="ltr">StigQ8@iRozQ8.com</a>.
+                   هذه الألعاب حالياً في <span className="font-bold text-brand-gold">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:M@irozq8.com" className="text-white hover:underline transition-colors hover:text-brand-gold" dir="ltr">M@irozq8.com</a>.
                  </p>
               </div>
 
@@ -1104,7 +1104,7 @@ function MainApp() {
           <span className="text-brand-gold/40 text-xs ml-2">(v1.1)</span>
         </p>
         <p className="text-brand-gold/40 text-xs mt-1 pointer-events-auto">
-          Support: <a href="mailto:StigQ8@iRozQ8.com" className="hover:text-brand-gold transition-colors">StigQ8@iRozQ8.com</a>
+          Support: <a href="mailto:M@irozq8.com" className="hover:text-brand-gold transition-colors">M@irozq8.com</a>
         </p>
       </div>
     </div>
