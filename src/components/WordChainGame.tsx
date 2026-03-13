@@ -60,7 +60,10 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     const currentPlayer = activePlayers[currentPlayerIndex];
     if (latestMessage.username !== currentPlayer) return;
 
-    const attemptedWord = text.split(/\s+/)[0].replace(/[^\u0600-\u06FF]/g, ''); // Keep only Arabic chars
+    // Require command before the word to avoid random chat/emotes
+    if (!text.startsWith('!w ') && !text.startsWith('!ج ')) return;
+
+    const attemptedWord = text.substring(3).trim().split(/\s+/)[0].replace(/[^\u0600-\u06FF]/g, ''); // Keep only Arabic chars
     if (!attemptedWord) return;
 
     const requiredLetter = currentWord.slice(-1);
@@ -291,6 +294,13 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
 
               <div className="text-2xl text-zinc-300 mb-12">
                 الحرف المطلوب: <span className="text-brand-gold font-bold text-4xl mx-2">{currentWord.slice(-1)}</span>
+              </div>
+              
+              <div className="mb-8 bg-zinc-900/80 border border-brand-gold/20 px-6 py-3 rounded-xl flex items-center gap-3">
+                <span className="text-zinc-400">للإجابة اكتب:</span>
+                <span className="text-white font-mono bg-black px-3 py-1 rounded">!w الكلمة</span>
+                <span className="text-zinc-500">أو</span>
+                <span className="text-white font-mono bg-black px-3 py-1 rounded">!ج الكلمة</span>
               </div>
 
               <div className="bg-black/70 border border-brand-gold/20 rounded-3xl p-8 w-full max-w-md text-center shadow-xl">
