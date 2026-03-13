@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Users, Play, ShieldAlert, Skull, Target, Heart, Crosshair, HelpCircle, SkipForward, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Users, Play, ShieldAlert, Skull, Target, Heart, Crosshair, HelpCircle, SkipForward, RefreshCw, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChatMessage } from '../types';
 
@@ -185,6 +185,17 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     }
   };
 
+  const addBotPlayer = () => {
+    const botNames = ['أحمد', 'محمد', 'سارة', 'فاطمة', 'علي', 'نورة', 'عمر', 'ريم'];
+    const randomName = botNames[Math.floor(Math.random() * botNames.length)] + '_' + Math.floor(Math.random() * 1000);
+    const randomColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`;
+    
+    setPlayers(prev => [
+      ...prev, 
+      { id: prev.length + 1, username: randomName, color: randomColor, status: 'alive', survivedShots: 0 }
+    ]);
+  };
+
   const resetGame = () => {
     setPlayers([]);
     setGameState('lobby');
@@ -242,18 +253,28 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
               </div>
             </div>
 
-            <button
-              onClick={startGame}
-              disabled={players.length < 2}
-              className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all ${
-                players.length >= 2 
-                  ? 'bg-brand-gold hover:bg-brand-gold-light text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:scale-105' 
-                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-              }`}
-            >
-              <Play className="w-6 h-6" />
-              بدء اللعبة
-            </button>
+            <div className="flex gap-4">
+              <button
+                onClick={addBotPlayer}
+                className="flex items-center gap-2 px-6 py-4 rounded-xl font-bold transition-all bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-600 hover:scale-105"
+              >
+                <Bot className="w-5 h-5" />
+                إضافة بوت
+              </button>
+
+              <button
+                onClick={startGame}
+                disabled={players.length < 2}
+                className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all ${
+                  players.length >= 2 
+                    ? 'bg-brand-gold hover:bg-brand-gold-light text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:scale-105' 
+                    : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                }`}
+              >
+                <Play className="w-6 h-6" />
+                بدء اللعبة
+              </button>
+            </div>
           </div>
         )}
 
