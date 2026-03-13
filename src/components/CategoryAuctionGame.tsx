@@ -41,6 +41,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
   
   const [guessedAnswers, setGuessedAnswers] = useState<string[]>([]);
   const [winner, setWinner] = useState<Player | null>(null);
+  const [lastBidderMessage, setLastBidderMessage] = useState<string | null>(null);
   const processedMessagesRef = useRef<Set<string>>(new Set());
 
   const startGame = () => {
@@ -61,12 +62,11 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
     setHighestBidder(null);
     setGuessedAnswers([]);
     
-    setGameState('bidding');
-    setTimeLeft(30);
-    setCurrentRound(prev => prev + 1);
-  }, [currentRound, maxRounds]);
-
-  const endGame = () => {
+      setGameState('bidding');
+      setTimeLeft(30);
+      setLastBidderMessage(null);
+      setCurrentRound(prev => prev + 1);
+    }, [currentRound, maxRounds]);  const endGame = () => {
     setGameState('game_over');
     if (players.length > 0) {
       const topPlayer = [...players].sort((a, b) => b.score - a.score)[0];
@@ -143,23 +143,27 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
             });
           }
         }
-      } else if (gameState === 'playing' && highestBidder && currentCategory) {
-        if (username === highestBidder.username) {
-          setGuessedAnswers(prev => {
-            let newGuessed = [...prev];
-            let changed = false;
+        } else if (gameState === 'playing' && highestBidder && currentCategory) {
+          if (username === highestBidder.username) {
+            setLastBidderMessage(msg.message); // Show what the bidder actually typed
 
-            currentCategory.answers.forEach(ans => {
-              const normalizedAns = normalizeArabic(ans);
-              if (normalizedText.includes(normalizedAns)) {
-                if (!newGuessed.includes(ans)) {
-                  newGuessed.push(ans);
-                  changed = true;
+            setGuessedAnswers(prev => {
+              let newGuessed = [...prev];
+              let changed = false;
+
+              currentCategory.answers.forEach(ans => {
+                const normalizedAns = normalizeArabic(ans);
+                // Also check without "ال" to be super generous
+                const ansWithoutAl = normalizedAns.startsWith('ال') ? normalizedAns.substring(2) : normalizedAns;
+                
+                if (normalizedText.includes(normalizedAns) || 
+                   (ansWithoutAl.length >= 2 && normalizedText.includes(ansWithoutAl))) {
+                  if (!newGuessed.includes(ans)) {
+                    newGuessed.push(ans);
+                    changed = true;
+                  }
                 }
-              }
-            });
-
-            if (changed && newGuessed.length >= highestBidder.amount && prev.length < highestBidder.amount) {
+              });            if (changed && newGuessed.length >= highestBidder.amount && prev.length < highestBidder.amount) {
               // Won! Only trigger once
               setPlayers(p => p.map(player => 
                 player.username === username ? { ...player, score: player.score + highestBidder.amount * 10 } : player
@@ -282,6 +286,13 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-2xl p-6 mb-6">
                      <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-gold font-bold">{highestBidder.username}</span></p>
                      <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-gold text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
+                     
+                     {lastBidderMessage && (
+                        <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-xl">
+                          <span className="text-xs text-zinc-400 block mb-1">الرسالة المستلمة من الشات:</span>
+                          <span className="text-lg text-white font-bold">{lastBidderMessage}</span>
+                        </div>
+                     )}
                   </div>
                   
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">

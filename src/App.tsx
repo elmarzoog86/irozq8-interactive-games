@@ -231,7 +231,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       id: 'categoryauction',
       name: 'مزاد الفئات',
       description: 'راهن على عدد الإجابات التي يمكنك تذكرها لفئة معينة... وأثبت ذلك!',
-      tutorial: 'يظهر تصنيف معين، وتكتب رقم بالشات للمزايدة. أعلى مزايد يكتب الإجابات المطلوبة مباشرة في الشات (كل إجابة برسالة عادية) قبل انتهاء الوقت.',
+      tutorial: 'يظهر تصنيف معين، وتكتب رقم بالشات للمزايدة. أعلى مزايد يكتب الإجابات المطلوبة مباشرة في الشات (إجابة تلو الأخرى، أو كلها في رسالة واحدة) قبل انتهاء الوقت.',
       image: '/categoryauction.png',
       status: 'testing',
       type: 'strategy',
@@ -1019,7 +1019,7 @@ function MainApp() {
                 <div className="flex items-start gap-3">
                    <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Skull className="w-5 h-5 text-red-500" /></div>
                    <div>
-                     <h3 className="font-bold text-white mb-1">روليت البقاء (نسخة تجريبية)</h3>
+                     <h3 className="font-bold text-white mb-1">روليت البقاء</h3>
                      <p className="text-sm text-zinc-400">لعبة تفاعلية جديدة كلياً! العجلة تختار شخصاً، ليُطلق النار على لاعب آخر أو يُنعشه.</p>
                    </div>
                 </div>
