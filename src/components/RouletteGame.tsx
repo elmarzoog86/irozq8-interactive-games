@@ -17,6 +17,7 @@ interface Player {
   color: string;
   status: 'alive' | 'eliminated';
   survivedShots: number;
+  hasRevived?: boolean;
 }
 
 const PieSlice = ({ startAngle, endAngle, color, label }: { startAngle: number, endAngle: number, color: string, label: string }) => {
@@ -165,16 +166,19 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     setTarget(selectedTarget);
     
     if (selectedTarget.status === 'eliminated') {
+      if (selectedTarget.hasRevived) {
+         // Prevent double revive
+         return;
+      }
       // Revive
       setResultMsg(`🕊️ تم إنعاش ${selectedTarget.username}! عاد إلى اللعبة.`);
-      setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'alive', survivedShots: 0 } : p));
+      setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'alive', survivedShots: 0, hasRevived: true } : p));
       setGameState('result');
     } else {
       // Shoot (Russian Roulette) Animation
       setGameState('shooting');
       
-      const chambersLeft = Math.max(1, 6 - selectedTarget.survivedShots);
-      const isBullet = Math.random() < (1 / chambersLeft);
+      const isBullet = Math.random() < (1 / 6); // Exactly 1 in 6 chance
       
       setTimeout(() => {
         if (isBullet) {
@@ -220,8 +224,8 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
             <Skull className="w-8 h-8 text-brand-gold" />
             روليت البقاء
           </h2>
-          <p className="text-brand-gold/50 mt-1">
-            {gameState === 'lobby' ? 'اكتب !join أو !انضمام في الدردشة للمشاركة' : 'عجلة الحظ تحدد من سيُطلق النار!'}
+          <p className="text-red-400/80 mt-1 text-sm font-bold">
+            ديربالك تغدر نفس صاحبنا...
           </p>
         </div>
         <button 
@@ -237,8 +241,14 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         
         {gameState === 'lobby' && (
           <div className="flex flex-col items-center max-w-2xl w-full">
-            <div className="bg-black/70 border border-brand-gold/20 rounded-2xl p-8 w-full text-center mb-8">
-              <Users className="w-16 h-16 text-brand-gold/50 mx-auto mb-4" />
+            <div className="bg-black/70 border border-brand-gold/20 rounded-2xl p-8 w-full text-center mb-8 relative">
+              {/* Tutorial Badge */}
+              <div className="absolute top-4 left-4 flex items-center gap-2 text-xs text-brand-gold bg-black/50 border border-brand-gold/20 px-3 py-1.5 rounded-lg">
+                <Skull className="w-4 h-4" />
+                <span>كيف تلعب؟ اكتب <span className="font-bold">!join</span> - العجلة تختار شخصاً - يكتب رقم لاعب ليضربه أو يُنعشه!</span>
+              </div>
+              
+              <Users className="w-16 h-16 text-brand-gold/50 mx-auto mb-4 mt-6" />
               <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
               <p className="text-brand-gold/70 mb-6">اللاعبون المنضمون: <span className="text-brand-gold font-bold text-xl">{players.length}</span></p>
               
@@ -258,14 +268,6 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
             </div>
 
             <div className="flex gap-4">
-              <button
-                onClick={addBotPlayer}
-                className="flex items-center gap-2 px-6 py-4 rounded-xl font-bold transition-all bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-600 hover:scale-105"
-              >
-                <Bot className="w-5 h-5" />
-                إضافة بوت
-              </button>
-
               <button
                 onClick={startGame}
                 disabled={players.length < 2}
@@ -357,6 +359,10 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                       {p.status === 'alive' ? (
                         <div className="flex items-center gap-1 text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded mb-2 border border-red-400/20">
                           <Target className="w-4 h-4" /> هدف متاح
+                        </div>
+                      ) : p.hasRevived ? (
+                        <div className="flex items-center gap-1 text-zinc-500 text-xs font-bold bg-zinc-500/10 px-2 py-1 rounded mb-2 border border-zinc-500/20">
+                          <Skull className="w-4 h-4" /> لا يمكن إنعاشه مجدداً
                         </div>
                       ) : (
                         <div className="flex items-center gap-1 text-green-400 text-xs font-bold bg-green-400/10 px-2 py-1 rounded mb-2 border border-green-400/20">
@@ -457,59 +463,6 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
           </motion.div>
         )}
 
-      </div>
-
-      {/* Floating Testing Bot Chat */}
-      <div className="fixed bottom-4 right-4 bg-zinc-900 border-2 border-brand-gold rounded-xl p-4 shadow-2xl z-50 flex flex-col gap-3 min-w-[300px]">
-        <h3 className="text-brand-gold font-bold text-sm uppercase tracking-wider">Bot Testing Tool</h3>
-        <div className="flex items-center gap-2">
-          <input 
-            type="text" 
-            placeholder="Username (e.g. bot_1)" 
-            value={testUsername}
-            onChange={(e) => setTestUsername(e.target.value)}
-            className="flex-1 bg-zinc-800 text-white px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-brand-gold text-sm"
-          />
-        </div>
-        <div className="flex gap-2">
-          <input 
-            type="text" 
-            placeholder="Message (e.g. !join or 2)" 
-            value={testMessageText}
-            onChange={(e) => setTestMessageText(e.target.value)}
-            onKeyDown={(e) => {
-               if(e.key === 'Enter') {
-                 const msg: ChatMessage = {
-                   id: `test-${Date.now()}-${Math.random()}`,
-                   username: testUsername,
-                   message: testMessageText,
-                   timestamp: Date.now(),
-                   color: '#D4AF37'
-                 };
-                 setTestMessages(prev => [...prev, msg]);
-                 setTestMessageText('');
-               }
-            }}
-            className="flex-1 bg-zinc-800 text-white px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-brand-gold text-sm"
-          />
-          <button 
-            type="button"
-            onClick={() => {
-              const msg: ChatMessage = {
-                id: `test-${Date.now()}-${Math.random()}`,
-                username: testUsername,
-                message: testMessageText,
-                timestamp: Date.now(),
-                color: '#D4AF37'
-              };
-              setTestMessages(prev => [...prev, msg]);
-              setTestMessageText('');
-            }}
-            className="bg-brand-gold text-black px-4 py-2 rounded font-bold hover:bg-brand-gold-light transition-colors text-sm"
-          >
-            Send
-          </button>
-        </div>
       </div>
     </div>
   );
