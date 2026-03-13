@@ -199,8 +199,8 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   <span>اكتب رقم في الشات للمزايدة (مثال: 5).</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                 </li>
-                <li className="flex items-center gap-2 justify-end">
-                  <span>صاحب أعلى مزايدة يجب أن يكتب الإجابات المطلوبة قبل انتهاء الوقت!</span>
+                <li className="flex items-center gap-2 justify-end text-right mt-1">
+                  <span>صاحب أعلى مزايدة يكتب إجاباته <span className="text-brand-gold font-bold">مباشرة في الشات</span> (كل إجابة برسالة عادية) قبل انتهاء الوقت!</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                 </li>
               </ul>
@@ -258,7 +258,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                 <div>
                   <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-2xl p-6 mb-6">
                      <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-gold font-bold">{highestBidder.username}</span></p>
-                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-gold text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة!</p>
+                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-gold text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
                   </div>
                   
                   <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
