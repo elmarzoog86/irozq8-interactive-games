@@ -80,14 +80,18 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
   const [wheelRotation, setWheelRotation] = useState(0);
   const [resultMsg, setResultMsg] = useState('');
   const [winner, setWinner] = useState<Player | null>(null);
+  const [testMessages, setTestMessages] = useState<ChatMessage[]>([]);
+  const [testUsername, setTestUsername] = useState('bot_1');
+  const [testMessageText, setTestMessageText] = useState('');
 
   const processedMsgRef = useRef<Set<string>>(new Set());
 
   // Auto-join from chat or handle decision
   useEffect(() => {
-    if (messages.length === 0) return;
+    const all = [...messages, ...testMessages].sort((a, b) => a.timestamp - b.timestamp);
+    if (all.length === 0) return;
 
-    const latestMessage = messages[messages.length - 1];
+    const latestMessage = all[all.length - 1];
     if (processedMsgRef.current.has(latestMessage.id)) return;
     processedMsgRef.current.add(latestMessage.id);
 
@@ -110,7 +114,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         }
       }
     }
-  }, [messages, gameState, actor, players]);
+  }, [messages, testMessages, gameState, actor, players]);
 
   // Handle result timer
   useEffect(() => {
@@ -453,6 +457,59 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
           </motion.div>
         )}
 
+      </div>
+
+      {/* Floating Testing Bot Chat */}
+      <div className="fixed bottom-4 right-4 bg-zinc-900 border-2 border-brand-gold rounded-xl p-4 shadow-2xl z-50 flex flex-col gap-3 min-w-[300px]">
+        <h3 className="text-brand-gold font-bold text-sm uppercase tracking-wider">Bot Testing Tool</h3>
+        <div className="flex items-center gap-2">
+          <input 
+            type="text" 
+            placeholder="Username (e.g. bot_1)" 
+            value={testUsername}
+            onChange={(e) => setTestUsername(e.target.value)}
+            className="flex-1 bg-zinc-800 text-white px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-brand-gold text-sm"
+          />
+        </div>
+        <div className="flex gap-2">
+          <input 
+            type="text" 
+            placeholder="Message (e.g. !join or 2)" 
+            value={testMessageText}
+            onChange={(e) => setTestMessageText(e.target.value)}
+            onKeyDown={(e) => {
+               if(e.key === 'Enter') {
+                 const msg: ChatMessage = {
+                   id: `test-${Date.now()}-${Math.random()}`,
+                   username: testUsername,
+                   message: testMessageText,
+                   timestamp: Date.now(),
+                   color: '#D4AF37'
+                 };
+                 setTestMessages(prev => [...prev, msg]);
+                 setTestMessageText('');
+               }
+            }}
+            className="flex-1 bg-zinc-800 text-white px-3 py-2 rounded border border-zinc-700 focus:outline-none focus:border-brand-gold text-sm"
+          />
+          <button 
+            type="button"
+            onClick={() => {
+              const msg: ChatMessage = {
+                id: `test-${Date.now()}-${Math.random()}`,
+                username: testUsername,
+                message: testMessageText,
+                timestamp: Date.now(),
+                color: '#D4AF37'
+              };
+              setTestMessages(prev => [...prev, msg]);
+              setTestMessageText('');
+            }}
+            className="bg-brand-gold text-black px-4 py-2 rounded font-bold hover:bg-brand-gold-light transition-colors text-sm"
+          >
+            Send
+          </button>
+        </div>
       </div>
     </div>
   );

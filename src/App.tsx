@@ -153,7 +153,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'لعبة الحظ والإقصاء. انضم للعجلة وانتظر دورك. إذا تم اختيارك، ستمتلك القوة لإقصاء منافسيك أو المخاطرة بالبقاء.',
     tutorial: 'انضم للردهة ليظهر اسمك. إذا اختارتك العجلة، يمكنك اختيار لاعب لإقصائه أو المخاطرة بفرصة إضافية.',
     image: '/roulette.png',
-    status: 'coming_soon',
+    status: 'testing',
     type: 'action',
     color: 'yellow'
   },
