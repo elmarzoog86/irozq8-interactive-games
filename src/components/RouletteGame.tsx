@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Users, Play, ShieldAlert, Skull } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, Users, Play, ShieldAlert, Skull, Target, Heart, Crosshair, HelpCircle, SkipForward, RefreshCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChatMessage } from '../types';
 
@@ -12,86 +12,185 @@ interface RouletteGameProps {
 }
 
 interface Player {
+  id: number;
   username: string;
   color: string;
   status: 'alive' | 'eliminated';
+  survivedShots: number;
 }
+
+const PieSlice = ({ startAngle, endAngle, color, label }: { startAngle: number, endAngle: number, color: string, label: string }) => {
+  const radius = 100;
+  const startRad = (startAngle - 90) * (Math.PI / 180);
+  const endRad = (endAngle - 90) * (Math.PI / 180);
+
+  const x1 = radius + radius * Math.cos(startRad);
+  const y1 = radius + radius * Math.sin(startRad);
+  const x2 = radius + radius * Math.cos(endRad);
+  const y2 = radius + radius * Math.sin(endRad);
+
+  const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
+
+  if (endAngle - startAngle === 360) {
+    return <circle cx={radius} cy={radius} r={radius} fill={color} stroke="#111" strokeWidth="2" opacity="0.8" />;
+  }
+
+  const d = [
+    `M ${radius} ${radius}`,
+    `L ${x1} ${y1}`,
+    `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+    'Z'
+  ].join(' ');
+
+  const middleAngle = startAngle + (endAngle - startAngle) / 2;
+  const textRad = (middleAngle - 90) * (Math.PI / 180);
+  const textX = radius + (radius * 0.7) * Math.cos(textRad);
+  const textY = radius + (radius * 0.7) * Math.sin(textRad);
+  
+  let rotate = middleAngle;
+  if (middleAngle > 90 && middleAngle < 270) {
+    rotate += 180;
+  }
+
+  return (
+    <g>
+      <path d={d} fill={color} stroke="#111" strokeWidth="2" opacity="0.8" />
+      <text 
+        x={textX} 
+        y={textY} 
+        fill="#fff" 
+        fontSize="12" 
+        fontWeight="bold" 
+        textAnchor="middle" 
+        alignmentBaseline="middle" 
+        transform={`rotate(${rotate}, ${textX}, ${textY})`}
+        className="drop-shadow-md"
+      >
+        {label}
+      </text>
+    </g>
+  );
+};
 
 export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
   const [players, setPlayers] = useState<Player[]>([]);
-  const [gameState, setGameState] = useState<'lobby' | 'spinning' | 'action' | 'finished'>('lobby');
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
+  const [gameState, setGameState] = useState<'lobby' | 'wheel' | 'spinning' | 'decision' | 'result' | 'finished'>('lobby');
+  const [actor, setActor] = useState<Player | null>(null);
+  const [target, setTarget] = useState<Player | null>(null);
+  const [wheelRotation, setWheelRotation] = useState(0);
+  const [resultMsg, setResultMsg] = useState('');
   const [winner, setWinner] = useState<Player | null>(null);
-  const [timeLeft, setTimeLeft] = useState(0);
 
-  // Auto-join from chat
+  const processedMsgRef = useRef<Set<string>>(new Set());
+
+  // Auto-join from chat or handle decision
   useEffect(() => {
-    if (gameState !== 'lobby') return;
+    if (messages.length === 0) return;
 
     const latestMessage = messages[messages.length - 1];
-    if (!latestMessage) return;
+    if (processedMsgRef.current.has(latestMessage.id)) return;
+    processedMsgRef.current.add(latestMessage.id);
 
     const text = latestMessage.message.trim().toLowerCase();
-    if (text === '!join' || text === '!انضمام') {
+
+    if (gameState === 'lobby' && (text === '!join' || text === '!انضمام')) {
       setPlayers(prev => {
         if (prev.some(p => p.username === latestMessage.username)) return prev;
-        return [...prev, { username: latestMessage.username, color: latestMessage.color || '#D4AF37', status: 'alive' }];
+        return [...prev, { id: prev.length + 1, username: latestMessage.username, color: latestMessage.color || '#D4AF37', status: 'alive', survivedShots: 0 }];
       });
     }
-  }, [messages, gameState]);
 
-  useEffect(() => {
-    if (gameState === 'spinning' && timeLeft > 0) {
-      const timer = setTimeout(() => setTimeLeft(prev => prev - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (gameState === 'spinning' && timeLeft === 0) {
-      const alivePlayers = players.filter(p => p.status === 'alive');
-      if (alivePlayers.length <= 1) {
-        setWinner(alivePlayers[0] || null);
-        setGameState('finished');
-        return;
+    if (gameState === 'decision' && actor && latestMessage.username === actor.username) {
+      const match = text.match(/\d+/);
+      if (match) {
+        const num = parseInt(match[0]);
+        const selected = players.find(p => p.id === num);
+        if (selected) {
+           handleAction(selected);
+        }
       }
-      const randomIndex = Math.floor(Math.random() * alivePlayers.length);
-      setSelectedPlayer(alivePlayers[randomIndex]);
-      setGameState('action');
     }
-  }, [timeLeft, gameState, players]);
+  }, [messages, gameState, actor, players]);
+
+  // Handle result timer
+  useEffect(() => {
+    if (gameState === 'result') {
+      const t = setTimeout(() => {
+        setGameState(prev => {
+           if (prev !== 'result') return prev;
+           const alive = players.filter(p => p.status === 'alive');
+           if (alive.length <= 1) {
+              setWinner(alive[0] || null);
+              return 'finished';
+           }
+           return 'wheel';
+        });
+      }, 5000);
+      return () => clearTimeout(t);
+    }
+  }, [gameState, players]);
 
   const startGame = () => {
     if (players.length < 2) return;
-    spinWheel();
+    setGameState('wheel');
   };
 
   const spinWheel = () => {
+    const alivePlayers = players.filter(p => p.status === 'alive');
+    if (alivePlayers.length <= 1) return;
+
+    const winnerIndex = Math.floor(Math.random() * alivePlayers.length);
+    const chosenActor = alivePlayers[winnerIndex];
+    setActor(chosenActor);
+
+    const sliceAngle = 360 / alivePlayers.length;
+    const targetAngle = 360 - (winnerIndex * sliceAngle + sliceAngle / 2);
+    const extraSpins = 360 * 5;
+    const currentBase = wheelRotation - (wheelRotation % 360);
+    const newRotation = currentBase + extraSpins + targetAngle;
+
+    setWheelRotation(newRotation);
     setGameState('spinning');
-    setSelectedPlayer(null);
-    setTimeLeft(30);
+    
+    setTimeout(() => {
+      setGameState('decision');
+    }, 4500); // 4.5s matches transition duration
   };
 
-  const eliminatePlayer = (username: string) => {
-    setPlayers(prev => prev.map(p => p.username === username ? { ...p, status: 'eliminated' } : p));
+  const handleAction = (selectedTarget: Player) => {
+    setTarget(selectedTarget);
     
-    // Check if game is over after elimination
-    setTimeout(() => {
-      const remaining = players.filter(p => p.username !== username && p.status === 'alive');
-      if (remaining.length <= 1) {
-        setWinner(remaining[0] || null);
-        setGameState('finished');
+    if (selectedTarget.status === 'eliminated') {
+      // Revive
+      setResultMsg(`🕊️ تم إنعاش ${selectedTarget.username}! عاد إلى اللعبة.`);
+      setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'alive', survivedShots: 0 } : p));
+    } else {
+      // Shoot (Russian Roulette)
+      const chambersLeft = Math.max(1, 6 - selectedTarget.survivedShots);
+      const isBullet = Math.random() < (1 / chambersLeft);
+      
+      if (isBullet) {
+         setResultMsg(`💥 بوم! الرصاصة أصابت ${selectedTarget.username} وتم إقصاؤه!`);
+         setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'eliminated' } : p));
       } else {
-        spinWheel(); // Next round
+         setResultMsg(`كليك! مسدس فارغ.. ${selectedTarget.username} نجا بصعوبة!`);
+         setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, survivedShots: p.survivedShots + 1 } : p));
       }
-    }, 2000);
+    }
+    setGameState('result');
   };
 
   const resetGame = () => {
     setPlayers([]);
     setGameState('lobby');
-    setSelectedPlayer(null);
+    setActor(null);
+    setTarget(null);
     setWinner(null);
+    setWheelRotation(0);
   };
 
   return (
-    <div className="flex flex-col h-full bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 shadow-2xl relative overflow-hidden font-arabic" dir="rtl">
+    <div className="flex flex-col h-full bg-black/80 rounded-[40px] border border-brand-gold/20 p-8 shadow-2xl relative overflow-hidden font-arabic" dir="rtl">
       <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent z-0 pointer-events-none" />
       
       {/* Header */}
@@ -102,7 +201,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
             روليت البقاء
           </h2>
           <p className="text-brand-gold/50 mt-1">
-            {gameState === 'lobby' ? 'اكتب !join أو !انضمام في الدردشة للمشاركة' : 'البقاء للأقوى!'}
+            {gameState === 'lobby' ? 'اكتب !join أو !انضمام في الدردشة للمشاركة' : 'عجلة الحظ تحدد من سيُطلق النار!'}
           </p>
         </div>
         <button 
@@ -114,7 +213,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10">
+      <div className="flex-1 flex flex-col items-center justify-center relative z-10 overflow-hidden">
         
         {gameState === 'lobby' && (
           <div className="flex flex-col items-center max-w-2xl w-full">
@@ -153,104 +252,147 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
           </div>
         )}
 
-        {gameState === 'spinning' && (
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="relative mb-12">
-                <motion.div 
-                  className="w-64 h-64 rounded-full border-4 border-t-brand-gold border-r-transparent border-b-brand-gold border-l-transparent absolute inset-0 text-brand-gold/20"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.div 
-                  className="w-64 h-64 rounded-full border-2 border-t-transparent border-r-white/20 border-b-transparent border-l-white/20 absolute inset-0"
-                  animate={{ rotate: -180 }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                />
-                <div className="w-64 h-64 rounded-full border border-brand-gold/10 flex flex-col items-center justify-center bg-black/70  relative z-10 shadow-[0_0_50px_rgba(212,175,55,0.1)]">
-                    <span className="text-8xl font-black text-brand-gold font-mono tracking-tighter drop-shadow-2xl">{timeLeft}</span>
-                    <span className="text-white/40 font-bold uppercase tracking-widest text-sm mt-2">Seconds</span>
-                </div>
-            </div>
-            <h3 className="text-4xl font-bold text-white mb-2 tracking-tight">جولة الإقصاء القادمة</h3>
-            <p className="text-brand-gold/60 text-lg animate-pulse">سيتم اختيار الضحية قريباً...</p>
-          </div>
+        {(gameState === 'wheel' || gameState === 'spinning') && (
+           <div className="flex flex-col items-center">
+              <div className="relative mb-8 mt-4">
+                 {/* Pointer */}
+                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 z-20">
+                    <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[35px] border-l-transparent border-r-transparent border-t-red-600 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)]" />
+                 </div>
+
+                 {/* Wheel container */}
+                 <motion.div 
+                   className="w-[350px] h-[350px] relative rounded-full shadow-[0_0_60px_rgba(212,175,55,0.15)] overflow-hidden border-[6px] border-brand-gold/80 bg-zinc-900"
+                   animate={{ rotate: wheelRotation }}
+                   transition={{ duration: gameState === 'spinning' ? 4.5 : 0, ease: [0.2, 0.8, 0.2, 1] }}
+                 >
+                   <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-2xl">
+                     {(() => {
+                        const alive = players.filter(p => p.status === 'alive');
+                        if (alive.length === 0) return null;
+                        const slice = 360 / alive.length;
+                        return alive.map((p, i) => (
+                          <PieSlice 
+                            key={p.id} 
+                            startAngle={i * slice} 
+                            endAngle={(i + 1) * slice} 
+                            color={p.color || '#444'} 
+                            label={p.username.substring(0, 10)} 
+                          />
+                        ));
+                     })()}
+                   </svg>
+                 </motion.div>
+                 
+                 {/* Center Spin Button / Result text */}
+                 <div 
+                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-24 h-24 bg-black rounded-full border-4 border-brand-gold flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.9)] cursor-pointer group"
+                   onClick={gameState === 'wheel' ? spinWheel : undefined}
+                 >
+                    {gameState === 'wheel' ? (
+                       <span className="font-black text-brand-gold text-2xl group-hover:scale-110 transition-transform">SPIN</span>
+                    ) : (
+                       <RefreshCw className="w-10 h-10 text-brand-gold animate-spin" />
+                    )}
+                 </div>
+              </div>
+              <h3 className="text-2xl text-white font-bold opacity-80">{gameState === 'wheel' ? 'اضغط SPIN لتدوير العجلة واختيار اللاعب!' : 'جاري اختيار اللاعب الذي سيُطلق النار...'}</h3>
+           </div>
         )}
 
-        {gameState === 'action' && selectedPlayer && (
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center bg-black/80 border border-brand-gold/20 rounded-3xl p-12 text-center max-w-lg w-full shadow-[0_0_50px_rgba(212,175,55,0.1)]"
-          >
-            <ShieldAlert className="w-20 h-20 text-brand-gold mb-6" />
-            <h3 className="text-2xl text-zinc-300 mb-2">تم اختيار:</h3>
-            <h2 className="text-5xl font-black mb-8" style={{ color: selectedPlayer.color }}>
-              {selectedPlayer.username}
-            </h2>
-            
-            <p className="text-brand-gold/80 mb-8">لقد وقع عليك الاختيار! سيتم إقصاؤك من اللعبة.</p>
+        {gameState === 'decision' && actor && (
+           <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="flex flex-col items-center w-full h-full">
+              <div className="bg-black/60 border border-brand-gold/30 rounded-2xl p-6 text-center mb-6 w-full max-w-4xl shadow-[0_0_30px_rgba(212,175,55,0.1)]">
+                 <h2 className="text-3xl font-bold text-white mb-2">دور اللاعب: <span className="underline decoration-brand-gold decoration-4" style={{color: actor.color}}>{actor.username}</span></h2>
+                 <p className="text-brand-gold/80 text-lg">يا {actor.username}، اكتب رقم اللاعب في الشات لتصويبه بالمسدس (إقصاء) أو لإنعاشه (إذا كان مقصياً)!</p>
+                 
+                 <div className="mt-4 flex justify-center">
+                   <button onClick={() => setGameState('wheel')} className="flex items-center gap-2 text-sm bg-red-950/30 hover:bg-red-900/50 text-red-400 border border-red-900/50 px-4 py-2 rounded-xl transition-colors">
+                     <SkipForward className="w-4 h-4" /> تخطي هذا اللاعب إذا لم يرد
+                   </button>
+                 </div>
+              </div>
 
-            <button
-              onClick={() => eliminatePlayer(selectedPlayer.username)}
-              className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-3 px-8 rounded-xl transition-all hover:scale-105 shadow-[0_0_20px_rgba(212,175,55,0.4)]"
-            >
-              تأكيد الإقصاء
-            </button>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full max-w-6xl overflow-y-auto custom-scrollbar p-2 pb-16">
+                 {players.map(p => (
+                   <div key={p.id} className={`p-4 rounded-xl border-2 flex flex-col items-center text-center transition-all relative overflow-hidden ${p.status === 'alive' ? 'bg-zinc-900 border-zinc-700' : 'bg-red-950/20 border-red-900/30 opacity-70'}`}>
+                      {p.id === actor.id && p.status === 'alive' && <div className="absolute top-0 inset-x-0 h-1 bg-brand-gold shadow-[0_0_10px_#d4af37]" />}
+                      
+                      <div className="text-3xl font-black bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-inner">
+                        {p.id}
+                      </div>
+                      
+                      <span className="font-bold text-lg mb-2 truncate w-full" style={{color: p.color}}>{p.username}</span>
+                      
+                      {p.status === 'alive' ? (
+                        <div className="flex items-center gap-1 text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded mb-2 border border-red-400/20">
+                          <Target className="w-4 h-4" /> هدف متاح
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 text-green-400 text-xs font-bold bg-green-400/10 px-2 py-1 rounded mb-2 border border-green-400/20">
+                          <Heart className="w-4 h-4" /> متاح للإنعاش
+                        </div>
+                      )}
+                      
+                      {/* Chambers display */}
+                      {p.status === 'alive' && (
+                        <div className="flex gap-1 mt-auto bg-black/50 p-2 rounded-lg w-full justify-center border border-zinc-800">
+                          {[...Array(6)].map((_, i) => (
+                             <div key={i} className={`w-2 h-4 rounded-sm ${i < (6 - p.survivedShots) ? 'bg-zinc-300' : 'bg-red-600/30'}`} />
+                          ))}
+                        </div>
+                      )}
+                   </div>
+                 ))}
+              </div>
+           </motion.div>
+        )}
+
+        {gameState === 'result' && target && (
+          <motion.div initial={{scale:0.8, opacity:0}} animate={{scale:1, opacity:1}} className="flex flex-col items-center justify-center text-center bg-zinc-900 rounded-3xl p-12 border border-brand-gold/30 shadow-[0_0_80px_rgba(212,175,55,0.15)] w-full max-w-3xl">
+             
+             {(() => {
+                const updatedTarget = players.find(p => p.id === target.id);
+                if (!updatedTarget) return null;
+                
+                if (updatedTarget.status === 'eliminated' && target.status === 'alive') {
+                   // Just died
+                   return <Skull className="w-40 h-40 text-red-500 mb-8 animate-[pulse_0.5s_infinite] drop-shadow-[0_0_30px_rgba(239,68,68,0.8)]" />
+                } else if (resultMsg.includes('إنعاش')) {
+                   return <Heart className="w-40 h-40 text-green-500 mb-8 animate-bounce drop-shadow-[0_0_30px_rgba(34,197,94,0.8)]" />
+                } else {
+                   // Survived a shot
+                   return <Crosshair className="w-40 h-40 text-brand-gold mb-8 animate-pulse drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]" />
+                }
+             })()}
+
+             <h2 className="text-4xl md:text-5xl font-black text-white leading-relaxed tracking-tight" style={{textShadow: '0 4px 20px rgba(0,0,0,0.8)'}}>
+               {resultMsg}
+             </h2>
           </motion.div>
         )}
 
         {gameState === 'finished' && (
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center text-center"
-          >
-            <div className="w-32 h-32 bg-brand-gold/20 rounded-full flex items-center justify-center mb-6 border-4 border-brand-gold shadow-[0_0_50px_rgba(212,175,55,0.5)]">
-              <span className="text-6xl">👑</span>
+          <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center">
+            <div className="w-40 h-40 bg-brand-gold/20 rounded-full flex items-center justify-center mb-8 border-4 border-brand-gold shadow-[0_0_80px_rgba(212,175,55,0.6)]">
+              <span className="text-7xl">👑</span>
             </div>
-            <h2 className="text-4xl font-bold text-white mb-2">الناجي الأخير!</h2>
+            <h2 className="text-5xl font-black text-white mb-2 drop-shadow-lg">الناجي الأخير!</h2>
             {winner ? (
-              <h3 className="text-5xl font-black mb-8" style={{ color: winner.color }}>
+              <h3 className="text-6xl font-black mb-10 drop-shadow-xl" style={{ color: winner.color }}>
                 {winner.username}
               </h3>
             ) : (
-              <h3 className="text-3xl font-bold text-zinc-400 mb-8">لا يوجد فائز</h3>
+              <h3 className="text-4xl font-bold text-zinc-400 mb-10">الجميع خسروا بطريقة ما</h3>
             )}
             
-            <button
-              onClick={resetGame}
-              className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-3 px-8 rounded-xl transition-all hover:scale-105 shadow-[0_0_20px_rgba(212,175,55,0.2)]"
-            >
+            <button onClick={resetGame} className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(212,175,55,0.3)] text-xl">
               لعب مرة أخرى
             </button>
           </motion.div>
         )}
 
       </div>
-      
-      {/* Sidebar: Alive Players */}
-      {gameState !== 'lobby' && (
-        <div className="absolute left-8 top-8 bottom-8 w-64 bg-black/80  border border-brand-gold/20 rounded-3xl p-6 overflow-y-auto shadow-[0_0_30px_rgba(0,0,0,0.5)] z-20">
-          <h4 className="text-lg font-bold text-white mb-4 border-b border-brand-gold/10 pb-2">اللاعبون ({players.filter(p => p.status === 'alive').length})</h4>
-          <div className="space-y-2">
-            {players.map(p => (
-              <div 
-                key={p.username} 
-                className={`p-3 rounded-xl border flex items-center justify-between transition-all ${
-                  p.status === 'alive' 
-                    ? 'bg-black/70 border-brand-gold/20 shadow-[0_0_10px_rgba(212,175,55,0.1)]' 
-                    : 'bg-red-900/10 border-red-900/30 opacity-40 line-through'
-                }`}
-              >
-                <span className="font-bold truncate" style={{ color: p.status === 'alive' ? p.color : '#ef4444' }}>
-                  {p.username}
-                </span>
-                {p.status === 'eliminated' && <Skull className="w-4 h-4 text-red-500/50" />}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
