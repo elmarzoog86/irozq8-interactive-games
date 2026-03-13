@@ -34,8 +34,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
   const [timeLeft, setTimeLeft] = useState(0);
   const [currentRound, setCurrentRound] = useState(1);
   const [maxRounds, setMaxRounds] = useState(3);
-  const [showChat, setShowChat] = useState(true);
-  
+
   const [currentCategory, setCurrentCategory] = useState<typeof CATEGORIES[0] | null>(null);
   const [bids, setBids] = useState<{username: string, amount: number}[]>([]);
   const [highestBidder, setHighestBidder] = useState<{username: string, amount: number} | null>(null);
@@ -343,18 +342,6 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
         {/* Header content... */}
         <div className="flex gap-4">
           <button
-            onClick={() => setShowChat(!showChat)}
-            className={`p-3 rounded-2xl border-2 transition-all ${
-              !showChat
-                ? 'bg-red-500/20 border-red-500 text-red-400'
-                : 'bg-black/50 border-brand-gold/30 text-brand-gold hover:bg-brand-gold/10'
-            }`}
-            title={showChat ? "إخفاء الشات" : "إظهار الشات"}
-          >
-            {showChat ? <MessageSquareOff className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
-          </button>
-          
-          <button
             onClick={startGame}
             className="bg-brand-gold text-black px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_30px_rgba(212,175,55,0.3)] flex items-center gap-2"
           >
@@ -363,8 +350,8 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           </button>
         </div>
 
-        {/* Sidebar (Leaderboard + Chat) */}
-        <div className={`w-[350px] flex flex-col gap-4 transition-all duration-300 ${!showChat ? 'w-[500px]' : ''}`}>
+        {/* Sidebar (Leaderboard) */}
+        <div className="w-[350px] flex flex-col gap-4 transition-all duration-300">
           {/* Leaderboard */}
           <div className="bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative">
             <div className="p-6 border-b border-brand-gold/20 bg-gradient-to-br from-brand-gold/10 to-transparent">
@@ -385,50 +372,8 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-
-          {/* Chat Component */}
-          {showChat && (
-            <div className="h-[400px] bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative flex flex-col pt-16">
-              <div className="absolute top-0 right-0 left-0 h-16 bg-gradient-to-b from-black/80 to-transparent z-10 flex items-center px-6">
-                <MessageSquare className="w-5 h-5 text-brand-gold ml-2" />
-                <span className="text-white font-bold">الشات المباشر</span>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto flex flex-col-reverse p-4 pt-20 custom-scrollbar relative z-0">
-                <AnimatePresence>
-                  {messages.slice().reverse().map((msg, i) => (
-                    <motion.div
-                      key={msg.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 flex items-center justify-center text-xs relative">
-                          <img 
-                            src={`https://decapi.me/twitch/avatar/${msg.username}`} 
-                            alt={msg.username}
-                            className="w-full h-full object-cover absolute inset-0 z-10"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                          <span className="relative z-0">{msg.username.charAt(0).toUpperCase()}</span>
-                        </div>
-                        <span className="font-bold text-sm" style={{ color: msg.color || '#fff' }}>
-                          {msg.username}
-                        </span>
-                      </div>
-                      <p className="text-zinc-300 text-sm pl-8 font-arabic break-words">{msg.message}</p>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
               </div>
             </div>
-          )}
         </div>
       </div>
     </div>
