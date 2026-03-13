@@ -74,7 +74,7 @@ const PieSlice = ({ startAngle, endAngle, color, label }: { startAngle: number, 
 
 export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
   const [players, setPlayers] = useState<Player[]>([]);
-  const [gameState, setGameState] = useState<'lobby' | 'wheel' | 'spinning' | 'decision' | 'result' | 'finished'>('lobby');
+  const [gameState, setGameState] = useState<'lobby' | 'wheel' | 'spinning' | 'decision' | 'shooting' | 'result' | 'finished'>('lobby');
   const [actor, setActor] = useState<Player | null>(null);
   const [target, setTarget] = useState<Player | null>(null);
   const [wheelRotation, setWheelRotation] = useState(0);
@@ -164,20 +164,25 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
       // Revive
       setResultMsg(`🕊️ تم إنعاش ${selectedTarget.username}! عاد إلى اللعبة.`);
       setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'alive', survivedShots: 0 } : p));
+      setGameState('result');
     } else {
-      // Shoot (Russian Roulette)
+      // Shoot (Russian Roulette) Animation
+      setGameState('shooting');
+      
       const chambersLeft = Math.max(1, 6 - selectedTarget.survivedShots);
       const isBullet = Math.random() < (1 / chambersLeft);
       
-      if (isBullet) {
-         setResultMsg(`💥 بوم! الرصاصة أصابت ${selectedTarget.username} وتم إقصاؤه!`);
-         setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'eliminated' } : p));
-      } else {
-         setResultMsg(`كليك! مسدس فارغ.. ${selectedTarget.username} نجا بصعوبة!`);
-         setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, survivedShots: p.survivedShots + 1 } : p));
-      }
+      setTimeout(() => {
+        if (isBullet) {
+           setResultMsg(`💥 بوم! الرصاصة أصابت ${selectedTarget.username} وتم إقصاؤه!`);
+           setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, status: 'eliminated' } : p));
+        } else {
+           setResultMsg(`كليك! مسدس فارغ.. ${selectedTarget.username} نجا بصعوبة!`);
+           setPlayers(prev => prev.map(p => p.id === selectedTarget.id ? { ...p, survivedShots: p.survivedShots + 1 } : p));
+        }
+        setGameState('result');
+      }, 3500); // Wait 3.5 seconds for dramatic shooting animation
     }
-    setGameState('result');
   };
 
   const resetGame = () => {
@@ -346,6 +351,41 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                  ))}
               </div>
            </motion.div>
+        )}
+
+        {gameState === 'shooting' && target && (
+          <motion.div 
+             initial={{ scale: 3, opacity: 0 }} 
+             animate={{ scale: 1, opacity: 1 }} 
+             transition={{ duration: 0.5, type: 'spring' }}
+             className="flex flex-col items-center justify-center text-center bg-black/80 rounded-3xl p-16 border-2 border-red-500/50 shadow-[0_0_100px_rgba(239,68,68,0.2)] w-full max-w-2xl relative overflow-hidden"
+          >
+             <div className="absolute inset-0 bg-red-500/5 animate-pulse mix-blend-overlay pointer-events-none" />
+             
+             <h2 className="text-3xl font-bold text-red-500 mb-2 relative z-10">إطلاق النار على</h2>
+             <h3 className="text-6xl font-black text-white mb-12 drop-shadow-lg relative z-10" style={{ color: target.color }}>{target.username}</h3>
+             
+             <div className="relative z-10 flex items-center justify-center">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 0.5, ease: "linear", repeat: Infinity }}
+                  className="absolute"
+                >
+                  <div className="w-48 h-48 rounded-full border-4 border-dashed border-red-500/30" />
+                </motion.div>
+                
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+                >
+                  <Target className="w-32 h-32 text-red-500 drop-shadow-[0_0_30px_rgba(239,68,68,0.8)]" />
+                </motion.div>
+             </div>
+             
+             <p className="mt-12 text-2xl text-red-400 font-bold animate-[pulse_0.4s_ease-in-out_infinite] tracking-widest relative z-10">
+               تدوير الأسطوانة...
+             </p>
+          </motion.div>
         )}
 
         {gameState === 'result' && target && (
