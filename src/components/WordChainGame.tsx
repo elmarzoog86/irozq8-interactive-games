@@ -27,7 +27,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
   const [joinedPlayers, setJoinedPlayers] = useState<string[]>([]);
   const [activePlayers, setActivePlayers] = useState<string[]>([]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
-  const [turnTimeLeft, setTurnTimeLeft] = useState(15);
+  const [turnTimeLeft, setTurnTimeLeft] = useState(25);
   const [lastPlayer, setLastPlayer] = useState<string | null>(null);
   const [pendingWord, setPendingWord] = useState<{word: string, player: string} | null>(null);
   
@@ -86,20 +86,20 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
   useEffect(() => {
     if (status === 'playing' && !pendingWord) {
       timerRef.current = window.setInterval(() => {
-        setTurnTimeLeft(prev => {
-          if (prev <= 1) {
-            handlePlayerTimeout();
-            return 15;
-          }
-          return prev - 1;
-        });
+        setTurnTimeLeft(prev => Math.max(0, prev - 1));
       }, 1000);
     }
 
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [status, activePlayers, currentPlayerIndex, pendingWord]);
+  }, [status, pendingWord]);
+
+  useEffect(() => {
+    if (status === 'playing' && turnTimeLeft === 0 && !pendingWord) {
+      handlePlayerTimeout();
+    }
+  }, [turnTimeLeft, status, pendingWord]);
 
   const handlePlayerTimeout = () => {
     const playerToRemove = activePlayers[currentPlayerIndex];
@@ -113,13 +113,13 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
       // If we removed the last player in the list, wrap around to 0
       const nextIndex = currentPlayerIndex >= newActivePlayers.length ? 0 : currentPlayerIndex;
       setCurrentPlayerIndex(nextIndex);
-      setTurnTimeLeft(15);
+      setTurnTimeLeft(25);
     }
   };
 
   const nextTurn = () => {
     setCurrentPlayerIndex(prev => (prev + 1) % activePlayers.length);
-    setTurnTimeLeft(15);
+    setTurnTimeLeft(25);
   };
 
   const acceptWord = () => {
@@ -149,7 +149,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     setLastPlayer(null);
     setActivePlayers([...joinedPlayers].sort(() => Math.random() - 0.5));
     setCurrentPlayerIndex(0);
-    setTurnTimeLeft(15);
+    setTurnTimeLeft(25);
     setStatus('playing');
     processedMessageIds.current.clear();
   };
@@ -228,7 +228,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                     <li>2. عند بدء اللعبة، سيظهر دور لاعب معين وحرف مطلوب لتكوين كلمة.</li>
                     <li>3. يجب أن يكتب اللاعب كلمة تبدأ بآخر حرف من الكلمة السابقة.</li>
                     <li>4. طريقة الإجابة: <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!w الكلمة</span> أو <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!ج الكلمة</span>.</li>
-                    <li>5. لديك <span className="text-brand-gold font-bold">15 ثانية</span> فقط للإجابة قبل الإقصاء!</li>
+                    <li>5. لديك <span className="text-brand-gold font-bold">25 ثانية</span> فقط للإجابة قبل الإقصاء!</li>
                   </ul>
                 </div>
 
@@ -328,7 +328,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                   <motion.div 
                     initial={{ width: "100%" }}
                     animate={{ width: "0%" }}
-                    transition={{ duration: 15, ease: "linear" }}
+                    transition={{ duration: 25, ease: "linear" }}
                     key={currentPlayerIndex}
                     className="h-full bg-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.5)]"
                   />
