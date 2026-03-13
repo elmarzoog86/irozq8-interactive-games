@@ -1006,6 +1006,11 @@ function MainApp() {
               <h2 className="text-3xl font-black text-white text-center mb-2 tracking-tight">
                 تحديث <span className="text-brand-gold">جديد!</span>
               </h2>
+              <div className="flex justify-center mb-2">
+                <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
+                  13/3/3036
+                </span>
+              </div>
               <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
 
               
