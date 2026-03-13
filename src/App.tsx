@@ -1008,13 +1008,21 @@ function MainApp() {
               </h2>
               <div className="flex justify-center mb-2">
                 <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
-                  13/3/3036
+                  13/3/2026
                 </span>
               </div>
               <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
 
               
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Skull className="w-5 h-5 text-red-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">روليت البقاء (نسخة تجريبية)</h3>
+                     <p className="text-sm text-zinc-400">لعبة تفاعلية جديدة كلياً! العجلة تختار شخصاً، ليُطلق النار على لاعب آخر أو يُنعشه.</p>
+                   </div>
+                </div>
 
                 <div className="flex items-start gap-3">
                    <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
