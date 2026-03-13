@@ -163,7 +163,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'اختبار لسرعة البديهة والمفردات. ابدأ بكلمة، وعلى اللاعب التالي أن يأتي بكلمة تبدأ بآخر حرف. لا تتوقف!',
     tutorial: 'اكتب كلمة تبدأ بآخر حرف من الكلمة السابقة. لديك وقت محدود للرد قبل أن تخسر.',
     image: '/wordchain.png',
-    status: 'coming_soon',
+    status: 'new',
     type: 'puzzles',
     color: 'blue'
   },

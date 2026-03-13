@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Play, Square, RotateCcw, ArrowRight, UserPlus, Timer, User } from 'lucide-react';
+import { Trophy, Play, Square, RotateCcw, ArrowRight, UserPlus, Timer, User, Check, X } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -29,6 +29,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [turnTimeLeft, setTurnTimeLeft] = useState(15);
   const [lastPlayer, setLastPlayer] = useState<string | null>(null);
+  const [pendingWord, setPendingWord] = useState<{word: string, player: string} | null>(null);
   
   const processedMessageIds = useRef<Set<string>>(new Set());
   const timerRef = useRef<number | null>(null);
@@ -73,20 +74,14 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     const firstChar = attemptedWord.charAt(0);
     
     if (normalize(firstChar) === normalize(requiredLetter) && !usedWords.has(attemptedWord)) {
-      // Valid word!
-      setCurrentWord(attemptedWord);
-      setUsedWords(prev => new Set(prev).add(attemptedWord));
-      setScores(prev => ({
-        ...prev,
-        [latestMessage.username]: (prev[latestMessage.username] || 0) + 10
-      }));
-      setLastPlayer(latestMessage.username);
-      nextTurn();
+      if (!pendingWord) {
+        setPendingWord({ word: attemptedWord, player: latestMessage.username });
+      }
     }
-  }, [messages, status, currentWord, usedWords, activePlayers, currentPlayerIndex]);
+  }, [messages, status, currentWord, usedWords, activePlayers, currentPlayerIndex, pendingWord]);
 
   useEffect(() => {
-    if (status === 'playing') {
+    if (status === 'playing' && !pendingWord) {
       timerRef.current = window.setInterval(() => {
         setTurnTimeLeft(prev => {
           if (prev <= 1) {
@@ -101,7 +96,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [status, activePlayers, currentPlayerIndex]);
+  }, [status, activePlayers, currentPlayerIndex, pendingWord]);
 
   const handlePlayerTimeout = () => {
     const playerToRemove = activePlayers[currentPlayerIndex];
@@ -122,6 +117,23 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
   const nextTurn = () => {
     setCurrentPlayerIndex(prev => (prev + 1) % activePlayers.length);
     setTurnTimeLeft(15);
+  };
+
+  const acceptWord = () => {
+    if (!pendingWord) return;
+    setCurrentWord(pendingWord.word);
+    setUsedWords(prev => new Set(prev).add(pendingWord.word));
+    setScores(prev => ({
+      ...prev,
+      [pendingWord.player]: (prev[pendingWord.player] || 0) + 10
+    }));
+    setLastPlayer(pendingWord.player);
+    setPendingWord(null);
+    nextTurn();
+  };
+
+  const rejectWord = () => {
+    setPendingWord(null);
   };
 
   const startGame = () => {
@@ -216,6 +228,50 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
 
           {status === 'playing' && (
             <div className="flex flex-col items-center w-full">
+              {pendingWord && (
+                <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center backdrop-blur-sm rounded-l-[40px]">
+                  <motion.div 
+                    initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                    animate={{ scale: 1, y: 0, opacity: 1 }}
+                    className="bg-zinc-900 border border-brand-gold/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+                  >
+                    <h3 className="text-xl text-zinc-400 mb-6">هل هذه الكلمة صحيحة؟</h3>
+                    <div className="flex flex-col items-center gap-3 mb-6">
+                      <img 
+                        src={`https://decapi.me/twitch/avatar/${pendingWord.player}`} 
+                        alt={pendingWord.player}
+                        className="w-20 h-20 rounded-full border-2 border-brand-gold bg-black/50"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${pendingWord.player}&background=27272a&color=d4af37`;
+                        }}
+                      />
+                      <span className="text-2xl font-bold text-white">{pendingWord.player}</span>
+                    </div>
+                    
+                    <div className="text-5xl font-black text-brand-gold mb-8 bg-black/40 py-4 rounded-xl border border-brand-gold/10">
+                      {pendingWord.word}
+                    </div>
+
+                    <div className="flex gap-4">
+                      <button
+                        onClick={acceptWord}
+                        className="flex-1 flex flex-col items-center gap-2 py-4 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-xl hover:scale-105 transition-all outline-none border border-green-500/30"
+                      >
+                        <Check className="w-8 h-8" />
+                        <span className="font-bold text-lg">قبول (صح)</span>
+                      </button>
+                      <button
+                        onClick={rejectWord}
+                        className="flex-1 flex flex-col items-center gap-2 py-4 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-xl hover:scale-105 transition-all outline-none border border-red-500/30"
+                      >
+                        <X className="w-8 h-8" />
+                        <span className="font-bold text-lg">رفض (خطأ)</span>
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+
               <div className="text-zinc-400 text-xl mb-4">الكلمة الحالية:</div>
               <motion.div 
                 key={currentWord}
