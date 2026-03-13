@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Play, Square, RotateCcw, ArrowRight, UserPlus, Timer, User, Check, X } from 'lucide-react';
+import { Trophy, Play, Square, RotateCcw, ArrowRight, UserPlus, Timer, User, Check, X, HelpCircle } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -213,10 +213,25 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
               </div>
 
               <div className="relative z-10">
-                <UserPlus className="w-32 h-32 text-brand-gold mx-auto mb-8 drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+                <UserPlus className="w-24 h-24 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
                 <h3 className="text-3xl font-bold text-white mb-4">إعداد اللعبة</h3>
-                <p className="text-zinc-400 mb-12 text-lg">اطلب من المتابعين كتابة <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 py-1 rounded-lg border border-brand-gold/20">!join</span> للمشاركة. نحتاج لاعبين على الأقل.</p>
+                <p className="text-zinc-400 mb-6 text-lg">اطلب من المتابعين كتابة <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 py-1 rounded-lg border border-brand-gold/20">!join</span> للمشاركة. نحتاج لاعبين على الأقل.</p>
                 
+                {/* Tutorial Section */}
+                <div className="bg-black/50 border border-brand-gold/20 rounded-2xl p-5 mb-8 text-right text-sm">
+                  <h4 className="text-brand-gold font-bold mb-3 flex items-center gap-2 justify-end text-lg">
+                    <span>طريقة اللعب</span>
+                    <HelpCircle className="w-5 h-5" />
+                  </h4>
+                  <ul className="text-zinc-300 space-y-3">
+                    <li>1. الانضمام عبر كتابة <span className="text-brand-gold font-mono">!join</span> في الشات.</li>
+                    <li>2. عند بدء اللعبة، سيظهر دور لاعب معين وحرف مطلوب لتكوين كلمة.</li>
+                    <li>3. يجب أن يكتب اللاعب كلمة تبدأ بآخر حرف من الكلمة السابقة.</li>
+                    <li>4. طريقة الإجابة: <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!w الكلمة</span> أو <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!ج الكلمة</span>.</li>
+                    <li>5. لديك <span className="text-brand-gold font-bold">15 ثانية</span> فقط للإجابة قبل الإقصاء!</li>
+                  </ul>
+                </div>
+
                 <button
                   onClick={startGame}
                   disabled={joinedPlayers.length < 2}
