@@ -23,6 +23,7 @@ import { TypingRoyaleGame } from './components/TypingRoyaleGame';
 import { MissingLinkGame } from './components/MissingLinkGame';
 import { ScattergoriesGame } from './components/ScattergoriesGame';
 import CategoryAuctionGame from './components/CategoryAuctionGame';
+import TrivialPursuitGame from './components/TrivialPursuitGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
 import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
@@ -236,10 +237,18 @@ const ENABLE_COMING_SOON_PAGE = false;
       status: 'testing',
       type: 'strategy',
       color: 'yellow'
+    },
+    {
+      id: 'trivialpursuit',
+      name: 'مسار المعرفة',
+      description: 'لعبة لوحية هادئة وتنافسية! ارمِ النرد واجمع 4 ميداليات من أسئلة ثقافية.',
+      tutorial: 'اكتب !join للتسجيل، وعند دورك تكتب !roll للرمي، وإذا ظهر سؤال، اكتب الإجابة في الشات لتربح ميدالية!',    
+      image: '/TrivialPursuit.png',
+      status: 'testing',
+      type: 'strategy',
+      color: 'blue'
     }
-];
-
-function MainApp() {
+];function MainApp() {
   const [channelNameInput, setChannelNameInput] = useState('');
   const [activeChannel, setActiveChannel] = useState('');
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -790,6 +799,24 @@ function MainApp() {
     );
   }
 
+  if (activeGame === 'trivialpursuit') {
+    return (
+      <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-black font-arabic" dir="rtl">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+          <source src="/background.webm" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="relative z-10 w-full h-full">
+          <TrivialPursuitGame 
+            messages={messages} 
+            onLeave={leaveGame} 
+            channelName={activeChannel} 
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
@@ -1008,7 +1035,7 @@ function MainApp() {
               </h2>
               <div className="flex justify-center mb-2">
                 <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
-                  13/3/2026
+                  14/3/2026
                 </span>
               </div>
               <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
@@ -1025,6 +1052,14 @@ function MainApp() {
                 </div>
 
                 <div className="flex items-start gap-3">
+                     <div className="bg-blue-500/20 p-2 rounded-lg mt-1 shrink-0"><Tag className="w-5 h-5 text-blue-500" /></div>
+                     <div>
+                       <h3 className="font-bold text-white mb-1">مسار المعرفة</h3>
+                       <p className="text-sm text-zinc-400">لعبة لوحية هادئة وتنافسية! ارمِ النرد واجمع 4 ميداليات من أسئلة ثقافية.</p>
+                     </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
                    <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
