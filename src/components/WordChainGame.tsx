@@ -295,16 +295,10 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                 key={currentWord}
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="text-7xl font-bold text-white mb-12 flex items-center justify-center gap-2 flex-row-reverse"
+                className="text-7xl font-bold text-brand-gold glow-gold-text mb-12 flex items-center justify-center"
+                dir="rtl"
               >
-                {currentWord.split('').map((char, i) => (
-                  <span 
-                    key={i} 
-                    className={i === currentWord.length - 1 ? "text-brand-gold glow-gold-text" : ""}
-                  >
-                    {char}
-                  </span>
-                ))}
+                {currentWord}
               </motion.div>
 
               <div className="text-2xl text-zinc-300 mb-12">

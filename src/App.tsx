@@ -298,6 +298,9 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   const leaveGame = () => {
     setActiveGame(null);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }, 50);
   };
 
   if (!activeChannel) {
