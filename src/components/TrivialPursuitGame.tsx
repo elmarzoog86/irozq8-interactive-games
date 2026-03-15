@@ -229,6 +229,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   
   const processedMessagesRef = useRef<Set<string>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const isFirstRun = useRef(true);
 
   // Layout calculations for 7x7 outer grid (24 tiles total)
   const getBoardCoordinates = (index: number) => {
@@ -239,7 +240,16 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   };
 
   useEffect(() => {
-    if (messages.length === 0) return;
+    if (messages.length === 0) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    if (isFirstRun.current) {
+      messages.forEach(msg => processedMessagesRef.current.add(msg.id));
+      isFirstRun.current = false;
+      return;
+    }
 
     messages.forEach(msg => {
       if (processedMessagesRef.current.has(msg.id)) return;
@@ -250,7 +260,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
       // Lobby: Joining
       if (gameState === 'lobby') {
-        if (text.toLowerCase() === '!join' || text === '!دخول' || text === '1') {
+        if (text.toLowerCase() === '!join') {
           setPlayers(prev => {
               if (prev.find(p => p.username === username) || prev.length >= 8) return prev;
               
@@ -801,7 +811,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
             ))}
             
             {players.length === 0 && (
-              <div className="text-zinc-600 text-center mt-10">اكتب <span className="text-brand-gold">1</span> أو <span className="text-brand-gold">!join</span> للعب</div>
+              <div className="text-zinc-600 text-center mt-10">اكتب <span className="text-brand-gold">!join</span> للعب</div>
             )}
           </div>
         </div>
@@ -821,8 +831,6 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                 <p className="text-brand-gold text-sm font-bold mb-2 uppercase tracking-widest">للانضمام بالشات</p>
                 <div className="flex items-center gap-4">
                   <p className="text-3xl text-white font-mono">!join</p>
-                  <span className="text-zinc-500">أو</span>
-                  <p className="text-3xl text-white font-mono">1</p>
                 </div>
               </div>
 
