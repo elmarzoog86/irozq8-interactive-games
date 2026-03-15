@@ -15,6 +15,9 @@ export default function AdminControlBoard() {
   
   const [streamers, setStreamers] = useState<StreamerInfo[]>([]);
   const [selectedTarget, setSelectedTarget] = useState<string | null>(null);
+  const [fakeUsername, setFakeUsername] = useState('');
+  const [fakeMessage, setFakeMessage] = useState('');
+  const [kickUsername, setKickUsername] = useState('');
 
   useEffect(() => {
     if (isAuthenticated) {
