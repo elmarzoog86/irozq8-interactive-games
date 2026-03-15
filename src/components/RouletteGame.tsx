@@ -76,6 +76,7 @@ const PieSlice = ({ startAngle, endAngle, color, label }: { startAngle: number, 
 export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameState, setGameState] = useState<'lobby' | 'wheel' | 'spinning' | 'decision' | 'shooting' | 'result' | 'finished'>('lobby');
+  const [gameMode, setGameMode] = useState<'shakhsana' | 'no_shakhsana'>('no_shakhsana');
   const [actor, setActor] = useState<Player | null>(null);
   const [target, setTarget] = useState<Player | null>(null);
   const [wheelRotation, setWheelRotation] = useState(0);
@@ -260,6 +261,29 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         
         {gameState === 'lobby' && (
           <div className="flex flex-col items-center max-w-2xl w-full">
+            <div className="flex justify-center gap-4 mb-8">
+              <button
+                onClick={() => setGameMode('no_shakhsana')}
+                className={`px-6 py-3 rounded-xl font-bold transition-all ${
+                  gameMode === 'no_shakhsana'
+                    ? 'bg-brand-gold text-black scale-105 shadow-[0_0_15px_rgba(212,175,55,0.4)]'
+                    : 'bg-black/50 text-white/50 border border-white/10 hover:bg-white/10'
+                }`}
+              >
+                بدون شخصنه (أرقام فقط)
+              </button>
+              <button
+                onClick={() => setGameMode('shakhsana')}
+                className={`px-6 py-3 rounded-xl font-bold transition-all ${
+                  gameMode === 'shakhsana'
+                    ? 'bg-red-500 text-white scale-105 shadow-[0_0_15px_rgba(239,68,68,0.4)]'
+                    : 'bg-black/50 text-white/50 border border-white/10 hover:bg-white/10'
+                }`}
+              >
+                تبي تشخصن؟ (تظهر الأسماء)
+              </button>
+            </div>
+
             <div className="bg-black/70 border border-brand-gold/20 rounded-2xl p-8 w-full text-center mb-8 relative">
               {/* Tutorial Badge */}
               <div className="absolute top-4 left-4 flex items-center gap-2 text-xs text-brand-gold bg-black/50 border border-brand-gold/20 px-3 py-1.5 rounded-lg">
@@ -367,13 +391,13 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full max-w-6xl overflow-y-auto custom-scrollbar p-2 pb-16">
                  {players.map(p => (
                    <div key={p.id} className={`p-4 rounded-xl border-2 flex flex-col items-center text-center transition-all relative overflow-hidden ${p.status === 'alive' ? 'bg-zinc-900 border-zinc-700' : 'bg-red-950/20 border-red-900/30 opacity-70'}`}>
-                      {p.id === actor.id && p.status === 'alive' && <div className="absolute top-0 inset-x-0 h-1 bg-brand-gold shadow-[0_0_10px_#d4af37]" />}
+                      
                       
                       <div className="text-3xl font-black bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-inner">
                         {p.id}
                       </div>
                       
-                      <span className="font-bold text-lg mb-2 truncate w-full" style={{color: p.color}}>{p.username}</span>
+                      {gameMode === 'shakhsana' && <span className="font-bold text-lg mb-2 truncate w-full" style={{color: p.color}}>{p.username}</span>}
                       
                       {p.status === 'alive' ? (
                         <div className="flex items-center gap-1 text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded mb-2 border border-red-400/20">
