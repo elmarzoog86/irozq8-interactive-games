@@ -101,10 +101,18 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     }
   }, [turnTimeLeft, status, pendingWord]);
 
+  const getTurnDuration = (wordsCount: number) => {
+    const rounds = wordsCount - 1;
+    if (rounds >= 40) return 15;
+    if (rounds >= 30) return 20;
+    if (rounds >= 20) return 25;
+    return 30;
+  };
+
   const handlePlayerTimeout = () => {
     const playerToRemove = activePlayers[currentPlayerIndex];
     const newActivePlayers = activePlayers.filter(p => p !== playerToRemove);
-    
+
     if (newActivePlayers.length <= 1) {
       setActivePlayers(newActivePlayers);
       setStatus('finished');
@@ -113,18 +121,19 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
       // If we removed the last player in the list, wrap around to 0
       const nextIndex = currentPlayerIndex >= newActivePlayers.length ? 0 : currentPlayerIndex;
       setCurrentPlayerIndex(nextIndex);
-      setTurnTimeLeft(30);
+      setTurnTimeLeft(getTurnDuration(usedWords.size));
     }
   };
 
-  const nextTurn = () => {
+  const nextTurn = (newWordsCount: number) => {
     setCurrentPlayerIndex(prev => (prev + 1) % activePlayers.length);
-    setTurnTimeLeft(30);
+    setTurnTimeLeft(getTurnDuration(newWordsCount));
   };
 
   const acceptWord = () => {
     if (!pendingWord) return;
     setCurrentWord(pendingWord.word);
+    const newWordsCount = usedWords.size + 1;
     setUsedWords(prev => new Set(prev).add(pendingWord.word));
     setScores(prev => ({
       ...prev,
@@ -132,10 +141,8 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     }));
     setLastPlayer(pendingWord.player);
     setPendingWord(null);
-    nextTurn();
-  };
-
-  const rejectWord = () => {
+    nextTurn(newWordsCount);
+  };  const rejectWord = () => {
     setPendingWord(null);
   };
 
@@ -227,8 +234,8 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                     <li>1. الانضمام عبر كتابة <span className="text-brand-gold font-mono">!join</span> في الشات.</li>
                     <li>2. عند بدء اللعبة، سيظهر دور لاعب معين وحرف مطلوب لتكوين كلمة.</li>
                     <li>3. يجب أن يكتب اللاعب كلمة تبدأ بآخر حرف من الكلمة السابقة.</li>
-                    <li>4. طريقة الإجابة: <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!w الكلمة</span> أو <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!ج الكلمة</span>.</li>
-                    <li>5. لديك <span className="text-brand-gold font-bold">30 ثانية</span> فقط للإجابة قبل الإقصاء!</li>
+                      <li>4. طريقة الإجابة: <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!w الكلمة</span> أو <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!ج الكلمة</span>.</li>
+                      <li>5. لديك <span className="text-brand-gold font-bold">وقت محدد يقل مع كثرة الكلمات</span> للإجابة قبل الإقصاء!</li>
                   </ul>
                 </div>
 
@@ -318,15 +325,15 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                   <User className="w-8 h-8 text-brand-gold" />
                   {activePlayers[currentPlayerIndex]}
                 </div>
-                <div className="w-full bg-black/80 h-2 rounded-full overflow-hidden border border-brand-gold/10">
-                  <motion.div 
-                    initial={{ width: "100%" }}
-                    animate={{ width: "0%" }}
-                    transition={{ duration: 30, ease: "linear" }}
-                    key={currentPlayerIndex}
-                    className="h-full bg-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.5)]"
-                  />
-                </div>
+                  <div className="w-full bg-black/80 h-2 rounded-full overflow-hidden border border-brand-gold/10">
+                    <motion.div 
+                      initial={{ width: "100%" }}
+                      animate={{ width: "0%" }}
+                      transition={{ duration: getTurnDuration(usedWords.size), ease: "linear" }}
+                      key={`${currentPlayerIndex}-${usedWords.size}`}
+                      className="h-full bg-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.5)]"
+                    />
+                  </div>
               </div>
             </div>
           )}
