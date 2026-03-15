@@ -69,7 +69,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
     const requiredLetter = currentWord.slice(-1);
     
     const normalize = (char: string) => {
-      if (['أ', 'إ', 'آ', 'ا'].includes(char)) return 'ا';
+      if (['أ', 'إ', 'آ', 'ا', 'ء', 'ؤ', 'ئ'].includes(char)) return 'ا';
       if (['ة', 'ه'].includes(char)) return 'ه';
       return char;
     };
@@ -183,9 +183,13 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
         
         {status === 'playing' && (
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-brand-gold/20 text-brand-gold px-6 py-3 rounded-xl font-bold text-xl border border-brand-gold/30">
-              <Timer className="w-6 h-6" />
-              {turnTimeLeft} ثانية
+            <div className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-xl border transition-all ${
+              turnTimeLeft <= 10 
+                ? 'bg-red-500/20 text-red-500 border-red-500/50 animate-pulse scale-105 shadow-[0_0_20px_rgba(239,68,68,0.4)]' 
+                : 'bg-brand-gold/20 text-brand-gold border-brand-gold/30'
+            }`}>
+              <Timer className={`w-6 h-6 ${turnTimeLeft <= 10 ? 'animate-bounce' : ''}`} />
+              <span className={turnTimeLeft <= 10 ? 'font-black' : ''}>{turnTimeLeft} ثانية</span>
             </div>
             <button
               onClick={() => setStatus('finished')}
