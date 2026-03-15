@@ -1048,16 +1048,16 @@ const ENABLE_COMING_SOON_PAGE = false;
                 <div className="flex items-start gap-3">
                    <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-gold" /></div>
                    <div>
-                     <h3 className="font-bold text-white mb-1">تفعيل لعبة الكراسي الموسيقية</h3>
-                     <p className="text-sm text-zinc-400">تدعم الآن الموسيقى الخاصة، صور تويتش، دوران سلس والمزيد!</p>
+                     <h3 className="font-bold text-white mb-1">لعبة الكراسي الموسيقية</h3>
+                     <p className="text-sm text-zinc-400">لعبة الكراسي الموسيقية مع المتابعين، اجلس بسرعة قبل توقف الموسيقى لتجنب الإقصاء!</p>
                    </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                    <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Music className="w-5 h-5 text-green-500" /></div>
                    <div>
-                     <h3 className="font-bold text-white mb-1">تحديث خمن الموسيقى</h3>
-                     <p className="text-sm text-zinc-400">تتبع ذكي للأغاني بدون تكرار حتى تنتهي القائمة بالكامل في البث.</p>
+                     <h3 className="font-bold text-white mb-1">خمن الموسيقى</h3>
+                     <p className="text-sm text-zinc-400">تحدي لفرقك لمعرفة اسم الأغنية التي تعمل لتجميع النقاط والفوز!</p>
                    </div>
                 </div>
 
