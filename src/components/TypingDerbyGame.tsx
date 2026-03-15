@@ -62,11 +62,19 @@ export function TypingDerbyGame({
     const newMessages = messages.filter(m => !processedMessageIds.current.has(m.id));
     if (newMessages.length === 0) return;
 
+    const normalizeStr = (str: string) => {
+      // Normalize Arabic alefs, hamzas, taa marbuta, and remove diacritics
+      return str.replace(/[أإآاءؤئ]/g, 'ا').replace(/[ةه]/g, 'ه').replace(/[ًٌٍَُِّْ]/g, '');
+    };
+
+    let wordSolvedInBatch = false;
+
     newMessages.forEach(msg => {
       processedMessageIds.current.add(msg.id);
-      const text = msg.message.trim();
+      const originalText = msg.message.replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+      const text = originalText.toLowerCase();
 
-      if (phase === 'lobby' && text === '!join') {
+      if (phase === 'lobby' && (text === '!join' || text === '!انضمام' || text === '!ج' || text === '!جوي')) {
         if (!players[msg.username]) {
           setPlayers(prev => ({
             ...prev,
@@ -77,30 +85,31 @@ export function TypingDerbyGame({
             }
           }));
         }
-      } else if (phase === 'playing' && text === currentWord) {
+      } else if (phase === 'playing' && !wordSolvedInBatch) {
         // Player got it right
-        if (players[msg.username]) {
-          setPlayers(prev => {
-            const next = { ...prev };
-            next[msg.username] = { ...next[msg.username], score: next[msg.username].score + 1 };
-            
-            // Check win
-            if (next[msg.username].score >= targetScore) {
-              setWinner(next[msg.username]);
-              setPhase('winner');
-            } else {
-              // Next word
-              pickNextWord();
-            }
-            return next;
-          });
+        if (normalizeStr(originalText) === normalizeStr(currentWord)) {
+          wordSolvedInBatch = true;
+          if (players[msg.username]) {
+            setPlayers(prev => {
+              const next = { ...prev };
+              next[msg.username] = { ...next[msg.username], score: next[msg.username].score + 1 };
+
+              // Check win
+              if (next[msg.username].score >= targetScore) {
+                setWinner(next[msg.username]);
+                setPhase('winner');
+              } else {
+                // Next word
+                pickNextWord();
+              }
+              return next;
+            });
+          }
         }
       }
     });
 
-  }, [messages, phase, currentWord, players, targetScore]);
-
-  const pickNextWord = () => {
+  }, [messages, phase, currentWord, players, targetScore]);  const pickNextWord = () => {
     const randomWord = ARABIC_WORDS[Math.floor(Math.random() * ARABIC_WORDS.length)];
     setCurrentWord(randomWord);
   };
@@ -299,7 +308,7 @@ export function TypingDerbyGame({
                       layout
                       className="flex items-center gap-4 bg-zinc-900 border border-white/5 p-4 rounded-2xl relative overflow-hidden group"
                     >
-                      <div className="absolute inset-0 bg-white/5 w-full transform origin-left transition-transform duration-500" 
+                      <div className="absolute inset-0 bg-white/5 w-full transform origin-right transition-transform duration-500" 
                            style={{ transform: `scaleX(${progressPercentage / 100})`, backgroundColor: `${p.color}22` }} />
                       
                       <div className="w-10 text-center font-bold text-zinc-500 z-10">#{index + 1}</div>
