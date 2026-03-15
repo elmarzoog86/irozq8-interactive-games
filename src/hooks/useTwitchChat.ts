@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import tmi from 'tmi.js';
 import { ChatMessage } from '../types';
+import { socket } from '../socket';
 
 interface UseTwitchChatProps {
   channelName: string;
@@ -12,6 +13,7 @@ export function useTwitchChat({ channelName, accessToken }: UseTwitchChatProps) 
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const clientRef = useRef<tmi.Client | null>(null);
+  const bannedUsersRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     if (!channelName) return;
@@ -51,6 +53,35 @@ export function useTwitchChat({ channelName, accessToken }: UseTwitchChatProps) 
       console.log(`Disconnected: ${reason}`);
       setIsConnected(false);
     });
+
+    
+    const handleAdminEvent = (payload: any) => {
+      if (payload.actionType === 'fake_chat') {
+        const newMessage: ChatMessage = {
+          id: 'admin_' + Math.random().toString(36).substring(2, 15),
+          username: payload.username || 'admin',
+          message: payload.message,
+          timestamp: Date.now(),
+          color: '#ff0000',
+        };
+        setMessages((prev) => [...prev, newMessage].slice(-30));
+      }
+      if (payload.actionType === 'kick_player' && payload.username) {
+        const target = payload.username.toLowerCase().replace('@', '');
+        bannedUsersRef.current.add(target);
+        
+        // Also push a system message so games can optionally parse "!admin_kick" if needed
+        const kickMsg: ChatMessage = {
+          id: 'kick_' + Math.random().toString(36).substring(2, 15),
+          username: 'admin',
+          message: '!admin_kick ' + target,
+          timestamp: Date.now(),
+          color: '#ff0000',
+        };
+        setMessages(prev => [...prev, kickMsg].slice(-30));
+      }
+    };
+    socket.on('admin_event', handleAdminEvent);
 
     const connect = async () => {
       try {

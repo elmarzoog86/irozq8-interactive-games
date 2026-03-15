@@ -140,6 +140,24 @@ export default function AdminControlBoard() {
                     <button onClick={() => triggerEvent('end_game')} className="w-full bg-red-900 hover:bg-red-800 border border-red-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] mt-4">
                         إنهاء اللعبة الحالية 🛑
                     </button>
+                    
+                    <div className="pt-6 mt-6 border-t border-red-500/20 text-black">
+                        <div className="flex gap-4">
+                            <input 
+                                type="text" 
+                                value={kickUsername} 
+                                onChange={e => setKickUsername(e.target.value)} 
+                                placeholder="اسم اللاعب لطرده / إقصائه..." 
+                                className="flex-1 bg-black border border-red-700 p-4 rounded-xl text-white outline-none focus:border-red-500" 
+                            />
+                            <button 
+                                onClick={() => triggerEvent('kick_player')} 
+                                className="bg-red-900 hover:bg-red-700 text-white font-black px-8 rounded-xl transition-all border border-red-500"
+                            >
+                                إقصاء 🚫
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
