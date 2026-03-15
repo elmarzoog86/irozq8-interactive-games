@@ -52,7 +52,23 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
   const [blockedTeamId, setBlockedTeamId] = useState<number | null>(null);
   const [isDoublePointsActive, setIsDoublePointsActive] = useState(false);
   const [isHintActive, setIsHintActive] = useState(false);
-  const [playedSongIds, setPlayedSongIds] = useState<Set<string>>(new Set());
+  
+  const getStorageKey = () => `musicGuesser_played_${user?.login || 'guest'}`;
+  
+  const [playedSongIds, setPlayedSongIds] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem(`musicGuesser_played_${user?.login || 'guest'}`);
+      return saved ? new Set(JSON.parse(saved)) : new Set();
+    } catch {
+      return new Set();
+    }
+  });
+
+  // Persist played songs whenever it changes
+  useEffect(() => {
+    localStorage.setItem(getStorageKey(), JSON.stringify(Array.from(playedSongIds)));
+  }, [playedSongIds, user?.login]);
+
   const [roundNum, setRoundNum] = useState(0);
   const [currentTurnIndex, setCurrentTurnIndex] = useState<0 | 1>(0);
   const [isSteal, setIsSteal] = useState(false);
@@ -87,7 +103,6 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
     setRoundNum(0);
     setCurrentTurnIndex(0);
     setIsSteal(false);
-    setPlayedSongIds(new Set());
     nextRound(validSongs);
   };  const parseDuration = (d: any): number => {
     if (typeof d === 'object' && d?.seconds) return d.seconds;

@@ -18,14 +18,13 @@ interface ChairsGameProps {
   error: string | null;
 }
 
-interface Player {
-  username: string;
-  isAlive: boolean;
-  chairId: string | null;
-  color: string;
-}
-
-interface Chair {
+  interface Player {
+    username: string;
+    isAlive: boolean;
+    chairId: string | null;
+    color: string;
+    avatar?: string;
+  }interface Chair {
   id: string;
   number: number;
   claimedBy: string | null;
@@ -36,27 +35,43 @@ const COLORS = [
   '#FFD700', '#DAA520', '#B8860B', '#CFB53B', '#E6BE8A'
 ];
 
-const SONGS = [
-  'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
-  'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=empty-mind-118973.mp3',
-  'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8175567.mp3?filename=chill-abstract-intention-110855.mp3'
-];
-
 export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, channelName, isConnected, error }) => {
   const [showChat, setShowChat] = useState(true);
   const [phase, setPhase] = useState<'config' | 'joining' | 'playing' | 'winner'>('config');
   const [roundState, setRoundState] = useState<'countdown' | 'music' | 'active' | 'round_end'>('countdown');
   const [countdown, setCountdown] = useState(3);
+  const [activeTimer, setActiveTimer] = useState(20);
   const [players, setPlayers] = useState<Record<string, Player>>({});
   const [chairs, setChairs] = useState<Chair[]>([]);
   const [roundNumber, setRoundNumber] = useState(1);
   const [eliminatedPlayer, setEliminatedPlayer] = useState<string | null>(null);
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const [musicVolume, setMusicVolume] = useState(0.5);
+  const [customSongs, setCustomSongs] = useState<string[]>([
+    'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=empty-mind-118973.mp3',
+    'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8175567.mp3?filename=chill-abstract-intention-110855.mp3'
+  ]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const processedMessageIds = useRef<Set<string>>(new Set());
 
   const activePlayers = (Object.values(players) as Player[]).filter(p => p.isAlive);
   const allPlayersList = Object.values(players) as Player[];
+
+  // Load custom songs
+  useEffect(() => {
+    fetch('/chairs-music.json')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCustomSongs(data);
+        }
+      })
+      .catch(err => {
+        // Silently fail if file relies on default songs
+      });
+  }, []);
 
   useEffect(() => {
     messages.forEach(msg => {
@@ -69,9 +84,34 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
           setPlayers(prev => {
             if (!prev[msg.username]) {
               const color = COLORS[Object.keys(prev).length % COLORS.length];
-              return { 
-                ...prev, 
-                [msg.username]: { username: msg.username, isAlive: true, chairId: null, color } 
+
+              // Fetch real Twitch avatar asynchronously
+              fetch(`https://decapi.me/twitch/avatar/${msg.username}`)
+                .then(res => res.text())
+                .then(avatarText => {
+                  if (avatarText && avatarText.startsWith('http')) {
+                    setPlayers(current => {
+                      if (current[msg.username]) {
+                        return {
+                          ...current,
+                          [msg.username]: { ...current[msg.username], avatar: avatarText }
+                        };
+                      }
+                      return current;
+                    });
+                  }
+                })
+                .catch(console.error);
+
+              return {
+                ...prev,
+                [msg.username]: { 
+                  username: msg.username, 
+                  isAlive: true, 
+                  chairId: null, 
+                  color,
+                  avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.username}`
+                }
               };
             }
             return prev;
@@ -123,31 +163,60 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
     }
   }, [chairs, phase, roundState, activePlayers]);
 
-  // Countdown timer
-  useEffect(() => {
-    if (phase === 'playing' && roundState === 'countdown') {
-      if (countdown > 0) {
-        const timer = setTimeout(() => setCountdown(c => c - 1), 1000);
-        return () => clearTimeout(timer);
-      } else {
-        setRoundState('music');
+    // Countdown timer
+    useEffect(() => {
+      if (phase === 'playing' && roundState === 'countdown') {
+        if (countdown > 0) {
+          const timer = setTimeout(() => setCountdown(c => c - 1), 1000);
+          return () => clearTimeout(timer);
+        } else {
+          setRoundState('music');
+        }
       }
-    }
-  }, [countdown, phase, roundState]);
+    }, [countdown, phase, roundState]);
 
-  // Music player
+    // Active phase timer
+    useEffect(() => {
+      if (phase === 'playing' && roundState === 'active') {
+        if (activeTimer > 0) {
+          const timer = setTimeout(() => setActiveTimer(c => c - 1), 1000);
+          return () => clearTimeout(timer);
+        } else {
+          setRoundState('round_end');
+
+          const eliminated = activePlayers.filter(p => !p.chairId);
+          if (eliminated.length > 0) {
+            setEliminatedPlayer(eliminated.map(p => p.username).join(' و '));
+            setPlayers(prev => {
+              const updated = { ...prev };
+              eliminated.forEach(p => {
+                if (updated[p.username]) {
+                  updated[p.username] = { ...updated[p.username], isAlive: false };
+                }
+              });
+              return updated;
+            });
+          }
+
+          setTimeout(() => {
+            startNextRound();
+          }, 4000);
+        }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeTimer, phase, roundState]);  // Music player
   useEffect(() => {
     if (phase === 'playing' && roundState === 'music') {
-      const song = SONGS[Math.floor(Math.random() * SONGS.length)];
+      const song = customSongs[Math.floor(Math.random() * customSongs.length)];
       if (audioRef.current) {
         audioRef.current.src = song;
-        audioRef.current.volume = 0.5;
+        audioRef.current.volume = musicVolume;
         audioRef.current.play().catch(e => console.error("Audio play failed:", e));
       }
 
-      // Random duration between 5s and 15s
-      const duration = Math.floor(Math.random() * 10000) + 5000;
-      const timer = setTimeout(() => {
+        // Random duration between 10s and 20s
+        const duration = Math.floor(Math.random() * 10000) + 10000;
+        const timer = setTimeout(() => {
         if (audioRef.current) {
           audioRef.current.pause();
         }
@@ -161,6 +230,31 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
         }
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, roundState]);
+
+  // Adjust volume separately if it changes while playing
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = musicVolume;
+    }
+  }, [musicVolume]);
+
+  // Handle Rotation animation during music
+  useEffect(() => {
+    let animationFrameId: number;
+    
+    if (phase === 'playing' && roundState === 'music') {
+      const updateRotation = () => {
+        setRotationAngle(prev => (prev + 0.02) % (2 * Math.PI));
+        animationFrameId = requestAnimationFrame(updateRotation);
+      };
+      animationFrameId = requestAnimationFrame(updateRotation);
+    }
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [phase, roundState]);
 
   const startGame = () => {
@@ -208,19 +302,20 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
       });
     }
     
-    setChairs(newChairs);
-    setEliminatedPlayer(null);
-    setRoundState('countdown');
-    setCountdown(3);
-  };
-
-  const getPosition = (index: number, total: number, radius: number) => {
+      setChairs(newChairs);
+      setEliminatedPlayer(null);
+      setRoundState('countdown');
+      setCountdown(3);
+      setActiveTimer(20);
+    };  const getPosition = (index: number, total: number, radius: number, isCircling: boolean = false) => {
     if (total === 0) return { x: 50, y: 50 };
     if (total === 1) return { x: 50, y: 50 };
-    const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
+    const baseAngle = (index / total) * 2 * Math.PI - Math.PI / 2;
+    const finalAngle = isCircling ? baseAngle + rotationAngle : baseAngle;
+    
     return {
-      x: 50 + radius * Math.cos(angle),
-      y: 50 + radius * Math.sin(angle)
+      x: 50 + radius * Math.cos(finalAngle),
+      y: 50 + radius * Math.sin(finalAngle)
     };
   };
 
@@ -265,13 +360,17 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             <div className="flex flex-wrap gap-3">
               <AnimatePresence>
                 {allPlayersList.map((p) => (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    key={p.username} 
+                    key={p.username}
                     className="bg-zinc-900 border border-zinc-700 px-4 py-2 rounded-xl flex items-center gap-2"
                   >
-                    <div className="w-3 h-3 rounded-full" style={{ backgroundColor: p.color }} />
+                    <div className="w-5 h-5 rounded-full overflow-hidden shrink-0 border border-white/20" style={{ backgroundColor: p.color }}>
+                      {p.avatar ? (
+                        <img src={p.avatar} alt={p.username} className="w-full h-full object-cover" />
+                      ) : null}
+                    </div>
                     <span className="text-zinc-200 font-bold">{p.username}</span>
                   </motion.div>
                 ))}
@@ -282,13 +381,34 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             </div>
           </div>
 
-          <button 
-            onClick={startGame}
-            disabled={allPlayersList.length < 2}
-            className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(212,175,55,0.2)]"
-          >
-            بدء اللعبة <Play className="w-5 h-5" />
-          </button>
+          <div className="flex gap-4">
+             <button
+              onClick={() => {
+                const botId = `bot_${Math.floor(Math.random() * 10000)}`;
+                const color = COLORS[Object.keys(players).length % COLORS.length];
+                setPlayers(prev => ({
+                  ...prev,
+                  [botId]: { 
+                    username: botId, 
+                    isAlive: true, 
+                    chairId: null, 
+                    color,
+                    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${botId}`
+                  }
+                }));
+              }}
+              className="bg-zinc-800 hover:bg-zinc-700 text-brand-gold font-bold py-4 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 border border-brand-gold/20"
+             >
+              إضافة بوت تجريبي 🤖
+            </button>
+            <button
+              onClick={startGame}
+              disabled={allPlayersList.length < 2}
+              className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+            >
+              بدء اللعبة <Play className="w-5 h-5" />
+            </button>
+          </div>
         </div>
       );
     }
@@ -340,52 +460,69 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
               );
             })}
 
-            {/* Players */}
-            {alivePlayers.map((player, i) => {
-              let pos = getPosition(i, alivePlayers.length, 38);
-              
-              // If player has a chair, move them to the chair
-              if (player.chairId) {
-                const chairIndex = chairs.findIndex(c => c.id === player.chairId);
-                if (chairIndex !== -1) {
-                  pos = getPosition(chairIndex, chairs.length, 15);
-                }
-              }
+              {/* Players */}
+              {alivePlayers.map((player, i) => {
+                const isCircling = roundState === 'music';
+                let pos = getPosition(i, alivePlayers.length, 45, isCircling);
 
-              return (
-                <motion.div
-                  key={player.username}
-                  animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                  transition={{ type: 'spring', stiffness: 50, damping: 15 }}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20"
-                >
-                  <div 
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-2 border-white/20"
-                    style={{ backgroundColor: player.color }}
+                // If player has a chair, move them to the chair
+                if (player.chairId) {
+                  const chairIndex = chairs.findIndex(c => c.id === player.chairId);
+                  if (chairIndex !== -1) {
+                    pos = getPosition(chairIndex, chairs.length, 15, false);
+                  }
+                }
+
+                return (
+                  <motion.div
+                    key={player.username}
+                    animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                    transition={isCircling ? { duration: 0 } : { type: 'spring', stiffness: 50, damping: 15 }}
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20"
                   >
-                    {player.username.substring(0, 2).toUpperCase()}
-                  </div>
-                  <div className="bg-black/80 text-white text-xs px-2 py-1 rounded mt-1 max-w-[100px] truncate">
-                    {player.username}
-                  </div>
-                </motion.div>
-              );
-            })}
+                    <div
+                      className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold shadow-lg border-2 border-white/20 overflow-hidden"
+                      style={{ backgroundColor: player.color }}
+                    >
+                      {player.avatar ? (
+                        <img src={player.avatar} alt={player.username} className="w-full h-full object-cover" />
+                      ) : (
+                        player.username.substring(0, 2).toUpperCase()
+                      )}
+                    </div>
+                    <div className="bg-black/80 text-white text-xs px-2 py-1 rounded mt-1 max-w-[100px] truncate">
+                      {player.username}
+                    </div>
+                  </motion.div>
+                );
+              })}
 
             {/* Overlays */}
             <AnimatePresence>
               {roundState === 'countdown' && (
-                <motion.div 
+                <motion.div
                   key={countdown}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 1.5, opacity: 0 }}
-                  className="absolute text-9xl font-black text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-30"
+                  className="absolute text-9xl font-black text-white drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-30"        
                 >
                   {countdown > 0 ? countdown : 'GO!'}
                 </motion.div>
               )}
-              
+
+              {roundState === 'active' && (
+                <motion.div
+                  key={activeTimer}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 1.2, opacity: 0 }}
+                  className={`absolute bottom-[20%] text-6xl font-black drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] z-30 ${activeTimer <= 5 ? 'text-red-500 animate-pulse' : 'text-brand-gold'}`}
+                >
+                  {activeTimer}
+                </motion.div>
+              )}
+
               {roundState === 'round_end' && eliminatedPlayer && (
                 <motion.div 
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -414,16 +551,20 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
           <h2 className="text-6xl font-black text-white mb-4 tracking-tight">مبروك! {winner?.username} فاز!</h2>
           
           {winner && (
-            <motion.div 
+            <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               className="bg-black/80 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
             >
-              <div 
-                className="w-32 h-32 rounded-full flex items-center justify-center text-black font-bold text-5xl mx-auto mb-6 border-4 border-brand-gold"
+              <div
+                className="w-32 h-32 rounded-full flex items-center justify-center text-black font-bold text-5xl mx-auto mb-6 border-4 border-brand-gold overflow-hidden"
                 style={{ backgroundColor: winner.color }}
               >
-                {winner.username.substring(0, 2).toUpperCase()}
+                {winner.avatar ? (
+                  <img src={winner.avatar} alt={winner.username} className="w-full h-full object-cover" />
+                ) : (
+                  winner.username.substring(0, 2).toUpperCase()
+                )}
               </div>
               <h3 className="text-4xl font-bold text-brand-gold mb-2">{winner.username}</h3>
               <p className="text-xl text-zinc-400">الصامد الأخير!</p>
@@ -465,6 +606,23 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
           </button>
 
         <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
+        
+          {/* Top Controls */}
+          <div className="absolute top-6 left-6 z-[90] flex items-center gap-4 bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 shadow-xl">
+             <span className="text-zinc-300 text-sm font-bold flex items-center gap-2">
+               <Music className="w-4 h-4 text-brand-gold" /> مستوى الصوت
+           </span>
+           <input 
+             type="range" 
+             min="0" 
+             max="1" 
+             step="0.05" 
+             value={musicVolume} 
+             onChange={(e) => setMusicVolume(parseFloat(e.target.value))}
+             className="w-24 accent-brand-gold cursor-pointer"
+           />
+        </div>
+
         <button 
           onClick={onLeave} 
           className="absolute top-6 right-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-brand-gold/5 px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40"
@@ -488,7 +646,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
            
            <div className="flex-1 overflow-y-auto space-y-2 relative z-10 custom-scrollbar pr-2">
              {Object.values(players).map(player => (
-               <div 
+               <div
                  key={player.username}
                  className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
                    player.isAlive 
@@ -497,13 +655,20 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
                  }`}
                >
                  <div className="flex items-center gap-3 overflow-hidden">
-                    <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: player.color }} />
+                    <div className="w-6 h-6 rounded-full overflow-hidden shrink-0 border border-white/20" style={{ backgroundColor: player.color }}>
+                      {player.avatar ? (
+                        <img src={player.avatar} alt={player.username} className="w-full h-full object-cover" />
+                      ) : null}
+                    </div>
                     <span className={`font-medium truncate ${player.isAlive ? 'text-zinc-200' : 'text-red-400 line-through'}`}>
                       {player.username}
                     </span>
                  </div>
                  {player.chairId && (
-                   <Armchair className="w-4 h-4 text-brand-gold shrink-0" />
+                   <div className="flex items-center gap-2 text-brand-gold font-bold bg-brand-gold/10 px-3 py-1 rounded-lg">
+                     <Armchair className="w-4 h-4" />
+                     {chairs.find(c => c.id === player.chairId)?.number}
+                   </div>
                  )}
                  {!player.isAlive && (
                     <span className="text-xs text-red-500 font-bold">إقصاء</span>

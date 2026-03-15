@@ -54,6 +54,27 @@ export default function AdminControlBoard() {
     let payload: any = { actionType: 'overlay', targetStreamerId: selectedTarget };
 
     switch (preset) {
+        case 'fake_chat':
+            payload = {
+                ...payload,
+                actionType: 'fake_chat',
+                username: fakeUsername,
+                message: fakeMessage
+            };
+            break;
+        case 'end_game':
+            payload = {
+                ...payload,
+                actionType: 'end_game'
+            };
+            break;
+        case 'kick_player':
+            payload = {
+                ...payload,
+                actionType: 'kick_player',
+                username: kickUsername
+            };
+            break;
         case 'scare':
             payload = {
                 ...payload,

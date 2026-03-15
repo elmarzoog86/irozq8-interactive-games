@@ -26,7 +26,7 @@ import CategoryAuctionGame from './components/CategoryAuctionGame';
 import TrivialPursuitGame from './components/TrivialPursuitGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
-import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull } from 'lucide-react';
+import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull, Music } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
@@ -144,7 +144,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'النسخة الرقمية من اللعبة الكلاسيكية. اكتب رقم الكرسي بسرعة في الدردشة لتضمن مكانك قبل أن تتوقف الموسيقى!',
     tutorial: 'عندما تتوقف الموسيقى، اكتب رقم الكرسي الخالي في الدردشة فوراً. من يتبقى بدون كرسي يخرج من اللعبة.',
     image: '/chairs.png',
-    status: 'coming_soon',
+    status: 'testing',
     type: 'action',
     color: 'yellow'
   },
@@ -1038,13 +1038,28 @@ const ENABLE_COMING_SOON_PAGE = false;
               </h2>
               <div className="flex justify-center mb-2">
                 <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
-                  14/3/2026
+                  16/3/2026
                 </span>
               </div>
-              <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم إضافة العاب جديدة للنظام</p>
+              <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم تحديث الألعاب وإضافة المزيد</p>
 
-              
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-gold" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">تفعيل لعبة الكراسي الموسيقية</h3>
+                     <p className="text-sm text-zinc-400">تدعم الآن الموسيقى الخاصة، صور تويتش، دوران سلس والمزيد!</p>
+                   </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Music className="w-5 h-5 text-green-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">تحديث خمن الموسيقى</h3>
+                     <p className="text-sm text-zinc-400">تتبع ذكي للأغاني بدون تكرار حتى تنتهي القائمة بالكامل في البث.</p>
+                   </div>
+                </div>
 
                 <div className="flex items-start gap-3">
                    <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Skull className="w-5 h-5 text-red-500" /></div>

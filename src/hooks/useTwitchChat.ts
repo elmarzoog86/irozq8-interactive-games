@@ -32,9 +32,25 @@ export function useTwitchChat({ channelName, accessToken }: UseTwitchChatProps) 
     client.on('message', (channel, tags, message, self) => {
       if (self) return;
 
+      const username = tags['display-name'] || tags.username || 'unknown';
+      const lowercaseUsername = username.toLowerCase();
+
+      // Broadcaster or Mod can type !kick username to drop them cleanly during the stream
+      if ((tags.badges?.broadcaster || tags.mod) && message.toLowerCase().startsWith('!kick ')) {
+         const target = message.split(' ')[1]?.replace('@', '').toLowerCase();
+         if (target) {
+            bannedUsersRef.current.add(target);
+            return; // Don't show the setup command
+         }
+      }
+
+      if (bannedUsersRef.current.has(lowercaseUsername)) {
+        return; // Target is banned, drop message entirely
+      }
+
       const newMessage: ChatMessage = {
         id: tags.id || Math.random().toString(36).substring(2, 15),
-        username: tags['display-name'] || tags.username || 'unknown',
+        username: username,
         message: message,
         timestamp: Date.now(),
         color: tags.color || '#818cf8',
