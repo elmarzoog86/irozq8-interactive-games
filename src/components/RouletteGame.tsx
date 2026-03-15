@@ -177,9 +177,11 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     } else {
       // Shoot (Russian Roulette) Animation
       setGameState('shooting');
-      
-      const isBullet = Math.random() < (1 / 6); // Exactly 1 in 6 chance
-      
+
+      // Chance gets higher the more shots they survive. If they survived 5 shots, remaining chambers is 1, so 1/1 = 100% chance.
+      const remainingChambers = Math.max(1, 6 - selectedTarget.survivedShots);
+      const isBullet = Math.random() < (1 / remainingChambers);
+
       setTimeout(() => {
         if (isBullet) {
            setResultMsg(`💥 بوم! الرصاصة أصابت ${selectedTarget.username} وتم إقصاؤه!`);
