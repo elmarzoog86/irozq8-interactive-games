@@ -86,6 +86,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
   const [testMessageText, setTestMessageText] = useState('');
 
   const processedMsgRef = useRef<Set<string>>(new Set());
+  const pastActorsRef = useRef<number[]>([]);
 
   // Auto-join from chat or handle decision
   useEffect(() => {
@@ -110,8 +111,8 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
       if (match) {
         const num = parseInt(match[0]);
         const selected = players.find(p => p.id === num);
-        if (selected) {
-           handleAction(selected);
+        if (selected && selected.id !== actor.id) {
+          handleAction(selected);
         }
       }
     }
@@ -144,8 +145,24 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     const alivePlayers = players.filter(p => p.status === 'alive');
     if (alivePlayers.length <= 1) return;
 
-    const winnerIndex = Math.floor(Math.random() * alivePlayers.length);
-    const chosenActor = alivePlayers[winnerIndex];
+    let winnerIndex = Math.floor(Math.random() * alivePlayers.length);
+    let chosenActor = alivePlayers[winnerIndex];
+
+    let maxAttempts = 10;
+    while (
+      pastActorsRef.current.length >= 2 &&
+      pastActorsRef.current[0] === chosenActor.id &&
+      pastActorsRef.current[1] === chosenActor.id &&
+      maxAttempts > 0 &&
+      alivePlayers.length > 2
+    ) {
+      winnerIndex = Math.floor(Math.random() * alivePlayers.length);
+      chosenActor = alivePlayers[winnerIndex];
+      maxAttempts--;
+    }
+
+    pastActorsRef.current = [chosenActor.id, pastActorsRef.current[0]].filter((x): x is number => x !== undefined);
+
     setActor(chosenActor);
 
     const sliceAngle = 360 / alivePlayers.length;
