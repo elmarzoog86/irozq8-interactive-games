@@ -15,10 +15,12 @@ interface TwitchChatProps {
 }
 
 export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, isConnected, error }) => {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -35,7 +37,7 @@ export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, i
         <span className="text-[10px] text-brand-gold/50 font-black uppercase tracking-widest" dir="ltr">#{channelName}</span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
+      <div ref={containerRef} className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar scroll-smooth">
         {error && (
           <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-xs font-bold">
             {error}
@@ -57,7 +59,6 @@ export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, i
             <div className="text-white font-medium leading-relaxed break-words break-all min-w-0 flex-1">{msg.message}</div>
           </div>
         ))}
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );
