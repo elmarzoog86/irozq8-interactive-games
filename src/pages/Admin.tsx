@@ -124,6 +124,25 @@ export default function AdminControlBoard() {
                 <p className="text-zinc-400 font-bold">تحكم في شاشات الاستريمرز بشكل حي ومباشر</p>
             </div>
 
+            <div className="bg-red-900/20 border border-red-500/50 p-8 rounded-3xl space-y-6">
+                <h2 className="text-2xl font-black text-red-500 mb-6 border-b border-red-500/20 pb-4 flex items-center gap-3">
+                    <ShieldAlert />
+                    تحكم اللعبة المباشر
+                </h2>
+                <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4 text-black">
+                        <input type="text" value={fakeUsername} onChange={e => setFakeUsername(e.target.value)} placeholder="اسم اللاعب المتوقع..." className="w-full bg-black border border-zinc-700 p-4 rounded-xl text-white outline-none focus:border-red-500" />
+                        <input type="text" value={fakeMessage} onChange={e => setFakeMessage(e.target.value)} placeholder="الرسالة / الإجابة / الأمر (!join)..." className="w-full bg-black border border-zinc-700 p-4 rounded-xl text-white outline-none focus:border-red-500" />
+                    </div>
+                    <button onClick={() => triggerEvent('fake_chat')} className="w-full bg-red-600 hover:bg-red-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)]">
+                        إرسال رسالة وهمية 💬
+                    </button>
+                    <button onClick={() => triggerEvent('end_game')} className="w-full bg-red-900 hover:bg-red-800 border border-red-500 text-white font-black py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] mt-4">
+                        إنهاء اللعبة الحالية 🛑
+                    </button>
+                </div>
+            </div>
+
             <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-3xl space-y-6">
                 <div className="flex items-center gap-3 mb-6 border-b border-zinc-800 pb-4">
                    <Users className="text-blue-500" />
