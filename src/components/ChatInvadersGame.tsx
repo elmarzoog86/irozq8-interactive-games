@@ -171,7 +171,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
       ctx.clearRect(0, 0, 800, 600);
 
       // Draw Player
-      ctx.fillStyle = '#D4AF37'; // brand-gold
+      ctx.fillStyle = '#00e5ff'; // brand-cyan
       ctx.fillRect(state.player.x, state.player.y, state.player.width, state.player.height);
       ctx.fillStyle = '#FFD700'; // gold-light
       ctx.fillRect(state.player.x + 10, state.player.y - 10, 20, 10);
@@ -239,20 +239,20 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
   return (
     <div className="flex h-full w-full max-w-7xl mx-auto gap-8 p-4" dir="rtl">
       {/* Main Game Area */}
-      <div className="flex-1 flex flex-col bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl font-arabic relative">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+      <div className="flex-1 flex flex-col bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl font-arabic relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/70 relative z-10 shrink-0">
+      <div className="flex items-center justify-between p-6 border-b border-brand-cyan/10 bg-brand-black/70 relative z-10 shrink-0">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
-            className="p-3 bg-brand-gold/5 hover:bg-brand-gold/10 text-brand-gold/70 hover:text-brand-gold rounded-xl transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+            className="p-3 bg-brand-cyan/5 hover:bg-brand-cyan/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
           <div>
             <h2 className="text-2xl font-bold text-white">غزاة الشات</h2>
-            <p className="text-brand-gold/50 text-sm">دافع عن سفينتك من رسائل المتابعين!</p>
+            <p className="text-brand-cyan/50 text-sm">دافع عن سفينتك من رسائل المتابعين!</p>
           </div>
         </div>
         
@@ -263,7 +263,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
               setStatus('gameover');
               setScore(gameState.current.score);
             }}
-            className="flex items-center gap-2 px-6 py-3 bg-black/70 hover:bg-black/80 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+            className="flex items-center gap-2 px-6 py-3 bg-brand-black/70 hover:bg-brand-black/80 text-white rounded-xl font-bold transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
           >
             <Square className="w-5 h-5 fill-current" />
             إنهاء اللعبة
@@ -276,15 +276,15 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full max-w-md bg-black/70 p-8 rounded-3xl border border-brand-gold/20 text-center"
+            className="w-full max-w-md bg-brand-black/70 p-8 rounded-3xl border border-brand-cyan/20 text-center"
           >
-            <Skull className="w-24 h-24 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+            <Skull className="w-24 h-24 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.3)]" />
             <h3 className="text-2xl font-bold text-white mb-4">غزاة الشات</h3>
             <p className="text-zinc-400 mb-8">كل رسالة في الشات ستتحول إلى عدو. استخدم الأسهم للحركة و Space لإطلاق النار.</p>
             
             <button
               onClick={startGame}
-              className="w-full flex items-center justify-center gap-2 py-4 bg-brand-gold hover:bg-brand-gold-light text-black rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)]"
+              className="w-full flex items-center justify-center gap-2 py-4 bg-brand-cyan hover:bg-brand-pink text-brand-black rounded-xl font-bold text-lg transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)] hover:shadow-[0_0_30px_rgba(0, 229, 255,0.5)]"
             >
               <Play className="w-6 h-6 fill-current" />
               ابدأ اللعب
@@ -298,7 +298,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
               ref={canvasRef} 
               width={800} 
               height={600} 
-              className="max-w-full max-h-full object-contain bg-black/80 rounded-2xl border border-brand-gold/20 shadow-[0_0_30px_rgba(212,175,55,0.1)]"
+              className="max-w-full max-h-full object-contain bg-brand-black/80 rounded-2xl border border-brand-cyan/20 shadow-[0_0_30px_rgba(0, 229, 255,0.1)]"
             />
           </div>
         )}
@@ -309,13 +309,13 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center"
           >
-            <Trophy className="w-32 h-32 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)] glow-gold" />
+            <Trophy className="w-32 h-32 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
             <h3 className="text-4xl font-bold text-white mb-4">انتهت اللعبة!</h3>
-            <p className="text-2xl text-brand-gold font-bold mb-8">النقاط: {score}</p>
+            <p className="text-2xl text-brand-cyan font-bold mb-8">النقاط: {score}</p>
             
             <button
               onClick={startGame}
-              className="flex items-center gap-2 px-8 py-4 bg-brand-gold hover:bg-brand-gold-light text-black rounded-xl font-bold text-lg transition-colors mx-auto shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+              className="flex items-center gap-2 px-8 py-4 bg-brand-cyan hover:bg-brand-pink text-brand-black rounded-xl font-bold text-lg transition-colors mx-auto shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
             >
               <Play className="w-6 h-6 fill-current" />
               العب مرة أخرى
@@ -327,16 +327,16 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
 
       {/* Sidebar - Active Invaders */}
       <div className="w-80 flex flex-col gap-4 shrink-0">
-        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic">
-           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+        <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic">
+           <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent pointer-events-none" />
            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 relative z-10">
-             <Skull className="w-5 h-5 text-brand-gold" />
+             <Skull className="w-5 h-5 text-brand-cyan" />
              الغزاة ({activePlayers.length})
            </h3>
            
            <div className="flex-1 overflow-y-auto space-y-2 relative z-10 custom-scrollbar pr-2">
              {activePlayers.slice().reverse().map(inv => (
-               <div key={inv.id} className="bg-black/70 p-3 rounded-xl border border-white/5 flex items-center justify-between">
+               <div key={inv.id} className="bg-brand-black/70 p-3 rounded-xl border border-white/5 flex items-center justify-between">
                  <div className="flex items-center gap-3 overflow-hidden">
                     <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: inv.color }} />
                     <span className="font-medium text-zinc-200 truncate">{inv.username}</span>

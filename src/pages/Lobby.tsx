@@ -9,21 +9,21 @@ export function Lobby() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-brand-black text-white font-sans flex flex-col relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-900 to-black opacity-80" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-yellow-600/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-black via-zinc-900 to-brand-black opacity-80" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl" />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-cyan-500/20 bg-brand-black/50 ">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center border border-yellow-500/50 glow-gold">
-            <Gamepad2 className="w-6 h-6 text-yellow-500" />
+          <div className="w-10 h-10 bg-cyan-500/20 rounded-xl flex items-center justify-center border border-cyan-500/50 glow-cyan">
+            <Gamepad2 className="w-6 h-6 text-cyan-500" />
           </div>
-          <h1 className="text-2xl font-bold font-arabic tracking-wider text-yellow-500 glow-gold-text">
+          <h1 className="text-2xl font-bold font-arabic tracking-wider text-cyan-500 glow-cyan-text">
             iRozQ8
           </h1>
         </div>
@@ -31,11 +31,11 @@ export function Lobby() {
         <div>
           {isAuthenticated && user ? (
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3 bg-zinc-900/80 px-4 py-2 rounded-full border border-yellow-500/30">
+              <div className="flex items-center gap-3 bg-zinc-900/80 px-4 py-2 rounded-full border border-cyan-500/30">
                 <img 
                   src={user.profile_image_url} 
                   alt={user.display_name} 
-                  className="w-8 h-8 rounded-full border border-yellow-500/50"
+                  className="w-8 h-8 rounded-full border border-cyan-500/50"
                 />
                 <span className="font-medium text-zinc-200">{user.display_name}</span>
               </div>
@@ -68,7 +68,7 @@ export function Lobby() {
           className="max-w-3xl"
         >
           <h2 className="text-5xl md:text-7xl font-bold font-arabic mb-6 text-white tracking-tight">
-            منصة الألعاب <span className="text-yellow-500 glow-gold-text">التفاعلية</span>
+            منصة الألعاب <span className="text-cyan-500 glow-cyan-text">التفاعلية</span>
           </h2>
           <p className="text-xl text-zinc-400 mb-12 font-arabic max-w-2xl mx-auto leading-relaxed">
             العب مع متابعينك بث مباشر، ألعاب تفاعلية، وتحديات ممتعة تزيد من تفاعل البث الخاص بك.
@@ -79,13 +79,13 @@ export function Lobby() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/games')}
-              className="bg-yellow-500 hover:bg-yellow-400 text-black px-10 py-4 rounded-full font-bold text-xl transition-all glow-gold flex items-center gap-3 mx-auto"
+              className="bg-cyan-500 hover:bg-cyan-400 text-brand-black px-10 py-4 rounded-full font-bold text-xl transition-all glow-cyan flex items-center gap-3 mx-auto"
             >
               <Gamepad2 className="w-6 h-6" />
               تصفح الألعاب
             </motion.button>
           ) : (
-            <div className="p-6 bg-zinc-900/50 border border-yellow-500/20 rounded-2xl max-w-md mx-auto ">
+            <div className="p-6 bg-zinc-900/50 border border-cyan-500/20 rounded-2xl max-w-md mx-auto ">
               <p className="text-zinc-300 mb-4 font-arabic">
                 قم بتسجيل الدخول باستخدام حساب تويتش للبدء
               </p>

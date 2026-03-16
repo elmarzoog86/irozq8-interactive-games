@@ -281,20 +281,20 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
     .sort(([, a], [, b]) => b - a);
 
   return (
-    <div className="flex flex-col h-full max-w-6xl mx-auto bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl font-arabic" dir="rtl">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+    <div className="flex flex-col h-full max-w-6xl mx-auto bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl font-arabic" dir="rtl">
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent pointer-events-none" />
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-brand-gold/10 bg-black/70 relative z-10">
+      <div className="flex items-center justify-between p-6 border-b border-brand-cyan/10 bg-brand-black/70 relative z-10">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
-            className="p-3 bg-brand-gold/5 hover:bg-brand-gold/10 text-brand-gold/70 hover:text-brand-gold rounded-xl transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+            className="p-3 bg-brand-cyan/5 hover:bg-brand-cyan/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
           <div>
             <h2 className="text-2xl font-bold text-white">خمن السعر</h2>
-            <p className="text-brand-gold/50 text-sm">أقرب تخمين للسعر الحقيقي بدون تجاوزه يفوز!</p>
+            <p className="text-brand-cyan/50 text-sm">أقرب تخمين للسعر الحقيقي بدون تجاوزه يفوز!</p>
           </div>
         </div>
         
@@ -305,13 +305,13 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
             </div>
             {status === 'guessing' && (
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 bg-brand-gold/20 text-brand-gold px-6 py-3 rounded-xl font-bold text-xl border border-brand-gold/30">
+                <div className="flex items-center gap-2 bg-brand-cyan/20 text-brand-cyan px-6 py-3 rounded-xl font-bold text-xl border border-brand-cyan/30">
                   <Timer className="w-6 h-6" />
                   {timeLeft} ثانية
                 </div>
                 <button
                   onClick={revealPrice}
-                  className="flex items-center gap-2 px-6 py-3 bg-black/70 hover:bg-black/80 text-white rounded-xl font-bold transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+                  className="flex items-center gap-2 px-6 py-3 bg-brand-black/70 hover:bg-brand-black/80 text-white rounded-xl font-bold transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
                 >
                   <Square className="w-5 h-5 fill-current" />
                   إنهاء التخمين
@@ -329,7 +329,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="w-full max-w-md bg-black/70 p-12 rounded-3xl border border-brand-gold/20 text-center relative overflow-hidden shadow-2xl"
+              className="w-full max-w-md bg-brand-black/70 p-12 rounded-3xl border border-brand-cyan/20 text-center relative overflow-hidden shadow-2xl"
             >
               {/* Game Show Background Decoration */}
               <div className="absolute inset-0 opacity-10 z-0 pointer-events-none">
@@ -344,9 +344,9 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
               </div>
 
               <div className="relative z-10">
-                <DollarSign className="w-32 h-32 text-brand-gold mx-auto mb-8 drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+                <DollarSign className="w-32 h-32 text-brand-cyan mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.3)]" />
                 <h3 className="text-3xl font-bold text-white mb-4">لعبة خمن السعر</h3>
-                <p className="text-zinc-400 mb-8 text-lg">سيتم اختيار منتج عشوائي عند البدء. اطلب من المتابعين كتابة <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 py-1 rounded-lg border border-brand-gold/20">!join</span> للمشاركة.</p>
+                <p className="text-zinc-400 mb-8 text-lg">سيتم اختيار منتج عشوائي عند البدء. اطلب من المتابعين كتابة <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 py-1 rounded-lg border border-brand-cyan/20">!join</span> للمشاركة.</p>
                 
                 <div className="mb-10 text-right">
                   <label className="block text-zinc-400 mb-3 font-bold">عدد الجولات</label>
@@ -357,8 +357,8 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                         onClick={() => setTotalRounds(num)}
                         className={`flex-1 py-3 rounded-xl font-bold border transition-all ${
                           totalRounds === num 
-                          ? 'bg-brand-gold border-brand-gold text-black shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
-                          : 'bg-black/70 border-brand-gold/20 text-brand-gold/70 hover:bg-brand-gold/10 hover:border-brand-gold/40'
+                          ? 'bg-brand-cyan border-brand-cyan text-brand-black shadow-[0_0_15px_rgba(0, 229, 255,0.4)]' 
+                          : 'bg-brand-black/70 border-brand-cyan/20 text-brand-cyan/70 hover:bg-brand-cyan/10 hover:border-brand-cyan/40'
                         }`}
                       >
                         {num}
@@ -369,7 +369,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
                 <button
                   onClick={startGame}
-                  className="w-full flex items-center justify-center gap-3 py-6 bg-brand-gold hover:bg-brand-gold-light text-black rounded-2xl font-bold text-2xl transition-all shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_40px_rgba(212,175,55,0.6)] active:scale-95"
+                  className="w-full flex items-center justify-center gap-3 py-6 bg-brand-cyan hover:bg-brand-pink text-brand-black rounded-2xl font-bold text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_40px_rgba(0, 229, 255,0.6)] active:scale-95"
                 >
                   <Play className="w-8 h-8 fill-current" />
                   ابدأ اللعبة
@@ -380,34 +380,34 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
           {(status === 'guessing' || status === 'revealed') && (
             <div className="flex flex-col items-center w-full max-w-2xl">
-              <div className="w-full bg-black/70 border border-brand-gold/20 rounded-3xl p-8 mb-8 text-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-brand-gold/10 to-transparent z-0" />
+              <div className="w-full bg-brand-black/70 border border-brand-cyan/20 rounded-3xl p-8 mb-8 text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/10 to-transparent z-0" />
                 <div className="relative z-10">
                   {item.imageUrl ? (
                     <img
                       src={item.imageUrl}
                       alt={`${item.nameAr} - ${item.name}`}
                       onError={handleImageError}
-                      className="w-64 h-64 object-contain mx-auto mb-6 rounded-2xl bg-black/70 p-4 shadow-2xl border border-brand-gold/20"
+                      className="w-64 h-64 object-contain mx-auto mb-6 rounded-2xl bg-brand-black/70 p-4 shadow-2xl border border-brand-cyan/20"
                     />
                   ) : (
-                    <div className="w-64 h-64 mx-auto mb-6 rounded-2xl bg-black/70 border border-brand-gold/20 flex items-center justify-center">
-                      <ImageIcon className="w-24 h-24 text-brand-gold/50" />
+                    <div className="w-64 h-64 mx-auto mb-6 rounded-2xl bg-brand-black/70 border border-brand-cyan/20 flex items-center justify-center">
+                      <ImageIcon className="w-24 h-24 text-brand-cyan/50" />
                     </div>
                   )}
                   <h3 className="text-4xl font-bold text-white mb-2">{item.nameAr}</h3>
                   <p className="text-base text-zinc-400 mb-4" dir="ltr">{item.name}</p>
-                  <p className="text-xl text-zinc-400 mb-4">اكتب <span className="text-brand-gold font-bold bg-brand-gold/10 px-2 py-1 rounded-lg border border-brand-gold/20">!join</span> للمشاركة، ثم خمن السعر!</p>
+                  <p className="text-xl text-zinc-400 mb-4">اكتب <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 py-1 rounded-lg border border-brand-cyan/20">!join</span> للمشاركة، ثم خمن السعر!</p>
                   
                   {status === 'guessing' && (
-                    <div className="mt-8 bg-black/70 p-6 rounded-2xl border border-brand-gold/20 max-w-sm mx-auto">
+                    <div className="mt-8 bg-brand-black/70 p-6 rounded-2xl border border-brand-cyan/20 max-w-sm mx-auto">
                       <label className="block text-zinc-400 mb-2 text-sm font-bold uppercase tracking-wider">تخمينك (الستريمر)</label>
                       <div className="flex gap-2">
                         <input
                           type="password"
                           value={streamerGuess}
                           onChange={(e) => setStreamerGuess(e.target.value)}
-                          className="flex-1 bg-black/50 border border-brand-gold/30 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-brand-gold transition-colors text-center font-bold text-xl"
+                          className="flex-1 bg-brand-black/50 border border-brand-cyan/30 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-brand-cyan transition-colors text-center font-bold text-xl"
                           placeholder="أدخل تخمينك..."
                         />
                       </div>
@@ -419,11 +419,11 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                     <motion.div 
                       initial={{ scale: 0.5, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="inline-block bg-brand-gold/20 border border-brand-gold/50 rounded-2xl px-12 py-6 mt-4"
+                      className="inline-block bg-brand-cyan/20 border border-brand-cyan/50 rounded-2xl px-12 py-6 mt-4"
                     >
-                      <div className="text-brand-gold text-sm font-bold mb-2 uppercase tracking-wider">السعر الحقيقي</div>
-                      <div className="text-6xl font-bold text-white glow-gold-text flex items-center justify-center gap-2">
-                        <DollarSign className="w-12 h-12 text-brand-gold" />
+                      <div className="text-brand-cyan text-sm font-bold mb-2 uppercase tracking-wider">السعر الحقيقي</div>
+                      <div className="text-6xl font-bold text-white glow-cyan-text flex items-center justify-center gap-2">
+                        <DollarSign className="w-12 h-12 text-brand-cyan" />
                         {item.price}
                       </div>
                     </motion.div>
@@ -439,13 +439,13 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   className="w-full text-center"
                 >
                   {winner ? (
-                    <div className="bg-brand-gold/20 border border-brand-gold/50 rounded-3xl p-8 relative overflow-hidden">
+                    <div className="bg-brand-cyan/20 border border-brand-cyan/50 rounded-3xl p-8 relative overflow-hidden">
                       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay" />
-                      <Trophy className="w-20 h-20 text-brand-gold mx-auto mb-4 drop-shadow-[0_0_20px_rgba(212,175,55,0.5)] glow-gold" />
-                      <h4 className="text-2xl text-brand-gold font-bold mb-2">فائز الجولة</h4>
+                      <Trophy className="w-20 h-20 text-brand-cyan mx-auto mb-4 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.5)] glow-cyan" />
+                      <h4 className="text-2xl text-brand-cyan font-bold mb-2">فائز الجولة</h4>
                       <div className="text-5xl font-bold text-white mb-4">{winner.username}</div>
                       <div className="text-xl text-zinc-300">
-                        خمن: <span className="text-brand-gold font-bold mx-2">${winner.guess}</span>
+                        خمن: <span className="text-brand-cyan font-bold mx-2">${winner.guess}</span>
                         (الفرق: ${winner.diff})
                       </div>
                     </div>
@@ -458,7 +458,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
                   <button
                     onClick={nextRound}
-                    className="mt-8 flex items-center gap-2 px-12 py-5 bg-brand-gold hover:bg-brand-gold-light text-black rounded-2xl font-bold text-xl transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] mx-auto"
+                    className="mt-8 flex items-center gap-2 px-12 py-5 bg-brand-cyan hover:bg-brand-pink text-brand-black rounded-2xl font-bold text-xl transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)] mx-auto"
                   >
                     {currentRound < totalRounds ? 'الجولة التالية' : 'النتائج النهائية'}
                     <ArrowRight className="w-6 h-6 rotate-180" />
@@ -474,26 +474,26 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center w-full max-w-2xl"
             >
-              <Trophy className="w-32 h-32 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)] glow-gold" />
+              <Trophy className="w-32 h-32 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
               <h3 className="text-4xl font-bold text-white mb-8">انتهت اللعبة!</h3>
               
-              <div className="bg-black/70 border border-brand-gold/20 rounded-3xl p-8 mb-8">
+              <div className="bg-brand-black/70 border border-brand-cyan/20 rounded-3xl p-8 mb-8">
                 <h4 className="text-2xl font-bold text-zinc-400 mb-6 uppercase tracking-wider">الترتيب النهائي</h4>
                 <div className="space-y-4">
                   {finalScores.map(([username, score], index) => (
-                    <div key={username} className="flex items-center justify-between bg-black/70 p-4 rounded-xl border border-brand-gold/10">
+                    <div key={username} className="flex items-center justify-between bg-brand-black/70 p-4 rounded-xl border border-brand-cyan/10">
                       <div className="flex items-center gap-4">
                         <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-                          index === 0 ? 'bg-brand-gold text-black' :
-                          index === 1 ? 'bg-zinc-300 text-black' :
-                          index === 2 ? 'bg-amber-600 text-black' :
+                          index === 0 ? 'bg-brand-cyan text-brand-black' :
+                          index === 1 ? 'bg-zinc-300 text-brand-black' :
+                          index === 2 ? 'bg-cyan-600 text-brand-black' :
                           'bg-white/10 text-white'
                         }`}>
                           {index + 1}
                         </div>
                         <span className="text-xl font-bold text-white">{username}</span>
                       </div>
-                      <div className="text-2xl font-bold text-brand-gold">{score} فوز</div>
+                      <div className="text-2xl font-bold text-brand-cyan">{score} فوز</div>
                     </div>
                   ))}
                   {finalScores.length === 0 && (
@@ -504,7 +504,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
               <button
                 onClick={() => setStatus('setup')}
-                className="flex items-center gap-2 px-8 py-4 bg-brand-gold hover:bg-brand-gold-light text-black rounded-xl font-bold text-lg transition-colors mx-auto shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                className="flex items-center gap-2 px-8 py-4 bg-brand-cyan hover:bg-brand-pink text-brand-black rounded-xl font-bold text-lg transition-colors mx-auto shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
               >
                 <RotateCcw className="w-6 h-6" />
                 لعبة جديدة
@@ -514,10 +514,10 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
         </div>
 
         {/* Live Guesses Sidebar */}
-        <div className="w-80 bg-black/70 border-r border-brand-gold/10 p-6 flex flex-col relative z-10">
+        <div className="w-80 bg-brand-black/70 border-r border-brand-cyan/10 p-6 flex flex-col relative z-10">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <UserPlus className="w-6 h-6 text-brand-gold" />
+              <UserPlus className="w-6 h-6 text-brand-cyan" />
               <h3 className="text-xl font-bold text-white">المشاركون ({joinedPlayers.size})</h3>
             </div>
           </div>
@@ -529,13 +529,13 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-brand-gold/20 border border-brand-gold/50 rounded-xl p-4 flex items-center justify-between"
+                  className="bg-brand-cyan/20 border border-brand-cyan/50 rounded-xl p-4 flex items-center justify-between"
                 >
                   <div className="flex flex-col">
                     <span className="font-bold text-white">أنت (الستريمر)</span>
-                    <span className="text-xs text-brand-gold font-bold italic">تم التخمين (سري)</span>
+                    <span className="text-xs text-brand-cyan font-bold italic">تم التخمين (سري)</span>
                   </div>
-                  <div className="w-10 h-6 bg-brand-gold/30 rounded-md animate-pulse" />
+                  <div className="w-10 h-6 bg-brand-cyan/30 rounded-md animate-pulse" />
                 </motion.div>
               )}
 
@@ -551,21 +551,21 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       className={`border rounded-xl p-4 flex items-center justify-between transition-colors ${
-                        isWinner ? 'bg-brand-gold/20 border-brand-gold/50' :
-                        isStreamer ? 'bg-brand-gold/10 border-brand-gold/30' :
-                        'bg-black/70 border-brand-gold/10'
+                        isWinner ? 'bg-brand-cyan/20 border-brand-cyan/50' :
+                        isStreamer ? 'bg-brand-cyan/10 border-brand-cyan/30' :
+                        'bg-brand-black/70 border-brand-cyan/10'
                       }`}
                     >
                       <div className="flex flex-col">
                         <span className="font-bold text-white truncate max-w-[120px]">{username}</span>
-                        {isWinner && <span className="text-xs text-brand-gold font-bold">الفائز!</span>}
-                        {isStreamer && <span className="text-xs text-brand-gold font-bold">للعرض فقط</span>}
-                        {isGuessing && <span className="text-xs text-brand-gold font-bold italic">تم التخمين (سري)</span>}
+                        {isWinner && <span className="text-xs text-brand-cyan font-bold">الفائز!</span>}
+                        {isStreamer && <span className="text-xs text-brand-cyan font-bold">للعرض فقط</span>}
+                        {isGuessing && <span className="text-xs text-brand-cyan font-bold italic">تم التخمين (سري)</span>}
                       </div>
                       {isGuessing ? (
-                        <div className="w-10 h-6 bg-brand-gold/20 rounded-md animate-pulse" />
+                        <div className="w-10 h-6 bg-brand-cyan/20 rounded-md animate-pulse" />
                       ) : (
-                        <span className={`font-bold text-lg text-brand-gold`}>
+                        <span className={`font-bold text-lg text-brand-cyan`}>
                           ${guess}
                         </span>
                       )}
@@ -577,7 +577,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   key={username}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-black/70 border border-brand-gold/10 rounded-xl p-4 flex items-center justify-between opacity-60"
+                  className="bg-brand-black/70 border border-brand-cyan/10 rounded-xl p-4 flex items-center justify-between opacity-60"
                 >
                   <div className="flex items-center gap-2">
                     <User className="w-4 h-4 text-zinc-500" />
@@ -589,7 +589,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
               {joinedPlayers.size === 0 && !streamerGuess && (
                 <div className="text-center text-zinc-500 py-8">
-                  لا يوجد مشاركون بعد.<br/>اكتب <span className="text-brand-gold font-bold">!join</span> للمشاركة!
+                  لا يوجد مشاركون بعد.<br/>اكتب <span className="text-brand-cyan font-bold">!join</span> للمشاركة!
                 </div>
               )}
             </AnimatePresence>

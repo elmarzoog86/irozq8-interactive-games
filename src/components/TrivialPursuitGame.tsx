@@ -32,7 +32,7 @@ const CATEGORIES = [
   { id: 'history', name: 'التاريخ', color: 'bg-indigo-900/50 border-indigo-500/50', icon: Trophy, tokenColor: 'bg-indigo-500', iconColor: 'text-indigo-400' },
   { id: 'science', name: 'العلوم', color: 'bg-emerald-900/50 border-emerald-500/50', icon: Brain, tokenColor: 'bg-emerald-500', iconColor: 'text-emerald-400' },
   { id: 'sports', name: 'الرياضة', color: 'bg-rose-900/50 border-rose-500/50', icon: Medal, tokenColor: 'bg-rose-500', iconColor: 'text-rose-400' },
-  { id: 'entertainment', name: 'الترفيه', color: 'bg-amber-900/50 border-amber-500/50', icon: Rocket, tokenColor: 'bg-amber-500', iconColor: 'text-amber-400' },
+  { id: 'entertainment', name: 'الترفيه', color: 'bg-amber-900/50 border-cyan-500/50', icon: Rocket, tokenColor: 'bg-cyan-500', iconColor: 'text-cyan-400' },
 ];
 
 const BOARD_SIZE = 24;
@@ -191,7 +191,7 @@ const QUESTIONS: Record<string, {q: string, options: string[], a: number}[]> = {
 ]
 };
 
-const PLAYER_COLORS = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#ec4899', '#f97316', '#06b6d4', '#8b5cf6'];
+const PLAYER_COLORS = ['#ef4444', '#3b82f6', '#22c55e', '#00e5ff', '#ec4899', '#f97316', '#06b6d4', '#8b5cf6'];
 
 export default function TrivialPursuitGame({ channelName, messages, onLeave }: TrivialPursuitGameProps) {
   const [gameState, setGameState] = useState<'lobby' | 'turn_start' | 'rolling' | 'answering' | 'result' | 'stage2_intro' | 'stage2_playing' | 'stage2_result' | 'stage3_intro' | 'stage3_category_pick' | 'stage3_playing' | 'stage3_result' | 'stage4_intro' | 'stage4_playing' | 'stage4_result' | 'stage1_leaderboard' | 'stage2_leaderboard' | 'stage3_leaderboard' | 'stage4_leaderboard' | 'stage5_intro' | 'stage5_playing' | 'stage5_result' | 'game_over'>('lobby');
@@ -750,7 +750,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
     <div className="flex-1 flex flex-col items-center p-8 bg-[#0a0a0a] relative overflow-hidden h-full">
       <button
         onClick={onLeave}
-        className="absolute top-6 right-6 text-zinc-500 hover:text-brand-gold transition-colors flex items-center gap-2 font-bold bg-white/5 px-4 py-2 rounded-full z-50"
+        className="absolute top-6 right-6 text-zinc-500 hover:text-brand-cyan transition-colors flex items-center gap-2 font-bold bg-white/5 px-4 py-2 rounded-full z-50"
       >
         <ArrowRight className="w-5 h-5" />
         العودة للرئيسية
@@ -760,8 +760,8 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         
         {/* Left Sidebar: Players */}
         <div className="w-[320px] flex flex-col gap-3 shrink-0">
-          <div className="bg-brand-gold/10 border border-brand-gold/20 rounded-2xl p-4 mb-2">
-            <h2 className="text-xl font-bold text-brand-gold flex items-center justify-center gap-2">
+          <div className="bg-brand-cyan/10 border border-brand-cyan/20 rounded-2xl p-4 mb-2">
+            <h2 className="text-xl font-bold text-brand-cyan flex items-center justify-center gap-2">
               <Users className="w-5 h-5" />
               اللاعبين والميداليات
             </h2>
@@ -774,7 +774,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                 animate={{ scale: idx === currentPlayerIndex && gameState !== 'lobby' ? 1.03 : 1 }}
                 className={`bg-white/5 border rounded-2xl p-4 transition-all duration-300 ${
                   idx === currentPlayerIndex && gameState !== 'lobby' 
-                  ? 'border-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.2)] bg-gradient-to-br from-brand-gold/10 to-transparent' 
+                  ? 'border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.2)] bg-gradient-to-br from-brand-cyan/10 to-transparent' 
                   : 'border-white/10'
                 }`}
               >
@@ -800,7 +800,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                      <div 
                        key={cat.id} 
                        className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 overflow-hidden shadow-inner border border-white/10 ${
-                         p.tokens.includes(cat.id) ? cat.tokenColor : 'bg-black/80 opacity-40'
+                         p.tokens.includes(cat.id) ? cat.tokenColor : 'bg-brand-black/80 opacity-40'
                        }`}
                      >
                        <cat.icon className={`w-5 h-5 ${p.tokens.includes(cat.id) ? 'text-white' : 'text-zinc-600'}`} />
@@ -811,7 +811,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
             ))}
             
             {players.length === 0 && (
-              <div className="text-zinc-600 text-center mt-10">اكتب <span className="text-brand-gold">!join</span> للعب</div>
+              <div className="text-zinc-600 text-center mt-10">اكتب <span className="text-brand-cyan">!join</span> للعب</div>
             )}
           </div>
         </div>
@@ -821,14 +821,14 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
           
           {gameState === 'lobby' ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center">
-              <Brain className="w-32 h-32 text-brand-gold mb-6 opacity-80" />
-              <h1 className="text-5xl font-black text-white mb-4 tracking-tight">مسار <span className="text-brand-gold">المعرفة</span></h1>
+              <Brain className="w-32 h-32 text-brand-cyan mb-6 opacity-80" />
+              <h1 className="text-5xl font-black text-white mb-4 tracking-tight">مسار <span className="text-brand-cyan">المعرفة</span></h1>
               <p className="text-xl text-zinc-400 mb-8 max-w-md leading-relaxed">
                 لعبة لوحية هادئة بأسئلة ثقافية. اجمع 4 ميداليات من تصنيفات مختلفة لتفوز!
               </p>
               
-              <div className="bg-black/50 border border-brand-gold/30 rounded-2xl p-6 px-12 mb-8 inline-block shadow-2xl">
-                <p className="text-brand-gold text-sm font-bold mb-2 uppercase tracking-widest">للانضمام بالشات</p>
+              <div className="bg-brand-black/50 border border-brand-cyan/30 rounded-2xl p-6 px-12 mb-8 inline-block shadow-2xl">
+                <p className="text-brand-cyan text-sm font-bold mb-2 uppercase tracking-widest">للانضمام بالشات</p>
                 <div className="flex items-center gap-4">
                   <p className="text-3xl text-white font-mono">!join</p>
                 </div>
@@ -837,7 +837,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
               {players.length > 0 && (
                 <button
                   onClick={startGame}
-                  className="bg-brand-gold hover:bg-yellow-400 text-black px-10 py-4 rounded-xl font-bold flex items-center gap-3 text-xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(212,175,55,0.4)]"
+                  className="bg-brand-cyan hover:bg-cyan-400 text-brand-black px-10 py-4 rounded-xl font-bold flex items-center gap-3 text-xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(0, 229, 255,0.4)]"
                 >
                   <Play className="w-6 h-6" />
                   بدء اللعبة ({players.length})
@@ -846,17 +846,17 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
             </div>
           ) : gameState === 'game_over' ? (
             <div className="flex-1 flex flex-col items-center justify-center text-center">
-               <Trophy className="w-40 h-40 text-brand-gold mx-auto mb-6 drop-shadow-[0_0_30px_rgba(212,175,55,0.6)]" />
+               <Trophy className="w-40 h-40 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.6)]" />
                <h2 className="text-5xl font-bold text-white mb-2">انتهت اللعبة!</h2>
-               <p className="text-2xl text-brand-gold mb-8">الناجي الأخير والمنتصر باللعبة</p>
+               <p className="text-2xl text-brand-cyan mb-8">الناجي الأخير والمنتصر باللعبة</p>
                
-               <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-3xl p-8 mb-8">
+               <div className="bg-brand-cyan/10 border border-brand-cyan/30 rounded-3xl p-8 mb-8">
                  <p className="text-4xl font-black text-white">{players.find(p => !stage4Eliminated.includes(p.username))?.username || [...players].sort((a,b) => (b.score2 || 0) - (a.score2 || 0))[0]?.username || "لا أحد"}</p>
                </div>
 
                <button
                   onClick={() => setGameState('lobby')}
-                  className="bg-brand-gold/20 text-brand-gold border border-brand-gold hover:bg-brand-gold hover:text-black transition-all px-8 py-3 rounded-full font-bold text-lg"
+                  className="bg-brand-cyan/20 text-brand-cyan border border-brand-cyan hover:bg-brand-cyan hover:text-brand-black transition-all px-8 py-3 rounded-full font-bold text-lg"
                 >
                   العودة للوبي
                 </button>
@@ -864,10 +864,10 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
           ) : (
             <>
               {/* Active Player Status Header */}
-              <div className="flex items-center justify-between bg-black/60 rounded-2xl p-4 border border-white/10 mb-6 shrink-0 shadow-lg">
+              <div className="flex items-center justify-between bg-brand-black/60 rounded-2xl p-4 border border-white/10 mb-6 shrink-0 shadow-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.4)]" style={{ backgroundColor: players[currentPlayerIndex]?.color }}>
-                     <img src={players[currentPlayerIndex]?.avatar || `https://ui-avatars.com/api/?name=${players[currentPlayerIndex]?.username}&background=random`} alt="" className="w-full h-full object-cover bg-black" onError={(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${players[currentPlayerIndex]?.username}&background=random`; }} />
+                  <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.4)]" style={{ backgroundColor: players[currentPlayerIndex]?.color }}>
+                     <img src={players[currentPlayerIndex]?.avatar || `https://ui-avatars.com/api/?name=${players[currentPlayerIndex]?.username}&background=random`} alt="" className="w-full h-full object-cover bg-brand-black" onError={(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${players[currentPlayerIndex]?.username}&background=random`; }} />
                   </div>
                   <div>
                     <p className="text-zinc-400 text-sm mb-1">دور اللاعب</p>
@@ -877,7 +877,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
                 {(gameState === 'turn_start' || gameState === 'answering') && (
                   <div className="flex items-center gap-3 bg-white/5 px-6 py-3 rounded-xl border border-white/5 shadow-inner">
-                    <Timer className="w-6 h-6 text-brand-gold animate-pulse" />
+                    <Timer className="w-6 h-6 text-brand-cyan animate-pulse" />
                     <span className="text-2xl font-mono text-white min-w-[3ch] text-center">{timeLeft}</span>
                   </div>
                 )}
@@ -932,15 +932,15 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                           
                           {gameState === 'turn_start' && (
                             <motion.div key="roll_prompt" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="flex-1 flex flex-col items-center justify-center text-center p-8">
-                              <Dices className="w-16 h-16 text-brand-gold mx-auto mb-4 opacity-70" />
+                              <Dices className="w-16 h-16 text-brand-cyan mx-auto mb-4 opacity-70" />
                               <p className="text-zinc-400 mb-2">في انتظار رمي النرد...</p>
-                              <p className="text-white text-2xl font-bold">اكتب <span className="text-brand-gold bg-brand-gold/20 px-3 py-1 rounded-lg mx-2 border border-brand-gold/30">!roll</span> أو <span className="text-brand-gold bg-brand-gold/20 px-3 py-1 rounded-lg mx-2 border border-brand-gold/30">رول</span> بالشات</p>
+                              <p className="text-white text-2xl font-bold">اكتب <span className="text-brand-cyan bg-brand-cyan/20 px-3 py-1 rounded-lg mx-2 border border-brand-cyan/30">!roll</span> أو <span className="text-brand-cyan bg-brand-cyan/20 px-3 py-1 rounded-lg mx-2 border border-brand-cyan/30">رول</span> بالشات</p>
                             </motion.div>
                           )}
                           
                           {gameState === 'rolling' && (
                             <motion.div key="rolling" className="flex-1 flex items-center justify-center">
-                               <div className="w-32 h-32 bg-brand-gold/20 rounded-3xl flex items-center justify-center border-4 border-brand-gold shadow-[0_0_50px_rgba(212,175,55,0.4)] animate-bounce">
+                               <div className="w-32 h-32 bg-brand-cyan/20 rounded-3xl flex items-center justify-center border-4 border-brand-cyan shadow-[0_0_50px_rgba(0, 229, 255,0.4)] animate-bounce">
                                  <span className="text-7xl font-black text-white">{diceValue}</span>
                                </div>
                             </motion.div>
@@ -966,7 +966,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                                   <div className="grid grid-cols-2 gap-3 lg:gap-4 w-full px-2 sm:px-6"> {/* Multiple Choice Layout */}
                                     {currentQuestion.options.map((opt, idx) => (
                                        <div key={idx} className="bg-white/5 hover:bg-white/10 transition-colors border border-white/10 rounded-2xl p-4 flex gap-4 items-center text-right shadow-lg">
-                                          <div className="w-10 h-10 rounded-xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-2xl shrink-0 border border-brand-gold/30 shadow-inner">
+                                          <div className="w-10 h-10 rounded-xl bg-brand-cyan/20 text-brand-cyan flex items-center justify-center font-bold text-2xl shrink-0 border border-brand-cyan/30 shadow-inner">
                                             {idx + 1}
                                           </div>
                                           <span className="text-white font-bold leading-tight text-lg lg:text-xl">{opt}</span>
@@ -974,7 +974,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                                     ))}
                                   </div>
 
-                                  <p className="text-zinc-400 mt-8">اكتب <span className="text-brand-gold font-bold text-lg">رقم الإجابة</span> فقط في الشات المباشر (1 - 4)</p>
+                                  <p className="text-zinc-400 mt-8">اكتب <span className="text-brand-cyan font-bold text-lg">رقم الإجابة</span> فقط في الشات المباشر (1 - 4)</p>
                                </div>
                             </motion.div>
                           )}
@@ -983,7 +983,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             
                             {gameState === 'stage3_intro' && (
                               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a] z-50">
-                                <Users className="w-24 h-24 text-brand-gold mb-6 animate-bounce" />
+                                <Users className="w-24 h-24 text-brand-cyan mb-6 animate-bounce" />
                                 <h2 className="text-5xl font-black text-white mb-4">المرحلة الثالثة</h2>
                                 <p className="text-2xl text-zinc-300">يختار كل لاعب موضوع لـ 5 أسئلة، الإجابة الخاطئة تقصيك للروند القادم!</p>
                               </motion.div>
@@ -991,14 +991,14 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             
                             {gameState === 'stage3_category_pick' && (
                               <motion.div className="flex-1 flex flex-col items-center justify-center p-8 bg-[#0a0a0a] z-50">
-                                <h2 className="text-4xl font-black text-white mb-6">دور: <span className="text-brand-gold">{players[stage3ActivePlayerIndex]?.username}</span></h2>
+                                <h2 className="text-4xl font-black text-white mb-6">دور: <span className="text-brand-cyan">{players[stage3ActivePlayerIndex]?.username}</span></h2>
                                 <p className="text-zinc-400 mb-8 text-xl">اختر تصنيف عبر كتابة (1 - 3) في الشات</p>
                                 <div className="flex gap-6 max-w-2xl mx-auto w-full justify-center">
                                    {stage3Categories.map((catId, i) => {
                                       const cat = CATEGORIES.find(c => c.id === catId);
                                       return (
-                                        <div key={catId} className="bg-[#1a1a1a] p-8 rounded-3xl border-2 border-brand-gold/30 text-center flex-1">
-                                          <div className="w-16 h-16 mx-auto bg-brand-gold/20 rounded-full flex items-center justify-center text-brand-gold text-2xl font-bold mb-4">{i+1}</div>
+                                        <div key={catId} className="bg-[#1a1a1a] p-8 rounded-3xl border-2 border-brand-cyan/30 text-center flex-1">
+                                          <div className="w-16 h-16 mx-auto bg-brand-cyan/20 rounded-full flex items-center justify-center text-brand-cyan text-2xl font-bold mb-4">{i+1}</div>
                                           <div className="text-white font-bold text-2xl">{cat?.name}</div>
                                         </div>
                                       );
@@ -1010,14 +1010,14 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             {gameState === 'stage3_playing' && stage3Q && (
                                <motion.div className="flex-1 flex flex-col p-8 bg-[#0a0a0a] z-50">
                                  <div className="flex justify-between items-center mb-6">
-                                   <div className="bg-brand-gold/20 text-brand-gold px-4 py-2 rounded-xl font-bold">سؤال {stage3QuestionCount + 1}/5 (تصنيف: {CATEGORIES.find(c => c.id === stage3CurrentCategory)?.name})</div>
+                                   <div className="bg-brand-cyan/20 text-brand-cyan px-4 py-2 rounded-xl font-bold">سؤال {stage3QuestionCount + 1}/5 (تصنيف: {CATEGORIES.find(c => c.id === stage3CurrentCategory)?.name})</div>
                                    <div className="text-3xl font-mono text-white flex items-center gap-2"><Timer className="w-8 h-8 text-brand-red animate-pulse" /> {timeLeft}</div>
                                  </div>
                                  <h2 className="text-3xl font-bold text-white text-center mb-8 bg-white/5 p-6 rounded-2xl border border-white/10">{stage3Q.q}</h2>
                                  <div className="grid grid-cols-2 gap-4">
                                    {stage3Q.options.map((opt, i) => (
                                      <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-4 flex items-center gap-4">
-                                       <span className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl font-black text-brand-gold">{i + 1}</span>
+                                       <span className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl font-black text-brand-cyan">{i + 1}</span>
                                        <span className="text-xl text-white font-bold">{opt}</span>
                                      </div>
                                    ))}
@@ -1035,7 +1035,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             
                             {gameState === 'stage3_result' && (
                               <motion.div className="flex-1 flex flex-col items-center justify-center p-8 bg-[#0a0a0a] z-50 text-center">
-                                 <Trophy className="w-24 h-24 text-brand-gold mb-6" />
+                                 <Trophy className="w-24 h-24 text-brand-cyan mb-6" />
                                  <h2 className="text-4xl text-white font-black mb-4">انتهت الجولة!</h2>
                                  <p className="text-xl text-zinc-400">ينتقل الدور للاعب التالي لاختيار التصنيف...</p>
                               </motion.div>
@@ -1043,7 +1043,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
                             {gameState === 'stage4_intro' && (
                               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a] z-50">
-                                <Trophy className="w-32 h-32 text-brand-gold mb-6 animate-bounce" />
+                                <Trophy className="w-32 h-32 text-brand-cyan mb-6 animate-bounce" />
                                 <h2 className="text-5xl font-black text-white mb-4">المرحلة الرابعة والأخيرة</h2>
                                 <p className="text-2xl text-zinc-300">أجب نصياً! إجابة صحيحة = بقاء، خاطئة/تأخر = خروج للمركز الأخير.</p>
                               </motion.div>
@@ -1052,10 +1052,10 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             {gameState === 'stage4_playing' && (
                                <motion.div className="flex-1 flex flex-col p-8 items-center justify-center text-center bg-[#0a0a0a] z-50">
                                  <div className="text-4xl font-mono text-white flex items-center gap-2 mb-8"><Timer className="w-10 h-10 text-brand-red animate-pulse" /> {timeLeft}</div>
-                                 <h3 className="text-2xl text-brand-gold mb-2">دور اللاعب:</h3>
-                                 <h2 className="text-6xl font-black text-white mb-8 border-b border-brand-gold/30 pb-4">{players[stage4ActivePlayerIndex]?.username}</h2>
+                                 <h3 className="text-2xl text-brand-cyan mb-2">دور اللاعب:</h3>
+                                 <h2 className="text-6xl font-black text-white mb-8 border-b border-brand-cyan/30 pb-4">{players[stage4ActivePlayerIndex]?.username}</h2>
                                  
-                                 <div className="bg-white/5 border border-brand-gold/20 p-8 rounded-3xl w-full max-w-2xl mb-8">
+                                 <div className="bg-white/5 border border-brand-cyan/20 p-8 rounded-3xl w-full max-w-2xl mb-8">
                                     <p className="text-3xl font-bold text-white mb-4">{STAGE4_Q.title}</p>
                                     <p className="text-zinc-400">اكتب اسم واحد فقط باللغة العربية حصراً.</p>
                                  </div>
@@ -1086,7 +1086,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
                             {gameState === 'stage2_intro' && (
                               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a] z-50">
-                                <Rocket className="w-24 h-24 text-brand-gold mb-6 animate-bounce" />
+                                <Rocket className="w-24 h-24 text-brand-cyan mb-6 animate-bounce" />
                                 <h2 className="text-5xl font-black text-white mb-4">المرحلة الثانية</h2>
                                 <p className="text-2xl text-zinc-300">أسئلة السرعة! أسرع لاعب يجيب يكسب النقاط.</p>
                               </motion.div>
@@ -1095,14 +1095,14 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                             {gameState === 'stage2_playing' && stage2Q && (
                               <motion.div key="s2_q" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col p-8 bg-[#0a0a0a] z-50">
                                  <div className="flex justify-between items-center mb-6">
-                                   <div className="bg-brand-gold/20 text-brand-gold px-4 py-2 rounded-xl font-bold">سؤال سريع {stage2QuestionCount + 1}/10</div>
+                                   <div className="bg-brand-cyan/20 text-brand-cyan px-4 py-2 rounded-xl font-bold">سؤال سريع {stage2QuestionCount + 1}/10</div>
                                    <div className="text-3xl font-mono text-white flex items-center gap-2"><Timer className="w-8 h-8 text-brand-red animate-pulse" /> {timeLeft}</div>
                                  </div>
                                  <h2 className="text-3xl font-bold text-white text-center mb-8 leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/10">{stage2Q.q}</h2>
                                  <div className="grid grid-cols-2 gap-4">
                                    {stage2Q.options.map((opt, i) => (
                                      <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-4 flex items-center gap-4">
-                                       <span className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl font-black text-brand-gold">{i + 1}</span>
+                                       <span className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl font-black text-brand-cyan">{i + 1}</span>
                                        <span className="text-xl text-white font-bold">{opt}</span>
                                      </div>
                                    ))}
@@ -1162,7 +1162,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                                   <p className="text-xl text-red-300 mb-8">فرصة سعيدة في الدور القادم!</p>
                                   
                                   {currentQuestion && (
-                                    <div className="bg-black/60 p-5 rounded-2xl inline-block text-center border border-green-500/30">
+                                    <div className="bg-brand-black/60 p-5 rounded-2xl inline-block text-center border border-green-500/30">
                                       <span className="text-zinc-400 text-sm block mb-2">الإجابة الصحيحة كانت رقم ({currentQuestion.a}):</span>
                                       <span className="text-3xl font-bold text-green-400">{currentQuestion.options[currentQuestion.a - 1]}</span>
                                     </div>

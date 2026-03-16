@@ -294,121 +294,121 @@ const ROUNDS: Round[] = [
   {
     answer: ['وظائف', 'مهن', 'مهنة', 'وظيفة', 'عمل'],
     items: [
-      { text: 'طبيب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=doctor&backgroundColor=d4af37' },
-      { text: 'معلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=teacher&backgroundColor=d4af37' },
-      { text: 'مهندس', image: 'https://api.dicebear.com/7.x/icons/svg?seed=engineer&backgroundColor=d4af37' }
+      { text: 'طبيب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=doctor&backgroundColor=00e5ff' },
+      { text: 'معلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=teacher&backgroundColor=00e5ff' },
+      { text: 'مهندس', image: 'https://api.dicebear.com/7.x/icons/svg?seed=engineer&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['مشروبات', 'مشروب', 'سوائل'],
     items: [
-      { text: 'قهوة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=coffee&backgroundColor=d4af37' },
-      { text: 'شاي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tea&backgroundColor=d4af37' },
-      { text: 'عصير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=juice&backgroundColor=d4af37' }
+      { text: 'قهوة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=coffee&backgroundColor=00e5ff' },
+      { text: 'شاي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tea&backgroundColor=00e5ff' },
+      { text: 'عصير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=juice&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['سيارات', 'مركبات', 'سيارة'],
     items: [
-      { text: 'تويوتا', image: 'https://api.dicebear.com/7.x/icons/svg?seed=toyota&backgroundColor=d4af37' },
-      { text: 'انفنتي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=infiniti&backgroundColor=d4af37' },
-      { text: 'نيسان', image: 'https://api.dicebear.com/7.x/icons/svg?seed=nissan&backgroundColor=d4af37' }
+      { text: 'تويوتا', image: 'https://api.dicebear.com/7.x/icons/svg?seed=toyota&backgroundColor=00e5ff' },
+      { text: 'انفنتي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=infiniti&backgroundColor=00e5ff' },
+      { text: 'نيسان', image: 'https://api.dicebear.com/7.x/icons/svg?seed=nissan&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['ملابس', 'كسوة', 'لبس', 'هدوم'],
     items: [
-      { text: 'قميص', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shirt&backgroundColor=d4af37' },
-      { text: 'بنطلون', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pants&backgroundColor=d4af37' },
-      { text: 'حذاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shoes&backgroundColor=d4af37' }
+      { text: 'قميص', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shirt&backgroundColor=00e5ff' },
+      { text: 'بنطلون', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pants&backgroundColor=00e5ff' },
+      { text: 'حذاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shoes&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['أدوات مدرسية', 'قرطاسية', 'مدرسة'],
     items: [
-      { text: 'قلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pen&backgroundColor=d4af37' },
-      { text: 'دفتر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=notebook&backgroundColor=d4af37' },
-      { text: 'ممحاة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eraser&backgroundColor=d4af37' }
+      { text: 'قلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pen&backgroundColor=00e5ff' },
+      { text: 'دفتر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=notebook&backgroundColor=00e5ff' },
+      { text: 'ممحاة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eraser&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['معادن', 'معدن'],
     items: [
-      { text: 'ذهب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=gold&backgroundColor=d4af37' },
-      { text: 'فضة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=silver&backgroundColor=d4af37' },
-      { text: 'حديد', image: 'https://api.dicebear.com/7.x/icons/svg?seed=iron&backgroundColor=d4af37' }
+      { text: 'ذهب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=gold&backgroundColor=00e5ff' },
+      { text: 'فضة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=silver&backgroundColor=00e5ff' },
+      { text: 'حديد', image: 'https://api.dicebear.com/7.x/icons/svg?seed=iron&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['أثاث', 'مفروشات', 'اثاث'],
     items: [
-      { text: 'سرير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=bed&backgroundColor=d4af37' },
-      { text: 'طاولة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=table&backgroundColor=d4af37' },
-      { text: 'كرسي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=chair&backgroundColor=d4af37' }
+      { text: 'سرير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=bed&backgroundColor=00e5ff' },
+      { text: 'طاولة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=table&backgroundColor=00e5ff' },
+      { text: 'كرسي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=chair&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['فصول السنة', 'فصول', 'فصل'],
     items: [
-      { text: 'شتاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=winter&backgroundColor=d4af37' },
-      { text: 'صيف', image: 'https://api.dicebear.com/7.x/icons/svg?seed=summer&backgroundColor=d4af37' },
-      { text: 'ربيع', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spring&backgroundColor=d4af37' }
+      { text: 'شتاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=winter&backgroundColor=00e5ff' },
+      { text: 'صيف', image: 'https://api.dicebear.com/7.x/icons/svg?seed=summer&backgroundColor=00e5ff' },
+      { text: 'ربيع', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spring&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['أدوات مطبخ', 'مطبخ', 'اواني', 'أواني'],
     items: [
-      { text: 'سكين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=knife&backgroundColor=d4af37' },
-      { text: 'ملعقة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spoon&backgroundColor=d4af37' },
-      { text: 'شوكة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fork&backgroundColor=d4af37' }
+      { text: 'سكين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=knife&backgroundColor=00e5ff' },
+      { text: 'ملعقة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spoon&backgroundColor=00e5ff' },
+      { text: 'شوكة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fork&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['طيور', 'طائر', 'عصافير'],
     items: [
-      { text: 'صقر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=falcon&backgroundColor=d4af37' },
-      { text: 'حمامة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=dove&backgroundColor=d4af37' },
-      { text: 'نسر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eagle&backgroundColor=d4af37' }
+      { text: 'صقر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=falcon&backgroundColor=00e5ff' },
+      { text: 'حمامة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=dove&backgroundColor=00e5ff' },
+      { text: 'نسر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eagle&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['وسائل نقل', 'مواصلات', 'نقل', 'مواصلة'],
     items: [
-      { text: 'طائرة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=plane&backgroundColor=d4af37' },
-      { text: 'قطار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=train&backgroundColor=d4af37' },
-      { text: 'سفينة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=ship&backgroundColor=d4af37' }
+      { text: 'طائرة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=plane&backgroundColor=00e5ff' },
+      { text: 'قطار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=train&backgroundColor=00e5ff' },
+      { text: 'سفينة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=ship&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['أجهزة كهرابئية', 'اجهزة', 'أجهزة', 'الكترونيات', 'كهربائيات'],
     items: [
-      { text: 'تلفاز', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tv&backgroundColor=d4af37' },
-      { text: 'ثلاجة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fridge&backgroundColor=d4af37' },
-      { text: 'غسالة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=washer&backgroundColor=d4af37' }
+      { text: 'تلفاز', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tv&backgroundColor=00e5ff' },
+      { text: 'ثلاجة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fridge&backgroundColor=00e5ff' },
+      { text: 'غسالة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=washer&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['زهور', 'زهرة', 'ورد', 'ورود'],
     items: [
-      { text: 'ياسمين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=jasmine&backgroundColor=d4af37' },
-      { text: 'جوري', image: 'https://api.dicebear.com/7.x/icons/svg?seed=rose&backgroundColor=d4af37' },
-      { text: 'توليب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tulip&backgroundColor=d4af37' }
+      { text: 'ياسمين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=jasmine&backgroundColor=00e5ff' },
+      { text: 'جوري', image: 'https://api.dicebear.com/7.x/icons/svg?seed=rose&backgroundColor=00e5ff' },
+      { text: 'توليب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tulip&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['لغات', 'لغة', 'لهجات'],
     items: [
-      { text: 'عربية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=arabic&backgroundColor=d4af37' },
-      { text: 'إنجليزية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=english&backgroundColor=d4af37' },
-      { text: 'فرنسية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=french&backgroundColor=d4af37' }
+      { text: 'عربية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=arabic&backgroundColor=00e5ff' },
+      { text: 'إنجليزية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=english&backgroundColor=00e5ff' },
+      { text: 'فرنسية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=french&backgroundColor=00e5ff' }
     ]
   },
   {
     answer: ['أدوات موسيقية', 'آلات موسيقية', 'موسيقى', 'الات'],
     items: [
-      { text: 'عود', image: 'https://api.dicebear.com/7.x/icons/svg?seed=oud&backgroundColor=d4af37' },
-      { text: 'بيانو', image: 'https://api.dicebear.com/7.x/icons/svg?seed=piano&backgroundColor=d4af37' },
-      { text: 'جيتار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=guitar&backgroundColor=d4af37' }
+      { text: 'عود', image: 'https://api.dicebear.com/7.x/icons/svg?seed=oud&backgroundColor=00e5ff' },
+      { text: 'بيانو', image: 'https://api.dicebear.com/7.x/icons/svg?seed=piano&backgroundColor=00e5ff' },
+      { text: 'جيتار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=guitar&backgroundColor=00e5ff' }
     ]
   }
 ]
@@ -553,12 +553,12 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
   return (
     <div className="flex h-full w-full max-w-[1600px] mx-auto gap-6 p-6 font-arabic" dir="rtl">
       {/* Main Game Area */}
-      <div className="flex-1 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl flex flex-col relative">
+      <div className="flex-1 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl flex flex-col relative">
         {/* Header */}
-        <div className="h-20 border-b border-brand-gold/10 flex items-center justify-between px-8 bg-black/20">
+        <div className="h-20 border-b border-brand-cyan/10 flex items-center justify-between px-8 bg-brand-black/20">
           <div className="flex items-center gap-4">
             <h2 className="text-3xl font-black text-white italic tracking-tighter">
-              الرابط <span className="text-brand-gold">العجيب</span>
+              الرابط <span className="text-brand-cyan">العجيب</span>
             </h2>
           </div>
           <div className="flex items-center gap-2">
@@ -593,30 +593,30 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="flex flex-col items-center text-center max-w-2xl"
               >
-                <div className="w-32 h-32 bg-brand-gold/10 rounded-3xl flex items-center justify-center border-2 border-brand-gold mb-8 shadow-[0_0_50px_rgba(212,175,55,0.2)]">
-                  <BrainCircuit className="w-16 h-16 text-brand-gold" />
+                <div className="w-32 h-32 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border-2 border-brand-cyan mb-8 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
+                  <BrainCircuit className="w-16 h-16 text-brand-cyan" />
                 </div>
                 <h1 className="text-5xl font-black text-white mb-4 tracking-tight">ابحث عن الرابط المشترك!</h1>
                 
-                <div className="bg-brand-gold/5 border border-brand-gold/20 rounded-2xl p-6 text-right mb-8 w-full">
-                    <h3 className="text-xl font-bold text-brand-gold mb-3 flex items-center gap-2">
+                <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-6 text-right mb-8 w-full">
+                    <h3 className="text-xl font-bold text-brand-cyan mb-3 flex items-center gap-2">
                           <Tag className="w-5 h-5" /> كيف تلعب؟
                       </h3>
                       <ul className="text-zinc-300 space-y-2 text-sm">
-                          <li>1. اكتب <span className="text-brand-gold font-bold">!join</span> لدخول الردهة الآن.</li>
+                          <li>1. اكتب <span className="text-brand-cyan font-bold">!join</span> لدخول الردهة الآن.</li>
                           <li>2. ستظهر مجموعة من الكلمات والصور على الشاشة تبدو مختلفة (3 صور).</li>
-                          <li>3. فكر بسرعة! ما هو <span className="text-brand-gold font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
+                          <li>3. فكر بسرعة! ما هو <span className="text-brand-cyan font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
                           <li>4. أول شخص يكتب الإجابة المطلوبة الصحيحة في الشات سيفوز بنقطة الجولة!</li>
                       </ul>
                   </div>
                 
                 <div className="flex items-center gap-6 mb-12">
-                  <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
-                    <span className="text-3xl font-black text-brand-gold mb-1">{players.length}</span>
+                  <div className="bg-brand-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
+                    <span className="text-3xl font-black text-brand-cyan mb-1">{players.length}</span>
                     <span className="text-sm font-bold text-zinc-500">عدد اللاعبين</span>
                   </div>
                   
-                  <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
+                  <div className="bg-brand-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
                     <div className="flex items-center gap-4 mb-1">
                       <button 
                         onClick={() => setMaxRounds(prev => Math.max(1, prev - 1))}
@@ -624,7 +624,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                       >
                         -
                       </button>
-                      <span className="text-3xl font-black text-brand-gold min-w-[2rem] text-center">{maxRounds}</span>
+                      <span className="text-3xl font-black text-brand-cyan min-w-[2rem] text-center">{maxRounds}</span>
                       <button 
                         onClick={() => setMaxRounds(prev => Math.min(ROUNDS.length, prev + 1))}
                         className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
@@ -638,7 +638,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                   <button
                     onClick={startGame}
                     disabled={players.length === 0}
-                    className="bg-brand-gold hover:bg-brand-gold-light disabled:opacity-50 disabled:cursor-not-allowed text-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-lg flex items-center gap-3"
+                    className="bg-brand-cyan hover:bg-brand-pink disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-lg flex items-center gap-3"
                   >
                     <Play className="w-6 h-6" /> ابدأ اللعبة
                   </button>
@@ -655,7 +655,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 className="flex flex-col items-center"
               >
                 <h2 className="text-3xl font-bold text-zinc-400 mb-8">الجولة {currentRoundIndex + 1}</h2>
-                <div className="text-9xl font-black text-brand-gold drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]">
+                <div className="text-9xl font-black text-brand-cyan drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]">
                   {countdown}
                 </div>
               </motion.div>
@@ -668,7 +668,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center w-full"
               >
-                <div className="bg-brand-gold/10 px-6 py-2 rounded-xl border border-brand-gold/30 text-brand-gold font-black mb-12 animate-pulse flex items-center gap-2">
+                <div className="bg-brand-cyan/10 px-6 py-2 rounded-xl border border-brand-cyan/30 text-brand-cyan font-black mb-12 animate-pulse flex items-center gap-2">
                   <Timer className="w-5 h-5" /> أسرع واكتب في الشات!
                 </div>
                 
@@ -681,7 +681,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                       transition={{ delay: idx * 0.1 }}
                       className="bg-zinc-900 border-2 border-white/10 rounded-3xl overflow-hidden flex flex-col w-64 shadow-2xl"
                     >
-                      <div className="h-48 w-full relative bg-black/50 flex items-center justify-center overflow-hidden">
+                      <div className="h-48 w-full relative bg-brand-black/50 flex items-center justify-center overflow-hidden">
                         <img 
                             src={item.image} 
                             alt={item.text} 
@@ -704,7 +704,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                   {!showHint ? (
                     <button
                       onClick={() => setShowHint(true)}
-                      className="bg-brand-gold/10 hover:bg-brand-gold/20 text-brand-gold border border-brand-gold/30 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
+                      className="bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
                     >
                       <Lightbulb className="w-5 h-5" /> إظهار تلميح
                     </button>
@@ -717,7 +717,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                       <p className="text-zinc-400 text-sm mb-2">عدد الأحرف المكونة للكلمة:</p>
                       <div className="flex gap-2 justify-center" dir="ltr">
                         {gameRounds[currentRoundIndex].answer[0].split('').map((char, i) => (
-                          <div key={i} className="w-8 h-10 border-b-2 border-brand-gold flex items-center justify-center text-xl font-bold bg-black/50 rounded-t-sm">
+                          <div key={i} className="w-8 h-10 border-b-2 border-brand-cyan flex items-center justify-center text-xl font-bold bg-brand-black/50 rounded-t-sm">
                             {char === ' ' ? ' ' : ''}
                           </div>
                         ))}
@@ -735,23 +735,23 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
-                className="flex flex-col items-center text-center bg-black/80 p-12 rounded-[40px] border-2 border-brand-gold shadow-[0_0_50px_rgba(212,175,55,0.2)]"
+                className="flex flex-col items-center text-center bg-brand-black/80 p-12 rounded-[40px] border-2 border-brand-cyan shadow-[0_0_50px_rgba(0, 229, 255,0.2)]"
               >
-                <h2 className="text-3xl font-bold text-white mb-6">الرابط هو: <span className="text-brand-gold font-black">{gameRounds[currentRoundIndex].answer[0]}</span></h2>
+                <h2 className="text-3xl font-bold text-white mb-6">الرابط هو: <span className="text-brand-cyan font-black">{gameRounds[currentRoundIndex].answer[0]}</span></h2>
                 <div className="relative">
-                  <div className="w-32 h-32 rounded-full border-4 border-brand-gold overflow-hidden mb-6 mx-auto shadow-2xl relative z-10">
+                  <div className="w-32 h-32 rounded-full border-4 border-brand-cyan overflow-hidden mb-6 mx-auto shadow-2xl relative z-10">
                     <img src={roundWinner.avatar} alt={roundWinner.username} className="w-full h-full object-cover" />
                   </div>
                   <motion.div 
                     initial={{ scale: 0, y: 20 }}
                     animate={{ scale: 1, y: 0 }}
-                    className="absolute -bottom-4 -right-4 bg-brand-gold text-black p-3 rounded-full border-4 border-black z-20"
+                    className="absolute -bottom-4 -right-4 bg-brand-cyan text-brand-black p-3 rounded-full border-4 border-black z-20"
                   >
                     <CheckCircle2 className="w-8 h-8" />
                   </motion.div>
                 </div>
                 <h3 className="text-4xl font-black text-white mb-2">{roundWinner.username}</h3>
-                <p className="text-brand-gold font-bold text-xl">أول من أجاب بشكل صحيح! +1 نقطة</p>
+                <p className="text-brand-cyan font-bold text-xl">أول من أجاب بشكل صحيح! +1 نقطة</p>
               </motion.div>
             )}
 
@@ -760,17 +760,17 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 key="game_over"
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="flex flex-col items-center text-center max-w-2xl bg-black/80 p-12 rounded-[40px] border border-brand-gold/30"
+                className="flex flex-col items-center text-center max-w-2xl bg-brand-black/80 p-12 rounded-[40px] border border-brand-cyan/30"
               >
-                <Trophy className="w-32 h-32 text-brand-gold mb-8 drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]" />
+                <Trophy className="w-32 h-32 text-brand-cyan mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
                 <h1 className="text-5xl font-black text-white mb-4">انتهت اللعبة!</h1>
                 {getWinner() ? (
                   <>
                     <h2 className="text-3xl font-bold text-zinc-300 mb-8">الفائز الأول</h2>
-                    <div className="w-40 h-40 rounded-full border-[6px] border-brand-gold overflow-hidden mb-6 mx-auto shadow-[0_0_50px_rgba(212,175,55,0.4)] relative">
+                    <div className="w-40 h-40 rounded-full border-[6px] border-brand-cyan overflow-hidden mb-6 mx-auto shadow-[0_0_50px_rgba(0, 229, 255,0.4)] relative">
                        <img src={getWinner()?.avatar} alt={getWinner()?.username} className="w-full h-full object-cover" />
                     </div>
-                    <div className="text-5xl font-black text-brand-gold mb-2">{getWinner()?.username}</div>
+                    <div className="text-5xl font-black text-brand-cyan mb-2">{getWinner()?.username}</div>
                     <div className="text-2xl text-white font-bold bg-white/10 px-6 py-2 rounded-xl inline-block">{getWinner()?.score} نقاط</div>
                   </>
                 ) : (
@@ -793,14 +793,14 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
 
       {/* Sidebar Leaderboard */}
       <div className={`w-[350px] flex flex-col gap-4 transition-all duration-300 ${!showChat ? 'w-[500px]' : ''}`}>
-        <div className="bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative">
+        <div className="bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative">
           <div className="absolute top-0 right-0 p-4 opacity-5">
             <Trophy className="w-32 h-32" />
           </div>
           
           <h3 className="text-xl font-black text-white mb-6 flex items-center gap-3 relative z-10">
-            <Users className="w-6 h-6 text-brand-gold" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-l from-brand-gold to-yellow-200">
+            <Users className="w-6 h-6 text-brand-cyan" />
+            <span className="bg-clip-text text-transparent bg-gradient-to-l from-brand-cyan to-yellow-200">
               اللاعبين والمراكز
             </span>
           </h3>
@@ -812,24 +812,24 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 key={p.username} 
                 className={`p-3 rounded-2xl flex items-center gap-4 border transition-all ${
                   i === 0 && p.score > 0
-                    ? 'bg-brand-gold/10 border-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.1)]' 
-                    : 'bg-black/40 border-white/5'
+                    ? 'bg-brand-cyan/10 border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.1)]' 
+                    : 'bg-brand-black/40 border-white/5'
                 }`}
               >
-                <div className={`font-black text-lg w-6 text-center ${i === 0 && p.score > 0 ? 'text-brand-gold' : 'text-zinc-500'}`}>
+                <div className={`font-black text-lg w-6 text-center ${i === 0 && p.score > 0 ? 'text-brand-cyan' : 'text-zinc-500'}`}>
                   {i + 1}
                 </div>
-                <div className={`w-12 h-12 rounded-full border-2 overflow-hidden flex-shrink-0 relative ${i===0 && p.score > 0 ? 'border-brand-gold' : 'border-white/10'}`}>
+                <div className={`w-12 h-12 rounded-full border-2 overflow-hidden flex-shrink-0 relative ${i===0 && p.score > 0 ? 'border-brand-cyan' : 'border-white/10'}`}>
                   <img src={p.avatar} alt="avatar" className="w-full h-full object-cover" />
                   {i === 0 && p.score > 0 && (
-                    <div className="absolute -top-2 -right-2 text-brand-gold drop-shadow-md">
-                      <Crown className="w-5 h-5 fill-brand-gold" />
+                    <div className="absolute -top-2 -right-2 text-brand-cyan drop-shadow-md">
+                      <Crown className="w-5 h-5 fill-brand-cyan" />
                     </div>
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-white text-sm truncate">{p.username}</div>
-                  <div className="text-brand-gold/70 text-xs font-bold mt-0.5">{p.score} نقاط</div>
+                  <div className="text-brand-cyan/70 text-xs font-bold mt-0.5">{p.score} نقاط</div>
                 </div>
               </motion.div>
             ))}
@@ -845,9 +845,9 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
         </div>
 
         {showChat && (
-          <div className="h-[400px] bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative flex flex-col pt-16">
-            <div className="absolute top-0 right-0 left-0 h-16 bg-gradient-to-b from-black/80 to-transparent z-10 flex items-center px-6">
-              <MessageSquare className="w-5 h-5 text-brand-gold ml-2" />
+          <div className="h-[400px] bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative flex flex-col pt-16">
+            <div className="absolute top-0 right-0 left-0 h-16 bg-gradient-to-b from-brand-black/80 to-transparent z-10 flex items-center px-6">
+              <MessageSquare className="w-5 h-5 text-brand-cyan ml-2" />
               <span className="text-white font-bold">الشات المباشر</span>
             </div>
             
@@ -862,7 +862,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                     className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
                   >
                     <div className="flex items-center gap-2 mb-1">
-                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-gold/20 flex items-center justify-center text-xs relative">
+                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-cyan/20 flex items-center justify-center text-xs relative">
                         <img 
                           src={`https://decapi.me/twitch/avatar/${msg.username}`} 
                           alt={msg.username}

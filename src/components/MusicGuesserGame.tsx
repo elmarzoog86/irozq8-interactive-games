@@ -232,12 +232,12 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
   }, [volume]);
 
   return (
-    <div className="h-screen w-full w-full bg-black text-white flex flex-col items-center justify-center p-8 relative overflow-hidden font-arabic">
+    <div className="h-screen w-full w-full bg-brand-black text-white flex flex-col items-center justify-center p-8 relative overflow-hidden font-arabic">
       {/* Dynamic Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-[20%] -left-[10%] w-[700px] h-[700px] bg-brand-gold/5 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute -top-[20%] -left-[10%] w-[700px] h-[700px] bg-brand-cyan/5 rounded-full blur-[120px] animate-pulse"></div>
           <div className="absolute top-[40%] -right-[10%] w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[100px] animate-pulse delay-1000"></div>
-          <div className="absolute -bottom-[20%] left-[20%] w-[600px] h-[600px] bg-brand-gold/5 rounded-full blur-[120px] animate-pulse delay-2000"></div>
+          <div className="absolute -bottom-[20%] left-[20%] w-[600px] h-[600px] bg-brand-cyan/5 rounded-full blur-[120px] animate-pulse delay-2000"></div>
       </div>
       
       {/* Back Button */}
@@ -256,51 +256,51 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
       {/* Moved to central stage */}
 
       {gameState === 'setup' && (
-        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-black/80  border border-brand-gold/30 p-8 rounded-[40px] max-w-lg w-full text-center space-y-6 shadow-[0_0_50px_rgba(212,175,55,0.1)] z-10">
-            <div className="w-20 h-20 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-                <Music className="w-10 h-10 text-brand-gold" />
+        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-brand-black/80  border border-brand-cyan/30 p-8 rounded-[40px] max-w-lg w-full text-center space-y-6 shadow-[0_0_50px_rgba(0, 229, 255,0.1)] z-10">
+            <div className="w-20 h-20 bg-brand-cyan/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+                <Music className="w-10 h-10 text-brand-cyan" />
             </div>
-            <h1 className="text-4xl font-black mb-1 text-brand-gold glow-gold-text">خمن الموسيقى</h1>
-            <p className="text-brand-gold/60 text-sm mb-4 font-bold flex items-center justify-center gap-2">
+            <h1 className="text-4xl font-black mb-1 text-brand-cyan glow-cyan-text">خمن الموسيقى</h1>
+            <p className="text-brand-cyan/60 text-sm mb-4 font-bold flex items-center justify-center gap-2">
                 <Music size={14} /> مجموع الأغاني: {songs.filter(s => s.id).length} أغنية
             </p>
             
             <div className="space-y-4">
                 <div className="space-y-2">
-                    <label className="text-brand-gold/50 text-sm font-bold">الفريق الأول</label>
+                    <label className="text-brand-cyan/50 text-sm font-bold">الفريق الأول</label>
                     <input 
                         type="text" 
                         value={teams[0].name}
                         onChange={(e) => setTeams(prev => [{...prev[0], name: e.target.value}, prev[1]])}
-                        className="w-full bg-black/70 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
+                        className="w-full bg-brand-black/70 border border-brand-cyan/20 focus:border-brand-cyan p-4 rounded-xl text-center text-xl text-white placeholder-brand-cyan/20 transition-all outline-none"
                         placeholder="اسم الفريق الأول"
                     />
                 </div>
                 
                 <div className="space-y-2">
-                    <label className="text-brand-gold/50 text-sm font-bold">الفريق الثاني</label>
+                    <label className="text-brand-cyan/50 text-sm font-bold">الفريق الثاني</label>
                     <input 
                         type="text" 
                         value={teams[1].name}
                         onChange={(e) => setTeams(prev => [prev[0], {...prev[1], name: e.target.value}])}
-                        className="w-full bg-black/70 border border-brand-gold/20 focus:border-brand-gold p-4 rounded-xl text-center text-xl text-white placeholder-brand-gold/20 transition-all outline-none"
+                        className="w-full bg-brand-black/70 border border-brand-cyan/20 focus:border-brand-cyan p-4 rounded-xl text-center text-xl text-white placeholder-brand-cyan/20 transition-all outline-none"
                         placeholder="اسم الفريق الثاني"
                     />
                 </div>
-                <div className="flex items-center justify-center gap-4 bg-black/20 p-4 rounded-xl border border-brand-gold/10">
-                    <span className="text-brand-gold/70 font-bold">النقاط للفوز:</span>
+                <div className="flex items-center justify-center gap-4 bg-brand-black/20 p-4 rounded-xl border border-brand-cyan/10">
+                    <span className="text-brand-cyan/70 font-bold">النقاط للفوز:</span>
                     <input 
                         type="number" 
                         value={pointsToWin}
                         onChange={(e) => setPointsToWin(Number(e.target.value))}
-                        className="w-20 bg-black/70 border border-brand-gold/20 p-2 rounded-lg text-center text-white font-bold outline-none focus:border-brand-gold"
+                        className="w-20 bg-brand-black/70 border border-brand-cyan/20 p-2 rounded-lg text-center text-white font-bold outline-none focus:border-brand-cyan"
                     />
                 </div>
             </div>
             
             <button 
                 onClick={startGame}
-                className="w-full bg-brand-gold hover:bg-brand-gold/80 text-black p-4 rounded-xl font-black text-xl transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:scale-105 active:scale-95"
+                className="w-full bg-brand-cyan hover:bg-brand-cyan/80 text-brand-black p-4 rounded-xl font-black text-xl transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)] hover:scale-105 active:scale-95"
             >
                 بدء اللعبة
             </button>
@@ -337,10 +337,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                 />
             </div>
             {/* Header / Controls */}
-            <div className="flex justify-between items-center bg-black/70 border border-brand-gold/20 p-6 rounded-2xl mb-8  shadow-[0_0_30px_rgba(212,175,55,0.05)]">
+            <div className="flex justify-between items-center bg-brand-black/70 border border-brand-cyan/20 p-6 rounded-2xl mb-8  shadow-[0_0_30px_rgba(0, 229, 255,0.05)]">
                 <div className="flex items-center gap-6 w-1/3">
-                    <div className="bg-brand-gold/10 p-3 rounded-full">
-                        <Volume2 className="text-brand-gold" size={24} />
+                    <div className="bg-brand-cyan/10 p-3 rounded-full">
+                        <Volume2 className="text-brand-cyan" size={24} />
                     </div>
                     <input 
                         type="range" 
@@ -348,11 +348,11 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         max="100" 
                         value={volume} 
                         onChange={(e) => setVolume(Number(e.target.value))}
-                        className="w-full accent-brand-gold h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer"
+                        className="w-full accent-brand-cyan h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer"
                     />
                 </div>
                 
-                <div className="text-4xl font-black w-1/3 text-center text-brand-gold glow-gold-text tabular-nums">
+                <div className="text-4xl font-black w-1/3 text-center text-brand-cyan glow-cyan-text tabular-nums">
                     {timeLeft > 0 ? `${timeLeft}s` : 'انتهى الوقت!'}
                 </div>
 
@@ -374,7 +374,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                                           }
                                       }
                                   }} 
-                                  className={`px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${isPlaying ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/50' : 'bg-brand-gold text-black hover:bg-brand-gold/80 hover:scale-105'}`}
+                                  className={`px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${isPlaying ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/50' : 'bg-brand-cyan text-brand-black hover:bg-brand-cyan/80 hover:scale-105'}`}
                               >
                                 {isPlaying ? 'إيقاف' : 'تشغيل'}
                                 {!isPlaying && <Play size={20} className="fill-current" />}
@@ -385,7 +385,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </>
                     )}
                     {gameState === 'revealed' ? (
-                       <button onClick={() => nextRound()} className="bg-brand-gold text-black px-8 py-3 rounded-xl font-black flex items-center gap-2 hover:bg-brand-gold/80 hover:scale-105 transition-all shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                       <button onClick={() => nextRound()} className="bg-brand-cyan text-brand-black px-8 py-3 rounded-xl font-black flex items-center gap-2 hover:bg-brand-cyan/80 hover:scale-105 transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
                            <SkipForward size={20} className="fill-current" /> جولة تالية
                        </button>
                     ) : (
@@ -399,10 +399,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             {/* Game Content */}
             <div className="flex-1 grid grid-cols-12 gap-8 items-start">
                {/* Team 1 */}
-               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 0 ? (isSteal ? 'border-amber-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-gold/80 shadow-[0_0_40px_rgba(212,175,55,0.4)] scale-[1.02]') : 'border-brand-gold/20 opacity-80'}`}>
+               <div className={`col-span-3 bg-brand-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 1 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 0 ? (isSteal ? 'border-cyan-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-cyan/80 shadow-[0_0_40px_rgba(0, 229, 255,0.4)] scale-[1.02]') : 'border-brand-cyan/20 opacity-80'}`}>
                     <div className="flex flex-col items-center w-full min-h-[48px]">
                         {currentTurnIndex === 0 && gameState === 'playing' && (
-                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-amber-400/20 text-amber-500 border border-amber-400/50' : 'bg-brand-gold/20 text-brand-gold border border-brand-gold/50'}`}>
+                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-cyan-400/20 text-cyan-500 border border-cyan-400/50' : 'bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/50'}`}>
                                {isSteal ? 'فرصة سرقة' : 'دورك الآن'}
                            </div>
                         )}
@@ -413,21 +413,21 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[0].score += 1;
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
                            <span className="text-3xl font-black mb-1">+</span>
                         </button>
-                        <div className="text-7xl font-black text-brand-gold glow-gold-text drop-shadow-2xl leading-none w-16 text-center">{teams[0].score}</div>
+                        <div className="text-7xl font-black text-brand-cyan glow-cyan-text drop-shadow-2xl leading-none w-16 text-center">{teams[0].score}</div>
                         <button onClick={() => {
                             const newTeams = [...teams];
                             newTeams[0].score = Math.max(0, newTeams[0].score - 1);
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
                            <span className="text-3xl font-black mb-1">-</span>
                         </button>
                     </div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
-                        <h3 className="text-xs text-brand-gold/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
+                        <h3 className="text-xs text-brand-cyan/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
                         <div className="grid grid-cols-1 gap-3">
                             <button 
                                 onClick={() => useLifeline(0, 'doublePoints')}
@@ -482,10 +482,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                 <div className="col-span-6 flex flex-col items-center justify-center pt-8">
                     <div className="relative w-80 h-80 flex items-center justify-center mb-12 group">
                         {/* Glow Effect */}
-                        <div className={`absolute inset-0 bg-brand-gold/20 rounded-full blur-[60px] transition-all duration-1000 ${isPlaying ? 'opacity-50 scale-110' : 'opacity-20 scale-90'}`}></div>
+                        <div className={`absolute inset-0 bg-brand-cyan/20 rounded-full blur-[60px] transition-all duration-1000 ${isPlaying ? 'opacity-50 scale-110' : 'opacity-20 scale-90'}`}></div>
                         
                         {/* Vinyl Record */}
-                        <div className={`w-72 h-72 bg-black rounded-full flex items-center justify-center border-4 border-zinc-800 relative z-10 shadow-2xl transition-transform duration-[3s] ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
+                        <div className={`w-72 h-72 bg-brand-black rounded-full flex items-center justify-center border-4 border-zinc-800 relative z-10 shadow-2xl transition-transform duration-[3s] ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
                             {/* Vinyl Grooves */}
                             <div className="absolute inset-2 rounded-full border border-zinc-900/50"></div>
                             <div className="absolute inset-4 rounded-full border border-zinc-900/50"></div>
@@ -493,17 +493,17 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             <div className="absolute inset-8 rounded-full border border-zinc-900/50"></div>
                             
                             {/* Center Label / Player */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-brand-gold rounded-full flex items-center justify-center shadow-inner overflow-hidden">
-                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-gold via-yellow-600 to-yellow-800 opacity-80"></div>
-                                <Music size={40} className="text-black relative z-10" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-brand-cyan rounded-full flex items-center justify-center shadow-inner overflow-hidden">
+                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-cyan via-cyan-600 to-yellow-800 opacity-80"></div>
+                                <Music size={40} className="text-brand-black relative z-10" />
                             </div>
                         </div>
                     </div>
                     
                     <div className="text-center w-full min-h-[160px]">
                         {gameState === 'revealed' ? (
-                            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-black/70  rounded-3xl p-8 border border-brand-gold/20 shadow-lg mx-auto max-w-lg">
-                                <h3 className="text-brand-gold/60 text-lg mb-2 font-bold uppercase tracking-widest">الأغنية هي</h3>
+                            <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="bg-brand-black/70  rounded-3xl p-8 border border-brand-cyan/20 shadow-lg mx-auto max-w-lg">
+                                <h3 className="text-brand-cyan/60 text-lg mb-2 font-bold uppercase tracking-widest">الأغنية هي</h3>
                                 <div className="text-4xl font-black text-white leading-tight mb-4">
                                     {currentSong?.name}
                                 </div>
@@ -515,7 +515,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             </motion.div>
                         ) : (
                             <div className="space-y-6">
-                                <div className={`text-3xl font-black ${isPlaying ? 'text-brand-gold animate-pulse' : 'text-gray-600'}`}>
+                                <div className={`text-3xl font-black ${isPlaying ? 'text-brand-cyan animate-pulse' : 'text-gray-600'}`}>
                                     {isPlaying ? '...جاري التشغيل' : 'اضغط تشغيل'}
                                 </div>
                                 <div className="flex flex-col gap-2 items-center">
@@ -544,10 +544,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                 </div>
 
                {/* Team 2 */}
-               <div className={`col-span-3 bg-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 1 ? (isSteal ? 'border-amber-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-gold/80 shadow-[0_0_40px_rgba(212,175,55,0.4)] scale-[1.02]') : 'border-brand-gold/20 opacity-80'}`}>
+               <div className={`col-span-3 bg-brand-black/70  p-6 rounded-[30px] border-2 flex flex-col items-center gap-6 transition-all h-[500px] shadow-xl ${blockedTeamId === 2 ? 'border-red-500/50 shadow-[0_0_30px_rgba(239,68,68,0.1)]' : currentTurnIndex === 1 ? (isSteal ? 'border-cyan-400/80 shadow-[0_0_40px_rgba(251,191,36,0.3)] scale-[1.02]' : 'border-brand-cyan/80 shadow-[0_0_40px_rgba(0, 229, 255,0.4)] scale-[1.02]') : 'border-brand-cyan/20 opacity-80'}`}>
                     <div className="flex flex-col items-center w-full min-h-[48px]">
                         {currentTurnIndex === 1 && gameState === 'playing' && (
-                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-amber-400/20 text-amber-500 border border-amber-400/50' : 'bg-brand-gold/20 text-brand-gold border border-brand-gold/50'}`}>
+                           <div className={`text-sm px-4 py-1 rounded-full mb-1 font-bold animate-pulse ${isSteal ? 'bg-cyan-400/20 text-cyan-500 border border-cyan-400/50' : 'bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/50'}`}>
                                {isSteal ? 'فرصة سرقة' : 'دورك الآن'}
                            </div>
                         )}
@@ -558,21 +558,21 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[1].score += 1;
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
                            <span className="text-3xl font-black mb-1">+</span>
                         </button>
-                        <div className="text-7xl font-black text-brand-gold glow-gold-text drop-shadow-2xl leading-none w-16 text-center">{teams[1].score}</div>
+                        <div className="text-7xl font-black text-brand-cyan glow-cyan-text drop-shadow-2xl leading-none w-16 text-center">{teams[1].score}</div>
                         <button onClick={() => {
                             const newTeams = [...teams];
                             newTeams[1].score = Math.max(0, newTeams[1].score - 1);
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20 hover:bg-brand-gold/30 rounded-xl text-brand-gold transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
                            <span className="text-3xl font-black mb-1">-</span>
                         </button>
                     </div>
                     
                     <div className="w-full space-y-3 mb-4 flex-1">
-                        <h3 className="text-xs text-brand-gold/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
+                        <h3 className="text-xs text-brand-cyan/50 uppercase tracking-[0.2em] text-center mb-4 font-bold">وسائل المساعدة</h3>
                         <div className="grid grid-cols-1 gap-3">
                             <button 
                                 onClick={() => useLifeline(1, 'doublePoints')}
@@ -629,17 +629,17 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
       {gameState === 'end' && (
         <div className="text-center relative z-10">
             <div className="mb-8 relative">
-                <div className="absolute inset-0 bg-brand-gold/20 blur-[100px] rounded-full"></div>
-                <Trophy size={120} className="text-brand-gold relative z-10 mx-auto drop-shadow-2xl animate-bounce" />
+                <div className="absolute inset-0 bg-brand-cyan/20 blur-[100px] rounded-full"></div>
+                <Trophy size={120} className="text-brand-cyan relative z-10 mx-auto drop-shadow-2xl animate-bounce" />
             </div>
             <h1 className="text-8xl font-black mb-6 text-white drop-shadow-xl">🏆 الفائز!</h1>
-            <div className="text-6xl text-brand-gold glow-gold-text mb-12 font-black">
+            <div className="text-6xl text-brand-cyan glow-cyan-text mb-12 font-black">
                 {teams[0].score > teams[1].score ? teams[0].name : teams[1].name}
             </div>
             <button onClick={() => {
                 setGameState('setup');
                 setTeams(teams.map(t => ({...t, score: 0, lifelines: {doublePoints: true, block: true, hint: true}})));
-            }} className="bg-brand-gold text-black px-12 py-6 rounded-2xl text-2xl font-black hover:bg-green-500 hover:text-white transition-all shadow-[0_0_50px_rgba(212,175,55,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.4)] hover:scale-105">
+            }} className="bg-brand-cyan text-brand-black px-12 py-6 rounded-2xl text-2xl font-black hover:bg-green-500 hover:text-white transition-all shadow-[0_0_50px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.4)] hover:scale-105">
                 لعبة جديدة
             </button>
         </div>

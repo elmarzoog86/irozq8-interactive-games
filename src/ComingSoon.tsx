@@ -6,7 +6,7 @@ export default function ComingSoon() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#050505] text-white p-4 font-arabic relative overflow-hidden" dir="rtl">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-gold/5 via-black to-black opacity-50" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-cyan/5 via-black to-brand-black opacity-50" />
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
       
       <div className="relative z-10 text-center space-y-8 max-w-4xl mx-auto">
@@ -16,7 +16,7 @@ export default function ComingSoon() {
           transition={{ duration: 0.8 }}
           className="flex justify-center mb-8"
         >
-          <div className="w-32 h-32 bg-brand-gold/10 rounded-3xl flex items-center justify-center border border-brand-gold/20 shadow-[0_0_50px_rgba(212,175,55,0.2)]">
+          <div className="w-32 h-32 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border border-brand-cyan/20 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
             <img src="/roz.png" alt="Logo" className="w-24 h-24 object-contain" />
           </div>
         </motion.div>
@@ -25,7 +25,7 @@ export default function ComingSoon() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-6xl md:text-8xl font-black text-brand-gold tracking-tighter"
+          className="text-6xl md:text-8xl font-black text-brand-cyan tracking-tighter"
         >
           قريباً
         </motion.h1>

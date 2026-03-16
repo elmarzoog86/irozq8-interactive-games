@@ -179,10 +179,10 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
   }, [messages, gameState, highestBidder, currentCategory, startRound]);
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-black/95 relative">
+    <div className="flex-1 flex flex-col items-center justify-center p-8 bg-brand-black/95 relative">
       <button 
         onClick={onLeave}
-        className="absolute top-6 right-6 text-zinc-500 hover:text-brand-gold transition-colors flex items-center gap-2 font-bold bg-white/5 px-4 py-2 rounded-full"
+        className="absolute top-6 right-6 text-zinc-500 hover:text-brand-cyan transition-colors flex items-center gap-2 font-bold bg-white/5 px-4 py-2 rounded-full"
       >
         <ArrowRight className="w-5 h-5" />
         العودة للرئيسية
@@ -195,11 +195,11 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="w-24 h-24 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-brand-gold/30 shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+            className="w-24 h-24 bg-brand-cyan/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-brand-cyan/30 shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
           >
-            <Gavel className="w-12 h-12 text-brand-gold" />
+            <Gavel className="w-12 h-12 text-brand-cyan" />
           </motion.div>
-          <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-gold via-yellow-200 to-brand-gold mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+          <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan via-yellow-200 to-brand-cyan mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             مزاد الفئات
           </h1>
           <p className="text-xl text-zinc-400">راهن على عدد الإجابات التي يمكنك تذكرها!</p>
@@ -210,25 +210,25 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-black/50 border border-brand-gold/30 rounded-3xl p-8 w-full max-w-2xl text-center backdrop-blur-sm shadow-[0_0_50px_rgba(212,175,55,0.05)]"
+            className="bg-brand-black/50 border border-brand-cyan/30 rounded-3xl p-8 w-full max-w-2xl text-center backdrop-blur-sm shadow-[0_0_50px_rgba(0, 229, 255,0.05)]"
           >
-            <div className="bg-brand-gold/5 border border-brand-gold/20 rounded-2xl p-6 mb-8 text-right">
+            <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-6 mb-8 text-right">
               <div className="flex items-center gap-3 mb-4 justify-end">
-                <h3 className="text-xl font-bold text-brand-gold">طريقة اللعب</h3>
-                <Tag className="w-6 h-6 text-brand-gold" />
+                <h3 className="text-xl font-bold text-brand-cyan">طريقة اللعب</h3>
+                <Tag className="w-6 h-6 text-brand-cyan" />
               </div>
               <ul className="text-zinc-300 space-y-3 text-lg dir-rtl list-none">
                 <li className="flex items-center gap-2 justify-end">
                   <span>تظهر فئة معينة (مثال: عواصم عربية).</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
                 </li>
                 <li className="flex items-center gap-2 justify-end">
                   <span>اكتب رقم في الشات للمزايدة (مثال: 5).</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
                 </li>
                 <li className="flex items-center gap-2 justify-end text-right mt-1">
-                  <span>صاحب أعلى مزايدة يكتب إجاباته <span className="text-brand-gold font-bold">مباشرة في الشات</span> (كل إجابة برسالة عادية) قبل انتهاء الوقت!</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
+                  <span>صاحب أعلى مزايدة يكتب إجاباته <span className="text-brand-cyan font-bold">مباشرة في الشات</span> (كل إجابة برسالة عادية) قبل انتهاء الوقت!</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
                 </li>
               </ul>
             </div>
@@ -238,7 +238,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                 startGame();
                 startRound();
               }}
-              className="mt-4 bg-brand-gold text-black px-12 py-4 rounded-full font-bold text-xl hover:bg-yellow-400 transition-colors shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+              className="mt-4 bg-brand-cyan text-brand-black px-12 py-4 rounded-full font-bold text-xl hover:bg-cyan-400 transition-colors shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
             >
               بدء اللعبة
             </button>
@@ -247,19 +247,19 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
 
         {(gameState === 'bidding' || gameState === 'playing') && (
           <div className="w-full max-w-4xl space-y-6">
-            <div className="flex justify-between items-center text-brand-gold mb-4">
+            <div className="flex justify-between items-center text-brand-cyan mb-4">
               <div className="flex items-center gap-2">
                 <Trophy className="w-6 h-6" />
                 <span className="text-xl font-bold">الجولة {currentRound}/{maxRounds}</span>
               </div>
               <div className="flex items-center gap-2 text-2xl font-bold">
-                <Timer className={`w-8 h-8 ${timeLeft <= 5 ? 'text-red-500' : 'text-brand-gold'}`} />
+                <Timer className={`w-8 h-8 ${timeLeft <= 5 ? 'text-red-500' : 'text-brand-cyan'}`} />
                 <span className={timeLeft <= 5 ? 'text-red-500' : 'text-white'}>{timeLeft}</span>
               </div>
             </div>
 
-            <div className="bg-black/50 border border-brand-gold/30 rounded-3xl p-8 text-center shadow-xl">
-              <h2 className="text-3xl text-brand-gold mb-2 font-bold">الفئة المحددة:</h2>
+            <div className="bg-brand-black/50 border border-brand-cyan/30 rounded-3xl p-8 text-center shadow-xl">
+              <h2 className="text-3xl text-brand-cyan mb-2 font-bold">الفئة المحددة:</h2>
               <div className="text-5xl font-black text-white py-6 bg-white/5 rounded-2xl mb-6 border border-white/10 shadow-inner">
                 {currentCategory?.name}
               </div>
@@ -269,9 +269,9 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   <div className="text-2xl text-zinc-300 mb-4 animate-pulse">اكتب رقماً في الشات للمزايدة!</div>
                   <div className="flex flex-col items-center gap-2 mt-6">
                     {highestBidder ? (
-                      <div className="bg-brand-gold/20 border border-brand-gold/50 px-8 py-4 rounded-2xl">
+                      <div className="bg-brand-cyan/20 border border-brand-cyan/50 px-8 py-4 rounded-2xl">
                         <span className="text-xl text-zinc-400">أعلى مزايدة: </span>
-                        <span className="text-3xl font-bold text-brand-gold mx-2">{highestBidder.amount}</span>
+                        <span className="text-3xl font-bold text-brand-cyan mx-2">{highestBidder.amount}</span>
                         <span className="text-xl text-white">من {highestBidder.username}</span>
                       </div>
                     ) : (
@@ -283,9 +283,9 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
 
               {gameState === 'playing' && highestBidder && (
                 <div>
-                  <div className="bg-brand-gold/10 border border-brand-gold/30 rounded-2xl p-6 mb-6">
-                     <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-gold font-bold">{highestBidder.username}</span></p>
-                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-gold text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
+                  <div className="bg-brand-cyan/10 border border-brand-cyan/30 rounded-2xl p-6 mb-6">
+                     <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-cyan font-bold">{highestBidder.username}</span></p>
+                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-cyan text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
                      
                      {lastBidderMessage && (
                         <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-xl">
@@ -332,14 +332,14 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-black/50 border border-brand-gold/30 rounded-3xl p-12 text-center shadow-2xl w-full max-w-2xl"
+            className="bg-brand-black/50 border border-brand-cyan/30 rounded-3xl p-12 text-center shadow-2xl w-full max-w-2xl"
           >
-            <Trophy className="w-24 h-24 text-brand-gold mx-auto mb-6" />
+            <Trophy className="w-24 h-24 text-brand-cyan mx-auto mb-6" />
             <h2 className="text-4xl font-bold text-white mb-4">انتهت اللعبة!</h2>
             {winner ? (
-              <div className="bg-brand-gold/10 rounded-2xl p-6 mb-8 border border-brand-gold/20">
+              <div className="bg-brand-cyan/10 rounded-2xl p-6 mb-8 border border-brand-cyan/20">
                 <p className="text-xl text-zinc-300 mb-2">الفائز هو</p>
-                <p className="text-4xl font-black text-brand-gold">{winner.username}</p>
+                <p className="text-4xl font-black text-brand-cyan">{winner.username}</p>
                 <p className="text-2xl text-white mt-2">{winner.score} نقطة</p>
               </div>
             ) : (
@@ -356,15 +356,15 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
 
         {/* Players Scoreboard */}
         {(gameState === 'bidding' || gameState === 'playing' || gameState === 'game_over') && players.length > 0 && (
-          <div className="w-full max-w-4xl bg-black/40 border border-brand-gold/20 rounded-2xl p-6 overflow-hidden">
-            <h3 className="text-brand-gold font-bold text-xl mb-4 text-right">اللاعبين</h3>
+          <div className="w-full max-w-4xl bg-brand-black/40 border border-brand-cyan/20 rounded-2xl p-6 overflow-hidden">
+            <h3 className="text-brand-cyan font-bold text-xl mb-4 text-right">اللاعبين</h3>
             <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar flex-row-reverse">
               {players.sort((a,b) => b.score - a.score).map((p, i) => (
-                <div key={p.username} className="bg-black/60 border border-white/10 rounded-xl p-3 min-w-[200px] flex items-center justify-between">
-                   <div className="text-brand-gold font-bold text-xl">{p.score}</div>
+                <div key={p.username} className="bg-brand-black/60 border border-white/10 rounded-xl p-3 min-w-[200px] flex items-center justify-between">
+                   <div className="text-brand-cyan font-bold text-xl">{p.score}</div>
                    <div className="flex items-center gap-3">
                      <span className="text-white font-bold max-w-[100px] truncate">{p.username}</span>
-                     <div className="w-8 h-8 bg-brand-gold/20 rounded-full flex items-center justify-center text-brand-gold font-bold">
+                     <div className="w-8 h-8 bg-brand-cyan/20 rounded-full flex items-center justify-center text-brand-cyan font-bold">
                        {i + 1}
                      </div>
                    </div>
@@ -378,7 +378,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
         <div className="flex gap-4">
           <button
             onClick={startGame}
-            className="bg-brand-gold text-black px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_30px_rgba(212,175,55,0.3)] flex items-center gap-2"
+            className="bg-brand-cyan text-brand-black px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.3)] flex items-center gap-2"
           >
             <Play className="w-5 h-5" />
             إعادة تشغيل
@@ -388,20 +388,20 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
         {/* Sidebar (Leaderboard) */}
         <div className="w-[350px] flex flex-col gap-4 transition-all duration-300">
           {/* Leaderboard */}
-          <div className="bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl relative">
-            <div className="p-6 border-b border-brand-gold/20 bg-gradient-to-br from-brand-gold/10 to-transparent">
-              <h3 className="text-xl font-bold text-brand-gold mb-4">لوحة المتصدرين</h3>
+          <div className="bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative">
+            <div className="p-6 border-b border-brand-cyan/20 bg-gradient-to-br from-brand-cyan/10 to-transparent">
+              <h3 className="text-xl font-bold text-brand-cyan mb-4">لوحة المتصدرين</h3>
               
               <div className="flex flex-col gap-2">
                 {players.sort((a, b) => b.score - a.score).map((player, i) => (
                   <div key={player.username} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-brand-gold/20 rounded-full flex items-center justify-center text-brand-gold font-bold">
+                      <div className="w-8 h-8 bg-brand-cyan/20 rounded-full flex items-center justify-center text-brand-cyan font-bold">
                         {i + 1}
                       </div>
                       <span className="text-white font-bold">{player.username}</span>
                     </div>
-                    <div className="text-brand-gold font-bold text-xl">
+                    <div className="text-brand-cyan font-bold text-xl">
                       {player.score}
                     </div>
                   </div>

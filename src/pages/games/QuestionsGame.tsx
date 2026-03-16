@@ -57,15 +57,15 @@ export function QuestionsGame() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-brand-black text-white font-sans flex flex-col relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-zinc-900 to-black opacity-80" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-black via-zinc-900 to-brand-black opacity-80" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-2xl" />
       </div>
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between p-6 border-b border-yellow-500/20 bg-black/50 ">
+      <header className="relative z-10 flex items-center justify-between p-6 border-b border-cyan-500/20 bg-brand-black/50 ">
         <div className="flex items-center gap-4">
           <button 
             onClick={() => navigate('/games')}
@@ -73,7 +73,7 @@ export function QuestionsGame() {
           >
             <ArrowLeft className="w-5 h-5 text-zinc-300" />
           </button>
-          <h1 className="text-2xl font-bold font-arabic text-yellow-500 glow-gold-text">
+          <h1 className="text-2xl font-bold font-arabic text-cyan-500 glow-cyan-text">
             سين جيم
           </h1>
         </div>
@@ -90,16 +90,16 @@ export function QuestionsGame() {
         {/* Left Column: Game Area */}
         <div className="flex-1 flex flex-col gap-6">
           {gameState === 'lobby' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
-              <div className="w-24 h-24 bg-yellow-500/10 rounded-full flex items-center justify-center mb-8 border border-yellow-500/30 glow-gold">
-                <Users className="w-12 h-12 text-yellow-500" />
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-cyan-500/20 p-8 flex flex-col items-center justify-center ">
+              <div className="w-24 h-24 bg-cyan-500/10 rounded-full flex items-center justify-center mb-8 border border-cyan-500/30 glow-cyan">
+                <Users className="w-12 h-12 text-cyan-500" />
               </div>
               
               <h2 className="text-4xl font-bold font-arabic mb-4 text-white">
-                بانتظار <span className="text-yellow-500 glow-gold-text">اللاعبين...</span>
+                بانتظار <span className="text-cyan-500 glow-cyan-text">اللاعبين...</span>
               </h2>
               <p className="text-zinc-400 font-arabic text-lg mb-8">
-                اكتب <span className="text-yellow-500 font-mono bg-yellow-500/10 px-2 py-1 rounded">!join</span> في الشات للمشاركة
+                اكتب <span className="text-cyan-500 font-mono bg-cyan-500/10 px-2 py-1 rounded">!join</span> في الشات للمشاركة
               </p>
 
               <div className="flex items-center gap-6 mb-12">
@@ -128,8 +128,8 @@ export function QuestionsGame() {
               <button 
                 onClick={startGame}
                 disabled={players.length === 0}
-                className={`bg-yellow-500 hover:bg-yellow-400 text-black px-10 py-4 rounded-full font-bold font-arabic text-xl transition-all flex items-center gap-3 ${
-                  players.length === 0 ? 'opacity-50 cursor-not-allowed' : 'glow-gold'
+                className={`bg-cyan-500 hover:bg-cyan-400 text-brand-black px-10 py-4 rounded-full font-bold font-arabic text-xl transition-all flex items-center gap-3 ${
+                  players.length === 0 ? 'opacity-50 cursor-not-allowed' : 'glow-cyan'
                 }`}
               >
                 <Play className="w-6 h-6" />
@@ -139,20 +139,20 @@ export function QuestionsGame() {
           )}
 
           {gameState === 'playing' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col ">
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-cyan-500/20 p-8 flex flex-col ">
               <div className="flex justify-between items-center mb-8">
                 <div className="text-zinc-400 font-arabic">
-                  السؤال <span className="text-yellow-500 font-bold text-xl">{currentQuestion}</span> من {totalQuestions}
+                  السؤال <span className="text-cyan-500 font-bold text-xl">{currentQuestion}</span> من {totalQuestions}
                 </div>
-                <div className="text-4xl font-mono font-bold text-yellow-500 glow-gold-text">
+                <div className="text-4xl font-mono font-bold text-cyan-500 glow-cyan-text">
                   00:{timer.toString().padStart(2, '0')}
                 </div>
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center">
                 {/* Streamer Control Panel */}
-                <div className="w-full max-w-2xl bg-black/50 border border-zinc-800 rounded-xl p-8">
-                  <h3 className="text-xl font-bold font-arabic text-yellow-500 mb-6 text-right">
+                <div className="w-full max-w-2xl bg-brand-black/50 border border-zinc-800 rounded-xl p-8">
+                  <h3 className="text-xl font-bold font-arabic text-cyan-500 mb-6 text-right">
                     لوحة تحكم الستريمر
                   </h3>
                   
@@ -166,7 +166,7 @@ export function QuestionsGame() {
                         value={streamerAnswer}
                         onChange={(e) => setStreamerAnswer(e.target.value)}
                         placeholder="أدخل الإجابة هنا..."
-                        className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white text-right font-arabic focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 transition-all outline-none"
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white text-right font-arabic focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all outline-none"
                       />
                     </div>
 
@@ -179,7 +179,7 @@ export function QuestionsGame() {
                       </button>
                       <button 
                         onClick={handleNextQuestion}
-                        className="bg-yellow-500 hover:bg-yellow-400 text-black px-8 py-3 rounded-xl font-bold font-arabic transition-colors glow-gold"
+                        className="bg-cyan-500 hover:bg-cyan-400 text-brand-black px-8 py-3 rounded-xl font-bold font-arabic transition-colors glow-cyan"
                       >
                         السؤال التالي
                       </button>
@@ -191,22 +191,22 @@ export function QuestionsGame() {
           )}
 
           {gameState === 'results' && (
-            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-8 flex flex-col items-center justify-center ">
-              <Trophy className="w-24 h-24 text-yellow-500 mb-6 glow-gold-text" />
+            <div className="flex-1 bg-zinc-900/50 rounded-2xl border border-cyan-500/20 p-8 flex flex-col items-center justify-center ">
+              <Trophy className="w-24 h-24 text-cyan-500 mb-6 glow-cyan-text" />
               <h2 className="text-4xl font-bold font-arabic mb-8 text-white">
-                النتائج <span className="text-yellow-500 glow-gold-text">النهائية</span>
+                النتائج <span className="text-cyan-500 glow-cyan-text">النهائية</span>
               </h2>
               
               <div className="w-full max-w-md space-y-4">
                 {players.sort((a, b) => b.score - a.score).map((player, index) => (
                   <div key={player.id} className="flex items-center justify-between bg-zinc-800/80 border border-zinc-700 rounded-xl p-4">
                     <div className="flex items-center gap-4">
-                      <span className={`text-xl font-bold ${index === 0 ? 'text-yellow-500' : 'text-zinc-400'}`}>
+                      <span className={`text-xl font-bold ${index === 0 ? 'text-cyan-500' : 'text-zinc-400'}`}>
                         #{index + 1}
                       </span>
                       <span className="font-medium text-white">{player.username}</span>
                     </div>
-                    <span className="text-yellow-500 font-mono font-bold">{player.score}</span>
+                    <span className="text-cyan-500 font-mono font-bold">{player.score}</span>
                   </div>
                 ))}
               </div>
@@ -224,9 +224,9 @@ export function QuestionsGame() {
         {/* Right Column: Chat & Players */}
         <div className="w-96 flex flex-col gap-6">
           {/* Active Players */}
-          <div className="bg-zinc-900/50 rounded-2xl border border-yellow-500/20 p-6  flex flex-col h-1/3">
+          <div className="bg-zinc-900/50 rounded-2xl border border-cyan-500/20 p-6  flex flex-col h-1/3">
             <div className="flex items-center justify-between mb-4">
-              <span className="bg-yellow-500/10 text-yellow-500 px-3 py-1 rounded-full text-sm font-bold font-mono">
+              <span className="bg-cyan-500/10 text-cyan-500 px-3 py-1 rounded-full text-sm font-bold font-mono">
                 {players.length}
               </span>
               <h3 className="font-bold font-arabic text-white">اللاعبين النشطين</h3>
@@ -240,7 +240,7 @@ export function QuestionsGame() {
               ) : (
                 players.map(player => (
                   <div key={player.id} className="flex items-center justify-between bg-zinc-800/80 rounded-lg p-3 border border-zinc-700/50">
-                    <span className="text-yellow-500 font-mono text-sm">{player.score}</span>
+                    <span className="text-cyan-500 font-mono text-sm">{player.score}</span>
                     <span className="text-zinc-200 font-medium">{player.username}</span>
                   </div>
                 ))

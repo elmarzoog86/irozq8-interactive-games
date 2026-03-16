@@ -104,7 +104,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     if (gameState === 'lobby' && (text === '!join' || text === '!انضمام')) {
       setPlayers(prev => {
         if (prev.some(p => p.username === latestMessage.username)) return prev;
-        return [...prev, { id: prev.length + 1, username: latestMessage.username, color: latestMessage.color || '#D4AF37', status: 'alive', survivedShots: 0 }];
+        return [...prev, { id: prev.length + 1, username: latestMessage.username, color: latestMessage.color || '#00e5ff', status: 'alive', survivedShots: 0 }];
       });
     }
 
@@ -246,14 +246,14 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
   };
 
   return (
-    <div className="flex flex-col h-full bg-black/80 rounded-[40px] border border-brand-gold/20 p-8 shadow-2xl relative overflow-hidden font-arabic" dir="rtl">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent z-0 pointer-events-none" />
+    <div className="flex flex-col h-full bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 p-8 shadow-2xl relative overflow-hidden font-arabic" dir="rtl">
+      <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent z-0 pointer-events-none" />
       
       {/* Header */}
       <div className="flex items-center justify-between mb-8 relative z-10">
         <div>
           <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
-            <Skull className="w-8 h-8 text-brand-gold" />
+            <Skull className="w-8 h-8 text-brand-cyan" />
             روليت البقاء
           </h2>
           <p className="text-red-400/80 mt-1 text-sm font-bold">
@@ -262,7 +262,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         </div>
         <button 
           onClick={onLeave}
-          className="text-brand-gold/70 hover:text-brand-gold transition-colors text-sm flex items-center gap-2 bg-brand-gold/5 hover:bg-brand-gold/10 px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40"
+          className="text-brand-cyan/70 hover:text-brand-cyan transition-colors text-sm flex items-center gap-2 bg-brand-cyan/5 hover:bg-brand-cyan/10 px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40"
         >
           <ArrowLeft className="w-4 h-4 rotate-180" /> العودة للردهة
         </button>
@@ -278,8 +278,8 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                 onClick={() => setGameMode('no_shakhsana')}
                 className={`px-6 py-3 rounded-xl font-bold transition-all ${
                   gameMode === 'no_shakhsana'
-                    ? 'bg-brand-gold text-black scale-105 shadow-[0_0_15px_rgba(212,175,55,0.4)]'
-                    : 'bg-black/50 text-white/50 border border-white/10 hover:bg-white/10'
+                    ? 'bg-brand-cyan text-brand-black scale-105 shadow-[0_0_15px_rgba(0, 229, 255,0.4)]'
+                    : 'bg-brand-black/50 text-white/50 border border-white/10 hover:bg-white/10'
                 }`}
               >
                 بدون شخصنه (أرقام فقط)
@@ -289,31 +289,31 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                 className={`px-6 py-3 rounded-xl font-bold transition-all ${
                   gameMode === 'shakhsana'
                     ? 'bg-red-500 text-white scale-105 shadow-[0_0_15px_rgba(239,68,68,0.4)]'
-                    : 'bg-black/50 text-white/50 border border-white/10 hover:bg-white/10'
+                    : 'bg-brand-black/50 text-white/50 border border-white/10 hover:bg-white/10'
                 }`}
               >
                 تبي تشخصن؟ (تظهر الأسماء)
               </button>
             </div>
 
-            <div className="bg-black/70 border border-brand-gold/20 rounded-2xl p-8 w-full text-center mb-8 relative">
+            <div className="bg-brand-black/70 border border-brand-cyan/20 rounded-2xl p-8 w-full text-center mb-8 relative">
               {/* Tutorial Badge */}
-              <div className="absolute top-4 left-4 flex items-center gap-2 text-xs text-brand-gold bg-black/50 border border-brand-gold/20 px-3 py-1.5 rounded-lg">
+              <div className="absolute top-4 left-4 flex items-center gap-2 text-xs text-brand-cyan bg-brand-black/50 border border-brand-cyan/20 px-3 py-1.5 rounded-lg">
                 <Skull className="w-4 h-4" />
                 <span>كيف تلعب؟ اكتب <span className="font-bold">!join</span> - العجلة تختار شخصاً - يكتب رقم لاعب ليضربه أو يُنعشه!</span>
               </div>
               
-              <Users className="w-16 h-16 text-brand-gold/50 mx-auto mb-4 mt-6" />
+              <Users className="w-16 h-16 text-brand-cyan/50 mx-auto mb-4 mt-6" />
               <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
-              <p className="text-brand-gold/70 mb-6">اللاعبون المنضمون: <span className="text-brand-gold font-bold text-xl">{players.length}</span></p>
+              <p className="text-brand-cyan/70 mb-6">اللاعبون المنضمون: <span className="text-brand-cyan font-bold text-xl">{players.length}</span></p>
               
-              <div className="flex flex-col gap-2 w-full max-h-64 overflow-y-auto custom-scrollbar p-2 bg-black/80 rounded-xl border border-brand-gold/10">
+              <div className="flex flex-col gap-2 w-full max-h-64 overflow-y-auto custom-scrollbar p-2 bg-brand-black/80 rounded-xl border border-brand-cyan/10">
                 {players.length === 0 ? (
                   <div className="text-zinc-500 text-sm text-center py-4">انتظار انضمام لاعبين...</div>
                 ) : (
                   players.map(p => (
-                    <div key={p.username} className="flex justify-between items-center p-3 rounded-xl bg-black/70 border border-brand-gold/20 shadow-sm relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-brand-gold/5 group-hover:bg-brand-gold/10 transition-colors" />
+                    <div key={p.username} className="flex justify-between items-center p-3 rounded-xl bg-brand-black/70 border border-brand-cyan/20 shadow-sm relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-brand-cyan/5 group-hover:bg-brand-cyan/10 transition-colors" />
                         <span className="font-bold text-lg z-10" style={{ color: p.color }}>{p.username}</span>
                         <div className="w-3 h-3 rounded-full z-10 shadow-[0_0_10px_currentColor]" style={{ backgroundColor: p.color }} />
                     </div>
@@ -328,7 +328,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                 disabled={players.length < 2}
                 className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all ${
                   players.length >= 2 
-                    ? 'bg-brand-gold hover:bg-brand-gold-light text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:scale-105' 
+                    ? 'bg-brand-cyan hover:bg-brand-pink text-brand-black shadow-[0_0_20px_rgba(0, 229, 255,0.4)] hover:scale-105' 
                     : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
                 }`}
               >
@@ -349,7 +349,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
 
                  {/* Wheel container */}
                  <motion.div 
-                   className="w-[350px] h-[350px] relative rounded-full shadow-[0_0_60px_rgba(212,175,55,0.15)] overflow-hidden border-[6px] border-brand-gold/80 bg-zinc-900"
+                   className="w-[350px] h-[350px] relative rounded-full shadow-[0_0_60px_rgba(0, 229, 255,0.15)] overflow-hidden border-[6px] border-brand-cyan/80 bg-zinc-900"
                    animate={{ rotate: wheelRotation }}
                    transition={{ duration: gameState === 'spinning' ? 4.5 : 0, ease: [0.2, 0.8, 0.2, 1] }}
                  >
@@ -373,13 +373,13 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                  
                  {/* Center Spin Button / Result text */}
                  <div 
-                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-24 h-24 bg-black rounded-full border-4 border-brand-gold flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.9)] cursor-pointer group"
+                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-24 h-24 bg-brand-black rounded-full border-4 border-brand-cyan flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.9)] cursor-pointer group"
                    onClick={gameState === 'wheel' ? spinWheel : undefined}
                  >
                     {gameState === 'wheel' ? (
-                       <span className="font-black text-brand-gold text-2xl group-hover:scale-110 transition-transform">SPIN</span>
+                       <span className="font-black text-brand-cyan text-2xl group-hover:scale-110 transition-transform">SPIN</span>
                     ) : (
-                       <RefreshCw className="w-10 h-10 text-brand-gold animate-spin" />
+                       <RefreshCw className="w-10 h-10 text-brand-cyan animate-spin" />
                     )}
                  </div>
               </div>
@@ -389,9 +389,9 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
 
         {gameState === 'decision' && actor && (
            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} className="flex flex-col items-center w-full h-full">
-              <div className="bg-black/60 border border-brand-gold/30 rounded-2xl p-6 text-center mb-6 w-full max-w-4xl shadow-[0_0_30px_rgba(212,175,55,0.1)]">
-                 <h2 className="text-3xl font-bold text-white mb-2">دور اللاعب: <span className="underline decoration-brand-gold decoration-4" style={{color: actor.color}}>{actor.username}</span></h2>
-                 <p className="text-brand-gold/80 text-lg">يا {actor.username}، اكتب رقم اللاعب في الشات لتصويبه بالمسدس (إقصاء) أو لإنعاشه (إذا كان مقصياً)!</p>
+              <div className="bg-brand-black/60 border border-brand-cyan/30 rounded-2xl p-6 text-center mb-6 w-full max-w-4xl shadow-[0_0_30px_rgba(0, 229, 255,0.1)]">
+                 <h2 className="text-3xl font-bold text-white mb-2">دور اللاعب: <span className="underline decoration-brand-cyan decoration-4" style={{color: actor.color}}>{actor.username}</span></h2>
+                 <p className="text-brand-cyan/80 text-lg">يا {actor.username}، اكتب رقم اللاعب في الشات لتصويبه بالمسدس (إقصاء) أو لإنعاشه (إذا كان مقصياً)!</p>
                  
                  <div className="mt-4 flex justify-center">
                    <button onClick={() => setGameState('wheel')} className="flex items-center gap-2 text-sm bg-red-950/30 hover:bg-red-900/50 text-red-400 border border-red-900/50 px-4 py-2 rounded-xl transition-colors">
@@ -427,7 +427,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                       
                       {/* Chambers display */}
                       {p.status === 'alive' && (
-                        <div className="flex gap-1 mt-auto bg-black/50 p-2 rounded-lg w-full justify-center border border-zinc-800">
+                        <div className="flex gap-1 mt-auto bg-brand-black/50 p-2 rounded-lg w-full justify-center border border-zinc-800">
                           {[...Array(6)].map((_, i) => (
                              <div key={i} className={`w-2 h-4 rounded-sm ${i < (6 - p.survivedShots) ? 'bg-zinc-300' : 'bg-red-600/30'}`} />
                           ))}
@@ -444,7 +444,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
              initial={{ scale: 3, opacity: 0 }} 
              animate={{ scale: 1, opacity: 1 }} 
              transition={{ duration: 0.5, type: 'spring' }}
-             className="flex flex-col items-center justify-center text-center bg-black/80 rounded-3xl p-16 border-2 border-red-500/50 shadow-[0_0_100px_rgba(239,68,68,0.2)] w-full max-w-2xl relative overflow-hidden"
+             className="flex flex-col items-center justify-center text-center bg-brand-black/80 rounded-3xl p-16 border-2 border-red-500/50 shadow-[0_0_100px_rgba(239,68,68,0.2)] w-full max-w-2xl relative overflow-hidden"
           >
              <div className="absolute inset-0 bg-red-500/5 animate-pulse mix-blend-overlay pointer-events-none" />
              
@@ -475,7 +475,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         )}
 
         {gameState === 'result' && target && (
-          <motion.div initial={{scale:0.8, opacity:0}} animate={{scale:1, opacity:1}} className="flex flex-col items-center justify-center text-center bg-zinc-900 rounded-3xl p-12 border border-brand-gold/30 shadow-[0_0_80px_rgba(212,175,55,0.15)] w-full max-w-3xl">
+          <motion.div initial={{scale:0.8, opacity:0}} animate={{scale:1, opacity:1}} className="flex flex-col items-center justify-center text-center bg-zinc-900 rounded-3xl p-12 border border-brand-cyan/30 shadow-[0_0_80px_rgba(0, 229, 255,0.15)] w-full max-w-3xl">
              
              {(() => {
                 const updatedTarget = players.find(p => p.id === target.id);
@@ -488,7 +488,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                    return <Heart className="w-40 h-40 text-green-500 mb-8 animate-bounce drop-shadow-[0_0_30px_rgba(34,197,94,0.8)]" />
                 } else {
                    // Survived a shot
-                   return <Crosshair className="w-40 h-40 text-brand-gold mb-8 animate-pulse drop-shadow-[0_0_30px_rgba(212,175,55,0.5)]" />
+                   return <Crosshair className="w-40 h-40 text-brand-cyan mb-8 animate-pulse drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
                 }
              })()}
 
@@ -500,7 +500,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
 
         {gameState === 'finished' && (
           <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center text-center">
-            <div className="w-40 h-40 bg-brand-gold/20 rounded-full flex items-center justify-center mb-8 border-4 border-brand-gold shadow-[0_0_80px_rgba(212,175,55,0.6)]">
+            <div className="w-40 h-40 bg-brand-cyan/20 rounded-full flex items-center justify-center mb-8 border-4 border-brand-cyan shadow-[0_0_80px_rgba(0, 229, 255,0.6)]">
               <span className="text-7xl">👑</span>
             </div>
             <h2 className="text-5xl font-black text-white mb-2 drop-shadow-lg">الناجي الأخير!</h2>
@@ -512,7 +512,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
               <h3 className="text-4xl font-bold text-zinc-400 mb-10">الجميع خسروا بطريقة ما</h3>
             )}
             
-            <button onClick={resetGame} className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(212,175,55,0.3)] text-xl">
+            <button onClick={resetGame} className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(0, 229, 255,0.3)] text-xl">
               لعب مرة أخرى
             </button>
           </motion.div>

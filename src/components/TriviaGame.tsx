@@ -547,7 +547,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
         <div className="flex flex-col items-center justify-center h-full w-full max-w-2xl mx-auto">
           <div className="bg-zinc-800/80 border border-zinc-700 p-8 rounded-2xl w-full">
             <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-              <Settings className="w-8 h-8 text-brand-gold" />
+              <Settings className="w-8 h-8 text-brand-cyan" />
               إعدادات اللعبة
             </h2>
             
@@ -561,7 +561,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
                       onClick={() => setSettings({...settings, numQuestions: num})}
                       className={`py-3 rounded-xl font-bold transition-all border ${
                         settings.numQuestions === num 
-                          ? 'bg-brand-gold border-brand-gold-light text-black shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
+                          ? 'bg-brand-cyan border-brand-pink text-brand-black shadow-[0_0_15px_rgba(0, 229, 255,0.4)]' 
                           : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                       }`}
                     >
@@ -580,7 +580,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
                       onClick={() => setSettings({...settings, timePerQuestion: sec})}
                       className={`py-3 rounded-xl font-bold transition-all border ${
                         settings.timePerQuestion === sec 
-                          ? 'bg-brand-gold border-brand-gold-light text-black shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
+                          ? 'bg-brand-cyan border-brand-pink text-brand-black shadow-[0_0_15px_rgba(0, 229, 255,0.4)]' 
                           : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                       }`}
                     >
@@ -592,7 +592,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
               
               <button 
                 onClick={startGame}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 mt-8 shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 mt-8 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
               >
                 <Play className="w-5 h-5" /> بدء اللعبة
               </button>
@@ -607,13 +607,13 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
         <div className="flex flex-col items-center justify-center h-full w-full font-arabic" dir="rtl">
           <h2 className="text-4xl font-bold text-white mb-4">بانتظار اللاعبين</h2>
           <p className="text-xl text-zinc-400 mb-8">
-            اكتب <span className="text-brand-gold font-mono bg-brand-gold/10 px-3 py-1 rounded-lg border border-brand-gold/20">!join</span> في الدردشة للدخول
+            اكتب <span className="text-brand-cyan font-mono bg-brand-cyan/10 px-3 py-1 rounded-lg border border-brand-cyan/20">!join</span> في الدردشة للدخول
           </p>
           
           <div className="bg-zinc-800/80 border border-zinc-700 rounded-2xl p-6 w-full max-w-2xl mb-8 min-h-[200px] max-h-[400px] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
-              <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-sm font-bold border border-brand-gold/30">
+              <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
                 المجموع {activePlayers.length}
               </span>
             </div>
@@ -633,7 +633,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
           <button 
             onClick={startFirstQuestion}
             disabled={activePlayers.length === 0}
-            className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+            className="bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
           >
             بدء الجولة 1 <ArrowRight className="w-5 h-5 rotate-180" />
           </button>
@@ -643,16 +643,16 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
 
     if (phase === 'playing') {
       const renderStreamerPanel = (isPopout = false) => (
-        <div className={`bg-black/90  border-2 border-brand-gold/50 rounded-xl p-4 shadow-2xl ${isPopout ? 'w-full h-full border-0' : 'w-80'}`}>
+        <div className={`bg-brand-black/90  border-2 border-brand-cyan/50 rounded-xl p-4 shadow-2xl ${isPopout ? 'w-full h-full border-0' : 'w-80'}`}>
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-bold text-brand-gold flex items-center gap-2">
+            <h3 className="text-sm font-bold text-brand-cyan flex items-center gap-2">
               {!isPopout && <GripHorizontal className="w-4 h-4" />} تحكم الستريمر السري
             </h3>
             <div className="flex gap-2">
               {!isPopout && (
                 <button 
                   onClick={() => setIsPopoutOpen(true)} 
-                  className="text-zinc-400 hover:text-brand-gold transition-colors" 
+                  className="text-zinc-400 hover:text-brand-cyan transition-colors" 
                   title="فتح في نافذة جديدة"
                 >
                   <ExternalLink className="w-4 h-4" />
@@ -672,14 +672,14 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
                   value={streamerSecretAnswer}
                   onChange={e => setStreamerSecretAnswer(e.target.value)}
                   placeholder="اكتب إجابتك هنا..."
-                  className="w-full bg-black border border-brand-gold/30 rounded-lg pr-10 pl-4 py-2 text-white text-sm focus:ring-2 focus:ring-brand-gold outline-none"
+                  className="w-full bg-brand-black border border-brand-cyan/30 rounded-lg pr-10 pl-4 py-2 text-white text-sm focus:ring-2 focus:ring-brand-cyan outline-none"
                   onPointerDownCapture={e => e.stopPropagation()} // Prevent drag when typing
                 />
                 <EyeOff className="w-4 h-4 text-zinc-500 absolute right-3 top-2.5" />
               </div>
             </div>
             {lockedStreamerAnswer ? (
-              <div className="text-xs text-brand-gold text-center bg-brand-gold/10 py-2 rounded-lg border border-brand-gold/20">
+              <div className="text-xs text-brand-cyan text-center bg-brand-cyan/10 py-2 rounded-lg border border-brand-cyan/20">
                 تم إرسال الإجابة!
               </div>
             ) : (
@@ -717,7 +717,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
           {!showStreamerBox && (
             <button
               onClick={() => setShowStreamerBox(true)}
-              className="absolute top-4 right-4 bg-brand-gold/10 hover:bg-brand-gold/20 text-brand-gold border border-brand-gold/30 px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-colors z-10"
+              className="absolute top-4 right-4 bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 px-4 py-2 rounded-lg flex items-center gap-2 text-sm transition-colors z-10"
             >
               <EyeOff className="w-4 h-4" /> إظهار الصندوق السري
             </button>
@@ -742,8 +742,8 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl">
                 {questionData?.options.map((opt, i) => (
-                  <div key={i} className="bg-black/80 border border-brand-gold/20 p-6 rounded-xl text-center text-2xl font-bold text-white flex items-center justify-start gap-4 shadow-lg hover:border-brand-gold/50 transition-all">
-                    <span className="bg-brand-gold/20 text-brand-gold w-10 h-10 rounded-lg flex items-center justify-center text-xl shrink-0 border border-brand-gold/30">
+                  <div key={i} className="bg-brand-black/80 border border-brand-cyan/20 p-6 rounded-xl text-center text-2xl font-bold text-white flex items-center justify-start gap-4 shadow-lg hover:border-brand-cyan/50 transition-all">
+                    <span className="bg-brand-cyan/20 text-brand-cyan w-10 h-10 rounded-lg flex items-center justify-center text-xl shrink-0 border border-brand-cyan/30">
                       {i + 1}
                     </span>
                     <span className="flex-1 text-right">{opt}</span>
@@ -752,32 +752,32 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
               </div>
               
               <p className="mt-8 text-zinc-400 text-lg">
-                اكتب <span className="text-brand-gold font-bold">رقم الإجابة</span> في الدردشة للمشاركة!
+                اكتب <span className="text-brand-cyan font-bold">رقم الإجابة</span> في الدردشة للمشاركة!
               </p>
             </div>
           </div>
 
           {/* Live Leaderboard Sidebar */}
           <div className="w-80 flex flex-col gap-4">
-            <div className="flex-1 bg-black/70  border border-brand-gold/20 rounded-xl p-4 flex flex-col min-h-0">
+            <div className="flex-1 bg-brand-black/70  border border-brand-cyan/20 rounded-xl p-4 flex flex-col min-h-0">
               <h3 className="text-sm font-medium text-zinc-400 mb-3 flex items-center gap-2">
-                <Trophy className="w-4 h-4 text-brand-gold" /> لوحة الصدارة المباشرة
+                <Trophy className="w-4 h-4 text-brand-cyan" /> لوحة الصدارة المباشرة
               </h3>
               <div className="flex-1 overflow-y-auto space-y-2 pr-2">
                 {sortedPlayers.map((p, i) => (
                   <div key={p.username} className="flex items-center justify-between bg-white/5 px-3 py-2 rounded-lg border border-white/5">
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <span className={`font-bold text-sm ${i === 0 ? 'text-brand-gold' : i === 1 ? 'text-zinc-300' : i === 2 ? 'text-brand-gold/70' : 'text-zinc-500'}`}>
+                      <span className={`font-bold text-sm ${i === 0 ? 'text-brand-cyan' : i === 1 ? 'text-zinc-300' : i === 2 ? 'text-brand-cyan/70' : 'text-zinc-500'}`}>
                         #{i + 1}
                       </span>
                       <span className="text-zinc-200 text-sm truncate">{p.username}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-brand-gold font-mono text-sm">{p.score}</span>
+                      <span className="text-brand-cyan font-mono text-sm">{p.score}</span>
                       {p.currentAnswer ? (
-                        <CheckCircle2 className="w-4 h-4 text-brand-gold shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-brand-cyan shrink-0" />
                       ) : (
-                        <div className="w-4 h-4 rounded-full border-2 border-brand-gold/20 border-t-brand-gold animate-spin shrink-0" />
+                        <div className="w-4 h-4 rounded-full border-2 border-brand-cyan/20 border-t-brand-cyan animate-spin shrink-0" />
                       )}
                     </div>
                   </div>
@@ -798,10 +798,10 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
           <h2 className="text-3xl font-bold text-white mb-2">نتائج الجولة {currentQuestion}</h2>
           {questionData && <p className="text-xl text-zinc-300 mb-6 text-center">"{questionData.q}"</p>}
           
-          <div className="bg-black/80 border border-brand-gold/20 rounded-2xl p-6 w-full mb-6 flex justify-between items-center">
+          <div className="bg-brand-black/80 border border-brand-cyan/20 rounded-2xl p-6 w-full mb-6 flex justify-between items-center">
             <div>
               <p className="text-sm text-zinc-400 mb-1">الإجابة الصحيحة</p>
-              <p className="text-2xl font-bold text-brand-gold">{questionData?.a}</p>
+              <p className="text-2xl font-bold text-brand-cyan">{questionData?.a}</p>
             </div>
             <div className="text-left">
               <p className="text-sm text-zinc-400 mb-1">الإجابات الصحيحة</p>
@@ -810,7 +810,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
             {fastestPlayer && (
               <div className="text-left">
                 <p className="text-sm text-zinc-400 mb-1">الأسرع</p>
-                <p className="text-xl font-bold text-brand-gold flex items-center gap-2">
+                <p className="text-xl font-bold text-brand-cyan flex items-center gap-2">
                   <Clock className="w-4 h-4" /> {fastestPlayer.username} ({(settings.timePerQuestion - (fastestPlayer.answerTime || 0))} ثانية)
                 </p>
               </div>
@@ -830,7 +830,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
                 const hasAnswered = !!p.currentAnswer;
                 
                 return (
-                  <div key={p.username} className={`grid grid-cols-4 gap-4 p-3 rounded-lg items-center ${isCorrect ? 'bg-brand-gold/10 border border-brand-gold/20' : hasAnswered ? 'bg-white/5 border border-white/10' : 'bg-black/20 border border-white/5'}`}>
+                  <div key={p.username} className={`grid grid-cols-4 gap-4 p-3 rounded-lg items-center ${isCorrect ? 'bg-brand-cyan/10 border border-brand-cyan/20' : hasAnswered ? 'bg-white/5 border border-white/10' : 'bg-brand-black/20 border border-white/5'}`}>
                     <div className="flex items-center gap-2">
                       <span className="text-zinc-500 text-xs">#{i + 1}</span>
                       <span className="text-zinc-200 font-medium truncate">{p.username}</span>
@@ -859,7 +859,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
 
           <button 
             onClick={startNextQuestion}
-            className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg w-full max-w-md shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+            className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg w-full max-w-md shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
           >
             {currentQuestion >= settings.numQuestions ? 'إنهاء اللعبة' : 'السؤال التالي'} <ArrowRight className="w-5 h-5 rotate-180" />
           </button>
@@ -870,7 +870,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
     if (phase === 'final_results') {
       return (
         <div className="flex flex-col items-center justify-center h-full w-full max-w-4xl mx-auto font-arabic" dir="rtl">
-          <Trophy className="w-20 h-20 text-brand-gold mb-6" />
+          <Trophy className="w-20 h-20 text-brand-cyan mb-6" />
           <h2 className="text-5xl font-black text-white mb-2 tracking-tight">لوحة الصدارة النهائية</h2>
           <p className="text-xl text-zinc-400 mb-12">انتهت اللعبة! إليكم النتائج النهائية.</p>
           
@@ -882,25 +882,25 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
                 transition={{ delay: i * 0.1 }}
                 key={p.username} 
                 className={`flex items-center justify-between p-4 rounded-xl border ${
-                  i === 0 ? 'bg-brand-gold/20 border-brand-gold/50' :
+                  i === 0 ? 'bg-brand-cyan/20 border-brand-cyan/50' :
                   i === 1 ? 'bg-zinc-300/20 border-zinc-300/50' :
-                  i === 2 ? 'bg-amber-600/20 border-amber-600/50' :
-                  'bg-black/70 border-brand-gold/10'
+                  i === 2 ? 'bg-cyan-600/20 border-cyan-600/50' :
+                  'bg-brand-black/70 border-brand-cyan/10'
                 }`}
               >
                 <div className="flex items-center gap-4">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                    i === 0 ? 'bg-brand-gold text-black' :
+                    i === 0 ? 'bg-brand-cyan text-brand-black' :
                     i === 1 ? 'bg-zinc-300 text-zinc-900' :
-                    i === 2 ? 'bg-amber-600 text-amber-950' :
-                    'bg-black text-brand-gold/50 border border-brand-gold/20'
+                    i === 2 ? 'bg-cyan-600 text-amber-950' :
+                    'bg-brand-black text-brand-cyan/50 border border-brand-cyan/20'
                   }`}>
                     {i + 1}
                   </div>
                   <span className={`text-xl font-bold ${
-                    i === 0 ? 'text-brand-gold' :
+                    i === 0 ? 'text-brand-cyan' :
                     i === 1 ? 'text-zinc-300' :
-                    i === 2 ? 'text-amber-500' :
+                    i === 2 ? 'text-cyan-500' :
                     'text-zinc-200'
                   }`}>{p.username}</span>
                 </div>
@@ -915,13 +915,13 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
           <div className="flex gap-4">
             <button 
               onClick={() => setPhase('config')}
-              className="bg-black/70 hover:bg-black/80 text-white font-bold py-3 px-8 rounded-xl transition-colors border border-brand-gold/20 hover:border-brand-gold/40"
+              className="bg-brand-black/70 hover:bg-brand-black/80 text-white font-bold py-3 px-8 rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
             >
               اللعب مرة أخرى
             </button>
             <button 
               onClick={onLeave}
-              className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-3 px-8 rounded-xl transition-colors shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+              className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-3 px-8 rounded-xl transition-colors shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
             >
               العودة للألعاب
             </button>
@@ -934,18 +934,18 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
   };
 
   return (
-    <div className="flex gap-8 h-full bg-black w-full max-w-[1600px] mx-auto">
+    <div className="flex gap-8 h-full bg-brand-black w-full max-w-[1600px] mx-auto">
       {/* Main Trivia Area */}
-      <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
-        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
+      <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
+        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
             {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
             {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
           </button>
 
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent" />
         <button 
           onClick={onLeave} 
-          className="absolute top-6 right-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-brand-gold/5 px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40"
+          className="absolute top-6 right-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-50 bg-brand-cyan/5 px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40"
         >
           <ArrowRight className="w-5 h-5" /> العودة للردهة
         </button>
@@ -958,7 +958,7 @@ export const TriviaGame: React.FC<TriviaGameProps> = ({ messages, onLeave, chann
       {/* Twitch Chat Sidebar */}
       {showChat && (
         <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
             <TwitchChat 
               channelName={channelName}
               messages={messages}

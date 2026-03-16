@@ -322,9 +322,9 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
   const deadPlayers = Object.entries(players).filter(([_, p]) => p.isDead);
 
   return (
-    <div className="flex w-full h-full gap-8 bg-black/50 overflow-hidden font-arabic" dir="rtl">
-      <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-black/80  flex flex-col relative overflow-hidden">
-        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
+    <div className="flex w-full h-full gap-8 bg-brand-black/50 overflow-hidden font-arabic" dir="rtl">
+      <div className="flex-1 rounded-[40px] border border-orange-500/20 bg-brand-black/80  flex flex-col relative overflow-hidden">
+        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
             {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
             {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
           </button>
@@ -332,7 +332,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         
         <AnimatePresence>
           {mode === 'lobby' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-black/90 to-black overflow-y-auto">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-brand-black/90 to-brand-black overflow-y-auto">
               <Skull className="w-24 h-24 text-orange-500 mb-6 drop-shadow-[0_0_30px_rgba(249,115,22,0.5)]" />
               <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">??????? <span className="text-orange-500">???????</span></h1>
               <p className="text-orange-200/60 text-xl font-medium mb-8 max-w-3xl text-center">
@@ -340,23 +340,23 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mb-8 w-full">
-                <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
+                <div className="bg-brand-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!join</div>
                    <div className="text-white/80 text-sm">???????? ??? ?????? (100 ???? ???).</div>
                 </div>
-                <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
+                <div className="bg-brand-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!loot</div>
                    <div className="text-white/80 text-sm">????? ?? ????? ???? ?? ????.</div>
                 </div>
-                <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
+                <div className="bg-brand-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!attack @???</div>
                    <div className="text-white/80 text-sm">??????? ???? ???. (15 ????? ??????). ???? ?? ???? ????? ????? 25% ????? ???? ????? 10%.</div>
                 </div>
-                <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
+                <div className="bg-brand-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!heal</div>
                    <div className="text-white/80 text-sm">?????? 25 ???? ???. (30 ????? ??????).</div>
                 </div>
-                <div className="bg-black/50 border border-orange-500/30 p-4 rounded-2xl">
+                <div className="bg-brand-black/50 border border-orange-500/30 p-4 rounded-2xl">
                    <div className="font-bold text-orange-400 mb-1 text-lg">!grab</div>
                    <div className="text-white/80 text-sm">??????? ????????? ????????? ??? ?????? (????? ????????).</div>
                 </div>
@@ -370,7 +370,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                 ???????? ????????: <span className="text-orange-500">{Object.keys(players).length}</span>
               </div>
 
-              <div className="w-full max-w-4xl bg-black/80 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
+              <div className="w-full max-w-4xl bg-brand-black/80 border border-orange-500/10 rounded-2xl p-4 mb-8 max-h-48 overflow-y-auto custom-scrollbar flex flex-wrap gap-2 justify-center content-start">
                  {Object.keys(players).length === 0 ? (
                     <span className="text-white/30 italic">??????? ?????? ?????????...</span>
                  ) : (
@@ -404,7 +404,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         </AnimatePresence>
 
         {mode !== 'lobby' && (
-          <div className="p-6 flex justify-between items-center z-10 border-b border-orange-500/10 bg-black/70">
+          <div className="p-6 flex justify-between items-center z-10 border-b border-orange-500/10 bg-brand-black/70">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center border border-orange-500/30">
                 <Crosshair className="w-6 h-6 text-orange-500" />
@@ -415,16 +415,16 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
               </div>
             </div>
             
-            <div className={`flex items-center gap-3 px-6 py-2 rounded-xl border-2 ${timer > 0 && timer % 30 < 5 ? 'bg-red-500/20 border-red-500 text-red-500 animate-pulse' : 'bg-black/50 border-orange-500/30 text-orange-500'}`}>
+            <div className={`flex items-center gap-3 px-6 py-2 rounded-xl border-2 ${timer > 0 && timer % 30 < 5 ? 'bg-red-500/20 border-red-500 text-red-500 animate-pulse' : 'bg-brand-black/50 border-orange-500/30 text-orange-500'}`}>
               <Timer className="w-5 h-5" />
               <span className="text-2xl font-mono font-black">{Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</span>
             </div>
             
             <div className="flex gap-2">
-                <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-3 bg-black/50 rounded-xl border border-white/10 text-white/50 hover:text-orange-400 cursor-pointer">
+                <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-3 bg-brand-black/50 rounded-xl border border-white/10 text-white/50 hover:text-orange-400 cursor-pointer">
                   {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
                 </button>
-                <button onClick={onLeave} className="p-3 bg-black/50 rounded-xl border border-white/10 text-white/50 hover:text-red-400 cursor-pointer">
+                <button onClick={onLeave} className="p-3 bg-brand-black/50 rounded-xl border border-white/10 text-white/50 hover:text-red-400 cursor-pointer">
                   <XCircle className="w-5 h-5" />
                 </button>
             </div>
@@ -434,11 +434,11 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
         {mode === 'playing' && (
           <div className="flex-1 flex gap-6 p-6 overflow-hidden z-10">
             {/* Grid of Players */}
-            <div className="flex-1 bg-black/30 rounded-3xl border border-white/5 p-6 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 bg-brand-black/30 rounded-3xl border border-white/5 p-6 overflow-y-auto custom-scrollbar">
                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                   <AnimatePresence>
                      {Object.entries(players).sort((a,b) => b[1].hp - a[1].hp).map(([uname, p]) => (
-                        <motion.div layout key={uname} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: p.isDead ? 0.4 : 1, scale: 1 }} className={`p-4 rounded-2xl border ${p.isDead ? 'bg-black/80 border-red-900/50 grayscale' : 'bg-black/80 border-orange-500/20'} relative overflow-hidden`}>
+                        <motion.div layout key={uname} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: p.isDead ? 0.4 : 1, scale: 1 }} className={`p-4 rounded-2xl border ${p.isDead ? 'bg-brand-black/80 border-red-900/50 grayscale' : 'bg-brand-black/80 border-orange-500/20'} relative overflow-hidden`}>
                            {p.hp <= 30 && !p.isDead && <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none" />}
                            <div className="flex justify-between items-start mb-2 relative z-10">
                               <span className="font-bold text-lg text-white truncate max-w-[70%]">{uname}</span>
@@ -446,7 +446,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
                            </div>
                            <div className="flex items-center gap-2 mb-2 relative z-10">
                               <Heart className={`w-4 h-4 ${p.isDead ? 'text-zinc-600' : 'text-red-500'}`} />
-                              <div className="flex-1 h-3 bg-black rounded-full overflow-hidden border border-white/10">
+                              <div className="flex-1 h-3 bg-brand-black rounded-full overflow-hidden border border-white/10">
                                  <motion.div className={`h-full ${p.hp > 50 ? 'bg-green-500' : p.hp > 20 ? 'bg-orange-500' : 'bg-red-500'}`} animate={{ width: `${Math.max(0, p.hp)}%` }} />
                               </div>
                               <span className="text-xs font-mono font-bold w-8 text-right text-white/70">{Math.floor(p.hp)}</span>
@@ -461,7 +461,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
             </div>
 
             {/* Kill Feed */}
-            <div className="w-80 bg-black/70 border border-orange-500/10 rounded-3xl p-4 flex flex-col shadow-xl">
+            <div className="w-80 bg-brand-black/70 border border-orange-500/10 rounded-3xl p-4 flex flex-col shadow-xl">
                <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm flex items-center justify-center gap-2">
                  <Zap className="w-4 h-4" /> ??? ???????
                </h3>
@@ -480,14 +480,14 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
 
         <AnimatePresence>
           {mode === 'game_over' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-black/95  flex flex-col items-center justify-center p-8">
-              <Crown className="w-40 h-40 text-brand-gold mb-6 drop-shadow-[0_0_50px_rgba(212,175,55,1)]" />
-              <h2 className="text-3xl text-brand-gold/80 font-bold mb-2">?????? ??????</h2>
-              <h1 className="text-7xl font-black text-white mb-8 bg-gradient-to-br from-brand-gold via-yellow-200 to-orange-500 text-transparent bg-clip-text">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-brand-black/95  flex flex-col items-center justify-center p-8">
+              <Crown className="w-40 h-40 text-brand-cyan mb-6 drop-shadow-[0_0_50px_rgba(0, 229, 255,1)]" />
+              <h2 className="text-3xl text-brand-cyan/80 font-bold mb-2">?????? ??????</h2>
+              <h1 className="text-7xl font-black text-white mb-8 bg-gradient-to-br from-brand-cyan via-yellow-200 to-orange-500 text-transparent bg-clip-text">
                 {winner}
               </h1>
               <div className="flex gap-4">
-                 <button onClick={() => { setMode('lobby'); setPlayers({}); }} className="mt-8 bg-brand-gold text-black font-black px-12 py-4 rounded-full hover:scale-105 transition-transform text-xl shadow-[0_0_30px_rgba(212,175,55,0.4)] cursor-pointer">
+                 <button onClick={() => { setMode('lobby'); setPlayers({}); }} className="mt-8 bg-brand-cyan text-brand-black font-black px-12 py-4 rounded-full hover:scale-105 transition-transform text-xl shadow-[0_0_30px_rgba(0, 229, 255,0.4)] cursor-pointer">
                    ????? ????????
                  </button>
               </div>
@@ -498,7 +498,7 @@ export function ChatRoyaleGame({ messages = [], onLeave, channelName, isConnecte
       
       {showChat && mode !== 'lobby' && (
         <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
             <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
           </div>
         </div>

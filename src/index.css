@@ -4,12 +4,12 @@
 @theme {
   --font-sans: "Inter", "Cairo", ui-sans-serif, system-ui, sans-serif;
   --font-arabic: "Cairo", ui-sans-serif, system-ui, sans-serif;
-  
-  --color-brand-gold: #d4af37;
-  --color-brand-gold-light: #f1c40f;
-  --color-brand-gold-dark: #996515;
-  --color-brand-black: #050505;
-  --color-brand-black-light: #121212;
+
+  --color-brand-cyan: #00e5ff;
+  --color-brand-pink: #ff00ff;
+  --color-brand-indigo: #2962ff;
+  --color-brand-black: #0b0f19;
+  --color-brand-black-light: #151e32;
 }
 
 body {
@@ -18,40 +18,40 @@ body {
   font-family: var(--font-sans);
 }
 
-.glow-gold {
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);
 }
 
-.glow-gold-strong {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+.glow-cyan-strong {
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
 }
 
-.glow-gold-text {
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+.glow-cyan-text {
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
 }
 
-.border-gold {
-  border: 1px solid rgba(212, 175, 55, 0.3);
+.border-cyan {
+  border: 1px solid rgba(0, 229, 255, 0.3);
 }
 
-.border-gold-strong {
-  border: 2px solid rgba(212, 175, 55, 0.6);
+.border-cyan-strong {
+  border: 2px solid rgba(0, 229, 255, 0.6);
 }
 
-.text-gold {
-  color: var(--color-brand-gold);
+.text-cyan {
+  color: var(--color-brand-cyan);
 }
 
-.text-gold-light {
-  color: var(--color-brand-gold-light);
+.text-pink {
+  color: var(--color-brand-pink);
 }
 
-.bg-gold-gradient {
-  background: linear-gradient(135deg, #d4af37 0%, #f1c40f 50%, #996515 100%);
+.bg-cyan-gradient {
+  background: linear-gradient(135deg, #00e5ff 0%, #ff00ff 50%, #2962ff 100%);
 }
 
 .bg-black-gradient {
-  background: linear-gradient(to bottom, #0a0a0a 0%, #050505 100%);
+  background: linear-gradient(to bottom, #0d1222 0%, #0b0f19 100%);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -64,15 +64,13 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(234, 179, 8, 0.2);
+  background: rgba(0, 229, 255, 0.2);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(234, 179, 8, 0.4);
-}
-
-.preserve-3d {
+  background: rgba(0, 229, 255, 0.4);
+}.preserve-3d {
   transform-style: preserve-3d;
 }
 

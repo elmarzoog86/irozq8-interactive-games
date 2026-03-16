@@ -257,7 +257,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         <div className="flex flex-col items-center justify-center h-full w-full max-w-2xl mx-auto font-arabic" dir="rtl">
           <div className="bg-zinc-800/80 border border-zinc-700 p-8 rounded-2xl w-full">
             <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
-              <Swords className="w-8 h-8 text-brand-gold" />
+              <Swords className="w-8 h-8 text-brand-cyan" />
               إعدادات حرب الفواكه
             </h2>
             
@@ -269,11 +269,11 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     onClick={() => setMode('voting')}
                     className={`p-6 rounded-xl border-2 text-right transition-all ${
                       mode === 'voting' 
-                        ? 'bg-brand-gold/10 border-brand-gold text-white shadow-[0_0_20px_rgba(212,175,55,0.2)]' 
+                        ? 'bg-brand-cyan/10 border-brand-cyan text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
                         : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                     }`}
                   >
-                    <Users className={`w-8 h-8 mb-3 ${mode === 'voting' ? 'text-brand-gold' : 'text-zinc-500'}`} />
+                    <Users className={`w-8 h-8 mb-3 ${mode === 'voting' ? 'text-brand-cyan' : 'text-zinc-500'}`} />
                     <h3 className="text-lg font-bold mb-1">نمط التصويت</h3>
                     <p className="text-sm opacity-80">الدردشة تصوت لإقصاء فاكهة في كل جولة.</p>
                   </button>
@@ -282,11 +282,11 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     onClick={() => setMode('roulette')}
                     className={`p-6 rounded-xl border-2 text-right transition-all ${
                       mode === 'roulette' 
-                        ? 'bg-brand-gold/10 border-brand-gold text-white shadow-[0_0_20px_rgba(212,175,55,0.2)]' 
+                        ? 'bg-brand-cyan/10 border-brand-cyan text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
                         : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                     }`}
                   >
-                    <Dices className={`w-8 h-8 mb-3 ${mode === 'roulette' ? 'text-brand-gold' : 'text-zinc-500'}`} />
+                    <Dices className={`w-8 h-8 mb-3 ${mode === 'roulette' ? 'text-brand-cyan' : 'text-zinc-500'}`} />
                     <h3 className="text-lg font-bold mb-1">نمط الروليت</h3>
                     <p className="text-sm opacity-80">يتم اختيار لاعب عشوائي لإقصاء شخص ما.</p>
                   </button>
@@ -295,7 +295,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
               
               <button 
                 onClick={() => setPhase('joining')}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 mt-8 shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 rounded-xl transition-colors flex items-center justify-center gap-2 mt-8 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
               >
                 <Play className="w-5 h-5" /> فتح الردهة
               </button>
@@ -310,13 +310,13 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         <div className="flex flex-col items-center justify-center h-full w-full font-arabic" dir="rtl">
           <h2 className="text-4xl font-bold text-white mb-4">بانتظار اللاعبين</h2>
           <p className="text-xl text-zinc-400 mb-8">
-            اكتب <span className="text-brand-gold font-mono bg-brand-gold/10 px-3 py-1 rounded-lg border border-brand-gold/20">!join</span> في الدردشة للحصول على فاكهتك!
+            اكتب <span className="text-brand-cyan font-mono bg-brand-cyan/10 px-3 py-1 rounded-lg border border-brand-cyan/20">!join</span> في الدردشة للحصول على فاكهتك!
           </p>
           
           <div className="bg-zinc-800/80 border border-zinc-700 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
-              <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-sm font-bold border border-brand-gold/30">
+              <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
                 {allPlayersList.length} / {ALL_FRUITS.length} الأقصى
               </span>
             </div>
@@ -346,7 +346,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
           <button 
             onClick={startGame}
             disabled={allPlayersList.length < 2}
-            className="bg-brand-gold hover:bg-brand-gold-light disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+            className="bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
           >
             بدء الحرب <Swords className="w-5 h-5" />
           </button>
@@ -361,7 +361,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-3xl font-black text-white flex items-center gap-3">
-                <Swords className="w-8 h-8 text-brand-gold" />
+                <Swords className="w-8 h-8 text-brand-cyan" />
                 حرب الفواكه: {mode === 'voting' ? 'نمط التصويت' : 'نمط الروليت'}
               </h2>
               <p className="text-zinc-400 mt-1">{activePlayers.length} فواكه متبقية</p>
@@ -379,17 +379,17 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             {mode === 'voting' ? (
               showRoundResult ? (
                 <div className="text-center">
-                  <Skull className="w-16 h-16 text-brand-gold/50 mx-auto mb-4" />
+                  <Skull className="w-16 h-16 text-brand-cyan/50 mx-auto mb-4" />
                   <h3 className="text-3xl font-bold text-white mb-2">
                     تم إقصاء {eliminatedThisRound?.username}!
                   </h3>
-                   <p className="text-xl text-brand-gold mb-4 font-bold">
+                   <p className="text-xl text-brand-cyan mb-4 font-bold">
                      كان يحمل فاكهة {eliminatedThisRound?.fruit.emoji} {eliminatedThisRound?.fruit.name}
                   </p>
                   <p className="text-zinc-400 mb-6">لقد حصلوا على أكبر عدد من الأصوات.</p>
                   <button 
                     onClick={startVotingRound}
-                    className="bg-brand-gold hover:bg-brand-gold-light text-black px-8 py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                    className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-8 py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
                   >
                     الجولة التالية
                   </button>
@@ -398,7 +398,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                 <div className="text-center flex flex-col items-center">
                   <h3 className="text-3xl font-bold text-white mb-4">صوت للإقصاء!</h3>
                   <p className="text-xl text-zinc-400 mb-6">
-                    اكتب <span className="text-brand-gold font-bold">اسم الفاكهة</span> أو <span className="text-brand-gold font-bold">الرمز التعبيري</span> في الدردشة للتصويت.
+                    اكتب <span className="text-brand-cyan font-bold">اسم الفاكهة</span> أو <span className="text-brand-cyan font-bold">الرمز التعبيري</span> في الدردشة للتصويت.
                   </p>
                   <button
                     onClick={handleVotingRoundEnd}
@@ -416,7 +416,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     <h3 className="text-3xl font-bold text-white mb-6">أدر لاختيار الجلاد</h3>
                     <button 
                       onClick={spinRoulette}
-                      className="bg-brand-gold hover:bg-brand-gold-light text-black px-12 py-4 rounded-xl font-bold text-xl w-full flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+                      className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-12 py-4 rounded-xl font-bold text-xl w-full flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
                     >
                       <Dices className="w-6 h-6" /> تدوير الروليت
                     </button>
@@ -440,7 +440,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                 {rouletteState === 'waiting' && selectedPlayer && (
                   <div className="py-4">
                     <div className="text-6xl mb-4 animate-bounce">{selectedPlayer.fruit.emoji}</div>
-                    <h3 className="text-3xl font-bold text-brand-gold mb-2">{selectedPlayer.fruit.name}</h3>
+                    <h3 className="text-3xl font-bold text-brand-cyan mb-2">{selectedPlayer.fruit.name}</h3>
                     <p className="text-lg text-zinc-300">
                       لديك القوة! اكتب اسم فاكهة أو رمزاً تعبيرياً في الدردشة لإقصائهم.
                     </p>
@@ -464,12 +464,12 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                       scale: p.isAlive ? 1 : 0.95
                     }}
                     key={p.username} 
-                    className={`bg-black/70 border p-4 rounded-xl flex flex-col items-center text-center relative overflow-hidden ${
-                      p.isAlive ? 'border-brand-gold/20' : 'border-white/5 grayscale'
-                    } ${mode === 'roulette' && rouletteState === 'waiting' && selectedPlayer?.username === p.username ? 'ring-2 ring-brand-gold shadow-[0_0_15px_rgba(212,175,55,0.3)]' : ''}`}
+                    className={`bg-brand-black/70 border p-4 rounded-xl flex flex-col items-center text-center relative overflow-hidden ${
+                      p.isAlive ? 'border-brand-cyan/20' : 'border-white/5 grayscale'
+                    } ${mode === 'roulette' && rouletteState === 'waiting' && selectedPlayer?.username === p.username ? 'ring-2 ring-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.3)]' : ''}`}
                   >
                     {!p.isAlive && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-black/80 backdrop-blur-[1px]">
+                      <div className="absolute inset-0 flex items-center justify-center z-10 bg-brand-black/80 backdrop-blur-[1px]">
                         <XCircle className="w-16 h-16 text-white/20" />
                       </div>
                     )}
@@ -483,7 +483,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     
                     {/* Vote Count Badge */}
                     {mode === 'voting' && p.isAlive && getVoteCount(p.fruit.name) > 0 && !showRoundResult && (
-                      <div className="absolute top-2 left-2 bg-brand-gold text-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border border-brand-gold-light">
+                      <div className="absolute top-2 left-2 bg-brand-cyan text-brand-black text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border border-brand-pink">
                         {getVoteCount(p.fruit.name)}
                       </div>
                     )}
@@ -500,17 +500,17 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
       const winner = activePlayers[0];
       return (
         <div className="flex flex-col items-center justify-center h-full w-full max-w-4xl mx-auto text-center font-arabic" dir="rtl">
-          <Trophy className="w-24 h-24 text-brand-gold mb-8 glow-gold" />
+          <Trophy className="w-24 h-24 text-brand-cyan mb-8 glow-cyan" />
           <h2 className="text-6xl font-black text-white mb-4 tracking-tight">بطل حرب الفواكه!</h2>
           
           {winner ? (
             <motion.div 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="bg-black/80 border border-brand-gold/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(212,175,55,0.1)]"
+              className="bg-brand-black/80 border border-brand-cyan/30 p-12 rounded-3xl mb-12 shadow-[0_0_50px_rgba(0, 229, 255,0.1)]"
             >
               <div className="text-9xl mb-6">{winner.fruit.emoji}</div>
-              <h3 className="text-4xl font-bold text-brand-gold mb-2">{winner.username}</h3>
+              <h3 className="text-4xl font-bold text-brand-cyan mb-2">{winner.username}</h3>
               <p className="text-xl text-zinc-400">الصامد الأخير بفاكهة {winner.fruit.name}!</p>
             </motion.div>
           ) : (
@@ -529,7 +529,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             </button>
             <button 
               onClick={onLeave}
-              className="bg-brand-gold hover:bg-brand-gold-light text-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(212,175,55,0.2)]"
+              className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
             >
               العودة للألعاب
             </button>
@@ -542,18 +542,18 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
   };
 
   return (
-    <div className="flex gap-8 h-full bg-black w-full max-w-[1600px] mx-auto">
+    <div className="flex gap-8 h-full bg-brand-black w-full max-w-[1600px] mx-auto">
       {/* Main Game Area */}
-      <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
-        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-[90] bg-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40 shadow-xl">
+      <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
+        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
             {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
             {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
           </button>
 
-        <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent" />
         <button 
           onClick={onLeave} 
-          className="absolute top-6 right-6 text-brand-gold/70 hover:text-brand-gold flex items-center gap-2 transition-colors z-50 bg-brand-gold/5 px-4 py-2 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40"
+          className="absolute top-6 right-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-50 bg-brand-cyan/5 px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40"
         >
           <ArrowLeft className="w-5 h-5 rotate-180" /> العودة للردهة
         </button>
@@ -565,10 +565,10 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
 
        {/* Active Players Sidebar */}
        <div className="w-80 flex flex-col gap-4">
-        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
-           <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent pointer-events-none" />
+        <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl p-6 flex flex-col relative font-arabic" dir="rtl">
+           <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent pointer-events-none" />
            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
-             <Trophy className="w-6 h-6 text-brand-gold" />
+             <Trophy className="w-6 h-6 text-brand-cyan" />
              المحاربين ({Object.values(players).length})
            </h3>
            
@@ -578,7 +578,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                  key={player.username}
                  className={`flex items-center justify-between p-3 rounded-xl border transition-all ${
                    player.isAlive 
-                     ? 'bg-black/70 border-white/5 hover:border-brand-gold/30' 
+                     ? 'bg-brand-black/70 border-white/5 hover:border-brand-cyan/30' 
                      : 'bg-red-900/10 border-red-500/20 opacity-60'
                  }`}
                >
@@ -605,7 +605,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         {/* Twitch Chat Sidebar */}
       {showChat && (
         <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-black/80 rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
             <TwitchChat 
             channelName={channelName} 
             messages={messages} 

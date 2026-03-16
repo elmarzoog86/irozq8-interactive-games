@@ -305,7 +305,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (!activeChannel) {
     return (
-      <div className="h-screen overflow-hidden flex flex-col flex flex-col items-center justify-center p-4 font-arabic relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col flex flex-col items-center justify-center p-4 font-arabic relative overflow-hidden bg-brand-black" dir="rtl">
         {/* Video Background */}
         <video 
           autoPlay 
@@ -317,15 +317,15 @@ const ENABLE_COMING_SOON_PAGE = false;
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
 
         {/* Top Bar */}
         <div className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between z-20 max-w-7xl mx-auto w-full">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -353,41 +353,41 @@ const ENABLE_COMING_SOON_PAGE = false;
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md bg-black/80  border border-brand-gold/20 rounded-[40px] p-10 shadow-2xl z-10 relative overflow-hidden"
+          className="w-full max-w-md bg-brand-black/80  border border-brand-cyan/20 rounded-[40px] p-10 shadow-2xl z-10 relative overflow-hidden"
         >
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-gold/50 to-transparent" />
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent" />
           
           <div className="text-center mb-10">
-            <div className="w-24 h-24 bg-brand-gold/5 rounded-[32px] flex items-center justify-center mx-auto mb-6 border border-brand-gold/20 transform rotate-6 overflow-hidden shadow-2xl">
+            <div className="w-24 h-24 bg-brand-cyan/5 rounded-[32px] flex items-center justify-center mx-auto mb-6 border border-brand-cyan/20 transform rotate-6 overflow-hidden shadow-2xl">
               <img 
                 src="/roz.png" 
                 alt="Roz Logo" 
                 className="w-full h-full object-cover -rotate-6 scale-[1.4]"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
-                  (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex flex-col items-center text-brand-gold/50"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg></div>';
+                  (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex flex-col items-center text-brand-cyan/50"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg></div>';
                 }}
               />
             </div>
             <h1 className="text-4xl font-black text-white tracking-tight mb-3">منصة روز</h1>
-            <p className="text-brand-gold/60 text-lg">اربط قناتك للبدء باللعب مع المتابعين</p>
+            <p className="text-brand-cyan/60 text-lg">اربط قناتك للبدء باللعب مع المتابعين</p>
           </div>
 
           <form onSubmit={handleConnect} className="space-y-8">
             <div>
-              <label htmlFor="channel" className="block text-sm font-bold text-brand-gold/50 mb-3 uppercase tracking-widest">
+              <label htmlFor="channel" className="block text-sm font-bold text-brand-cyan/50 mb-3 uppercase tracking-widest">
                 اسم قناة تويتش
               </label>
               <div className="relative" dir="ltr">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                  <span className="text-brand-gold/30 font-mono text-sm">twitch.tv/</span>
+                  <span className="text-brand-cyan/30 font-mono text-sm">twitch.tv/</span>
                 </div>
                 <input
                   type="text"
                   id="channel"
                   value={channelNameInput}
                   onChange={(e) => setChannelNameInput(e.target.value)}
-                  className="block w-full pl-32 pr-5 py-4 bg-white/5 border border-brand-gold/20 rounded-2xl text-white placeholder-brand-gold/20 focus:ring-2 focus:ring-brand-gold/50 focus:border-transparent transition-all outline-none text-lg font-medium"
+                  className="block w-full pl-32 pr-5 py-4 bg-white/5 border border-brand-cyan/20 rounded-2xl text-white placeholder-brand-cyan/20 focus:ring-2 focus:ring-brand-cyan/50 focus:border-transparent transition-all outline-none text-lg font-medium"
                   placeholder="username"
                   required
                 />
@@ -396,7 +396,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
             <button
               type="submit"
-              className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-black py-5 px-6 rounded-2xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_20px_rgba(212,175,55,0.2)] flex items-center justify-center gap-3 text-xl"
+              className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black font-black py-5 px-6 rounded-2xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_10px_20px_rgba(0, 229, 255,0.2)] flex items-center justify-center gap-3 text-xl"
             >
               اتصال ولعب
             </button>
@@ -405,13 +405,13 @@ const ENABLE_COMING_SOON_PAGE = false;
 
         {/* Credits */}
         <div className="absolute bottom-6 left-0 right-0 text-center z-20 pointer-events-none">
-          <p className="text-yellow-500/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
+          <p className="text-cyan-500/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
             <span>Done by:</span>
-            <span className="text-yellow-500/60 font-bold">iRozQ8</span>
+            <span className="text-cyan-500/60 font-bold">iRozQ8</span>
             <span>•</span>
-            <span className="text-yellow-500/60 font-bold">iSari9</span>
+            <span className="text-cyan-500/60 font-bold">iSari9</span>
             <span>•</span>
-            <span className="text-yellow-500/60 font-bold">iMythQ8</span>
+            <span className="text-cyan-500/60 font-bold">iMythQ8</span>
           </p>
         </div>
       </div>
@@ -421,20 +421,20 @@ const ENABLE_COMING_SOON_PAGE = false;
   // Full screen games
   if (activeGame === 'trivia') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -468,20 +468,20 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'fruitwar') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -515,20 +515,20 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'chairs') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -562,20 +562,20 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'roulette') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -609,20 +609,20 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'wordchain') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -691,20 +691,20 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'priceisright') {
     return (
-      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-black" dir="rtl">
+      <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -804,7 +804,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   if (activeGame === 'trivialpursuit') {
     return (
-      <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-black font-arabic" dir="rtl">
+      <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-brand-black font-arabic" dir="rtl">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
@@ -821,20 +821,20 @@ const ENABLE_COMING_SOON_PAGE = false;
   }
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
+    <div className="min-h-screen bg-brand-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
         <source src="/background.webm" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-black/70 z-0" />
+      <div className="absolute inset-0 bg-brand-black/70 z-0" />
 
       {/* Top Bar */}
   <div className="w-full max-w-[96vw] flex items-center justify-between mb-4 relative z-20">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-brand-gold/10 rounded-2xl flex items-center justify-center border border-brand-gold/30 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+          <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
             <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
           </div>
-          <h1 className="text-3xl font-bold text-brand-gold tracking-wider glow-gold-text">iRozQ8</h1>
+          <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
         </div>
         <div className="flex items-center gap-4">
           <a 
@@ -862,61 +862,61 @@ const ENABLE_COMING_SOON_PAGE = false;
   <div className="w-full max-w-[96vw] flex gap-8 h-[75vh] relative z-10 pb-8 flex-1 min-h-0">
         
         {/* Main Content Area */}
-        <div className="flex-1 bg-black/80  rounded-[40px] border border-brand-gold/20 p-8 flex flex-col relative overflow-hidden shadow-2xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent" />
+        <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 p-8 flex flex-col relative overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent" />
           
           <div className="relative z-10 w-full h-full flex flex-col">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col h-full">
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h1 className="text-4xl font-black text-white tracking-tight">ردهة الألعاب</h1>
-                  <p className="text-brand-gold/60 mt-1 text-lg">اختر لعبة للعبها مع الدردشة</p>
+                  <p className="text-brand-cyan/60 mt-1 text-lg">اختر لعبة للعبها مع الدردشة</p>
                 </div>
                 <div className="flex flex-col items-end gap-3">
                   <button 
                     onClick={() => setActiveChannel('')} 
-                    className="text-brand-gold/70 hover:text-brand-gold transition-all text-sm font-bold flex items-center gap-2 bg-brand-gold/5 px-5 py-2.5 rounded-xl border border-brand-gold/20 hover:border-brand-gold/40"
+                    className="text-brand-cyan/70 hover:text-brand-cyan transition-all text-sm font-bold flex items-center gap-2 bg-brand-cyan/5 px-5 py-2.5 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40"
                   >
                     <ArrowLeft className="w-4 h-4 rotate-180" /> قطع الاتصال
                   </button>
                   
                   {/* Filters */}
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-black/70 p-1.5 rounded-2xl border border-brand-gold/10">
+                    <div className="flex items-center gap-2 bg-brand-black/70 p-1.5 rounded-2xl border border-brand-cyan/10">
                       <button 
                         onClick={() => setStatusFilter('all')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'all' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'all' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >الكل</button>
                       <button 
                         onClick={() => setStatusFilter('active')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'active' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'active' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >نشطة</button>
                       <button 
                         onClick={() => setStatusFilter('coming_soon')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'coming_soon' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'coming_soon' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >قريباً</button>
                       <button 
                         onClick={() => setStatusFilter('testing')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'testing' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${statusFilter === 'testing' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >تجريبي</button>
                     </div>
 
-                    <div className="flex items-center gap-2 bg-black/70 p-1.5 rounded-2xl border border-brand-gold/10">
+                    <div className="flex items-center gap-2 bg-brand-black/70 p-1.5 rounded-2xl border border-brand-cyan/10">
                       <button 
                         onClick={() => setTypeFilter('all')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'all' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'all' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >الكل</button>
                       <button 
                         onClick={() => setTypeFilter('action')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'action' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'action' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >أكشن</button>
                       <button 
                         onClick={() => setTypeFilter('puzzles')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'puzzles' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'puzzles' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >ألغاز</button>
                       <button 
                         onClick={() => setTypeFilter('strategy')}
-                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'strategy' ? 'bg-brand-gold text-black shadow-lg' : 'text-brand-gold/40 hover:text-brand-gold/70'}`}
+                        className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all ${typeFilter === 'strategy' ? 'bg-brand-cyan text-brand-black shadow-lg' : 'text-brand-cyan/40 hover:text-brand-cyan/70'}`}
                       >استراتيجية</button>
                     </div>
                   </div>
@@ -940,46 +940,46 @@ const ENABLE_COMING_SOON_PAGE = false;
                       <div 
                         key={game.id}
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
-                        className={`group relative bg-black/70  border-2 border-brand-gold/10 hover:border-brand-gold/50 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-gold/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
+                        className={`group relative bg-brand-black/70  border-2 border-brand-cyan/10 hover:border-brand-cyan/50 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
                         
-                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-gold/20 bg-black/70 flex items-center justify-center relative shadow-inner">
+                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-cyan/20 bg-brand-black/70 flex items-center justify-center relative shadow-inner">
                           <img 
                             src={game.image} 
                             alt={game.name} 
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             onError={(e) => {
                               (e.target as HTMLImageElement).style.display = 'none';
-                              (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="flex flex-col items-center text-brand-gold/30"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21l-5-5 5-5 5 5-5 5z"></path><path d="M2 21h20"></path></svg></div>`;
+                              (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="flex flex-col items-center text-brand-cyan/30"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21l-5-5 5-5 5 5-5 5z"></path><path d="M2 21h20"></path></svg></div>`;
                             }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent opacity-60" />
                           
-                          {game.isNew && <div className="absolute top-4 right-4 bg-brand-gold text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">جديد</div>}
-                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-black/80 text-brand-gold/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-gold/20">قريباً</div>}
-                          {game.status === 'testing' && <div className="absolute top-4 right-4 bg-brand-gold/20 text-brand-gold text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg border border-brand-gold/30">تجريبي</div>}
+                          {game.isNew && <div className="absolute top-4 right-4 bg-brand-cyan text-brand-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">جديد</div>}
+                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-brand-black/80 text-brand-cyan/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-cyan/20">قريباً</div>}
+                          {game.status === 'testing' && <div className="absolute top-4 right-4 bg-brand-cyan/20 text-brand-cyan text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg border border-brand-cyan/30">تجريبي</div>}
                         </div>
 
                         <div className="relative z-10">
-                          <h3 className="text-3xl font-black text-white mb-3 tracking-tight group-hover:text-brand-gold transition-colors">{game.name}</h3>
-                          <p className="text-brand-gold/50 text-base leading-relaxed flex-1 font-medium">{game.description}</p>
+                          <h3 className="text-3xl font-black text-white mb-3 tracking-tight group-hover:text-brand-cyan transition-colors">{game.name}</h3>
+                          <p className="text-brand-cyan/50 text-base leading-relaxed flex-1 font-medium">{game.description}</p>
                         </div>
                         
-                        <div className="mt-6 pt-6 border-t border-brand-gold/10 flex items-center justify-between">
-                          <span className="text-[10px] font-black text-brand-gold/30 uppercase tracking-widest">{game.type}</span>
+                        <div className="mt-6 pt-6 border-t border-brand-cyan/10 flex items-center justify-between">
+                          <span className="text-[10px] font-black text-brand-cyan/30 uppercase tracking-widest">{game.type}</span>
                           <div className="flex items-center gap-2">
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setTutorialGame(game.id);
                               }}
-                              className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center hover:bg-brand-gold hover:text-black transition-all text-brand-gold"
+                              className="w-8 h-8 rounded-full bg-brand-cyan/10 flex items-center justify-center hover:bg-brand-cyan hover:text-brand-black transition-all text-brand-cyan"
                               title="كيف تلعب؟"
                             >
                               <HelpCircle className="w-4 h-4" />
                             </button>
-                            <div className="w-8 h-8 rounded-full bg-brand-gold/10 flex items-center justify-center group-hover:bg-brand-gold group-hover:text-black transition-all text-brand-gold">
+                            <div className="w-8 h-8 rounded-full bg-brand-cyan/10 flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-black transition-all text-brand-cyan">
                               <Rocket className="w-4 h-4" />
                             </div>
                           </div>
@@ -994,7 +994,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
           {/* Sidebar Chat */}
           <div className="w-[500px] flex flex-col gap-4">
-            <div className="flex-1 min-h-0 bg-black/80  rounded-[40px] border border-brand-gold/20 overflow-hidden shadow-2xl">
+            <div className="flex-1 min-h-0 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
             <TwitchChat 
               channelName={activeChannel} 
               messages={messages}
@@ -1012,41 +1012,41 @@ const ENABLE_COMING_SOON_PAGE = false;
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-black/80 backdrop-blur-sm"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-black/90 border border-brand-gold/30 rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+              className="bg-brand-black/90 border border-brand-cyan/30 rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
             >
               <button 
                 onClick={() => setShowUpdateModal(false)}
-                className="absolute top-4 left-4 text-brand-gold/50 hover:text-brand-gold transition-colors"
+                className="absolute top-4 left-4 text-brand-cyan/50 hover:text-brand-cyan transition-colors"
                >
                  <ArrowLeft className="w-6 h-6 rotate-180" />
               </button>
 
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center border border-brand-gold/30">
-                  <Sparkles className="w-8 h-8 text-brand-gold" />
+                <div className="w-16 h-16 bg-brand-cyan/10 rounded-full flex items-center justify-center border border-brand-cyan/30">
+                  <Sparkles className="w-8 h-8 text-brand-cyan" />
                 </div>
               </div>
 
               <h2 className="text-3xl font-black text-white text-center mb-2 tracking-tight">
-                تحديث <span className="text-brand-gold">جديد!</span>
+                تحديث <span className="text-brand-cyan">جديد!</span>
               </h2>
               <div className="flex justify-center mb-2">
-                <span className="bg-brand-gold/20 text-brand-gold px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
+                <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
                   16/3/2026
                 </span>
               </div>
-              <p className="text-brand-gold/60 flex items-center justify-center gap-2 mb-6 text-sm">تم تحديث الألعاب وإضافة المزيد</p>
+              <p className="text-brand-cyan/60 flex items-center justify-center gap-2 mb-6 text-sm">تم تحديث الألعاب وإضافة المزيد</p>
 
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
 
                 <div className="flex items-start gap-3">
-                   <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-gold" /></div>
+                   <div className="bg-brand-cyan/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-cyan" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">لعبة الكراسي الموسيقية</h3>
                      <p className="text-sm text-zinc-400">لعبة الكراسي الموسيقية مع المتابعين، اجلس بسرعة قبل توقف الموسيقى لتجنب الإقصاء!</p>
@@ -1078,7 +1078,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                   </div>
 
                   <div className="flex items-start gap-3">
-                   <div className="bg-brand-gold/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-gold" /></div>
+                   <div className="bg-brand-cyan/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-cyan" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
                      <p className="text-sm text-zinc-400">اربط 3 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
@@ -1127,16 +1127,16 @@ const ENABLE_COMING_SOON_PAGE = false;
 
               </div>
 
-              <div className="flex items-start gap-3 mb-8 bg-brand-gold/5 border border-brand-gold/10 p-4 rounded-xl">
-                 <Info className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
-                 <p className="text-xs text-brand-gold/80 leading-relaxed text-right">
-                   هذه الألعاب حالياً في <span className="font-bold text-brand-gold">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:M@irozq8.com" className="text-white hover:underline transition-colors hover:text-brand-gold" dir="ltr">M@irozq8.com</a>.
+              <div className="flex items-start gap-3 mb-8 bg-brand-cyan/5 border border-brand-cyan/10 p-4 rounded-xl">
+                 <Info className="w-5 h-5 text-brand-cyan shrink-0 mt-0.5" />
+                 <p className="text-xs text-brand-cyan/80 leading-relaxed text-right">
+                   هذه الألعاب حالياً في <span className="font-bold text-brand-cyan">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:M@irozq8.com" className="text-white hover:underline transition-colors hover:text-brand-cyan" dir="ltr">M@irozq8.com</a>.
                  </p>
               </div>
 
               <button 
                 onClick={() => setShowUpdateModal(false)}
-                className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-black py-4 rounded-xl transition-all shadow-lg text-lg"
+                className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black font-black py-4 rounded-xl transition-all shadow-lg text-lg"
               >
                 حسناً، فلنلعب!
               </button>
@@ -1147,17 +1147,17 @@ const ENABLE_COMING_SOON_PAGE = false;
 
       {/* Credits */}
       <div className="absolute bottom-4 left-0 right-0 text-center z-20 pointer-events-none">
-        <p className="text-brand-gold/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
+        <p className="text-brand-cyan/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
           <span>Done by:</span>
-          <span className="text-brand-gold/60 font-bold">iRozQ8</span>
+          <span className="text-brand-cyan/60 font-bold">iRozQ8</span>
           <span>•</span>
-          <span className="text-brand-gold/60 font-bold">iSari9</span>
+          <span className="text-brand-cyan/60 font-bold">iSari9</span>
           <span>•</span>
-          <span className="text-brand-gold/60 font-bold">iMythQ8</span>
-          <span className="text-brand-gold/40 text-xs ml-2">(v1.1)</span>
+          <span className="text-brand-cyan/60 font-bold">iMythQ8</span>
+          <span className="text-brand-cyan/40 text-xs ml-2">(v1.1)</span>
         </p>
-        <p className="text-brand-gold/40 text-xs mt-1 pointer-events-auto">
-          Support: <a href="mailto:M@irozq8.com" className="hover:text-brand-gold transition-colors">M@irozq8.com</a>
+        <p className="text-brand-cyan/40 text-xs mt-1 pointer-events-auto">
+          Support: <a href="mailto:M@irozq8.com" className="hover:text-brand-cyan transition-colors">M@irozq8.com</a>
         </p>
       </div>
     </div>

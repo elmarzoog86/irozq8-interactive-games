@@ -279,7 +279,7 @@ export function TypingRoyaleGame({
 
 
   return (
-    <div className="h-screen flex flex-col bg-black text-white font-arabic relative overflow-hidden" dir="rtl">
+    <div className="h-screen flex flex-col bg-brand-black text-white font-arabic relative overflow-hidden" dir="rtl">
       {/* Dynamic Backgrounds based on phase */}
       <div className="absolute inset-0 z-0">
         {phase === 'elimination_reveal' && (
@@ -292,7 +292,7 @@ export function TypingRoyaleGame({
       </div>
 
       {/* Header */}
-      <header className="relative z-10 p-6 flex items-center justify-between border-b border-yellow-500/20 bg-black/80 backdrop-blur-sm">
+      <header className="relative z-10 p-6 flex items-center justify-between border-b border-cyan-500/20 bg-brand-black/80 backdrop-blur-sm">
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
@@ -302,7 +302,7 @@ export function TypingRoyaleGame({
           </button>
           <div>
             <h1 className="text-2xl font-black text-white flex items-center gap-3">
-              <Crosshair className="w-8 h-8 text-yellow-500" />
+              <Crosshair className="w-8 h-8 text-cyan-500" />
               باتل رويال الكلمات
             </h1>
             <p className="text-zinc-500 font-medium">البقاء للأسرع، الأبطأ يُقصى!</p>
@@ -311,17 +311,17 @@ export function TypingRoyaleGame({
 
         {phase !== 'lobby' && phase !== 'winner' && (
           <div className="flex items-center gap-6">
-            <div className="bg-zinc-900 px-6 py-2 rounded-xl flex items-center gap-3 border border-yellow-500/20">
-              <Users className="w-5 h-5 text-yellow-500" />
+            <div className="bg-zinc-900 px-6 py-2 rounded-xl flex items-center gap-3 border border-cyan-500/20">
+              <Users className="w-5 h-5 text-cyan-500" />
               <span className="text-xl font-black text-white">{alivePlayers.length} ناجين</span>
             </div>
-            <div className="bg-zinc-900 px-6 py-2 rounded-xl border border-yellow-500/20">
+            <div className="bg-zinc-900 px-6 py-2 rounded-xl border border-cyan-500/20">
               <span className="text-zinc-400 font-bold ml-2">بطولة</span>
-              <span className="text-2xl font-black text-yellow-500">{majorRound}</span>
+              <span className="text-2xl font-black text-cyan-500">{majorRound}</span>
             </div>
-            <div className="bg-zinc-900 px-6 py-2 rounded-xl border border-yellow-500/20">
+            <div className="bg-zinc-900 px-6 py-2 rounded-xl border border-cyan-500/20">
               <span className="text-zinc-400 font-bold ml-2">جولة مصغرة</span>
-              <span className="text-2xl font-black text-yellow-500">{miniRound}/3</span>
+              <span className="text-2xl font-black text-cyan-500">{miniRound}/3</span>
             </div>
           </div>
         )}
@@ -348,13 +348,13 @@ export function TypingRoyaleGame({
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-zinc-900/80 border border-yellow-500/20 rounded-[2rem] p-10 text-center max-w-2xl w-full backdrop-blur-md overflow-y-auto custom-scrollbar"
+              className="bg-zinc-900/80 border border-cyan-500/20 rounded-[2rem] p-10 text-center max-w-2xl w-full backdrop-blur-md overflow-y-auto custom-scrollbar"
             >
-              <Target className="w-20 h-20 text-yellow-500 mx-auto mb-4" />
+              <Target className="w-20 h-20 text-cyan-500 mx-auto mb-4" />
               <h2 className="text-4xl font-black text-white mb-6">ساحة المعركة</h2>
               
-              <div className="bg-black/50 border border-yellow-500/20 rounded-2xl p-6 mb-6">
-                 <h3 className="text-yellow-500 font-bold mb-2 flex items-center justify-center gap-2">
+              <div className="bg-brand-black/50 border border-cyan-500/20 rounded-2xl p-6 mb-6">
+                 <h3 className="text-cyan-500 font-bold mb-2 flex items-center justify-center gap-2">
                     <Timer className="w-5 h-5" />
                     طريقة اللعب
                  </h3>
@@ -362,16 +362,16 @@ export function TypingRoyaleGame({
                     ستظهر لك كلمة ويجب أن تكتبها بأسرع وقت خلال 30 ثانية. بعد 3 جولات، سيتم جمع أوقات كل جولة للاعبين، واللاعب صاحب أطول وقت (الأبطأ) سيتم إقصاؤه نهائياً! البقاء للأسرع دائماً.
                  </p>
                  <p className="text-xl text-zinc-300">
-                    اكتب <span className="text-yellow-400 font-black animate-pulse bg-yellow-500/10 px-4 py-2 rounded-xl mx-2">!join</span> لتنضم
+                    اكتب <span className="text-cyan-400 font-black animate-pulse bg-cyan-500/10 px-4 py-2 rounded-xl mx-2">!join</span> لتنضم
                  </p>
               </div>
 
-              <div className="bg-black/40 p-4 rounded-2xl mb-6 flex justify-center flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar border border-yellow-500/10">
+              <div className="bg-brand-black/40 p-4 rounded-2xl mb-6 flex justify-center flex-wrap gap-2 max-h-32 overflow-y-auto custom-scrollbar border border-cyan-500/10">
                 {Object.keys(players).length === 0 ? (
                   <span className="text-zinc-500 self-center">في انتظار المتسابقين...</span>
                 ) : (
                   Object.values(players).map(p => (
-                    <span key={p.username} className="px-3 py-1 bg-black/60 rounded-lg text-sm font-bold border border-white/10" style={{ color: p.color }}>
+                    <span key={p.username} className="px-3 py-1 bg-brand-black/60 rounded-lg text-sm font-bold border border-white/10" style={{ color: p.color }}>
                       {p.username}
                     </span>
                   ))
@@ -383,7 +383,7 @@ export function TypingRoyaleGame({
               <button
                 onClick={startGame}
                 disabled={Object.keys(players).length < 2}
-                className="bg-yellow-500 hover:bg-yellow-400 text-black px-12 py-4 rounded-2xl text-2xl font-black transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-3 w-full shadow-[0_0_30px_rgba(234,179,8,0.3)]"
+                className="bg-cyan-500 hover:bg-cyan-400 text-brand-black px-12 py-4 rounded-2xl text-2xl font-black transition-all hover:scale-105 disabled:opacity-50 disabled:hover:scale-100 flex items-center justify-center gap-3 w-full shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
               >
                 <Play className="w-8 h-8" />
                 ابدأ التحدي
@@ -397,7 +397,7 @@ export function TypingRoyaleGame({
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 1.5, opacity: 0 }}
-              className="text-9xl font-black text-yellow-500 drop-shadow-[0_0_50px_rgba(234,179,8,0.5)] bg-black/50 w-64 h-64 rounded-full flex items-center justify-center border-4 border-yellow-500/50"
+              className="text-9xl font-black text-cyan-500 drop-shadow-[0_0_50px_rgba(0, 229, 255,0.5)] bg-brand-black/50 w-64 h-64 rounded-full flex items-center justify-center border-4 border-cyan-500/50"
             >
               {countdown}
             </motion.div>
@@ -407,9 +407,9 @@ export function TypingRoyaleGame({
             <div className="w-full h-full flex flex-col items-center justify-center p-8">
               
               {/* Timer Bar */}
-              <div className="w-full max-w-4xl h-4 bg-zinc-800 rounded-full mb-12 overflow-hidden border border-yellow-500/20 relative">
+              <div className="w-full max-w-4xl h-4 bg-zinc-800 rounded-full mb-12 overflow-hidden border border-cyan-500/20 relative">
                 <motion.div 
-                  className={`h-full ${timeLeft <= 5 ? 'bg-red-500 shadow-[0_0_20px_rgba(220,38,38,1)]' : 'bg-yellow-500'}`}
+                  className={`h-full ${timeLeft <= 5 ? 'bg-red-500 shadow-[0_0_20px_rgba(220,38,38,1)]' : 'bg-cyan-500'}`}
                   initial={{ width: '100%' }}
                   animate={{ width: `${(timeLeft / 30) * 100}%` }}
                   transition={{ ease: "linear", duration: 1 }}
@@ -420,11 +420,11 @@ export function TypingRoyaleGame({
               <motion.div 
                 initial={{ y: 50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                className="bg-zinc-900 border border-yellow-500/30 p-12 rounded-[3rem] shadow-[0_0_40px_rgba(234,179,8,0.1)] relative overflow-hidden"
+                className="bg-zinc-900 border border-cyan-500/30 p-12 rounded-[3rem] shadow-[0_0_40px_rgba(0, 229, 255,0.1)] relative overflow-hidden"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-500/5 to-transparent skew-x-12 translate-x-full animate-[shimmer_2s_infinite]" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-500/5 to-transparent skew-x-12 translate-x-full animate-[shimmer_2s_infinite]" />
                 <h3 className="text-zinc-400 text-xl mb-6 flex items-center justify-center gap-3">
-                  <Keyboard className="w-6 h-6 text-yellow-500" /> اكتب هذه الجملة الآن:
+                  <Keyboard className="w-6 h-6 text-cyan-500" /> اكتب هذه الجملة الآن:
                 </h3>
                 <div className="text-5xl md:text-7xl font-black text-white mx-auto tracking-wide text-center">
                   {currentWord}
@@ -456,7 +456,7 @@ export function TypingRoyaleGame({
             <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }} 
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-zinc-900/90 border border-yellow-500/30 rounded-[2rem] p-10 text-center w-full max-w-3xl backdrop-blur-md"
+                className="bg-zinc-900/90 border border-cyan-500/30 rounded-[2rem] p-10 text-center w-full max-w-3xl backdrop-blur-md"
             >
                 <h2 className="text-4xl font-black text-white mb-4">
                     نتائج الجولة ({miniRound}/3)
@@ -465,7 +465,7 @@ export function TypingRoyaleGame({
                 
                 <div className="flex flex-col gap-3 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                     {sortedScoreboard.map((p, idx) => (
-                        <div key={p.username} className="bg-black/60 border border-yellow-500/10 rounded-2xl p-4 flex items-center justify-between">
+                        <div key={p.username} className="bg-brand-black/60 border border-cyan-500/10 rounded-2xl p-4 flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <span className="text-2xl font-black text-zinc-500">#{idx + 1}</span>
                                 <span className="text-xl font-bold" style={{ color: p.color }}>{p.username}</span>
@@ -477,7 +477,7 @@ export function TypingRoyaleGame({
                                     </span>
                                 ))}
                             </div>
-                            <div className="text-2xl font-black text-yellow-500 w-24 border-l border-yellow-500/20 pl-4">
+                            <div className="text-2xl font-black text-cyan-500 w-24 border-l border-cyan-500/20 pl-4">
                                 {calculateTotalTime(p.currentRoundTimes)}s
                             </div>
                         </div>
@@ -507,7 +507,7 @@ export function TypingRoyaleGame({
                     <div className="text-8xl font-black mb-8" style={{ color: eliminatedPlayer.color }}>
                          {eliminatedPlayer.username}
                     </div>
-                    <div className="text-3xl text-red-100/50 bg-black/30 w-fit mx-auto px-8 py-4 rounded-xl border border-red-500/30">
+                    <div className="text-3xl text-red-100/50 bg-brand-black/30 w-fit mx-auto px-8 py-4 rounded-xl border border-red-500/30">
                         مجموع الثواني: {calculateTotalTime(eliminatedPlayer.currentRoundTimes)}s
                     </div>
                 </motion.div>
@@ -518,17 +518,17 @@ export function TypingRoyaleGame({
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              className="bg-gradient-to-b from-yellow-900/40 to-zinc-900 border border-yellow-500/50 rounded-[3rem] p-16 text-center max-w-2xl w-full relative overflow-hidden shadow-[0_0_100px_rgba(234,179,8,0.4)]"
+              className="bg-gradient-to-b from-yellow-900/40 to-zinc-900 border border-cyan-500/50 rounded-[3rem] p-16 text-center max-w-2xl w-full relative overflow-hidden shadow-[0_0_100px_rgba(0, 229, 255,0.4)]"
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.2),transparent_70%)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0, 229, 255,0.2),transparent_70%)]" />
               
               <div className="relative z-10">
-                <Trophy className="w-32 h-32 text-yellow-400 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(234,179,8,0.6)]" />
+                <Trophy className="w-32 h-32 text-cyan-400 mx-auto mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.6)]" />
                 
                 <h2 className="text-4xl text-zinc-300 mb-6 font-bold">الناجي الأخير وبطل الكلمات!</h2>
                 
                 {getWinner() && (
-                  <div className="text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-600 mb-12 drop-shadow-md">
+                  <div className="text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-cyan-500 to-cyan-600 mb-12 drop-shadow-md">
                     {getWinner()?.username}
                   </div>
                 )}

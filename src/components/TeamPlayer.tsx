@@ -62,22 +62,22 @@ export const TeamPlayer: React.FC = () => {
 
   if (!isJoined) {
     return (
-      <div className="h-screen w-full bg-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-black/70 border border-brand-gold/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(212,175,55,0.1)] ">
-          <h1 className="text-3xl font-black mb-8 text-center text-brand-gold italic glow-gold-text">انضم للعبة الفريق</h1>
+      <div className="h-screen w-full bg-brand-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(0, 229, 255,0.1)] ">
+          <h1 className="text-3xl font-black mb-8 text-center text-brand-cyan italic glow-cyan-text">انضم للعبة الفريق</h1>
           <form onSubmit={joinGame} className="space-y-6">
             <div>
-              <label className="block text-sm font-bold text-brand-gold/50 mb-2 mr-2">اسمك المستعار</label>
+              <label className="block text-sm font-bold text-brand-cyan/50 mb-2 mr-2">اسمك المستعار</label>
               <input 
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="ادخل اسمك..."
-                className="w-full bg-black/70 border-2 border-brand-gold/20 p-4 rounded-2xl outline-none focus:border-brand-gold transition-all text-center font-bold text-xl text-white"
+                className="w-full bg-brand-black/70 border-2 border-brand-cyan/20 p-4 rounded-2xl outline-none focus:border-brand-cyan transition-all text-center font-bold text-xl text-white"
                 required
               />
             </div>
-            <button type="submit" className="w-full bg-brand-gold hover:bg-brand-gold-light text-black font-black py-4 rounded-2xl text-xl transition-all shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+            <button type="submit" className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black font-black py-4 rounded-2xl text-xl transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)]">
               دخول
             </button>
           </form>
@@ -86,20 +86,20 @@ export const TeamPlayer: React.FC = () => {
     );
   }
 
-  if (!state) return <div className="h-screen w-full bg-black text-white flex items-center justify-center">جاري التحميل...</div>;
+  if (!state) return <div className="h-screen w-full bg-brand-black text-white flex items-center justify-center">جاري التحميل...</div>;
 
   const myPlayer = state.players.find(p => p.id === socket?.id || p.name === name);
 
   return (
-    <div className="h-screen w-full bg-black text-white p-6 font-arabic" dir="rtl">
+    <div className="h-screen w-full bg-brand-black text-white p-6 font-arabic" dir="rtl">
       <div className="max-w-md mx-auto space-y-8">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-black italic text-brand-gold glow-gold-text">
+          <h2 className="text-2xl font-black italic text-brand-cyan glow-cyan-text">
             {state.gameType === 'teamfeud' ? 'تحدي الفرق' : state.gameType === 'codenames' ? 'لعبة الشفرة' : 'سباق القنبلة'}
           </h2>
-          <div className="flex items-center gap-2 bg-black/70 border border-brand-gold/20 px-3 py-1 rounded-full text-xs font-bold text-brand-gold/70">
+          <div className="flex items-center gap-2 bg-brand-black/70 border border-brand-cyan/20 px-3 py-1 rounded-full text-xs font-bold text-brand-cyan/70">
             {state.gameType === 'teamfeud' && myPlayer?.team && state.data?.leaders?.[myPlayer.team] === myPlayer.id && (
-              <Crown className="w-4 h-4 text-brand-gold" />
+              <Crown className="w-4 h-4 text-brand-cyan" />
             )}
             {name}
           </div>
@@ -107,24 +107,24 @@ export const TeamPlayer: React.FC = () => {
 
         {state.status === 'waiting' && (
           <div className="space-y-6">
-            <h3 className="text-center text-xl font-bold text-brand-gold">اختر فريقك</h3>
+            <h3 className="text-center text-xl font-bold text-brand-cyan">اختر فريقك</h3>
             <div className="grid grid-cols-2 gap-4">
               <button 
                 onClick={() => switchTeam('gold')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-gold bg-brand-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.3)]' : 'border-brand-gold/10 bg-black/70 opacity-50 hover:opacity-80'}`}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-cyan bg-brand-cyan/20 shadow-[0_0_20px_rgba(0, 229, 255,0.3)]' : 'border-brand-cyan/10 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
               >
-                <Shield className="w-12 h-12 text-brand-gold" />
-                <span className="font-black text-brand-gold">ذهبي</span>
+                <Shield className="w-12 h-12 text-brand-cyan" />
+                <span className="font-black text-brand-cyan">ذهبي</span>
               </button>
               <button 
                 onClick={() => switchTeam('black')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'black' ? 'border-zinc-400 bg-zinc-800/80 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-black/70 opacity-50 hover:opacity-80'}`}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'black' ? 'border-zinc-400 bg-zinc-800/80 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-white" />
                 <span className="font-black text-white">أسود</span>
               </button>
             </div>
-            <p className="text-center text-brand-gold/40 text-sm">انتظر الستريمر لبدء اللعبة...</p>
+            <p className="text-center text-brand-cyan/40 text-sm">انتظر الستريمر لبدء اللعبة...</p>
           </div>
         )}
 
@@ -134,17 +134,17 @@ export const TeamPlayer: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center justify-center space-y-8 mt-12"
           >
-            <h3 className="text-2xl font-black text-brand-gold italic glow-gold-text">مرحلة الزر!</h3>
+            <h3 className="text-2xl font-black text-brand-cyan italic glow-cyan-text">مرحلة الزر!</h3>
             
             <div className="text-center">
               {state.data.buzzerTimer > 0 ? (
                 <div className="flex flex-col items-center gap-4">
-                  <p className="text-brand-gold/60 text-lg">استعد...</p>
+                  <p className="text-brand-cyan/60 text-lg">استعد...</p>
                   <motion.div 
                     key={state.data.buzzerTimer}
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-8xl font-black text-brand-gold drop-shadow-[0_0_30px_rgba(212,175,55,0.8)]"
+                    className="text-8xl font-black text-brand-cyan drop-shadow-[0_0_30px_rgba(0, 229, 255,0.8)]"
                   >
                     {state.data.buzzerTimer}
                   </motion.div>
@@ -153,7 +153,7 @@ export const TeamPlayer: React.FC = () => {
                 <div className="flex flex-col items-center gap-8 w-full">
                   {myPlayer?.team && state.data.leaders?.[myPlayer.team] === myPlayer.id ? (
                     <>
-                      <p className="text-xl text-brand-gold font-bold animate-pulse">
+                      <p className="text-xl text-brand-cyan font-bold animate-pulse">
                         اضغط الزر الآن!!
                       </p>
                       {state.data.buzzerActive && (
@@ -169,7 +169,7 @@ export const TeamPlayer: React.FC = () => {
                       )}
                     </>
                   ) : (
-                    <p className="text-xl text-brand-gold font-bold animate-pulse">
+                    <p className="text-xl text-brand-cyan font-bold animate-pulse">
                       شجع قائد فريقك ليضغط الزر!
                     </p>
                   )}
@@ -183,8 +183,8 @@ export const TeamPlayer: React.FC = () => {
           <div className="space-y-8">
             {state.gameType === 'teamfeud' && (
               <div className="space-y-6">
-                <div className={`p-6 rounded-3xl border-4 text-center ${state.data.currentTurn === myPlayer?.team ? 'border-brand-gold bg-brand-gold/10 shadow-[0_0_20px_rgba(212,175,55,0.2)]' : 'border-brand-gold/10 opacity-50'}`}>
-                  <h3 className="text-xl font-bold text-brand-gold">{state.data.currentTurn === myPlayer?.team ? 'دور فريقك!' : 'دور الفريق الآخر'}</h3>
+                <div className={`p-6 rounded-3xl border-4 text-center ${state.data.currentTurn === myPlayer?.team ? 'border-brand-cyan bg-brand-cyan/10 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' : 'border-brand-cyan/10 opacity-50'}`}>
+                  <h3 className="text-xl font-bold text-brand-cyan">{state.data.currentTurn === myPlayer?.team ? 'دور فريقك!' : 'دور الفريق الآخر'}</h3>
                   <p className="text-3xl font-black mt-2 text-white">{state.data.question}</p>
                 </div>
 
@@ -196,14 +196,14 @@ export const TeamPlayer: React.FC = () => {
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
                         placeholder="أنت القائد! اكتب إجابة فريقك..."
-                        className="w-full bg-black/70 border-2 border-brand-gold/20 p-4 rounded-2xl text-center font-bold focus:border-brand-gold outline-none text-white"
+                        className="w-full bg-brand-black/70 border-2 border-brand-cyan/20 p-4 rounded-2xl text-center font-bold focus:border-brand-cyan outline-none text-white"
                       />
-                      <button type="submit" className="w-full bg-brand-gold hover:bg-brand-gold-light text-black py-4 rounded-2xl font-black shadow-[0_0_15px_rgba(212,175,55,0.3)]">إرسال</button>
+                      <button type="submit" className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black py-4 rounded-2xl font-black shadow-[0_0_15px_rgba(0, 229, 255,0.3)]">إرسال</button>
                     </form>
                   ) : (
-                    <div className="bg-brand-gold/10 border border-brand-gold/20 p-6 rounded-2xl text-center">
-                      <p className="text-brand-gold font-bold">أخبر القائد بإجابتك!</p>
-                      <p className="text-sm text-brand-gold/60 mt-2">القائد فقط من يمكنه كتابة الإجابة النهائية</p>
+                    <div className="bg-brand-cyan/10 border border-brand-cyan/20 p-6 rounded-2xl text-center">
+                      <p className="text-brand-cyan font-bold">أخبر القائد بإجابتك!</p>
+                      <p className="text-sm text-brand-cyan/60 mt-2">القائد فقط من يمكنه كتابة الإجابة النهائية</p>
                     </div>
                   )
                 )}
@@ -213,17 +213,17 @@ export const TeamPlayer: React.FC = () => {
             {state.gameType === 'codenames' && (
               <div className="space-y-6">
                 {state.data.currentHint && (
-                  <div className="bg-brand-gold/20 border-2 border-brand-gold p-4 rounded-2xl text-center shadow-[0_0_15px_rgba(212,175,55,0.3)] animate-pulse">
-                    <p className="text-sm text-brand-gold/80 mb-1">تلميح Spymaster الجديد:</p>
-                    <p className="text-2xl font-black text-brand-gold mb-2">{state.data.currentHint.word} - {state.data.currentHint.count}</p>
+                  <div className="bg-brand-cyan/20 border-2 border-brand-cyan p-4 rounded-2xl text-center shadow-[0_0_15px_rgba(0, 229, 255,0.3)] animate-pulse">
+                    <p className="text-sm text-brand-cyan/80 mb-1">تلميح Spymaster الجديد:</p>
+                    <p className="text-2xl font-black text-brand-cyan mb-2">{state.data.currentHint.word} - {state.data.currentHint.count}</p>
                     {state.data.guessesLeft !== undefined && (
-                      <p className="text-xs font-bold text-white bg-black/50 inline-block px-3 py-1 rounded-full">الخيارات المتبقية: {state.data.guessesLeft}</p>
+                      <p className="text-xs font-bold text-white bg-brand-black/50 inline-block px-3 py-1 rounded-full">الخيارات المتبقية: {state.data.guessesLeft}</p>
                     )}
                   </div>
                 )}
 
-                <div className="flex justify-between items-center bg-black/70 p-4 border border-brand-gold/20 rounded-2xl">
-                  <div className={`text-sm font-bold ${state.data.currentTurn === 'gold' ? 'text-brand-gold' : 'text-zinc-500'}`}>الذهبي: {state.data.scores?.gold ?? 9}</div>
+                <div className="flex justify-between items-center bg-brand-black/70 p-4 border border-brand-cyan/20 rounded-2xl">
+                  <div className={`text-sm font-bold ${state.data.currentTurn === 'gold' ? 'text-brand-cyan' : 'text-zinc-500'}`}>الذهبي: {state.data.scores?.gold ?? 9}</div>
                   <div className="text-lg font-black text-white">دور {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}</div>
                   <div className={`text-sm font-bold ${state.data.currentTurn === 'black' ? 'text-white' : 'text-zinc-500'}`}>الأسود: {state.data.scores?.black ?? 8}</div>
                 </div>
@@ -240,7 +240,7 @@ export const TeamPlayer: React.FC = () => {
                 {/* Floating button for History */}
                 <button
                   onClick={() => setShowHistory(!showHistory)}
-                  className="fixed bottom-20 left-4 z-40 flex justify-center items-center gap-2 p-3 rounded-full bg-black/80 border-2 border-brand-gold text-brand-gold text-sm font-bold shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:bg-brand-gold/20 backdrop-blur-sm transition-all"
+                  className="fixed bottom-20 left-4 z-40 flex justify-center items-center gap-2 p-3 rounded-full bg-brand-black/80 border-2 border-brand-cyan text-brand-cyan text-sm font-bold shadow-[0_0_20px_rgba(0, 229, 255,0.3)] hover:bg-brand-cyan/20 backdrop-blur-sm transition-all"
                 >
                   <MessageSquare className="w-5 h-5" />
                   <span className="hidden sm:inline">سجل الحركات</span>
@@ -253,7 +253,7 @@ export const TeamPlayer: React.FC = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
+                        className="fixed inset-0 bg-brand-black/60 z-40 backdrop-blur-sm"
                         onClick={() => setShowHistory(false)}
                       />
                       <motion.div
@@ -261,10 +261,10 @@ export const TeamPlayer: React.FC = () => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-                        className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0a] border-l border-brand-gold/30 p-5 z-50 overflow-y-auto shadow-2xl flex flex-col gap-4"
+                        className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0a] border-l border-brand-cyan/30 p-5 z-50 overflow-y-auto shadow-2xl flex flex-col gap-4"
                       >
-                        <div className="flex items-center justify-between border-b border-brand-gold/20 pb-4">
-                          <h3 className="text-xl font-bold text-brand-gold flex items-center gap-2">
+                        <div className="flex items-center justify-between border-b border-brand-cyan/20 pb-4">
+                          <h3 className="text-xl font-bold text-brand-cyan flex items-center gap-2">
                             <MessageSquare className="w-5 h-5" />
                             سجل الحركات
                           </h3>
@@ -276,7 +276,7 @@ export const TeamPlayer: React.FC = () => {
                         {state.data.history && state.data.history.length > 0 ? (
                           <div className="space-y-3">
                             {state.data.history.map((entry: any, idx: number) => (
-                              <div key={idx} className={`p-3 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-gold/5 border-brand-gold/20 text-brand-gold' : 'bg-zinc-800/50 border-zinc-700 text-zinc-300'}`}>
+                              <div key={idx} className={`p-3 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-cyan/5 border-brand-cyan/20 text-brand-cyan' : 'bg-zinc-800/50 border-zinc-700 text-zinc-300'}`}>
                                 <div className="flex justify-between items-center text-[10px] opacity-70">
                                   <span>{entry.team === 'gold' ? 'الفريق الذهبي' : 'الفريق الأسود'}</span>
                                   <span>{new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -311,10 +311,10 @@ export const TeamPlayer: React.FC = () => {
                 </AnimatePresence>
 
                 {state.data.spymasters?.[myPlayer?.team!] === myPlayer?.name && (
-                  <div className="bg-brand-gold/10 border border-brand-gold p-4 rounded-xl space-y-4">
+                  <div className="bg-brand-cyan/10 border border-brand-cyan p-4 rounded-xl space-y-4">
                     <div className="text-center">
-                      <p className="font-bold text-brand-gold text-lg">أنت قائد الفريق!</p>
-                      <p className="text-sm text-brand-gold/70 mt-1">اكتب التلميح (كلمة واحدة) وعدد الكلمات المرتبطة به.</p>
+                      <p className="font-bold text-brand-cyan text-lg">أنت قائد الفريق!</p>
+                      <p className="text-sm text-brand-cyan/70 mt-1">اكتب التلميح (كلمة واحدة) وعدد الكلمات المرتبطة به.</p>
                     </div>
 
                     <form 
@@ -333,7 +333,7 @@ export const TeamPlayer: React.FC = () => {
                         value={hintWord}
                         onChange={(e) => setHintWord(e.target.value)}
                         placeholder="التلميح..."
-                        className="flex-1 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                        className="flex-1 bg-brand-black/80 border border-brand-cyan/30 p-3 rounded-xl text-center focus:border-brand-cyan outline-none text-white font-bold"
                         required
                       />
                       <input
@@ -343,10 +343,10 @@ export const TeamPlayer: React.FC = () => {
                         placeholder="العدد"
                         min="1"
                         max="9"
-                        className="w-20 bg-black/80 border border-brand-gold/30 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white font-bold"
+                        className="w-20 bg-brand-black/80 border border-brand-cyan/30 p-3 rounded-xl text-center focus:border-brand-cyan outline-none text-white font-bold"
                         required
                       />
-                      <button type="submit" className="bg-brand-gold hover:bg-brand-gold-light text-black px-4 rounded-xl font-black transition-all">إرسال</button>
+                      <button type="submit" className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-4 rounded-xl font-black transition-all">إرسال</button>
                     </form>
                   </div>
                 )}
@@ -354,13 +354,13 @@ export const TeamPlayer: React.FC = () => {
                 <div className="grid grid-cols-5 gap-2">
                   {state.data.board.map((card: any, i: number) => {
                     const isSpymaster = myPlayer?.team && state.data.spymasters?.[myPlayer.team] === myPlayer.name;
-                    let bgColor = 'bg-black/80';
+                    let bgColor = 'bg-brand-black/80';
                     let textColor = 'text-white';
-                    let borderColor = 'border-brand-gold/20';
+                    let borderColor = 'border-brand-cyan/20';
 
                     if (card.revealed || isSpymaster) {
-                      if (card.type === 'gold') { bgColor = 'bg-[#D4AF37]'; textColor = 'text-black'; borderColor = 'border-[#FFE55C]'; }
-                      else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-gold shadow-[0_0_10px_rgba(212,175,55,0.4)]'; }
+                      if (card.type === 'gold') { bgColor = 'bg-[#00e5ff]'; textColor = 'text-brand-black'; borderColor = 'border-[#FFE55C]'; }
+                      else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-cyan shadow-[0_0_10px_rgba(0, 229, 255,0.4)]'; }
                       else if (card.type === 'assassin') { bgColor = 'bg-red-950'; textColor = 'text-red-500'; borderColor = 'border-red-600'; }
                       else { bgColor = 'bg-zinc-900'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
                     }                    return (
@@ -381,12 +381,12 @@ export const TeamPlayer: React.FC = () => {
                       >
                         {card.word}
                         {!card.revealed && card.votes?.length > 0 && (
-                          <span className="absolute -top-2 -right-2 bg-brand-gold text-black rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center text-xs font-black shadow-lg border border-yellow-200 z-10">
+                          <span className="absolute -top-2 -right-2 bg-brand-cyan text-brand-black rounded-full min-w-[20px] h-5 px-1 flex items-center justify-center text-xs font-black shadow-lg border border-yellow-200 z-10">
                             {card.votes.length}
                           </span>
                         )}
                         {!card.revealed && card.votes?.includes(myPlayer?.name) && (
-                          <span className="absolute bottom-1 left-0 right-0 text-[8px] sm:text-[10px] text-brand-gold font-bold opacity-80 pointer-events-none">تأكيد؟</span>
+                          <span className="absolute bottom-1 left-0 right-0 text-[8px] sm:text-[10px] text-brand-cyan font-bold opacity-80 pointer-events-none">تأكيد؟</span>
                         )}
                       </button>
                     );
@@ -398,19 +398,19 @@ export const TeamPlayer: React.FC = () => {
             {state.gameType === 'bombrelay' && (
               <div className="space-y-6">
                 <div className="text-center">
-                  <div className="text-6xl font-black font-mono text-brand-gold drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]">{state.data.timer}s</div>
+                  <div className="text-6xl font-black font-mono text-brand-cyan drop-shadow-[0_0_10px_rgba(0, 229, 255,0.5)]">{state.data.timer}s</div>
                 </div>
                 {state.data.tasks.map((task: any) => (
-                  <div key={task.id} className={`p-6 rounded-2xl border-2 ${task.completed ? 'bg-brand-gold/20 border-brand-gold' : 'bg-black/70 border-brand-gold/20'}`}>
+                  <div key={task.id} className={`p-6 rounded-2xl border-2 ${task.completed ? 'bg-brand-cyan/20 border-brand-cyan' : 'bg-brand-black/70 border-brand-cyan/20'}`}>
                     <h4 className="font-bold mb-4 text-white">{task.text}</h4>
                     {!task.completed && (
                       task.target ? (
-                        <button onClick={() => submitAction('task_progress', { taskId: task.id })} className="w-full bg-brand-gold hover:bg-brand-gold-light text-black py-3 rounded-xl font-black shadow-[0_0_15px_rgba(212,175,55,0.3)]">تفكيك!</button>
+                        <button onClick={() => submitAction('task_progress', { taskId: task.id })} className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black py-3 rounded-xl font-black shadow-[0_0_15px_rgba(0, 229, 255,0.3)]">تفكيك!</button>
                       ) : (
                         <input 
                           type="text" 
                           placeholder="الإجابة..."
-                          className="w-full bg-black/70 border border-brand-gold/20 p-3 rounded-xl text-center focus:border-brand-gold outline-none text-white"
+                          className="w-full bg-brand-black/70 border border-brand-cyan/20 p-3 rounded-xl text-center focus:border-brand-cyan outline-none text-white"
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                               submitAction('task_progress', { taskId: task.id, answer: (e.target as HTMLInputElement).value });
