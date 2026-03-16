@@ -312,12 +312,12 @@ const ENABLE_COMING_SOON_PAGE = false;
           loop 
           muted 
           playsInline 
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40"
+          className="absolute inset-0 w-full h-full object-cover z-0 opacity-100"
         >
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
 
         {/* Top Bar */}
         <div className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between z-20 max-w-7xl mx-auto w-full">
@@ -422,11 +422,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'trivia') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -469,11 +469,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'fruitwar') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -516,11 +516,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'chairs') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -563,11 +563,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'roulette') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
 
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -610,11 +610,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'wordchain') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -692,11 +692,11 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'priceisright') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-black/60 via-black/40 to-brand-black/80 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
         
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
@@ -805,7 +805,7 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'trivialpursuit') {
     return (
       <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-brand-black font-arabic" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
+        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
           <source src="/background.webm" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
@@ -826,7 +826,7 @@ const ENABLE_COMING_SOON_PAGE = false;
         <source src="/background.webm" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-brand-black/70 z-0" />
+      <div className="absolute inset-0 bg-brand-black/20 z-0" />
 
       {/* Top Bar */}
   <div className="w-full max-w-[96vw] flex items-center justify-between mb-4 relative z-20">
@@ -940,7 +940,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                       <div 
                         key={game.id}
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
-                        className={`group relative bg-brand-black/70  border-2 border-brand-indigo/40 hover:border-brand-pink/60 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
+                        className={`group relative bg-brand-black/70  border-2 border-brand-indigo/40 hover:border-brand-pink/60 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-100 grayscale cursor-not-allowed' : ''}`}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
                         
