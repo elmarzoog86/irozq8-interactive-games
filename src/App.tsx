@@ -30,6 +30,7 @@ import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair,
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
+import AddMusic from './pages/AddMusic';
 
 import { socket } from './socket';
 
@@ -50,6 +51,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     return (
       <Routes>
         <Route path="/admin" element={<AdminControlBoard />} />
+        <Route path="/add-music" element={<AddMusic />} />
         <Route path="/howmany/:roomId" element={<HowManyPlayer />} />
         <Route path="/team/:roomId" element={<TeamPlayer />} />
         <Route path="/games/guess-song" element={
@@ -312,9 +314,9 @@ const ENABLE_COMING_SOON_PAGE = false;
           loop 
           muted 
           playsInline 
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-100"
+          className="fixed inset-0 w-full h-full object-cover z-0 opacity-100"
         >
-          <source src="/background.webm" type="video/webm" />
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -362,7 +364,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               <img 
                 src="/roz.png" 
                 alt="Roz Logo" 
-                className="w-full h-full object-cover -rotate-6 scale-[1.4]"
+                className="w-full h-full object-fill -rotate-6 scale-[1.4]"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                   (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex flex-col items-center text-brand-cyan/50"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg></div>';
@@ -422,8 +424,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'trivia') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -469,8 +471,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'fruitwar') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -516,8 +518,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'chairs') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -563,8 +565,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'roulette') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -610,8 +612,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'wordchain') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -692,8 +694,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'priceisright') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-black z-0" />
@@ -805,8 +807,8 @@ const ENABLE_COMING_SOON_PAGE = false;
   if (activeGame === 'trivialpursuit') {
     return (
       <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-brand-black font-arabic" dir="rtl">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 opacity-100">
-          <source src="/background.webm" type="video/webm" />
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
           <source src="/background.mp4" type="video/mp4" />
         </video>
         <div className="relative z-10 w-full h-full">
@@ -822,8 +824,8 @@ const ENABLE_COMING_SOON_PAGE = false;
 
   return (
     <div className="min-h-screen bg-brand-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
-      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0">
-        <source src="/background.webm" type="video/webm" />
+      <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0">
+        <source src="/background.webm?v=1773683360769" type="video/webm" />
         <source src="/background.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-brand-black/20 z-0" />
@@ -942,44 +944,44 @@ const ENABLE_COMING_SOON_PAGE = false;
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
                         className={`group relative bg-brand-black/70  border-2 border-brand-indigo/40 hover:border-brand-pink/60 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-100 grayscale cursor-not-allowed' : ''}`}
                       >
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-brand-pink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
                         
-                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-cyan/20 bg-brand-black/70 flex items-center justify-center relative shadow-inner">
+                        <div className="w-full h-56 mb-6 rounded-2xl overflow-hidden shrink-0 border border-brand-pink/20 bg-brand-black/70 flex items-center justify-center relative shadow-inner">
                           <img 
                             src={game.image} 
                             alt={game.name} 
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             onError={(e) => {
                               (e.target as HTMLImageElement).style.display = 'none';
-                              (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="flex flex-col items-center text-brand-cyan/30"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21l-5-5 5-5 5 5-5 5z"></path><path d="M2 21h20"></path></svg></div>`;
+                              (e.target as HTMLImageElement).parentElement!.innerHTML = `<div class="flex flex-col items-center text-brand-pink/30"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 21l-5-5 5-5 5 5-5 5z"></path><path d="M2 21h20"></path></svg></div>`;
                             }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-brand-black/60 to-transparent opacity-60" />
                           
-                          {game.isNew && <div className="absolute top-4 right-4 bg-brand-cyan text-brand-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">جديد</div>}
-                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-brand-black/80 text-brand-cyan/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-cyan/20">قريباً</div>}
-                          {game.status === 'testing' && <div className="absolute top-4 right-4 bg-brand-cyan/20 text-brand-cyan text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg border border-brand-cyan/30">تجريبي</div>}
+                          {game.isNew && <div className="absolute top-4 right-4 bg-brand-pink text-brand-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">جديد</div>}
+                          {game.status === 'coming_soon' && <div className="absolute top-4 right-4 bg-brand-black/80 text-brand-pink/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-brand-pink/20">قريباً</div>}
+                          {game.status === 'testing' && <div className="absolute top-4 right-4 bg-brand-pink/20 text-brand-pink text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg border border-brand-pink/30">تجريبي</div>}
                         </div>
 
                         <div className="relative z-10">
-                          <h3 className="text-3xl font-black text-white mb-3 tracking-tight group-hover:text-brand-cyan transition-colors">{game.name}</h3>
-                          <p className="text-brand-cyan/50 text-base leading-relaxed flex-1 font-medium">{game.description}</p>
+                          <h3 className="text-3xl font-black text-white mb-3 tracking-tight group-hover:text-brand-pink transition-colors">{game.name}</h3>
+                          <p className="text-brand-pink/80 text-base leading-relaxed flex-1 font-medium">{game.description}</p>
                         </div>
                         
-                        <div className="mt-6 pt-6 border-t border-brand-cyan/10 flex items-center justify-between">
-                          <span className="text-[10px] font-black text-brand-pink/30 uppercase tracking-widest">{game.type}</span>
+                        <div className="mt-6 pt-6 border-t border-brand-pink/10 flex items-center justify-between">
+                          <span className="text-[10px] font-black text-brand-pink/40 uppercase tracking-widest">{game.type}</span>
                           <div className="flex items-center gap-2">
                             <button 
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setTutorialGame(game.id);
                               }}
-                              className="w-8 h-8 rounded-full bg-brand-cyan/10 flex items-center justify-center hover:bg-brand-cyan hover:text-brand-black transition-all text-brand-cyan"
+                              className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center hover:bg-brand-pink hover:text-brand-black transition-all text-brand-pink"
                               title="كيف تلعب؟"
                             >
                               <HelpCircle className="w-4 h-4" />
                             </button>
-                            <div className="w-8 h-8 rounded-full bg-brand-cyan/10 flex items-center justify-center group-hover:bg-brand-cyan group-hover:text-brand-black transition-all text-brand-cyan">
+                            <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center group-hover:bg-brand-pink group-hover:text-brand-black transition-all text-brand-pink">
                               <Rocket className="w-4 h-4" />
                             </div>
                           </div>
@@ -1147,8 +1149,8 @@ const ENABLE_COMING_SOON_PAGE = false;
 
       {/* Credits */}
       <div className="absolute bottom-4 left-0 right-0 text-center z-20 pointer-events-none">
-        <p className="text-brand-cyan/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
-          <span>Done by:</span>
+        <p className="text-brand-pink/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
+          <span>تم التطوير بواسطة:</span>
           <span className="text-brand-pink/60 font-bold">iRozQ8</span>
           <span>•</span>
           <span className="text-brand-pink/60 font-bold">iSari9</span>
@@ -1157,7 +1159,7 @@ const ENABLE_COMING_SOON_PAGE = false;
           <span className="text-brand-pink/40 text-xs ml-2">(v1.1)</span>
         </p>
         <p className="text-brand-cyan/40 text-xs mt-1 pointer-events-auto">
-          Support: <a href="mailto:M@irozq8.com" className="hover:text-brand-cyan transition-colors">M@irozq8.com</a>
+          الدعم الفني: <a href="mailto:M@irozq8.com" className="hover:text-brand-cyan transition-colors">M@irozq8.com</a>
         </p>
       </div>
     </div>

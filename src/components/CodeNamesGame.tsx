@@ -7,22 +7,23 @@ import { TwitchChat } from './TwitchChat';
 interface Player {
   id: string;
   name: string;
-  team: 'gold' | 'black' | null;
+  team: 'pink' | 'blue' | null;
 }
 
 interface GameState {
   players: Player[];
   status: 'waiting' | 'playing' | 'results';
   data: {
-    board: { word: string; type: 'gold' | 'black' | 'neutral' | 'assassin'; revealed: boolean; votes?: string[] }[];
-    currentTurn: 'gold' | 'black';
-    scores: { gold: number; black: number };
-    winner?: 'gold' | 'black';
-    spymasters?: { gold: string | null; black: string | null };
+    board: { word: string; type: 'pink' | 'blue' | 'neutral' | 'assassin'; revealed: boolean; votes?: string[] }[];
+    currentTurn: 'pink' | 'blue';
+    scores: { pink: number; blue: number };
+    winner?: 'pink' | 'blue';
+    spymasters?: { pink: string | null; blue: string | null };
     currentHint?: { word: string; count: number } | null;
+    guessesLeft?: number;
     history?: {
       type: 'hint' | 'reveal';
-      team: 'gold' | 'black';
+      team: 'pink' | 'blue';
       word?: string;
       count?: number;
       cardWord?: string;
@@ -42,7 +43,7 @@ export const CodeNamesGame: React.FC<{
 }> = ({ onLeave, messages, channelName, isConnected, error }) => {
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
-  const [isSpymaster, setIsSpymaster] = useState(true);
+  const [isSpymaster] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
@@ -56,11 +57,11 @@ export const CodeNamesGame: React.FC<{
     };
   }, [roomId]);
 
-  const switchTeam = (playerId: string, team: 'gold' | 'black' | null) => {
+  const switchTeam = (playerId: string, team: 'pink' | 'blue' | null) => {
     socket.emit('switch_team', { roomId, playerId, team });
   };
 
-  const setSpymaster = (playerName: string, team: 'gold' | 'black') => {
+  const setSpymaster = (playerName: string, team: 'pink' | 'blue') => {
     socket.emit('submit_team_action', { roomId, action: 'set_spymaster', payload: { playerName, team } });
   };
 
@@ -132,37 +133,37 @@ export const CodeNamesGame: React.FC<{
               <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
                 <div className="bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(0, 229, 255,0.1)]">
                   <Shield className="w-16 h-16 text-brand-pink mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0, 229, 255,0.5)]" />
-                  <h2 className="text-3xl font-black text-brand-pink mb-6">الفريق الذهبي</h2>
+                  <h2 className="text-3xl font-black text-brand-pink mb-6">الفريق الوردي</h2>
                   <div className="space-y-2 min-h-[200px]">
-                    {state.players.filter(p => p.team === 'gold').map(p => (
-                      <div key={p.id} className={`bg-brand-indigo/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.gold === p.name ? 'border-brand-indigo border-2' : 'border-brand-cyan/20'}`}>
-                        <div className="flex items-center gap-2">
-                          {state.data?.spymasters?.gold === p.name && <Eye className="w-4 h-4 text-brand-cyan" />}
+                    {state.players.filter(p => p.team === 'pink').map(p => (
+                      <div key={p.id} className={`bg-brand-pink/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.pink === p.name ? 'border-brand-pink border-2' : 'border-brand-pink/20'}`}>
+                          <div className="flex items-center gap-2">
+                            {state.data?.spymasters?.pink === p.name && <Eye className="w-4 h-4 text-brand-pink" />}
                           <span className="font-bold">{p.name}</span>
                         </div>
-                        <div className="flex gap-2">
-                          <button onClick={() => setSpymaster(p.name, 'gold')} className="text-[10px] bg-brand-cyan/20 hover:bg-brand-cyan/40 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">Spymaster</button>
-                          <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-brand-black/70 hover:bg-brand-black/80 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">الأسود</button>
-                        </div>
+                          <div className="flex gap-2">
+                            <button onClick={() => setSpymaster(p.name, 'pink')} className="text-[10px] bg-brand-pink/20 hover:bg-brand-pink/40 px-2 py-1 rounded border border-brand-pink/30 text-brand-pink transition-colors">Spymaster</button>
+                            <button onClick={() => switchTeam(p.id, 'blue')} className="text-[10px] bg-brand-cyan/20 hover:bg-brand-cyan/40 px-2 py-1 rounded border border-brand-cyan/30 text-brand-cyan transition-colors">الأزرق</button>
+                          </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="bg-brand-black/70 border border-brand-cyan/10 p-8 rounded-[40px] text-center opacity-80">
-                  <Shield className="w-16 h-16 text-zinc-400 mx-auto mb-4" />
-                  <h2 className="text-3xl font-black text-white mb-6">الفريق الأسود</h2>
-                  <div className="space-y-2 min-h-[200px]">
-                    {state.players.filter(p => p.team === 'black').map(p => (
-                      <div key={p.id} className={`bg-brand-black/70 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.black === p.name ? 'border-white border-2' : 'border-zinc-700'}`}>
-                        <div className="flex items-center gap-2">
-                          {state.data?.spymasters?.black === p.name && <Eye className="w-4 h-4 text-white" />}
-                          <span className="font-bold text-white">{p.name}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <button onClick={() => setSpymaster(p.name, 'black')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">Spymaster</button>
-                          <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-indigo/10 hover:bg-brand-cyan/20 px-2 py-1 rounded border border-brand-indigo/20 transition-colors">الذهبي</button>
-                        </div>
+                    <Shield className="w-16 h-16 text-brand-cyan mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0,229,255,0.5)]" />
+                    <h2 className="text-3xl font-black text-brand-cyan mb-6">الفريق الأزرق</h2>
+                    <div className="space-y-2 min-h-[200px]">
+                      {state.players.filter(p => p.team === 'blue').map(p => (
+                      <div key={p.id} className={`bg-brand-cyan/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.blue === p.name ? 'border-brand-cyan border-2' : 'border-brand-cyan/20'}`}>
+                          <div className="flex items-center gap-2">
+                            {state.data?.spymasters?.blue === p.name && <Eye className="w-4 h-4 text-brand-cyan" />}
+                            <span className="font-bold text-white">{p.name}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <button onClick={() => setSpymaster(p.name, 'blue')} className="text-[10px] bg-brand-cyan/20 hover:bg-brand-cyan/40 px-2 py-1 rounded border border-brand-cyan/30 text-brand-cyan transition-colors">Spymaster</button>
+                            <button onClick={() => switchTeam(p.id, 'pink')} className="text-[10px] bg-brand-pink/20 hover:bg-brand-pink/40 px-2 py-1 rounded border border-brand-pink/30 text-brand-pink transition-colors">الوردي</button>
+                          </div>
                       </div>
                     ))}
                   </div>
@@ -179,8 +180,8 @@ export const CodeNamesGame: React.FC<{
               {state.status === 'playing' && (
                 <motion.div key="playing" className="w-full max-w-6xl flex flex-col h-full flex-1 min-h-0 space-y-4">
                   {state.data.currentHint && (
-                  <div className="bg-brand-indigo/10 border-2 border-brand-indigo p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(0, 229, 255,0.2)]">
-                    <h3 className="text-xl text-brand-cyan/80 mb-2">تلميح Spymaster الحالي</h3>
+                  <div className="bg-brand-pink/10 border-2 border-brand-pink p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(255,0,255,0.2)]">
+                    <h3 className="text-xl text-brand-pink/80 mb-2">تلميح Spymaster الحالي</h3>
                     <div className="text-5xl font-black text-brand-pink flex items-center justify-center gap-4 mb-4">
                       <span>{state.data.currentHint.word}</span>
                       <span className="text-brand-pink/50">-</span>
@@ -195,21 +196,19 @@ export const CodeNamesGame: React.FC<{
                   </div>
                 )}
 
-                <div className="flex justify-between items-center">
-                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'gold' ? 'border-brand-cyan bg-brand-indigo/10' : 'border-brand-indigo/10'}`}>
-                    <span className="text-xl font-bold text-brand-pink">الذهبي: {state.data.scores.gold}</span>
-                  </div>
-
-                  <button
+                  <div className="flex justify-between items-center">
+                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'pink' ? 'border-brand-pink bg-brand-pink/20' : 'border-brand-pink/10'}`}>
+                    <span className="text-xl font-bold text-brand-pink">الوردي: {state.data.scores.pink}</span>
+                  </div>                  <button
                     onClick={() => setShowHistory(!showHistory)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-bold transition-all ${showHistory ? 'bg-brand-cyan text-brand-black border-brand-cyan' : 'bg-brand-black/50 text-brand-cyan border-brand-cyan/30 hover:bg-brand-indigo/10 hover:border-brand-indigo'}`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-bold transition-all ${showHistory ? 'bg-brand-cyan text-brand-black border-brand-cyan' : 'bg-brand-black/50 text-brand-cyan border-brand-cyan/30 hover:bg-brand-pink/10 hover:border-brand-pink'}`}
                   >
                     <MessageSquare className="w-5 h-5" />
                     <span>{showHistory ? 'إخفاء السجل' : 'سجل التلميحات'}</span>
                   </button>
 
-                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80' : 'border-zinc-800'}`}>
-                    <span className="text-xl font-bold text-white">الأسود: {state.data.scores.black}</span>
+                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'blue' ? 'border-brand-cyan bg-brand-cyan/20' : 'border-zinc-800'}`}>
+                    <span className="text-xl font-bold text-white">الأزرق: {state.data.scores.blue}</span>
                     </div>
                   </div>
                   
@@ -236,7 +235,7 @@ export const CodeNamesGame: React.FC<{
                         </div>
                         <div className="flex-1 space-y-3 mt-4">
                           {state.data.history.map((entry: any, idx: number) => (
-                            <div key={idx} className={`p-4 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-indigo/10 border-brand-indigo/30 text-brand-cyan' : 'bg-zinc-800/80 border-zinc-600 text-zinc-300'}`}>
+                              <div key={idx} className={`p-4 rounded-xl flex flex-col gap-2 border ${entry.team === 'pink' ? 'bg-brand-pink/10 border-brand-pink/30 text-brand-pink' : 'bg-brand-cyan/10 border-brand-cyan/30 text-brand-cyan'}`}>
                               <span className="text-xs opacity-50 font-mono self-end">
                                 {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               </span>
@@ -252,9 +251,9 @@ export const CodeNamesGame: React.FC<{
                               ) : (
                                 <div className="flex flex-col gap-1 text-sm text-center">
                                   <span className="opacity-70">{entry.playerName || 'لاعب'} اختار:</span>
-                                  <span className={`font-bold px-3 py-1 rounded-lg text-lg ${
-                                    entry.cardType === 'gold' ? 'bg-brand-cyan text-brand-black shadow-[0_0_10px_rgba(0, 229, 255,0.5)]' :
-                                    entry.cardType === 'black' ? 'bg-zinc-900 border border-zinc-700 text-white' :
+                                    <span className={`font-bold px-3 py-1 rounded-lg text-lg ${
+                                    entry.cardType === 'pink' ? 'bg-brand-pink text-brand-black shadow-[0_0_10px_rgba(255,0,255,0.5)]' :
+                                    entry.cardType === 'blue' ? 'bg-brand-cyan text-brand-black shadow-[0_0_10px_rgba(0,229,255,0.5)]' :
                                     entry.cardType === 'assassin' ? 'bg-red-800 text-red-100 shadow-[0_0_15px_rgba(153,27,27,0.5)]' :
                                     'bg-zinc-700 text-zinc-300'
                                   }`}>
@@ -275,16 +274,16 @@ export const CodeNamesGame: React.FC<{
                     let textColor = 'text-brand-cyan/40';
                     let borderColor = 'border-brand-cyan/10';
 
-                      if (card.revealed) {
-                        if (card.type === 'gold') { bgColor = 'bg-brand-cyan'; textColor = 'text-brand-black'; borderColor = 'border-brand-pink'; }
-                        else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.3)]'; }
+                      if (card.revealed || isSpymaster) {
+                        if (card.type === 'pink') { bgColor = 'bg-brand-pink'; textColor = 'text-brand-black'; borderColor = 'border-brand-pink shadow-[0_0_15px_rgba(255,0,255,0.3)]'; }
+                        else if (card.type === 'blue') { bgColor = 'bg-brand-cyan'; textColor = 'text-brand-black'; borderColor = 'border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.3)]'; }
                         else if (card.type === 'assassin') { bgColor = 'bg-zinc-950'; textColor = 'text-red-500'; borderColor = 'border-red-900'; }
-                        else { bgColor = 'bg-brand-black/80'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
+                        else { bgColor = 'bg-brand-black/80'; textColor = card.revealed ? 'text-zinc-500' : 'text-zinc-300'; borderColor = 'border-zinc-800'; }
                       }                    return (
                         <button
                           key={i}
                           onClick={() => revealCard(i)}
-                          className={`relative w-full h-full rounded-2xl border-b-[6px] transition-all flex items-center justify-center p-2 md:p-4 text-center font-black text-xl md:text-2xl 2xl:text-3xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(0, 229, 255,0.1)] hover:scale-105 hover:bg-brand-black/80'}`}
+                            className={`relative w-full h-full rounded-2xl border-b-[6px] transition-all flex items-center justify-center p-2 md:p-4 text-center font-black text-xl md:text-2xl 2xl:text-3xl ${bgColor} ${textColor} ${borderColor} ${card.revealed ? 'opacity-50 scale-95' : 'shadow-[0_0_20px_rgba(0,229,255,0.1)] hover:scale-105 hover:brightness-110'}`}
                         >
                         <span className="break-words px-2 leading-tight">{card.word}</span>
                         {!card.revealed && card.votes?.length > 0 && (
@@ -306,9 +305,9 @@ export const CodeNamesGame: React.FC<{
                 animate={{ scale: 1, opacity: 1 }}
                 className="flex flex-col items-center justify-center space-y-8 w-full"
               >
-                <Trophy className="w-32 h-32 text-brand-indigo drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
-                <h2 className="text-6xl font-black italic text-brand-cyan glow-cyan-text">
-                  فاز الفريق {state.data.winner === 'gold' ? 'الذهبي' : 'الأسود'}!
+                <Trophy className={`w-32 h-32 ${state.data.winner === 'pink' ? 'text-brand-pink drop-shadow-[0_0_30px_rgba(255,0,255,0.5)]' : 'text-brand-cyan drop-shadow-[0_0_30px_rgba(0,229,255,0.5)]'}`} />
+                <h2 className={`text-6xl font-black italic ${state.data.winner === 'pink' ? 'text-brand-pink glow-pink-text' : 'text-brand-cyan glow-cyan-text'}`}>
+                  فاز الفريق {state.data.winner === 'pink' ? 'الوردي' : 'الأزرق'}!
                 </h2>
                 <button
                   onClick={resetGame}
@@ -331,16 +330,16 @@ export const CodeNamesGame: React.FC<{
            </h3>
            
            <div className="flex-1 flex flex-col gap-4 overflow-y-auto">
-             {/* Gold Team */}
+             {/* Pink Team */}
              <div>
                <h4 className="text-brand-cyan font-bold mb-2 flex items-center justify-between">
-                 <span>الفريق الذهبي</span>
-                 <span className="bg-brand-pink/20 px-2 rounded">{state.players.filter(p => p.team === 'gold').length}</span>
+                 <span>الفريق الوردي</span>
+                 <span className="bg-brand-pink/20 px-2 rounded">{state.players.filter(p => p.team === 'pink').length}</span>
                </h4>
                <div className="space-y-1">
-                 {state.players.filter(p => p.team === 'gold').map(p => (
+                 {state.players.filter(p => p.team === 'pink').map(p => (
                    <div key={p.id} className="text-sm bg-brand-cyan/5 p-2 rounded text-zinc-300 flex items-center gap-2">
-                     {state.data?.spymasters?.gold === p.name && <Eye className="w-3 h-3 text-brand-cyan" />}
+                     {state.data?.spymasters?.pink === p.name && <Eye className="w-3 h-3 text-brand-cyan" />}
                      <span className="truncate">{p.name}</span>
                    </div>
                  ))}
@@ -348,14 +347,14 @@ export const CodeNamesGame: React.FC<{
              </div>
              
              <div className="bg-brand-black/70 border border-zinc-800 p-4 rounded-xl">
-               <h4 className="text-white font-bold mb-2 flex items-center justify-between">
-                 <span>الفريق الأسود</span>
-                 <span className="bg-zinc-800 px-2 rounded">{state.players.filter(p => p.team === 'black').length}</span>
-               </h4>
+                 <h4 className="text-white font-bold mb-2 flex items-center justify-between">
+                   <span>الفريق الأزرق</span>
+                   <span className="bg-brand-cyan/20 text-brand-cyan px-2 rounded">{state.players.filter(p => p.team === 'blue').length}</span>
+                 </h4>
                <div className="space-y-1">
-                 {state.players.filter(p => p.team === 'black').map(p => (
+                 {state.players.filter(p => p.team === 'blue').map(p => (
                    <div key={p.id} className="text-sm bg-zinc-900 p-2 rounded text-zinc-400 flex items-center gap-2">
-                     {state.data?.spymasters?.black === p.name && <Eye className="w-3 h-3 text-white" />}
+                     {state.data?.spymasters?.blue === p.name && <Eye className="w-3 h-3 text-white" />}
                      <span className="truncate">{p.name}</span>
                    </div>
                  ))}

@@ -48,9 +48,14 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
   const [rotationAngle, setRotationAngle] = useState(0);
   const [musicVolume, setMusicVolume] = useState(0.5);
   const [customSongs, setCustomSongs] = useState<string[]>([
-    'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
-    'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=empty-mind-118973.mp3',
-    'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8175567.mp3?filename=chill-abstract-intention-110855.mp3'
+    '/توب توب.mp3',
+    '/زومبي1.mp3',
+    '/زومبي2.mp3',
+    '/ياحلوكم1.mp3',
+    '/ياحلوكم2.mp3',
+    '/ياحلوكم3.mp3',
+    '/ياحلوكم4.mp3',
+    '/ياحلوكم5.mp3'
   ]);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -246,7 +251,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
     
     if (phase === 'playing' && roundState === 'music') {
       const updateRotation = () => {
-        setRotationAngle(prev => (prev + 0.02) % (2 * Math.PI));
+        setRotationAngle(prev => (prev + 0.008) % (2 * Math.PI));
         animationFrameId = requestAnimationFrame(updateRotation);
       };
       animationFrameId = requestAnimationFrame(updateRotation);

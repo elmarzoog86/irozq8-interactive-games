@@ -7,7 +7,7 @@ import { Shield, Swords, CheckCircle2, XCircle, Bomb, Key, Crown, MessageSquare,
 interface Player {
   id: string;
   name: string;
-  team: 'gold' | 'black' | null;
+  team: 'pink' | 'blue' | null;
 }
 
 interface GameState {
@@ -48,7 +48,7 @@ export const TeamPlayer: React.FC = () => {
     }
   };
 
-  const switchTeam = (team: 'gold' | 'black') => {
+  const switchTeam = (team: 'pink' | 'blue') => {
     if (roomId) {
       socket.emit('switch_team', { roomId, playerId: socket.id, team, name });
     }
@@ -110,18 +110,18 @@ export const TeamPlayer: React.FC = () => {
             <h3 className="text-center text-xl font-bold text-brand-cyan">اختر فريقك</h3>
             <div className="grid grid-cols-2 gap-4">
               <button 
-                onClick={() => switchTeam('gold')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-cyan bg-brand-cyan/20 shadow-[0_0_20px_rgba(0, 229, 255,0.3)]' : 'border-brand-cyan/10 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
+                onClick={() => switchTeam('pink')}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'pink' ? 'border-brand-cyan bg-brand-cyan/20 shadow-[0_0_20px_rgba(0, 229, 255,0.3)]' : 'border-brand-cyan/10 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-brand-cyan" />
-                <span className="font-black text-brand-pink">ذهبي</span>
+                <span className="font-black text-brand-pink">وردي</span>
               </button>
               <button 
-                onClick={() => switchTeam('black')}
-                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'black' ? 'border-zinc-400 bg-zinc-800/80 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
+                onClick={() => switchTeam('blue')}
+                className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'blue' ? 'border-zinc-400 bg-zinc-800/80 shadow-[0_0_20px_rgba(255,255,255,0.1)]' : 'border-zinc-800 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-white" />
-                <span className="font-black text-white">أسود</span>
+                <span className="font-black text-white">أزرق</span>
               </button>
             </div>
             <p className="text-center text-brand-cyan/40 text-sm">انتظر الستريمر لبدء اللعبة...</p>
@@ -160,7 +160,7 @@ export const TeamPlayer: React.FC = () => {
                         <button 
                           onClick={() => submitAction('buzz', { team: myPlayer.team })}
                           className={`w-64 h-64 rounded-full border-8 font-black text-4xl shadow-[0_0_50px_rgba(255,0,0,0.6)] active:scale-95 transition-all
-                            ${myPlayer.team === 'gold' 
+                            ${myPlayer.team === 'pink' 
                               ? 'bg-red-600 hover:bg-red-500 border-red-800 text-white' 
                               : 'bg-red-600 hover:bg-red-500 border-red-800 text-white'}`}
                         >
@@ -223,9 +223,9 @@ export const TeamPlayer: React.FC = () => {
                 )}
 
                 <div className="flex justify-between items-center bg-brand-black/70 p-4 border border-brand-cyan/20 rounded-2xl">
-                  <div className={`text-sm font-bold ${state.data.currentTurn === 'gold' ? 'text-brand-cyan' : 'text-zinc-500'}`}>الذهبي: {state.data.scores?.gold ?? 9}</div>
-                  <div className="text-lg font-black text-white">دور {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}</div>
-                  <div className={`text-sm font-bold ${state.data.currentTurn === 'black' ? 'text-white' : 'text-zinc-500'}`}>الأسود: {state.data.scores?.black ?? 8}</div>
+                  <div className={`text-sm font-bold ${state.data.currentTurn === 'pink' ? 'text-brand-cyan' : 'text-zinc-500'}`}>الوردي: {state.data.scores?.pink ?? 9}</div>
+                  <div className="text-lg font-black text-white">دور {state.data.currentTurn === 'pink' ? 'الوردي' : 'الأزرق'}</div>
+                  <div className={`text-sm font-bold ${state.data.currentTurn === 'blue' ? 'text-white' : 'text-zinc-500'}`}>الأزرق: {state.data.scores?.blue ?? 8}</div>
                 </div>
 
                 {state.data.currentTurn === myPlayer?.team && state.data.currentHint && state.data.guessesLeft !== undefined && state.data.guessesLeft > 0 && !(myPlayer?.team && state.data.spymasters?.[myPlayer.team] === myPlayer.name) && (
@@ -276,9 +276,9 @@ export const TeamPlayer: React.FC = () => {
                         {state.data.history && state.data.history.length > 0 ? (
                           <div className="space-y-3">
                             {state.data.history.map((entry: any, idx: number) => (
-                              <div key={idx} className={`p-3 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-cyan/5 border-brand-cyan/20 text-brand-cyan' : 'bg-zinc-800/50 border-zinc-700 text-zinc-300'}`}>
+                              <div key={idx} className={`p-3 rounded-xl flex flex-col gap-2 border ${entry.team === 'pink' ? 'bg-brand-cyan/5 border-brand-cyan/20 text-brand-cyan' : 'bg-zinc-800/50 border-zinc-700 text-zinc-300'}`}>
                                 <div className="flex justify-between items-center text-[10px] opacity-70">
-                                  <span>{entry.team === 'gold' ? 'الفريق الذهبي' : 'الفريق الأسود'}</span>
+                                  <span>{entry.team === 'pink' ? 'الفريق الوردي' : 'الفريق الأزرق'}</span>
                                   <span>{new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                                 </div>
                                 {entry.type === 'hint' ? (
@@ -359,8 +359,8 @@ export const TeamPlayer: React.FC = () => {
                     let borderColor = 'border-brand-cyan/20';
 
                     if (card.revealed || isSpymaster) {
-                      if (card.type === 'gold') { bgColor = 'bg-[#00e5ff]'; textColor = 'text-brand-black'; borderColor = 'border-[#FFE55C]'; }
-                      else if (card.type === 'black') { bgColor = 'bg-zinc-800'; textColor = 'text-white'; borderColor = 'border-brand-cyan shadow-[0_0_10px_rgba(0, 229, 255,0.4)]'; }
+                      if (card.type === 'pink') { bgColor = 'bg-brand-pink'; textColor = 'text-brand-black'; borderColor = 'border-brand-pink shadow-[0_0_15px_rgba(255,0,255,0.3)]'; }
+                      else if (card.type === 'blue') { bgColor = 'bg-brand-cyan'; textColor = 'text-brand-black'; borderColor = 'border-brand-cyan shadow-[0_0_15px_rgba(0,229,255,0.3)]'; }
                       else if (card.type === 'assassin') { bgColor = 'bg-red-950'; textColor = 'text-red-500'; borderColor = 'border-red-600'; }
                       else { bgColor = 'bg-zinc-900'; textColor = 'text-zinc-500'; borderColor = 'border-zinc-800'; }
                     }                    return (

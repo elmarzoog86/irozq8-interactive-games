@@ -7,7 +7,7 @@ import { ChatSidebar } from './ChatSidebar';
 interface Player {
   id: string;
   name: string;
-  team: 'gold' | 'black' | null;
+  team: 'pink' | 'blue' | null;
 }
 
 interface GameState {
@@ -38,7 +38,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
       if (messageText && !processedMessages.current.has(msg.id)) {
         processedMessages.current.add(msg.id);
         if (messageText.trim().toLowerCase() === '!join') {
-          socket.emit('switch_team', { roomId, team: 'gold', name: messageUser });
+          socket.emit('switch_team', { roomId, team: 'pink', name: messageUser });
         }
       }
     });
@@ -52,7 +52,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
     return () => { newSocket.disconnect(); };
   }, [roomId]);
 
-  const switchTeam = (playerId: string, team: 'gold' | 'black' | null) => {
+  const switchTeam = (playerId: string, team: 'pink' | 'blue' | null) => {
     socket?.emit('switch_team', { roomId, playerId, team });
   };
 
@@ -125,7 +125,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
                   {state.players.map(p => (
                     <div key={p.id} className="bg-brand-indigo/10 p-3 rounded-xl flex justify-between items-center border border-brand-indigo/10">
                       <span>{p.name}</span>
-                      <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-cyan/20 px-2 py-1 rounded border border-brand-cyan/20">تثبيت</button>
+                      <button onClick={() => switchTeam(p.id, 'pink')} className="text-[10px] bg-brand-cyan/20 px-2 py-1 rounded border border-brand-cyan/20">تثبيت</button>
                     </div>
                   ))}
                 </div>
@@ -232,7 +232,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
         {state.players.map(p => (
           <div key={p.id} className="bg-brand-black/70 p-2 rounded-lg border border-white/5 flex items-center justify-between">
             <span className="text-zinc-200 text-sm truncate">{p.name}</span>
-            {p.team === 'gold' && <Shield className="w-4 h-4 text-brand-cyan" />}
+            {p.team === 'pink' && <Shield className="w-4 h-4 text-brand-cyan" />}
           </div>
         ))}
         {state.players.length === 0 && (

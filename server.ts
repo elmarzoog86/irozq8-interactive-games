@@ -73,6 +73,57 @@ app.get('/api/music/playlist', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+app.post('/api/music/add', async (req, res) => {
+  try {
+    const { name } = req.body;
+    if (!name || typeof name !== 'string') {
+      return res.status(400).json({ error: 'Song name is required' });
+    }
+
+    const musicFile = path.join(__dirname, 'music-songs.json');
+    let songs = [];
+    if (fs.existsSync(musicFile)) {
+      const content = fs.readFileSync(musicFile, 'utf-8');
+      songs = JSON.parse(content);
+    }
+
+    // Check if it already exists
+    if (songs.some((s: any) => s.name.toLowerCase() === name.toLowerCase())) {
+      return res.status(400).json({ error: 'Song already exists in the playlist' });
+    }
+
+    console.log(`Adding new song request: ${name}`);
+    
+    // Find song on youtube directly so we get the ID immediately
+    try {
+      const r = await yts(name);
+      const video = r.videos.length > 0 ? r.videos[0] : null;
+      if (video) {
+        songs.push({
+          name: name,
+          id: video.videoId,
+          url: video.url,
+          duration: video.duration
+        });
+        
+        fs.writeFileSync(musicFile, JSON.stringify(songs, null, 2));
+        
+        // Broadcast to all clients that playlist updated
+        io.emit('playlist_updated');
+        
+        return res.json({ success: true, song: { name, id: video.videoId } });
+      } else {
+        return res.status(404).json({ error: 'Could not find music video on YouTube' });
+      }
+    } catch (err) {
+      console.error('YouTube search error:', err);
+      return res.status(500).json({ error: 'Error searching for music' });
+    }
+  } catch (error) {
+    console.error('Error adding music:', error);
+    res.status(500).json({ error: 'Failed to add music' });
+  }
+});
 
 
 // How Many Can You Name Game State
@@ -105,7 +156,7 @@ interface TeamGameState {
   players: {
     id: string;
     name: string;
-    team: 'gold' | 'black' | null;
+    team: 'pink' | 'blue' | null;
   }[];
   status: 'waiting' | 'buzzer' | 'playing' | 'results';
   gameType: 'teamfeud' | 'codenames' | 'bombrelay';
@@ -497,13 +548,13 @@ io.on("connection", (socket) => {
         }
         const selected = availableQuestions[Math.floor(Math.random() * availableQuestions.length)];
         room.data.usedQuestions.push(selected.question);
-        const currentLeaders = room.data.leaders || { gold: null, black: null };
+        const currentLeaders = room.data.leaders || { pink: null, blue: null };
         room.data = {
           question: selected.question,
           answers: selected.answers,
-          strikes: { gold: 0, black: 0 },
-          scores: room.data.scores || { gold: 0, black: 0 },
-          currentTurn: 'gold',
+          strikes: { pink: 0, blue: 0 },
+          scores: room.data.scores || { pink: 0, blue: 0 },
+          currentTurn: 'pink',
           roundPoints: 0,
           isStealOpportunity: false,
           leaders: currentLeaders,
@@ -530,14 +581,14 @@ io.on("connection", (socket) => {
         const shuffledWords = wordsPool.sort(() => 0.5 - Math.random()).slice(0, 25);
           const board = shuffledWords.map((word, i) => ({
             word,
-            type: i < 9 ? 'gold' : i < 17 ? 'black' : i === 17 ? 'assassin' : 'neutral',
+            type: i < 9 ? 'pink' : i < 17 ? 'blue' : i === 17 ? 'assassin' : 'neutral',
             revealed: false,
             votes: []
-          })).sort(() => 0.5 - Math.random());        const currentSpymasters = room.data?.spymasters || { gold: null, black: null };
+          })).sort(() => 0.5 - Math.random());        const currentSpymasters = room.data?.spymasters || { pink: null, blue: null };
         room.data = {
           board,
-          currentTurn: 'gold',
-          scores: { gold: 9, black: 8 },
+          currentTurn: 'pink',
+          scores: { pink: 9, blue: 8 },
           spymasters: currentSpymasters
         };
       } else if (room.gameType === 'bombrelay') {
@@ -598,7 +649,7 @@ io.on("connection", (socket) => {
 
       if (room.gameType === 'teamfeud') {
         if (action === 'set_leader') {
-          if (!room.data.leaders) room.data.leaders = { gold: null, black: null };
+          if (!room.data.leaders) room.data.leaders = { pink: null, blue: null };
           room.data.leaders[payload.team] = payload.playerName;
           io.to(roomId).emit("team_game_state", room);
           return;
@@ -636,21 +687,21 @@ io.on("connection", (socket) => {
           
           if (room.data.isStealOpportunity) {
             // Steal failed, original team gets points
-            const originalTeam = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+            const originalTeam = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
             room.data.scores[originalTeam] += room.data.roundPoints;
             room.data.roundPoints = 0;
             room.status = 'results';
           } else if (room.data.strikes[room.data.currentTurn] >= 3) {
             // 3 strikes, other team gets a chance to steal
             room.data.isStealOpportunity = true;
-            room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+            room.data.currentTurn = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
             room.data.strikes[room.data.currentTurn] = 0; // Reset strikes for stealing team (they get 1 strike)
           }
         }
       }
       } else if (room.gameType === 'codenames') {
         if (action === 'set_spymaster') {
-          if (!room.data.spymasters) room.data.spymasters = { gold: null, black: null };
+          if (!room.data.spymasters) room.data.spymasters = { pink: null, blue: null };
           room.data.spymasters[payload.team] = payload.playerName;
           io.to(roomId).emit("team_game_state", room);
           return;
@@ -668,7 +719,7 @@ io.on("connection", (socket) => {
         if (action === 'pass_turn') {
           if (room.data.currentTurn === payload.team && !room.data.spymasters?.[payload.team]) {
                // well wait, anyone can pass.
-               room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+               room.data.currentTurn = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
                room.data.currentHint = null;
                room.data.guessesLeft = 0;
                if (!room.data.history) room.data.history = [];
@@ -698,21 +749,21 @@ io.on("connection", (socket) => {
           if (!card.revealed) {
             card.revealed = true;
             if (!room.data.history) room.data.history = [];
-            room.data.history.push({ type: 'reveal', team: room.data.currentTurn, cardWord: card.word, playerName: payload.playerName, cardType: card.type, timestamp: Date.now() });          if (card.type === 'gold' || card.type === 'black') {
+            room.data.history.push({ type: 'reveal', team: room.data.currentTurn, cardWord: card.word, playerName: payload.playerName, cardType: card.type, timestamp: Date.now() });          if (card.type === 'pink' || card.type === 'blue') {
             room.data.scores[card.type]--;
           }
           
-          if (room.data.scores.gold <= 0) {
+          if (room.data.scores.pink <= 0) {
             room.status = 'results';
-            room.data.winner = 'gold';
-          } else if (room.data.scores.black <= 0) {
+            room.data.winner = 'pink';
+          } else if (room.data.scores.blue <= 0) {
             room.status = 'results';
-            room.data.winner = 'black';
+            room.data.winner = 'blue';
           } else if (card.type === 'assassin') {
             room.status = 'results';
-            room.data.winner = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+            room.data.winner = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
           } else if (card.type !== room.data.currentTurn) {
-            room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+            room.data.currentTurn = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
             room.data.currentHint = null; // Clear hint on turn change
             room.data.guessesLeft = 0;
           } else {
@@ -720,7 +771,7 @@ io.on("connection", (socket) => {
             if (typeof room.data.guessesLeft === 'number') {
               room.data.guessesLeft--;
               if (room.data.guessesLeft <= 0) {
-                room.data.currentTurn = room.data.currentTurn === 'gold' ? 'black' : 'gold';
+                room.data.currentTurn = room.data.currentTurn === 'pink' ? 'blue' : 'pink';
                 room.data.currentHint = null;
                 room.data.guessesLeft = 0;
               }

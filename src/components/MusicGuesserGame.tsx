@@ -3,7 +3,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useTwitchAuth } from '../contexts/TwitchAuthContext';
 import YouTube from 'react-youtube';
 import { Music, Play, Volume2, SkipForward, Trophy, Users, X, Check, Shield, Zap, Search, ArrowLeft, RotateCcw } from 'lucide-react';
+import { io } from 'socket.io-client';
 
+const socket = io();
 
 interface Song {
   name: string;
@@ -75,10 +77,19 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
 
   // Fetch playlist
   useEffect(() => {
-    fetch('/api/music/playlist')
-      .then(res => res.json())
-      .then(data => setSongs(data))
-      .catch(err => console.error(err));
+    const fetchPlaylist = () => {
+      fetch('/api/music/playlist')
+        .then(res => res.json())
+        .then(data => setSongs(data))
+        .catch(err => console.error(err));
+    };
+    
+    fetchPlaylist();
+
+    socket.on('playlist_updated', fetchPlaylist);
+    return () => {
+      socket.off('playlist_updated', fetchPlaylist);
+    };
   }, []);
 
   const startGame = async () => {
@@ -374,7 +385,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                                           }
                                       }
                                   }} 
-                                  className={`px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${isPlaying ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/50' : 'bg-brand-cyan text-brand-black hover:bg-brand-cyan/80 hover:scale-105'}`}
+                                  className={`px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${isPlaying ? 'bg-red-500/20 text-red-500 hover:bg-red-500/30 border border-red-500/50' : 'bg-brand-cyan text-brand-black hover:bg-brand-cyan/80 hover:scale-105'}`}
                               >
                                 {isPlaying ? 'إيقاف' : 'تشغيل'}
                                 {!isPlaying && <Play size={20} className="fill-current" />}

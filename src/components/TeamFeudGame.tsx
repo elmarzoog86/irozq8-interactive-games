@@ -8,7 +8,7 @@ import { TEAM_FEUD_QUESTIONS } from '../data/team-feud-questions';
 interface Player {
   id: string;
   name: string;
-  team: 'gold' | 'black' | null;
+  team: 'pink' | 'blue' | null;
 }
 
 interface GameState {
@@ -17,12 +17,12 @@ interface GameState {
   data: {
     question: string;
     answers: { text: string; points: number; revealed: boolean }[];
-    strikes: { gold: number; black: number };
-    scores: { gold: number; black: number };
-    currentTurn: 'gold' | 'black';
+    strikes: { pink: number; blue: number };
+    scores: { pink: number; blue: number };
+    currentTurn: 'pink' | 'blue';
     roundPoints: number;
     isStealOpportunity: boolean;
-    leaders: { gold: string | null; black: string | null };
+    leaders: { pink: string | null; blue: string | null };
     buzzerTimer?: number;
     buzzerActive?: boolean;
   };
@@ -57,11 +57,11 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
     };
   }, [roomId]);
 
-  const switchTeam = (playerId: string, team: 'gold' | 'black' | null) => {
+  const switchTeam = (playerId: string, team: 'pink' | 'blue' | null) => {
     socket?.emit('switch_team', { roomId, playerId, team });
   };
 
-  const setLeader = (playerId: string, team: 'gold' | 'black') => {
+  const setLeader = (playerId: string, team: 'pink' | 'blue') => {
     socket?.emit('submit_team_action', { roomId, action: 'set_leader', payload: { playerId, team } });
   };
 
@@ -138,21 +138,21 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
             <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
               <div className="bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(0, 229, 255,0.1)]">
                 <Shield className="w-16 h-16 text-brand-pink mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0, 229, 255,0.5)]" />
-                <h2 className="text-3xl font-black text-brand-pink mb-6">الفريق الذهبي</h2>
+                <h2 className="text-3xl font-black text-brand-pink mb-6">الفريق الوردي</h2>
                 <div className="space-y-2 min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar">
-                  {state.players.filter(p => p.team === 'gold').map(p => (
+                  {state.players.filter(p => p.team === 'pink').map(p => (
                     <div key={p.id} className="bg-brand-indigo/10 p-3 rounded-xl flex justify-between items-center border border-brand-indigo/20">
                       <div className="flex items-center gap-2">
-                        {state.data?.leaders?.gold === p.id && <Crown className="w-4 h-4 text-brand-cyan" />}
+                        {state.data?.leaders?.pink === p.id && <Crown className="w-4 h-4 text-brand-cyan" />}
                         <span className="font-bold">{p.name}</span>
                       </div>
                       <div className="flex gap-2">
-                        {state.data?.leaders?.gold === p.id ? (
+                        {state.data?.leaders?.pink === p.id ? (
                           <span className="text-[10px] bg-brand-cyan text-brand-black px-2 py-1 rounded font-bold">القائد</span>
                         ) : (
-                          <button onClick={() => setLeader(p.id, 'gold')} className="text-[10px] bg-brand-cyan/20 hover:bg-brand-cyan/40 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">تعيين قائد</button>
+                          <button onClick={() => setLeader(p.id, 'pink')} className="text-[10px] bg-brand-cyan/20 hover:bg-brand-cyan/40 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">تعيين قائد</button>
                         )}
-                        <button onClick={() => switchTeam(p.id, 'black')} className="text-[10px] bg-brand-black/70 hover:bg-brand-black/80 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">نقل للأسود</button>
+                        <button onClick={() => switchTeam(p.id, 'blue')} className="text-[10px] bg-brand-black/70 hover:bg-brand-black/80 px-2 py-1 rounded border border-brand-cyan/30 transition-colors">نقل للأسود</button>
                       </div>
                     </div>
                   ))}
@@ -161,21 +161,21 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
 
               <div className="bg-brand-black/70 border border-brand-cyan/10 p-8 rounded-[40px] text-center opacity-80">
                 <Shield className="w-16 h-16 text-zinc-400 mx-auto mb-4" />
-                <h2 className="text-3xl font-black text-white mb-6">الفريق الأسود</h2>
+                <h2 className="text-3xl font-black text-white mb-6">الفريق الأزرق</h2>
                 <div className="space-y-2 min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar">
-                  {state.players.filter(p => p.team === 'black').map(p => (
+                  {state.players.filter(p => p.team === 'blue').map(p => (
                     <div key={p.id} className="bg-brand-black/70 p-3 rounded-xl flex justify-between items-center border border-zinc-700">
                       <div className="flex items-center gap-2">
-                        {state.data?.leaders?.black === p.id && <Crown className="w-4 h-4 text-white" />}
+                        {state.data?.leaders?.blue === p.id && <Crown className="w-4 h-4 text-white" />}
                         <span className="font-bold text-white">{p.name}</span>
                       </div>
                       <div className="flex gap-2">
-                        {state.data?.leaders?.black === p.id ? (
+                        {state.data?.leaders?.blue === p.id ? (
                           <span className="text-[10px] bg-white text-brand-black px-2 py-1 rounded font-bold">القائد</span>
                         ) : (
-                          <button onClick={() => setLeader(p.id, 'black')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">تعيين قائد</button>
+                          <button onClick={() => setLeader(p.id, 'blue')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">تعيين قائد</button>
                         )}
-                        <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-indigo/10 hover:bg-brand-cyan/20 px-2 py-1 rounded border border-brand-indigo/20 transition-colors">نقل للذهبي</button>
+                        <button onClick={() => switchTeam(p.id, 'pink')} className="text-[10px] bg-brand-indigo/10 hover:bg-brand-cyan/20 px-2 py-1 rounded border border-brand-indigo/20 transition-colors">نقل للذهبي</button>
                       </div>
                     </div>
                   ))}
@@ -189,8 +189,8 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                     {state.players.filter(p => !p.team).map(p => (
                       <div key={p.id} className="bg-brand-black/70 p-2 rounded-lg flex gap-2 items-center border border-brand-cyan/10">
                         <span>{p.name}</span>
-                        <button onClick={() => switchTeam(p.id, 'gold')} className="bg-brand-pink w-4 h-4 rounded-full shadow-[0_0_10px_rgba(0, 229, 255,0.5)]"></button>
-                        <button onClick={() => switchTeam(p.id, 'black')} className="bg-zinc-400 w-4 h-4 rounded-full border border-zinc-500"></button>
+                        <button onClick={() => switchTeam(p.id, 'pink')} className="bg-brand-pink w-4 h-4 rounded-full shadow-[0_0_10px_rgba(0, 229, 255,0.5)]"></button>
+                        <button onClick={() => switchTeam(p.id, 'blue')} className="bg-zinc-400 w-4 h-4 rounded-full border border-zinc-500"></button>
                       </div>
                     ))}
                   </div>
@@ -209,18 +209,18 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                 <div className="flex flex-col items-center gap-4 bg-brand-indigo/10 p-8 rounded-[40px] border-2 border-brand-indigo/30">
                   <Shield className="w-24 h-24 text-brand-cyan drop-shadow-[0_0_20px_rgba(0, 229, 255,0.6)]" />
                   <span className="text-3xl font-black text-white">
-                    {state.players.find(p => p.id === state.data.leaders?.gold)?.name || 'الذهبي'}
+                    {state.players.find(p => p.id === state.data.leaders?.pink)?.name || 'الوردي'}
                   </span>
                   {state.data.buzzerActive && 
                    (
-                    state.data.leaders?.gold === socket?.id || 
-                    (!state.data.leaders?.gold && (state.data.leaders?.black !== socket?.id))
+                    state.data.leaders?.pink === socket?.id || 
+                    (!state.data.leaders?.pink && (state.data.leaders?.blue !== socket?.id))
                    ) && (
                     <button 
-                      onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'gold' } })}
+                      onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'pink' } })}
                       className="mt-4 px-12 py-6 rounded-full border-8 font-black text-3xl shadow-[0_0_50px_rgba(255,0,0,0.6)] active:scale-95 transition-all bg-red-600 hover:bg-red-500 border-red-800 text-white"
                     >
-                      زر الذهبي
+                      زر الوردي
                     </button>
                   )}
                 </div>
@@ -239,18 +239,18 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                 <div className="flex flex-col items-center gap-4 bg-brand-black/70 p-8 rounded-[40px] border-2 border-zinc-700">
                   <Shield className="w-24 h-24 text-zinc-400 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]" />
                   <span className="text-3xl font-black text-white">
-                    {state.players.find(p => p.id === state.data.leaders?.black)?.name || 'الأسود'}
+                    {state.players.find(p => p.id === state.data.leaders?.blue)?.name || 'الأزرق'}
                   </span>
                   {state.data.buzzerActive && 
                    (
-                    state.data.leaders?.black === socket?.id || 
-                    (!state.data.leaders?.black && (state.data.leaders?.gold !== socket?.id))
+                    state.data.leaders?.blue === socket?.id || 
+                    (!state.data.leaders?.blue && (state.data.leaders?.pink !== socket?.id))
                    ) && (
                     <button 
-                      onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'black' } })}
+                      onClick={() => socket?.emit('submit_team_action', { roomId, action: 'buzz', payload: { team: 'blue' } })}
                       className="mt-4 px-12 py-6 rounded-full border-8 font-black text-3xl shadow-[0_0_50px_rgba(255,0,0,0.6)] active:scale-95 transition-all bg-red-600 hover:bg-red-500 border-red-800 text-white"
                     >
-                      زر الأسود
+                      زر الأزرق
                     </button>
                   )}
                 </div>
@@ -268,29 +268,29 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                 <div className="flex items-center gap-3 bg-brand-indigo/10 border border-brand-indigo/30 px-6 py-3 rounded-2xl">
                   <Crown className="w-6 h-6 text-brand-cyan" />
                   <div className="text-right">
-                    <p className="text-[10px] text-brand-cyan/60 uppercase font-black">قائد الفريق الذهبي</p>
+                    <p className="text-[10px] text-brand-cyan/60 uppercase font-black">قائد الفريق الوردي</p>
                     <p className="text-lg font-black text-white">
-                      {state.players.find(p => p.id === state.data.leaders.gold)?.name || 'لم يتم التعيين'}
+                      {state.players.find(p => p.id === state.data.leaders.pink)?.name || 'لم يتم التعيين'}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 bg-white/5 border border-white/20 px-6 py-3 rounded-2xl">
                   <Crown className="w-6 h-6 text-white" />
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40 uppercase font-black">قائد الفريق الأسود</p>
+                    <p className="text-[10px] text-white/40 uppercase font-black">قائد الفريق الأزرق</p>
                     <p className="text-lg font-black text-white">
-                      {state.players.find(p => p.id === state.data.leaders.black)?.name || 'لم يتم التعيين'}
+                      {state.players.find(p => p.id === state.data.leaders.blue)?.name || 'لم يتم التعيين'}
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="flex justify-between items-center">
-                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'gold' ? 'border-brand-cyan bg-brand-indigo/10 scale-110' : 'border-brand-indigo/10 opacity-50'}`}>
-                  <h3 className="text-2xl font-black text-brand-cyan">ذهبي: {state.data.scores.gold}</h3>
+                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'pink' ? 'border-brand-cyan bg-brand-indigo/10 scale-110' : 'border-brand-indigo/10 opacity-50'}`}>
+                  <h3 className="text-2xl font-black text-brand-cyan">ذهبي: {state.data.scores.pink}</h3>
                   <div className="flex gap-1 mt-2">
-                    {[...Array(state.data.isStealOpportunity && state.data.currentTurn === 'gold' ? 1 : 3)].map((_, i) => (
-                      <XCircle key={i} className={`w-6 h-6 ${i < state.data.strikes.gold ? 'text-brand-cyan fill-brand-cyan' : 'text-brand-cyan/10'}`} />
+                    {[...Array(state.data.isStealOpportunity && state.data.currentTurn === 'pink' ? 1 : 3)].map((_, i) => (
+                      <XCircle key={i} className={`w-6 h-6 ${i < state.data.strikes.pink ? 'text-brand-cyan fill-brand-cyan' : 'text-brand-cyan/10'}`} />
                     ))}
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   <h2 className="text-5xl font-black italic text-brand-cyan glow-cyan-text">{state.data.question}</h2>
                   <div className="bg-brand-black/70 border border-brand-cyan/20 p-4 rounded-2xl inline-block">
                     <span className="text-xl font-bold text-white">
-                      {state.data.isStealOpportunity ? 'فرصة سرقة - ' : ''}دور الفريق {state.data.currentTurn === 'gold' ? 'الذهبي' : 'الأسود'}
+                      {state.data.isStealOpportunity ? 'فرصة سرقة - ' : ''}دور الفريق {state.data.currentTurn === 'pink' ? 'الوردي' : 'الأزرق'}
                     </span>
                   </div>
                   {state.data.roundPoints > 0 && (
@@ -309,11 +309,11 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                   )}
                 </div>
 
-                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'black' ? 'border-zinc-400 bg-zinc-800/80 scale-110' : 'border-zinc-800 opacity-50'}`}>
-                  <h3 className="text-2xl font-black text-white">أسود: {state.data.scores.black}</h3>
+                <div className={`p-6 rounded-3xl border-4 transition-all ${state.data.currentTurn === 'blue' ? 'border-zinc-400 bg-zinc-800/80 scale-110' : 'border-zinc-800 opacity-50'}`}>
+                  <h3 className="text-2xl font-black text-white">أسود: {state.data.scores.blue}</h3>
                   <div className="flex gap-1 mt-2">
-                    {[...Array(state.data.isStealOpportunity && state.data.currentTurn === 'black' ? 1 : 3)].map((_, i) => (
-                      <XCircle key={i} className={`w-6 h-6 ${i < state.data.strikes.black ? 'text-white fill-white' : 'text-white/10'}`} />
+                    {[...Array(state.data.isStealOpportunity && state.data.currentTurn === 'blue' ? 1 : 3)].map((_, i) => (
+                      <XCircle key={i} className={`w-6 h-6 ${i < state.data.strikes.blue ? 'text-white fill-white' : 'text-white/10'}`} />
                     ))}
                   </div>
                 </div>
@@ -345,29 +345,29 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
               {/* Team Management during game */}
               <div className="grid grid-cols-2 gap-8 mt-12 pt-12 border-t border-brand-cyan/10">
                 <div className="bg-brand-black/20 p-4 rounded-2xl">
-                  <h4 className="text-brand-cyan font-bold mb-2">إدارة الفريق الذهبي</h4>
+                  <h4 className="text-brand-cyan font-bold mb-2">إدارة الفريق الوردي</h4>
                   <div className="space-y-1 max-h-40 overflow-y-auto custom-scrollbar">
-                    {state.players.filter(p => p.team === 'gold').map(p => (
+                    {state.players.filter(p => p.team === 'pink').map(p => (
                       <div key={p.id} className="flex justify-between items-center text-xs bg-brand-black/70 p-2 rounded-lg">
                         <span className="flex items-center gap-1">
-                          {state.data.leaders.gold === p.id && <Crown className="w-3 h-3 text-brand-cyan" />}
+                          {state.data.leaders.pink === p.id && <Crown className="w-3 h-3 text-brand-cyan" />}
                           {p.name}
                         </span>
-                        <button onClick={() => setLeader(p.id, 'gold')} className="text-[8px] bg-brand-cyan/20 px-2 py-1 rounded">قائد</button>
+                        <button onClick={() => setLeader(p.id, 'pink')} className="text-[8px] bg-brand-cyan/20 px-2 py-1 rounded">قائد</button>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="bg-brand-black/20 p-4 rounded-2xl">
-                  <h4 className="text-white font-bold mb-2">إدارة الفريق الأسود</h4>
+                  <h4 className="text-white font-bold mb-2">إدارة الفريق الأزرق</h4>
                   <div className="space-y-1 max-h-40 overflow-y-auto custom-scrollbar">
-                    {state.players.filter(p => p.team === 'black').map(p => (
+                    {state.players.filter(p => p.team === 'blue').map(p => (
                       <div key={p.id} className="flex justify-between items-center text-xs bg-brand-black/70 p-2 rounded-lg">
                         <span className="flex items-center gap-1">
-                          {state.data.leaders.black === p.id && <Crown className="w-3 h-3 text-white" />}
+                          {state.data.leaders.blue === p.id && <Crown className="w-3 h-3 text-white" />}
                           {p.name}
                         </span>
-                        <button onClick={() => setLeader(p.id, 'black')} className="text-[8px] bg-white/20 px-2 py-1 rounded">قائد</button>
+                        <button onClick={() => setLeader(p.id, 'blue')} className="text-[8px] bg-white/20 px-2 py-1 rounded">قائد</button>
                       </div>
                     ))}
                   </div>
@@ -384,12 +384,12 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
                 
                 <div className="flex justify-center gap-12 mb-8">
                   <div className="text-center p-6 bg-brand-indigo/10 rounded-3xl border border-brand-indigo/30 min-w-[200px]">
-                    <h3 className="text-2xl font-black text-brand-cyan mb-2">الذهبي</h3>
-                    <p className="text-5xl font-black text-white">{state.data.scores.gold}</p>
+                    <h3 className="text-2xl font-black text-brand-cyan mb-2">الوردي</h3>
+                    <p className="text-5xl font-black text-white">{state.data.scores.pink}</p>
                   </div>
                   <div className="text-center p-6 bg-white/5 rounded-3xl border border-white/20 min-w-[200px]">
-                    <h3 className="text-2xl font-black text-white mb-2">الأسود</h3>
-                    <p className="text-5xl font-black text-white">{state.data.scores.black}</p>
+                    <h3 className="text-2xl font-black text-white mb-2">الأزرق</h3>
+                    <p className="text-5xl font-black text-white">{state.data.scores.blue}</p>
                   </div>
                 </div>
 
@@ -432,13 +432,13 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
           {/* Gold Team */}
           <div>
             <h4 className="text-brand-cyan text-sm font-bold mb-2 flex justify-between px-2">
-              الفريق الذهبي
-              <span className="bg-brand-pink/20 px-2 rounded text-xs">{state.players.filter(p => p.team === 'gold').length}</span>
+              الفريق الوردي
+              <span className="bg-brand-pink/20 px-2 rounded text-xs">{state.players.filter(p => p.team === 'pink').length}</span>
             </h4>
             <div className="space-y-1">
-              {state.players.filter(p => p.team === 'gold').map(p => (
+              {state.players.filter(p => p.team === 'pink').map(p => (
                 <div key={p.id} className="bg-brand-pink/5 p-2 rounded border border-brand-cyan/10 flex items-center gap-2 text-sm">
-                   {state.data?.leaders?.gold === p.id && <Crown className="w-3 h-3 text-brand-cyan" />}
+                   {state.data?.leaders?.pink === p.id && <Crown className="w-3 h-3 text-brand-cyan" />}
                    <span className="text-zinc-200 truncate">{p.name}</span>
                 </div>
               ))}
@@ -448,13 +448,13 @@ export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = 
           {/* Black Team */}
           <div>
             <h4 className="text-zinc-400 text-sm font-bold mb-2 flex justify-between px-2">
-              الفريق الأسود
-              <span className="bg-zinc-800 px-2 rounded text-xs">{state.players.filter(p => p.team === 'black').length}</span>
+              الفريق الأزرق
+              <span className="bg-zinc-800 px-2 rounded text-xs">{state.players.filter(p => p.team === 'blue').length}</span>
             </h4>
             <div className="space-y-1">
-              {state.players.filter(p => p.team === 'black').map(p => (
+              {state.players.filter(p => p.team === 'blue').map(p => (
                 <div key={p.id} className="bg-zinc-900 p-2 rounded border border-zinc-800 flex items-center gap-2 text-sm">
-                   {state.data?.leaders?.black === p.id && <Crown className="w-3 h-3 text-zinc-400" />}
+                   {state.data?.leaders?.blue === p.id && <Crown className="w-3 h-3 text-zinc-400" />}
                    <span className="text-zinc-400 truncate">{p.name}</span>
                 </div>
               ))}
