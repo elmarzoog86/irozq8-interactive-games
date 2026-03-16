@@ -22,393 +22,393 @@ const ROUNDS: Round[] = [
   {
     answer: ['فواكه', 'فاكهة', 'فواكة'],
     items: [
-      { text: 'تفاح', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pink_lady_and_cross_section.jpg/500px-Pink_lady_and_cross_section.jpg' },
-      { text: 'برتقال', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Oranges_-_whole-halved-segment.jpg/500px-Oranges_-_whole-halved-segment.jpg' },
-      { text: 'موز', image: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }
+      { text: 'تفاح', image: '🍎' },
+      { text: 'برتقال', image: '🍊' },
+      { text: 'موز', image: '🍌' }
     ]
   },
   {
     answer: ['تواصل اجتماعي', 'سوشيال ميديا', 'برامج', 'تطبيقات'],
     items: [
-      { text: 'تويتر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/X_%28formerly_Twitter%29_logo_late_2025.svg/500px-X_%28formerly_Twitter%29_logo_late_2025.svg.png' },
-      { text: 'يوتيوب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Youtube_interface%2C_showing_search_results_of_Burger_Recipe.png/500px-Youtube_interface%2C_showing_search_results_of_Burger_Recipe.png' },
-      { text: 'انستغرام', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/500px-Instagram_logo_2022.svg.png' }
+      { text: 'تويتر', image: '🐦' },
+      { text: 'يوتيوب', image: '▶️' },
+      { text: 'انستغرام', image: '📷' }
     ]
   },
   {
     answer: ['عملات', 'عملة', 'فلوس', 'اموال', 'مال'],
     items: [
-      { text: 'دولار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/USDnotesNew.png/500px-USDnotesNew.png' },
-      { text: 'يورو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/500px-Flag_of_Europe.svg.png' },
-      { text: 'بتكوين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/500px-Bitcoin.svg.png' }
+      { text: 'دولار', image: '💵' },
+      { text: 'يورو', image: '💶' },
+      { text: 'بتكوين', image: '🪙' }
     ]
   },
   {
     answer: ['عواصم', 'عاصمة', 'مدن', 'مدينة'],
     items: [
-      { text: 'لندن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/London_Skyline_%28125508655%29.jpeg/500px-London_Skyline_%28125508655%29.jpeg' },
-      { text: 'باريس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg/500px-La_Tour_Eiffel_vue_de_la_Tour_Saint-Jacques%2C_Paris_ao%C3%BBt_2014_%282%29.jpg' },
-      { text: 'طوكيو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/500px-Skyscrapers_of_Shinjuku_2009_January.jpg' }
+      { text: 'لندن', image: '🎡' },
+      { text: 'باريس', image: '🗼' },
+      { text: 'طوكيو', image: '🗻' }
     ]
   },
   {
     answer: ['مطاعم', 'وجبات سريعة', 'فاست فود'],
     items: [
-      { text: 'برجر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/RedDot_Burger.jpg/500px-RedDot_Burger.jpg' },
-      { text: 'بطاطس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/French_Fries.JPG/500px-French_Fries.JPG' },
-      { text: 'بيتزا', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/500px-Pizza-3007395.jpg' }
+      { text: 'برجر', image: '🍔' },
+      { text: 'بطاطس', image: '🍟' },
+      { text: 'بيتزا', image: '🍕' }
     ]
   },
   {
     answer: ['كواكب', 'كوكب', 'فضاء'],
     items: [
-      { text: 'المريخ', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png/500px-Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png' },
-      { text: 'القمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/500px-FullMoon2010.jpg' },
-      { text: 'الارض', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Meteosat-12-after-eqnx_04-b.jpg/500px-Meteosat-12-after-eqnx_04-b.jpg' }
+      { text: 'المريخ', image: '🪐' },
+      { text: 'القمر', image: '🌕' },
+      { text: 'الارض', image: '🌍' }
     ]
   },
   {
     answer: ['مركبات', 'سيارات', 'مواصلات', 'وسائل نقل'],
     items: [
-      { text: 'سيارة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/1925_Ford_Model_T_touring.jpg/500px-1925_Ford_Model_T_touring.jpg' },
-      { text: 'دراجة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Left_side_of_Flying_Pigeon.jpg/500px-Left_side_of_Flying_Pigeon.jpg' },
-      { text: 'قطار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg/500px-%D0%9F%D0%BE%D0%B5%D0%B7%D0%B4_%D0%BD%D0%B0_%D1%84%D0%BE%D0%BD%D0%B5_%D0%B3%D0%BE%D1%80%D1%8B_%D0%A8%D0%B0%D1%82%D1%80%D0%B8%D1%89%D0%B5._%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%D1%81%D0%BA%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C.jpg' }
+      { text: 'سيارة', image: '🚗' },
+      { text: 'دراجة', image: '🚲' },
+      { text: 'قطار', image: '🚆' }
     ]
   },
   {
     answer: ['حيوانات', 'حيوان', 'حيوانات اليفة'],
     items: [
-      { text: 'قطة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/500px-Cat_August_2010-4.jpg' },
-      { text: 'كلب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Huskiesatrest.jpg/500px-Huskiesatrest.jpg' },
-      { text: 'ارنب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oryctolagus_cuniculus_Rcdo.jpg/500px-Oryctolagus_cuniculus_Rcdo.jpg' }
+      { text: 'قطة', image: '🐱' },
+      { text: 'كلب', image: '🐶' },
+      { text: 'ارنب', image: '🐰' }
     ]
   },
   {
     answer: ['رياضات', 'رياضة', 'العاب رياضية'],
     items: [
-      { text: 'كرة قدم', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Football_in_Bloomington%2C_Indiana%2C_1995.jpg/500px-Football_in_Bloomington%2C_Indiana%2C_1995.jpg' },
-      { text: 'سلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Steph_Curry_%2851915116957%29.jpg/500px-Steph_Curry_%2851915116957%29.jpg' },
-      { text: 'تنس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/2013_Australian_Open_-_Guillaume_Rufin.jpg/500px-2013_Australian_Open_-_Guillaume_Rufin.jpg' }
+      { text: 'كرة قدم', image: '⚽' },
+      { text: 'سلة', image: '🧺' },
+      { text: 'تنس', image: '🎾' }
     ]
   },
   {
     answer: ['ملابس', 'ملبس', 'ازياء', 'أزياء'],
     items: [
-      { text: 'قميص', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Leipzig2012.jpg/500px-Leipzig2012.jpg' },
-      { text: 'بنطال', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Trousers-colourisolated.jpg/500px-Trousers-colourisolated.jpg' },
-      { text: 'حذاء', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Skor_fr%C3%A5n_1700-_till_1960-talet_-_Nordiska_Museet_-_NMA.0056302.jpg/500px-Skor_fr%C3%A5n_1700-_till_1960-talet_-_Nordiska_Museet_-_NMA.0056302.jpg' }
+      { text: 'قميص', image: '👕' },
+      { text: 'بنطال', image: '👖' },
+      { text: 'حذاء', image: '👞' }
     ]
   },
   {
     answer: ['مشروبات', 'مشروب', 'سوائل'],
     items: [
-      { text: 'قهوة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Latte_and_dark_coffee.jpg/500px-Latte_and_dark_coffee.jpg' },
-      { text: 'شاي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Longjing_tea_steeping_in_gaiwan.jpg/500px-Longjing_tea_steeping_in_gaiwan.jpg' },
-      { text: 'عصير', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Orange_juice_1.jpg/500px-Orange_juice_1.jpg' }
+      { text: 'قهوة', image: '☕' },
+      { text: 'شاي', image: '🍵' },
+      { text: 'عصير', image: '🧃' }
     ]
   },
   {
     answer: ['ادوات مدرسية', 'مدرسة', 'قرطاسية', 'أدوات مكتبية'],
     items: [
-      { text: 'قلم', image: 'https://upload.wikimedia.org/wikipedia/commons/a/ae/Carandache_Ecridor.jpg' },
-      { text: 'دفتر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Notebooks.jpg/500px-Notebooks.jpg' },
-      { text: 'شنطة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Rucksack1.jpg/500px-Rucksack1.jpg' }
+      { text: 'قلم', image: '✏️' },
+      { text: 'دفتر', image: '📓' },
+      { text: 'شنطة', image: '🎒' }
         ]
   },
   {
     answer: ['الوان', 'لون', 'ألوان'],
     items: [
-      { text: 'احمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Red.svg/500px-Red.svg.png' },
-      { text: 'ازرق', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Solid_blue.svg/500px-Solid_blue.svg.png' },
-      { text: 'اخضر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Solid_green.svg/500px-Solid_green.svg.png' }
+      { text: 'احمر', image: '🔴' },
+      { text: 'ازرق', image: '🔵' },
+      { text: 'اخضر', image: '🟢' }
     ]
   },
   {
     answer: ['طيور', 'طير', 'عصافير'],
     items: [
-      { text: 'نسر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Bald_Eagle_Portrait.jpg/500px-Bald_Eagle_Portrait.jpg' },
-      { text: 'ببغاء', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ara_macao_flying_-Costa_Rica-8.jpg/500px-Ara_macao_flying_-Costa_Rica-8.jpg' },
-      { text: 'حمامة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Feral_Pigeon.jpg/500px-Feral_Pigeon.jpg' }
+      { text: 'نسر', image: '🦅' },
+      { text: 'ببغاء', image: '🦜' },
+      { text: 'حمامة', image: '🕊️' }
     ]
   },
   {
     answer: ['اجهزة كهربائية', 'الكترونيات', 'كهربائيات', 'اجهزة منزلية'],
     items: [
-      { text: 'ثلاجة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Refrigerator.png/500px-Refrigerator.png' },
-      { text: 'غسالة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Washing_machine.jpg/500px-Washing_machine.jpg' },
-      { text: 'تلفاز', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/CRT_television.jpg/500px-CRT_television.jpg' }
+      { text: 'ثلاجة', image: '🧊' },
+      { text: 'غسالة', image: '🧺' },
+      { text: 'تلفاز', image: '📺' }
     ]
   },
   {
     answer: ['حشرات', 'حشرة', 'بقيات'],
     items: [
-      { text: 'نملة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Ant_Macro.jpg/500px-Ant_Macro.jpg' },
-      { text: 'نحلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Apis_mellifera_flying.jpg/500px-Apis_mellifera_flying.jpg' },
-      { text: 'فраشة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Monarch_Butterfly_Danaus_plexippus.jpg/500px-Monarch_Butterfly_Danaus_plexippus.jpg' }
+      { text: 'نملة', image: '🐜' },
+      { text: 'نحلة', image: '🐝' },
+      { text: 'فраشة', image: '🦋' }
     ]
   },
   {
     answer: ['اعضاء الجسم', 'جسم', 'اعضاء'],
     items: [
-      { text: 'عين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Human_eye_with_blood_vessels.jpg/500px-Human_eye_with_blood_vessels.jpg' },
-      { text: 'قلب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Human_Heart_and_lungs.jpg/500px-Human_Heart_and_lungs.jpg' },
-      { text: 'يد', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Hand_picture.jpg/500px-Hand_picture.jpg' }
+      { text: 'عين', image: '👁️' },
+      { text: 'قلب', image: '❤️' },
+      { text: 'يد', image: '✋' }
     ]
   },
   {
     answer: ['اسلحة', 'سلاح'],
     items: [
-      { text: 'سيف', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Sword.jpg/500px-Sword.jpg' },
-      { text: 'بندقية', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Rifle.jpg/500px-Rifle.jpg' },
-      { text: 'قنبلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Bomb.jpg/500px-Bomb.jpg' }
+      { text: 'سيف', image: '🗡️' },
+      { text: 'بندقية', image: '🔫' },
+      { text: 'قنبلة', image: '💣' }
     ]
   },
   {
     answer: ['الات موسيقية', 'موسيقى', 'معازف', 'آلات موسيقية'],
     items: [
-      { text: 'عود', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Oud.jpg/500px-Oud.jpg' },
-      { text: 'بيانو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Piano.jpg/500px-Piano.jpg' },
-      { text: 'جيتار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Guitar.jpg/500px-Guitar.jpg' }
+      { text: 'عود', image: '🪵' },
+      { text: 'بيانو', image: '🎹' },
+      { text: 'جيتار', image: '🎸' }
     ]
   },
   {
     answer: ['مهن', 'وظائف', 'عمل', 'شغل'],
     items: [
-      { text: 'طبيب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Doctor.jpg/500px-Doctor.jpg' },
-      { text: 'معلم', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Teacher.jpg/500px-Teacher.jpg' },
-      { text: 'مهندس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Engineer.jpg/500px-Engineer.jpg' }
+      { text: 'طبيب', image: '👨‍⚕️' },
+      { text: 'معلم', image: '👨‍🏫' },
+      { text: 'مهندس', image: '👷' }
     ]
   },
   {
     answer: ['العاب فيديو', 'قيمنق', 'العاب', 'بلايستيشن', 'اكس بوكس'],
     items: [
-      { text: 'ماينكرافت', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Minecraft_logo.svg/500px-Minecraft_logo.svg.png' },
-      { text: 'فيفا', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/FIFA_logo.svg/500px-FIFA_logo.svg.png' },
-      { text: 'فورتنايت', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Fortnite_logo.svg/500px-Fortnite_logo.svg.png' }
+      { text: 'ماينكرافت', image: '🧱' },
+      { text: 'فيفا', image: '⚽' },
+      { text: 'فورتنايت', image: '🎮' }
     ]
   },
   {
     answer: ['اوقات', 'زمن', 'وقت', 'فصول', 'فترات'],
     items: [
-      { text: 'صباح', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Sunrise.jpg/500px-Sunrise.jpg' },
-      { text: 'مساء', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Sunset.jpg/500px-Sunset.jpg' },
-      { text: 'ليل', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Night.jpg/500px-Night.jpg' }
+      { text: 'صباح', image: '🌅' },
+      { text: 'مساء', image: '🌇' },
+      { text: 'ليل', image: '🌃' }
     ]
   },
   {
     answer: ['بحار', 'محيطات', 'مسطحات مائية', 'ماء'],
     items: [
-      { text: 'البحر الاحمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Red_Sea_map.png/500px-Red_Sea_map.png' },
-      { text: 'البحر المتوسط', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Mediterranean_Sea_map.png/500px-Mediterranean_Sea_map.png' },
-      { text: 'المحيط الاطلسي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Atlantic_Ocean.png/500px-Atlantic_Ocean.png' }
+      { text: 'البحر الاحمر', image: '🌊' },
+      { text: 'البحر المتوسط', image: '⛵' },
+      { text: 'المحيط الاطلسي', image: '🐋' }
     ]
   },
   {
     answer: ['معالم سياحية', 'معالم', 'سياحة', 'اماكن'],
     items: [
-      { text: 'الاهرامات', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Kheops-Pyramid.jpg/500px-Kheops-Pyramid.jpg' },
-      { text: 'سور الصين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Great_Wall_of_China_July_2006.JPG/500px-Great_Wall_of_China_July_2006.JPG' },
-      { text: 'ساعة بيغ بن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Big_Ben_Clock_Face.jpg/500px-Big_Ben_Clock_Face.jpg' }
+      { text: 'الاهرامات', image: '🔺' },
+      { text: 'سور الصين', image: '🧱' },
+      { text: 'ساعة بيغ بن', image: '🕐' }
     ]
   },
   {
     answer: ['مكسرات', 'تسالي', 'حبوب'],
     items: [
-      { text: 'لوز', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Almonds.jpg/500px-Almonds.jpg' },
-      { text: 'فستق', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Pistachio.jpg/500px-Pistachio.jpg' },
-      { text: 'كاجو', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Cashew.jpg/500px-Cashew.jpg' }
+      { text: 'لوز', image: '🥜' },
+      { text: 'فستق', image: '🥜' },
+      { text: 'كاجو', image: '🥜' }
     ]
   },
   {
     answer: ['لغات', 'لغة', 'لهجات', 'كلام'],
     items: [
-      { text: 'انجليزي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/500px-Flag_of_the_United_Kingdom.svg.png' },
-      { text: 'عربي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_Arab_League.svg/500px-Flag_of_the_Arab_League.svg.png' },
-      { text: 'فرنسي', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/500px-Flag_of_France.svg.png' }
+      { text: 'انجليزي', image: '🇬🇧' },
+      { text: 'عربي', image: '🇸🇦' },
+      { text: 'فرنسي', image: '🇫🇷' }
     ]
   },
   {
     answer: ['ادوات طعام', 'مطبخ', 'مواعين', 'اواني'],
     items: [
-      { text: 'ملعقة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Spoon.jpg/500px-Spoon.jpg' },
-      { text: 'شوكة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Fork.jpg/500px-Fork.jpg' },
-      { text: 'سكين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Knife.jpg/500px-Knife.jpg' }
+      { text: 'ملعقة', image: '🥄' },
+      { text: 'شوكة', image: '🍴' },
+      { text: 'سكين', image: '🔪' }
     ]
   },
   {
     answer: ['اشجار', 'شجر', 'نباتات', 'نبات'],
     items: [
-      { text: 'نخلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Palm_tree.jpg/500px-Palm_tree.jpg' },
-      { text: 'شجرة تفاح', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Apple_tree.jpg/500px-Apple_tree.jpg' },
-      { text: 'صبار', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Cactus.jpg/500px-Cactus.jpg' }
+      { text: 'نخلة', image: '🌴' },
+      { text: 'شجرة تفاح', image: '🌳' },
+      { text: 'صبار', image: '🌵' }
     ]
   },
   {
     answer: ['مشاعر', 'احاسيس', 'عواطف', 'شعور'],
     items: [
-      { text: 'فرح', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Joy.jpg/500px-Joy.jpg' },
-      { text: 'حزن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Sadness.jpg/500px-Sadness.jpg' },
-      { text: 'غضب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Anger.jpg/500px-Anger.jpg' }
+      { text: 'فرح', image: '😊' },
+      { text: 'حزن', image: '😢' },
+      { text: 'غضب', image: '😠' }
     ]
   },
   {
     answer: ['ألوان', 'الوان', 'لون'],
     items: [
-      { text: 'أحمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/500px-SNice.svg.png' },
-      { text: 'أزرق', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Blue_sphere.svg/500px-Blue_sphere.svg.png' },
-      { text: 'أخضر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Green_sphere.svg/500px-Green_sphere.svg.png' }
+      { text: 'أحمر', image: '🔴' },
+      { text: 'أزرق', image: '🔵' },
+      { text: 'أخضر', image: '🟢' }
     ]
   },
   {
     answer: ['حيوانات', 'حيوان', 'كائنات'],
     items: [
-      { text: 'أسد', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Lion_waiting_in_Namibia.jpg/500px-Lion_waiting_in_Namibia.jpg' },
-      { text: 'فيل', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/500px-African_Bush_Elephant.jpg' },
-      { text: 'زرافة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/500px-Giraffe_Mikumi_National_Park.jpg' }
+      { text: 'أسد', image: '🦁' },
+      { text: 'فيل', image: '🐘' },
+      { text: 'زرافة', image: '🦒' }
     ]
   },
   {
     answer: ['رياضات', 'رياضة', 'لعبة', 'ألعاب'],
     items: [
-      { text: 'كرة قدم', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/500px-Soccerball.svg.png' },
-      { text: 'كرة سلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Basketball.png/500px-Basketball.png' },
-      { text: 'تنس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tennis_ball.svg/500px-Tennis_ball.svg.png' }
+      { text: 'كرة قدم', image: '⚽' },
+      { text: 'كرة سلة', image: '🏀' },
+      { text: 'تنس', image: '🎾' }
     ]
   },
   {
     answer: ['كواكب', 'كوكب', 'فضاء'],
     items: [
-      { text: 'الأرض', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/500px-The_Earth_seen_from_Apollo_17.jpg' },
-      { text: 'المريخ', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/500px-OSIRIS_Mars_true_color.jpg' },
-      { text: 'المشتري', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Jupiter.jpg/500px-Jupiter.jpg' }
+      { text: 'الأرض', image: '🌍' },
+      { text: 'المريخ', image: '🪐' },
+      { text: 'المشتري', image: '🪐' }
     ]
   },
   {
     answer: ['حواس', 'حاسة'],
     items: [
-      { text: 'عين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Eye.jpg/500px-Eye.jpg' },
-      { text: 'أذن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ear.jpg/500px-Ear.jpg' },
-      { text: 'أنف', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Nose.jpg/500px-Nose.jpg' }
+      { text: 'عين', image: '👁️' },
+      { text: 'أذن', image: '👂' },
+      { text: 'أنف', image: '👃' }
     ]
   },
   {
     answer: ['وظائف', 'مهن', 'مهنة', 'وظيفة', 'عمل'],
     items: [
-      { text: 'طبيب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=doctor&backgroundColor=00e5ff' },
-      { text: 'معلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=teacher&backgroundColor=00e5ff' },
-      { text: 'مهندس', image: 'https://api.dicebear.com/7.x/icons/svg?seed=engineer&backgroundColor=00e5ff' }
+      { text: 'طبيب', image: '👨‍⚕️' },
+      { text: 'معلم', image: '👨‍🏫' },
+      { text: 'مهندس', image: '👷' }
     ]
   },
   {
     answer: ['مشروبات', 'مشروب', 'سوائل'],
     items: [
-      { text: 'قهوة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=coffee&backgroundColor=00e5ff' },
-      { text: 'شاي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tea&backgroundColor=00e5ff' },
-      { text: 'عصير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=juice&backgroundColor=00e5ff' }
+      { text: 'قهوة', image: '☕' },
+      { text: 'شاي', image: '🍵' },
+      { text: 'عصير', image: '🧃' }
     ]
   },
   {
     answer: ['سيارات', 'مركبات', 'سيارة'],
     items: [
-      { text: 'تويوتا', image: 'https://api.dicebear.com/7.x/icons/svg?seed=toyota&backgroundColor=00e5ff' },
-      { text: 'انفنتي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=infiniti&backgroundColor=00e5ff' },
-      { text: 'نيسان', image: 'https://api.dicebear.com/7.x/icons/svg?seed=nissan&backgroundColor=00e5ff' }
+      { text: 'تويوتا', image: '🚙' },
+      { text: 'انفنتي', image: '♾️' },
+      { text: 'نيسان', image: '🚘' }
     ]
   },
   {
     answer: ['ملابس', 'كسوة', 'لبس', 'هدوم'],
     items: [
-      { text: 'قميص', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shirt&backgroundColor=00e5ff' },
-      { text: 'بنطلون', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pants&backgroundColor=00e5ff' },
-      { text: 'حذاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shoes&backgroundColor=00e5ff' }
+      { text: 'قميص', image: '👕' },
+      { text: 'بنطلون', image: '👖' },
+      { text: 'حذاء', image: '👞' }
     ]
   },
   {
     answer: ['أدوات مدرسية', 'قرطاسية', 'مدرسة'],
     items: [
-      { text: 'قلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pen&backgroundColor=00e5ff' },
-      { text: 'دفتر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=notebook&backgroundColor=00e5ff' },
-      { text: 'ممحاة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eraser&backgroundColor=00e5ff' }
+      { text: 'قلم', image: '✏️' },
+      { text: 'دفتر', image: '📓' },
+      { text: 'ممحاة', image: '🧹' }
     ]
   },
   {
     answer: ['معادن', 'معدن'],
     items: [
-      { text: 'ذهب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=gold&backgroundColor=00e5ff' },
-      { text: 'فضة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=silver&backgroundColor=00e5ff' },
-      { text: 'حديد', image: 'https://api.dicebear.com/7.x/icons/svg?seed=iron&backgroundColor=00e5ff' }
+      { text: 'ذهب', image: '🥇' },
+      { text: 'فضة', image: '🥈' },
+      { text: 'حديد', image: '⚓' }
     ]
   },
   {
     answer: ['أثاث', 'مفروشات', 'اثاث'],
     items: [
-      { text: 'سرير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=bed&backgroundColor=00e5ff' },
-      { text: 'طاولة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=table&backgroundColor=00e5ff' },
-      { text: 'كرسي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=chair&backgroundColor=00e5ff' }
+      { text: 'سرير', image: '🛌' },
+      { text: 'طاولة', image: '🪑' },
+      { text: 'كرسي', image: '🪑' }
     ]
   },
   {
     answer: ['فصول السنة', 'فصول', 'فصل'],
     items: [
-      { text: 'شتاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=winter&backgroundColor=00e5ff' },
-      { text: 'صيف', image: 'https://api.dicebear.com/7.x/icons/svg?seed=summer&backgroundColor=00e5ff' },
-      { text: 'ربيع', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spring&backgroundColor=00e5ff' }
+      { text: 'شتاء', image: '❄️' },
+      { text: 'صيف', image: '☀️' },
+      { text: 'ربيع', image: '🌸' }
     ]
   },
   {
     answer: ['أدوات مطبخ', 'مطبخ', 'اواني', 'أواني'],
     items: [
-      { text: 'سكين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=knife&backgroundColor=00e5ff' },
-      { text: 'ملعقة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spoon&backgroundColor=00e5ff' },
-      { text: 'شوكة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fork&backgroundColor=00e5ff' }
+      { text: 'سكين', image: '🔪' },
+      { text: 'ملعقة', image: '🥄' },
+      { text: 'شوكة', image: '🍴' }
     ]
   },
   {
     answer: ['طيور', 'طائر', 'عصافير'],
     items: [
-      { text: 'صقر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=falcon&backgroundColor=00e5ff' },
-      { text: 'حمامة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=dove&backgroundColor=00e5ff' },
-      { text: 'نسر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eagle&backgroundColor=00e5ff' }
+      { text: 'صقر', image: '🦅' },
+      { text: 'حمامة', image: '🕊️' },
+      { text: 'نسر', image: '🦅' }
     ]
   },
   {
     answer: ['وسائل نقل', 'مواصلات', 'نقل', 'مواصلة'],
     items: [
-      { text: 'طائرة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=plane&backgroundColor=00e5ff' },
-      { text: 'قطار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=train&backgroundColor=00e5ff' },
-      { text: 'سفينة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=ship&backgroundColor=00e5ff' }
+      { text: 'طائرة', image: '✈️' },
+      { text: 'قطار', image: '🚆' },
+      { text: 'سفينة', image: '🚢' }
     ]
   },
   {
     answer: ['أجهزة كهرابئية', 'اجهزة', 'أجهزة', 'الكترونيات', 'كهربائيات'],
     items: [
-      { text: 'تلفاز', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tv&backgroundColor=00e5ff' },
-      { text: 'ثلاجة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fridge&backgroundColor=00e5ff' },
-      { text: 'غسالة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=washer&backgroundColor=00e5ff' }
+      { text: 'تلفاز', image: '📺' },
+      { text: 'ثلاجة', image: '🧊' },
+      { text: 'غسالة', image: '🧺' }
     ]
   },
   {
     answer: ['زهور', 'زهرة', 'ورد', 'ورود'],
     items: [
-      { text: 'ياسمين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=jasmine&backgroundColor=00e5ff' },
-      { text: 'جوري', image: 'https://api.dicebear.com/7.x/icons/svg?seed=rose&backgroundColor=00e5ff' },
-      { text: 'توليب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tulip&backgroundColor=00e5ff' }
+      { text: 'ياسمين', image: '🌼' },
+      { text: 'جوري', image: '🌹' },
+      { text: 'توليب', image: '🌷' }
     ]
   },
   {
     answer: ['لغات', 'لغة', 'لهجات'],
     items: [
-      { text: 'عربية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=arabic&backgroundColor=00e5ff' },
-      { text: 'إنجليزية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=english&backgroundColor=00e5ff' },
-      { text: 'فرنسية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=french&backgroundColor=00e5ff' }
+      { text: 'عربية', image: '🇸🇦' },
+      { text: 'إنجليزية', image: '🇬🇧' },
+      { text: 'فرنسية', image: '🇫🇷' }
     ]
   },
   {
     answer: ['أدوات موسيقية', 'آلات موسيقية', 'موسيقى', 'الات'],
     items: [
-      { text: 'عود', image: 'https://api.dicebear.com/7.x/icons/svg?seed=oud&backgroundColor=00e5ff' },
-      { text: 'بيانو', image: 'https://api.dicebear.com/7.x/icons/svg?seed=piano&backgroundColor=00e5ff' },
-      { text: 'جيتار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=guitar&backgroundColor=00e5ff' }
+      { text: 'عود', image: '🪵' },
+      { text: 'بيانو', image: '🎹' },
+      { text: 'جيتار', image: '🎸' }
     ]
   }
 ]
@@ -682,15 +682,21 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                       className="bg-zinc-900 border-2 border-white/10 rounded-3xl overflow-hidden flex flex-col w-64 shadow-2xl"
                     >
                       <div className="h-48 w-full relative bg-brand-black/50 flex items-center justify-center overflow-hidden">
-                        <img 
-                            src={item.image} 
-                            alt={item.text} 
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
+                        {!item.image.startsWith('http') ? (
+                            <div className="w-full h-full flex items-center justify-center bg-zinc-800">
+                                <span className="text-[120px] drop-shadow-2xl select-none leading-none">{item.image}</span>
+                            </div>
+                          ) : (
+                            <img
+                              src={item.image}
+                              alt={item.text}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = 'none';
-                                (e.target as HTMLImageElement).parentElement!.innerHTML = '<span class="text-4xl">❓</span>';
-                            }}
-                        />
+                                (e.target as HTMLImageElement).parentElement!.innerHTML = '<span class="text-4xl text-white">⚠️</span>';
+                              }}
+                            />
+                          )}
                       </div>
                       <div className="p-4 bg-zinc-900 text-center border-t border-white/10">
                         <span className="text-2xl font-black text-white">{item.text}</span>
