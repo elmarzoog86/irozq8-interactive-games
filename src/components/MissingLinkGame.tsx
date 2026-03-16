@@ -250,6 +250,166 @@ const ROUNDS: Round[] = [
       { text: 'حزن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Sadness.jpg/500px-Sadness.jpg' },
       { text: 'غضب', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Anger.jpg/500px-Anger.jpg' }
     ]
+  },
+  {
+    answer: ['ألوان', 'الوان', 'لون'],
+    items: [
+      { text: 'أحمر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/500px-SNice.svg.png' },
+      { text: 'أزرق', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Blue_sphere.svg/500px-Blue_sphere.svg.png' },
+      { text: 'أخضر', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Green_sphere.svg/500px-Green_sphere.svg.png' }
+    ]
+  },
+  {
+    answer: ['حيوانات', 'حيوان', 'كائنات'],
+    items: [
+      { text: 'أسد', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Lion_waiting_in_Namibia.jpg/500px-Lion_waiting_in_Namibia.jpg' },
+      { text: 'فيل', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/African_Bush_Elephant.jpg/500px-African_Bush_Elephant.jpg' },
+      { text: 'زرافة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Giraffe_Mikumi_National_Park.jpg/500px-Giraffe_Mikumi_National_Park.jpg' }
+    ]
+  },
+  {
+    answer: ['رياضات', 'رياضة', 'لعبة', 'ألعاب'],
+    items: [
+      { text: 'كرة قدم', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Soccerball.svg/500px-Soccerball.svg.png' },
+      { text: 'كرة سلة', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Basketball.png/500px-Basketball.png' },
+      { text: 'تنس', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tennis_ball.svg/500px-Tennis_ball.svg.png' }
+    ]
+  },
+  {
+    answer: ['كواكب', 'كوكب', 'فضاء'],
+    items: [
+      { text: 'الأرض', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/500px-The_Earth_seen_from_Apollo_17.jpg' },
+      { text: 'المريخ', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/500px-OSIRIS_Mars_true_color.jpg' },
+      { text: 'المشتري', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Jupiter.jpg/500px-Jupiter.jpg' }
+    ]
+  },
+  {
+    answer: ['حواس', 'حاسة'],
+    items: [
+      { text: 'عين', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Eye.jpg/500px-Eye.jpg' },
+      { text: 'أذن', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Ear.jpg/500px-Ear.jpg' },
+      { text: 'أنف', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Nose.jpg/500px-Nose.jpg' }
+    ]
+  },
+  {
+    answer: ['وظائف', 'مهن', 'مهنة', 'وظيفة', 'عمل'],
+    items: [
+      { text: 'طبيب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=doctor&backgroundColor=d4af37' },
+      { text: 'معلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=teacher&backgroundColor=d4af37' },
+      { text: 'مهندس', image: 'https://api.dicebear.com/7.x/icons/svg?seed=engineer&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['مشروبات', 'مشروب', 'سوائل'],
+    items: [
+      { text: 'قهوة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=coffee&backgroundColor=d4af37' },
+      { text: 'شاي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tea&backgroundColor=d4af37' },
+      { text: 'عصير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=juice&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['سيارات', 'مركبات', 'سيارة'],
+    items: [
+      { text: 'تويوتا', image: 'https://api.dicebear.com/7.x/icons/svg?seed=toyota&backgroundColor=d4af37' },
+      { text: 'انفنتي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=infiniti&backgroundColor=d4af37' },
+      { text: 'نيسان', image: 'https://api.dicebear.com/7.x/icons/svg?seed=nissan&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['ملابس', 'كسوة', 'لبس', 'هدوم'],
+    items: [
+      { text: 'قميص', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shirt&backgroundColor=d4af37' },
+      { text: 'بنطلون', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pants&backgroundColor=d4af37' },
+      { text: 'حذاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=shoes&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['أدوات مدرسية', 'قرطاسية', 'مدرسة'],
+    items: [
+      { text: 'قلم', image: 'https://api.dicebear.com/7.x/icons/svg?seed=pen&backgroundColor=d4af37' },
+      { text: 'دفتر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=notebook&backgroundColor=d4af37' },
+      { text: 'ممحاة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eraser&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['معادن', 'معدن'],
+    items: [
+      { text: 'ذهب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=gold&backgroundColor=d4af37' },
+      { text: 'فضة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=silver&backgroundColor=d4af37' },
+      { text: 'حديد', image: 'https://api.dicebear.com/7.x/icons/svg?seed=iron&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['أثاث', 'مفروشات', 'اثاث'],
+    items: [
+      { text: 'سرير', image: 'https://api.dicebear.com/7.x/icons/svg?seed=bed&backgroundColor=d4af37' },
+      { text: 'طاولة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=table&backgroundColor=d4af37' },
+      { text: 'كرسي', image: 'https://api.dicebear.com/7.x/icons/svg?seed=chair&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['فصول السنة', 'فصول', 'فصل'],
+    items: [
+      { text: 'شتاء', image: 'https://api.dicebear.com/7.x/icons/svg?seed=winter&backgroundColor=d4af37' },
+      { text: 'صيف', image: 'https://api.dicebear.com/7.x/icons/svg?seed=summer&backgroundColor=d4af37' },
+      { text: 'ربيع', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spring&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['أدوات مطبخ', 'مطبخ', 'اواني', 'أواني'],
+    items: [
+      { text: 'سكين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=knife&backgroundColor=d4af37' },
+      { text: 'ملعقة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=spoon&backgroundColor=d4af37' },
+      { text: 'شوكة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fork&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['طيور', 'طائر', 'عصافير'],
+    items: [
+      { text: 'صقر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=falcon&backgroundColor=d4af37' },
+      { text: 'حمامة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=dove&backgroundColor=d4af37' },
+      { text: 'نسر', image: 'https://api.dicebear.com/7.x/icons/svg?seed=eagle&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['وسائل نقل', 'مواصلات', 'نقل', 'مواصلة'],
+    items: [
+      { text: 'طائرة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=plane&backgroundColor=d4af37' },
+      { text: 'قطار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=train&backgroundColor=d4af37' },
+      { text: 'سفينة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=ship&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['أجهزة كهرابئية', 'اجهزة', 'أجهزة', 'الكترونيات', 'كهربائيات'],
+    items: [
+      { text: 'تلفاز', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tv&backgroundColor=d4af37' },
+      { text: 'ثلاجة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=fridge&backgroundColor=d4af37' },
+      { text: 'غسالة', image: 'https://api.dicebear.com/7.x/icons/svg?seed=washer&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['زهور', 'زهرة', 'ورد', 'ورود'],
+    items: [
+      { text: 'ياسمين', image: 'https://api.dicebear.com/7.x/icons/svg?seed=jasmine&backgroundColor=d4af37' },
+      { text: 'جوري', image: 'https://api.dicebear.com/7.x/icons/svg?seed=rose&backgroundColor=d4af37' },
+      { text: 'توليب', image: 'https://api.dicebear.com/7.x/icons/svg?seed=tulip&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['لغات', 'لغة', 'لهجات'],
+    items: [
+      { text: 'عربية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=arabic&backgroundColor=d4af37' },
+      { text: 'إنجليزية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=english&backgroundColor=d4af37' },
+      { text: 'فرنسية', image: 'https://api.dicebear.com/7.x/icons/svg?seed=french&backgroundColor=d4af37' }
+    ]
+  },
+  {
+    answer: ['أدوات موسيقية', 'آلات موسيقية', 'موسيقى', 'الات'],
+    items: [
+      { text: 'عود', image: 'https://api.dicebear.com/7.x/icons/svg?seed=oud&backgroundColor=d4af37' },
+      { text: 'بيانو', image: 'https://api.dicebear.com/7.x/icons/svg?seed=piano&backgroundColor=d4af37' },
+      { text: 'جيتار', image: 'https://api.dicebear.com/7.x/icons/svg?seed=guitar&backgroundColor=d4af37' }
+    ]
   }
 ]
 
@@ -451,13 +611,30 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                   </div>
                 
                 <div className="flex items-center gap-6 mb-12">
-                  <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">
+                  <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
                     <span className="text-3xl font-black text-brand-gold mb-1">{players.length}</span>
                     <span className="text-sm font-bold text-zinc-500">عدد اللاعبين</span>
                   </div>
-                </div>
-
-                <div className="flex gap-4">
+                  
+                  <div className="bg-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
+                    <div className="flex items-center gap-4 mb-1">
+                      <button 
+                        onClick={() => setMaxRounds(prev => Math.max(1, prev - 1))}
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
+                      >
+                        -
+                      </button>
+                      <span className="text-3xl font-black text-brand-gold min-w-[2rem] text-center">{maxRounds}</span>
+                      <button 
+                        onClick={() => setMaxRounds(prev => Math.min(ROUNDS.length, prev + 1))}
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span className="text-sm font-bold text-zinc-500">عدد الجولات</span>
+                  </div>
+                </div>                <div className="flex gap-4">
                   <button
                     onClick={startGame}
                     disabled={players.length === 0}
