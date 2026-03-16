@@ -171,7 +171,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
-            className="p-3 bg-brand-cyan/5 hover:bg-brand-cyan/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
+            className="p-3 bg-brand-cyan/5 hover:bg-brand-indigo/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-indigo/20 hover:border-brand-cyan/40"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
@@ -226,7 +226,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
               <div className="relative z-10">
                 <UserPlus className="w-24 h-24 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.3)]" />
                 <h3 className="text-3xl font-bold text-white mb-4">إعداد اللعبة</h3>
-                <p className="text-zinc-400 mb-6 text-lg">اطلب من المتابعين كتابة <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 py-1 rounded-lg border border-brand-cyan/20">!join</span> للمشاركة. نحتاج لاعبين على الأقل.</p>
+                <p className="text-zinc-400 mb-6 text-lg">اطلب من المتابعين كتابة <span className="text-brand-pink font-bold bg-brand-indigo/10 px-2 py-1 rounded-lg border border-brand-indigo/20">!join</span> للمشاركة. نحتاج لاعبين على الأقل.</p>
                 
                 {/* Tutorial Section */}
                 <div className="bg-brand-black/50 border border-brand-cyan/20 rounded-2xl p-5 mb-8 text-right text-sm">
@@ -235,18 +235,18 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                     <HelpCircle className="w-5 h-5" />
                   </h4>
                   <ul className="text-zinc-300 space-y-3">
-                    <li>1. الانضمام عبر كتابة <span className="text-brand-cyan font-mono">!join</span> في الشات.</li>
+                    <li>1. الانضمام عبر كتابة <span className="text-brand-pink font-mono">!join</span> في الشات.</li>
                     <li>2. عند بدء اللعبة، سيظهر دور لاعب معين وحرف مطلوب لتكوين كلمة.</li>
                     <li>3. يجب أن يكتب اللاعب كلمة تبدأ بآخر حرف من الكلمة السابقة.</li>
                       <li>4. طريقة الإجابة: <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!w الكلمة</span> أو <span className="text-white font-mono bg-zinc-800 px-2 py-1 rounded">!ج الكلمة</span>.</li>
-                      <li>5. لديك <span className="text-brand-cyan font-bold">وقت محدد يقل مع كثرة الكلمات</span> للإجابة قبل الإقصاء!</li>
+                      <li>5. لديك <span className="text-brand-pink font-bold">وقت محدد يقل مع كثرة الكلمات</span> للإجابة قبل الإقصاء!</li>
                   </ul>
                 </div>
 
                 <button
                   onClick={startGame}
                   disabled={joinedPlayers.length < 2}
-                  className="w-full flex items-center justify-center gap-3 py-6 bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-500 text-brand-black rounded-2xl font-bold text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_40px_rgba(0, 229, 255,0.6)] active:scale-95"
+                  className="w-full flex items-center justify-center gap-3 py-6 bg-brand-pink hover:bg-pink-400 disabled:bg-zinc-800 disabled:text-zinc-500 text-brand-black rounded-2xl font-bold text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_40px_rgba(0, 229, 255,0.6)] active:scale-95"
                 >
                   <Play className="w-8 h-8 fill-current" />
                   ابدأ اللعب
@@ -262,7 +262,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                   <motion.div 
                     initial={{ scale: 0.9, y: 20, opacity: 0 }}
                     animate={{ scale: 1, y: 0, opacity: 1 }}
-                    className="bg-zinc-900 border border-brand-cyan/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+                    className="bg-zinc-900 border border-brand-indigo/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
                   >
                     <h3 className="text-xl text-zinc-400 mb-6">هل هذه الكلمة صحيحة؟</h3>
                     <div className="flex flex-col items-center gap-3 mb-6">
@@ -277,7 +277,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                       <span className="text-2xl font-bold text-white">{pendingWord.player}</span>
                     </div>
                     
-                    <div className="text-5xl font-black text-brand-cyan mb-8 bg-brand-black/40 py-4 rounded-xl border border-brand-cyan/10">
+                    <div className="text-5xl font-black text-brand-pink mb-8 bg-brand-black/40 py-4 rounded-xl border border-brand-cyan/10">
                       {pendingWord.word}
                     </div>
 
@@ -313,7 +313,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
               </motion.div>
 
               <div className="text-2xl text-zinc-300 mb-12">
-                الحرف المطلوب: <span className="text-brand-cyan font-bold text-4xl mx-2">{currentWord.slice(-1)}</span>
+                الحرف المطلوب: <span className="text-brand-pink font-bold text-4xl mx-2">{currentWord.slice(-1)}</span>
               </div>
               
               <div className="mb-8 bg-zinc-900/80 border border-brand-cyan/20 px-6 py-3 rounded-xl flex items-center gap-3">
@@ -348,7 +348,7 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center"
             >
-              <Trophy className="w-32 h-32 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
+              <Trophy className="w-32 h-32 text-brand-indigo mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
               <h3 className="text-4xl font-bold text-white mb-4">انتهت اللعبة!</h3>
               {activePlayers.length === 1 && (
                 <p className="text-2xl text-brand-cyan font-bold mb-4">الفائز: {activePlayers[0]}</p>
@@ -404,9 +404,9 @@ export const WordChainGame: React.FC<Props> = ({ messages, onLeave }) => {
                   >
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-white truncate max-w-[120px]">{username}</span>
-                      {index === currentPlayerIndex && <span className="text-xs text-brand-cyan font-bold">دوره</span>}
+                      {index === currentPlayerIndex && <span className="text-xs text-brand-pink font-bold">دوره</span>}
                     </div>
-                    <span className="text-brand-cyan font-bold">{scores[username] || 0}</span>
+                    <span className="text-brand-pink font-bold">{scores[username] || 0}</span>
                   </motion.div>
                 ))
               )}

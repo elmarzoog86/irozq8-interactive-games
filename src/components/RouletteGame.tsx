@@ -262,7 +262,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
         </div>
         <button 
           onClick={onLeave}
-          className="text-brand-cyan/70 hover:text-brand-cyan transition-colors text-sm flex items-center gap-2 bg-brand-cyan/5 hover:bg-brand-cyan/10 px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40"
+          className="text-brand-cyan/70 hover:text-brand-cyan transition-colors text-sm flex items-center gap-2 bg-brand-cyan/5 hover:bg-brand-indigo/10 px-4 py-2 rounded-xl border border-brand-indigo/20 hover:border-brand-cyan/40"
         >
           <ArrowLeft className="w-4 h-4 rotate-180" /> العودة للردهة
         </button>
@@ -303,9 +303,9 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                 <span>كيف تلعب؟ اكتب <span className="font-bold">!join</span> - العجلة تختار شخصاً - يكتب رقم لاعب ليضربه أو يُنعشه!</span>
               </div>
               
-              <Users className="w-16 h-16 text-brand-cyan/50 mx-auto mb-4 mt-6" />
+              <Users className="w-16 h-16 text-brand-pink/50 mx-auto mb-4 mt-6" />
               <h3 className="text-2xl font-bold text-white mb-2">في انتظار اللاعبين...</h3>
-              <p className="text-brand-cyan/70 mb-6">اللاعبون المنضمون: <span className="text-brand-cyan font-bold text-xl">{players.length}</span></p>
+              <p className="text-brand-cyan/70 mb-6">اللاعبون المنضمون: <span className="text-brand-pink font-bold text-xl">{players.length}</span></p>
               
               <div className="flex flex-col gap-2 w-full max-h-64 overflow-y-auto custom-scrollbar p-2 bg-brand-black/80 rounded-xl border border-brand-cyan/10">
                 {players.length === 0 ? (
@@ -377,7 +377,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                    onClick={gameState === 'wheel' ? spinWheel : undefined}
                  >
                     {gameState === 'wheel' ? (
-                       <span className="font-black text-brand-cyan text-2xl group-hover:scale-110 transition-transform">SPIN</span>
+                       <span className="font-black text-brand-pink text-2xl group-hover:scale-110 transition-transform">SPIN</span>
                     ) : (
                        <RefreshCw className="w-10 h-10 text-brand-cyan animate-spin" />
                     )}
@@ -512,7 +512,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
               <h3 className="text-4xl font-bold text-zinc-400 mb-10">الجميع خسروا بطريقة ما</h3>
             )}
             
-            <button onClick={resetGame} className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(0, 229, 255,0.3)] text-xl">
+            <button onClick={resetGame} className="bg-brand-pink hover:bg-brand-pink text-brand-black font-bold py-4 px-10 rounded-2xl transition-all hover:scale-105 shadow-[0_0_30px_rgba(0, 229, 255,0.3)] text-xl">
               لعب مرة أخرى
             </button>
           </motion.div>

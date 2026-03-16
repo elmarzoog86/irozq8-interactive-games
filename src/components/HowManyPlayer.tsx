@@ -98,7 +98,7 @@ export const HowManyPlayer: React.FC = () => {
           className="w-full max-w-md space-y-8 text-center"
         >
           <div className="bg-brand-black/70 p-8 rounded-[40px] border border-brand-cyan/20 shadow-[0_0_50px_rgba(0, 229, 255,0.1)] ">
-            <h1 className="text-4xl font-black italic mb-2 text-brand-cyan glow-cyan-text">كم تقدر تسمي؟</h1>
+            <h1 className="text-4xl font-black italic mb-2 text-brand-pink glow-cyan-text">كم تقدر تسمي؟</h1>
             <p className="text-brand-cyan/60 uppercase tracking-widest text-sm mb-8">انضم للعبة الآن</p>
             
             <form onSubmit={joinRoom} className="space-y-4">
@@ -136,7 +136,7 @@ export const HowManyPlayer: React.FC = () => {
       {/* Header */}
       <div className="p-6 border-b border-brand-cyan/10 flex justify-between items-center bg-brand-cyan/5  sticky top-0 z-50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-brand-cyan/10 rounded-full flex items-center justify-center border border-brand-cyan/20">
+          <div className="w-10 h-10 bg-brand-indigo/10 rounded-full flex items-center justify-center border border-brand-indigo/20">
             👤
           </div>
           <div>
@@ -156,7 +156,7 @@ export const HowManyPlayer: React.FC = () => {
         <AnimatePresence mode="wait">
           {state.status === 'waiting' && (
             <motion.div key="waiting" className="text-center space-y-4">
-              <Users className="w-16 h-16 text-brand-cyan/30 mx-auto animate-pulse" />
+              <Users className="w-16 h-16 text-brand-pink/30 mx-auto animate-pulse" />
               <h2 className="text-2xl font-black text-brand-cyan">بانتظار الستريمر لبدء اللعبة...</h2>
               <p className="text-brand-cyan/50">أنت الآن في الردهة</p>
             </motion.div>
@@ -169,7 +169,7 @@ export const HowManyPlayer: React.FC = () => {
                 <p className="text-brand-cyan/60">المواجهة القادمة:</p>
                 <div className="text-xl font-black text-white">
                   {state.players.find(p => p.id === state.currentMatch?.[0])?.name}
-                  <span className="mx-4 text-brand-cyan">VS</span>
+                  <span className="mx-4 text-brand-pink">VS</span>
                   {state.players.find(p => p.id === state.currentMatch?.[1])?.name}
                 </div>
               </div>
@@ -179,14 +179,14 @@ export const HowManyPlayer: React.FC = () => {
           {isGambling && (
             <motion.div key="gambling" className="w-full max-w-md space-y-8">
               <div className="text-center space-y-2">
-                <div className="inline-block bg-brand-cyan/10 px-4 py-1 rounded-full text-brand-cyan text-xs font-bold uppercase tracking-widest border border-brand-cyan/20">
+                <div className="inline-block bg-brand-indigo/10 px-4 py-1 rounded-full text-brand-cyan text-xs font-bold uppercase tracking-widest border border-brand-indigo/20">
                   مرحلة المزايدة
                 </div>
                 <h2 className="text-4xl font-black italic text-white">{state.selectedCategory}</h2>
                 {state.bid > 0 && (
                   <div className="mt-4 p-4 bg-brand-black/70 rounded-2xl border border-brand-cyan/30">
                     <p className="text-xs text-brand-cyan/50 uppercase">المزايدة الحالية</p>
-                    <p className="text-3xl font-black text-brand-cyan glow-cyan-text">{state.bid}</p>
+                    <p className="text-3xl font-black text-brand-pink glow-cyan-text">{state.bid}</p>
                   </div>
                 )}
               </div>
@@ -206,14 +206,14 @@ export const HowManyPlayer: React.FC = () => {
                   <button 
                     onClick={placeBid}
                     disabled={bidInput <= state.bid}
-                    className="w-full bg-brand-cyan hover:bg-brand-pink disabled:bg-brand-cyan/10 disabled:text-brand-cyan/30 text-brand-black font-black py-4 rounded-2xl text-xl transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)]"
+                    className="w-full bg-brand-pink hover:bg-pink-400 disabled:bg-brand-cyan/10 disabled:text-brand-cyan/30 text-brand-black font-black py-4 rounded-2xl text-xl transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.3)]"
                   >
                     أقدر أسمي {bidInput}
                   </button>
                   {state.bid > 0 && (
                     <button 
                       onClick={callLiar}
-                      className="w-full bg-brand-black/70 hover:bg-brand-cyan/10 text-brand-cyan font-black py-4 rounded-2xl text-xl transition-all border border-brand-cyan/30 shadow-lg"
+                      className="w-full bg-brand-black/70 hover:bg-brand-indigo/10 text-brand-cyan font-black py-4 rounded-2xl text-xl transition-all border border-brand-indigo/30 shadow-lg"
                     >
                       كاذب!
                     </button>
@@ -231,7 +231,7 @@ export const HowManyPlayer: React.FC = () => {
           {isNaming && (
             <motion.div key="naming" className="w-full max-w-md space-y-8">
               <div className="text-center space-y-2">
-                <div className="inline-block bg-brand-cyan/10 px-4 py-1 rounded-full text-brand-cyan text-xs font-bold uppercase tracking-widest border border-brand-cyan/20">
+                <div className="inline-block bg-brand-indigo/10 px-4 py-1 rounded-full text-brand-cyan text-xs font-bold uppercase tracking-widest border border-brand-indigo/20">
                   دورك الآن!
                 </div>
                 <h2 className="text-4xl font-black italic text-white">{state.selectedCategory}</h2>
@@ -276,9 +276,9 @@ export const HowManyPlayer: React.FC = () => {
 
           {!isNaming && state.status === 'naming' && (
             <motion.div key="naming-wait" className="text-center space-y-4">
-              <Timer className="w-16 h-16 text-brand-cyan/50 mx-auto animate-spin-slow" />
+              <Timer className="w-16 h-16 text-brand-pink/50 mx-auto animate-spin-slow" />
               <h2 className="text-2xl font-black italic text-white">
-                <span className="text-brand-cyan">{state.players.find(p => p.id === state.gamblerId)?.name}</span> يحاول التسمية...
+                <span className="text-brand-pink">{state.players.find(p => p.id === state.gamblerId)?.name}</span> يحاول التسمية...
               </h2>
               <div className="text-4xl font-black font-mono text-brand-cyan glow-cyan-text">{state.timer}</div>
             </motion.div>

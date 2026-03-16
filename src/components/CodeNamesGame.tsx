@@ -84,7 +84,7 @@ export const CodeNamesGame: React.FC<{
           {/* Header */}
           <div className="flex justify-between items-start mb-8">
             <div className="space-y-1">
-              <h1 className="text-4xl font-black italic tracking-tighter text-brand-cyan uppercase glow-cyan-text">لعبة الشفرة</h1>
+              <h1 className="text-4xl font-black italic tracking-tighter text-brand-pink uppercase glow-cyan-text">لعبة الشفرة</h1>
               <p className="text-brand-cyan/60">ابحث عن الكلمات السرية لفريقك</p>
             </div>
             <div className="flex gap-4">
@@ -112,10 +112,10 @@ export const CodeNamesGame: React.FC<{
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 bg-brand-cyan/10 border border-brand-cyan/30 p-4 rounded-2xl flex items-center justify-between"
+              className="mb-8 bg-brand-indigo/10 border border-brand-indigo/30 p-4 rounded-2xl flex items-center justify-between"
             >
               <div className="flex items-center gap-4">
-                <div className="bg-brand-cyan p-2 rounded-xl">
+                <div className="bg-brand-pink p-2 rounded-xl">
                   <Users className="w-6 h-6 text-brand-black" />
                 </div>
                 <div>
@@ -131,11 +131,11 @@ export const CodeNamesGame: React.FC<{
             {state.status === 'waiting' && (
               <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
                 <div className="bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-[40px] text-center shadow-[0_0_30px_rgba(0, 229, 255,0.1)]">
-                  <Shield className="w-16 h-16 text-brand-cyan mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0, 229, 255,0.5)]" />
-                  <h2 className="text-3xl font-black text-brand-cyan mb-6">الفريق الذهبي</h2>
+                  <Shield className="w-16 h-16 text-brand-pink mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0, 229, 255,0.5)]" />
+                  <h2 className="text-3xl font-black text-brand-pink mb-6">الفريق الذهبي</h2>
                   <div className="space-y-2 min-h-[200px]">
                     {state.players.filter(p => p.team === 'gold').map(p => (
-                      <div key={p.id} className={`bg-brand-cyan/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.gold === p.name ? 'border-brand-cyan border-2' : 'border-brand-cyan/20'}`}>
+                      <div key={p.id} className={`bg-brand-indigo/10 p-3 rounded-xl flex justify-between items-center border ${state.data?.spymasters?.gold === p.name ? 'border-brand-indigo border-2' : 'border-brand-cyan/20'}`}>
                         <div className="flex items-center gap-2">
                           {state.data?.spymasters?.gold === p.name && <Eye className="w-4 h-4 text-brand-cyan" />}
                           <span className="font-bold">{p.name}</span>
@@ -161,7 +161,7 @@ export const CodeNamesGame: React.FC<{
                         </div>
                         <div className="flex gap-2">
                           <button onClick={() => setSpymaster(p.name, 'black')} className="text-[10px] bg-white/20 hover:bg-white/40 px-2 py-1 rounded border border-white/30 transition-colors">Spymaster</button>
-                          <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-cyan/10 hover:bg-brand-cyan/20 px-2 py-1 rounded border border-brand-cyan/20 transition-colors">الذهبي</button>
+                          <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-indigo/10 hover:bg-brand-cyan/20 px-2 py-1 rounded border border-brand-indigo/20 transition-colors">الذهبي</button>
                         </div>
                       </div>
                     ))}
@@ -169,7 +169,7 @@ export const CodeNamesGame: React.FC<{
                 </div>
 
                 <div className="col-span-2 flex flex-col items-center gap-6">
-                  <button onClick={startGame} className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)]">
+                  <button onClick={startGame} className="bg-brand-pink hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)]">
                     ابدأ اللعبة
                   </button>
                 </div>
@@ -179,30 +179,30 @@ export const CodeNamesGame: React.FC<{
               {state.status === 'playing' && (
                 <motion.div key="playing" className="w-full max-w-6xl flex flex-col h-full flex-1 min-h-0 space-y-4">
                   {state.data.currentHint && (
-                  <div className="bg-brand-cyan/10 border-2 border-brand-cyan p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(0, 229, 255,0.2)]">
+                  <div className="bg-brand-indigo/10 border-2 border-brand-indigo p-6 rounded-3xl text-center max-w-2xl mx-auto shadow-[0_0_30px_rgba(0, 229, 255,0.2)]">
                     <h3 className="text-xl text-brand-cyan/80 mb-2">تلميح Spymaster الحالي</h3>
-                    <div className="text-5xl font-black text-brand-cyan flex items-center justify-center gap-4 mb-4">
+                    <div className="text-5xl font-black text-brand-pink flex items-center justify-center gap-4 mb-4">
                       <span>{state.data.currentHint.word}</span>
-                      <span className="text-brand-cyan/50">-</span>
+                      <span className="text-brand-pink/50">-</span>
                       <span>{state.data.currentHint.count}</span>
                     </div>
                     {state.data.guessesLeft !== undefined && (
                       <div className="inline-block bg-brand-black/50 border border-brand-cyan/30 px-6 py-2 rounded-full">
                         <span className="text-white font-bold">الخيارات المتبقية: </span>
-                        <span className="text-brand-cyan font-black mx-1">{state.data.guessesLeft}</span>
+                        <span className="text-brand-pink font-black mx-1">{state.data.guessesLeft}</span>
                       </div>
                     )}
                   </div>
                 )}
 
                 <div className="flex justify-between items-center">
-                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'gold' ? 'border-brand-cyan bg-brand-cyan/10' : 'border-brand-cyan/10'}`}>
-                    <span className="text-xl font-bold text-brand-cyan">الذهبي: {state.data.scores.gold}</span>
+                  <div className={`p-4 rounded-2xl border-2 ${state.data.currentTurn === 'gold' ? 'border-brand-cyan bg-brand-indigo/10' : 'border-brand-indigo/10'}`}>
+                    <span className="text-xl font-bold text-brand-pink">الذهبي: {state.data.scores.gold}</span>
                   </div>
 
                   <button
                     onClick={() => setShowHistory(!showHistory)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-bold transition-all ${showHistory ? 'bg-brand-cyan text-brand-black border-brand-cyan' : 'bg-brand-black/50 text-brand-cyan border-brand-cyan/30 hover:bg-brand-cyan/10 hover:border-brand-cyan'}`}
+                    className={`flex items-center gap-2 px-6 py-3 rounded-xl border-2 font-bold transition-all ${showHistory ? 'bg-brand-cyan text-brand-black border-brand-cyan' : 'bg-brand-black/50 text-brand-cyan border-brand-cyan/30 hover:bg-brand-indigo/10 hover:border-brand-indigo'}`}
                   >
                     <MessageSquare className="w-5 h-5" />
                     <span>{showHistory ? 'إخفاء السجل' : 'سجل التلميحات'}</span>
@@ -236,7 +236,7 @@ export const CodeNamesGame: React.FC<{
                         </div>
                         <div className="flex-1 space-y-3 mt-4">
                           {state.data.history.map((entry: any, idx: number) => (
-                            <div key={idx} className={`p-4 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-cyan/10 border-brand-cyan/30 text-brand-cyan' : 'bg-zinc-800/80 border-zinc-600 text-zinc-300'}`}>
+                            <div key={idx} className={`p-4 rounded-xl flex flex-col gap-2 border ${entry.team === 'gold' ? 'bg-brand-indigo/10 border-brand-indigo/30 text-brand-cyan' : 'bg-zinc-800/80 border-zinc-600 text-zinc-300'}`}>
                               <span className="text-xs opacity-50 font-mono self-end">
                                 {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               </span>
@@ -306,7 +306,7 @@ export const CodeNamesGame: React.FC<{
                 animate={{ scale: 1, opacity: 1 }}
                 className="flex flex-col items-center justify-center space-y-8 w-full"
               >
-                <Trophy className="w-32 h-32 text-brand-cyan drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
+                <Trophy className="w-32 h-32 text-brand-indigo drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
                 <h2 className="text-6xl font-black italic text-brand-cyan glow-cyan-text">
                   فاز الفريق {state.data.winner === 'gold' ? 'الذهبي' : 'الأسود'}!
                 </h2>
@@ -335,7 +335,7 @@ export const CodeNamesGame: React.FC<{
              <div>
                <h4 className="text-brand-cyan font-bold mb-2 flex items-center justify-between">
                  <span>الفريق الذهبي</span>
-                 <span className="bg-brand-cyan/20 px-2 rounded">{state.players.filter(p => p.team === 'gold').length}</span>
+                 <span className="bg-brand-pink/20 px-2 rounded">{state.players.filter(p => p.team === 'gold').length}</span>
                </h4>
                <div className="space-y-1">
                  {state.players.filter(p => p.team === 'gold').map(p => (

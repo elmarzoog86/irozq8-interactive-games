@@ -269,7 +269,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     onClick={() => setMode('voting')}
                     className={`p-6 rounded-xl border-2 text-right transition-all ${
                       mode === 'voting' 
-                        ? 'bg-brand-cyan/10 border-brand-cyan text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
+                        ? 'bg-brand-indigo/10 border-brand-indigo text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
                         : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                     }`}
                   >
@@ -282,7 +282,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     onClick={() => setMode('roulette')}
                     className={`p-6 rounded-xl border-2 text-right transition-all ${
                       mode === 'roulette' 
-                        ? 'bg-brand-cyan/10 border-brand-cyan text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
+                        ? 'bg-brand-indigo/10 border-brand-indigo text-white shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' 
                         : 'bg-zinc-900 border-zinc-700 text-zinc-400 hover:border-zinc-500'
                     }`}
                   >
@@ -310,13 +310,13 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         <div className="flex flex-col items-center justify-center h-full w-full font-arabic" dir="rtl">
           <h2 className="text-4xl font-bold text-white mb-4">بانتظار اللاعبين</h2>
           <p className="text-xl text-zinc-400 mb-8">
-            اكتب <span className="text-brand-cyan font-mono bg-brand-cyan/10 px-3 py-1 rounded-lg border border-brand-cyan/20">!join</span> في الدردشة للحصول على فاكهتك!
+            اكتب <span className="text-brand-pink font-mono bg-brand-indigo/10 px-3 py-1 rounded-lg border border-brand-indigo/20">!join</span> في الدردشة للحصول على فاكهتك!
           </p>
           
           <div className="bg-zinc-800/80 border border-zinc-700 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
-              <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
+              <span className="bg-brand-pink/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
                 {allPlayersList.length} / {ALL_FRUITS.length} الأقصى
               </span>
             </div>
@@ -346,7 +346,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
           <button 
             onClick={startGame}
             disabled={allPlayersList.length < 2}
-            className="bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
+            className="bg-brand-pink hover:bg-pink-400 disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
           >
             بدء الحرب <Swords className="w-5 h-5" />
           </button>
@@ -379,7 +379,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             {mode === 'voting' ? (
               showRoundResult ? (
                 <div className="text-center">
-                  <Skull className="w-16 h-16 text-brand-cyan/50 mx-auto mb-4" />
+                  <Skull className="w-16 h-16 text-brand-pink/50 mx-auto mb-4" />
                   <h3 className="text-3xl font-bold text-white mb-2">
                     تم إقصاء {eliminatedThisRound?.username}!
                   </h3>
@@ -389,7 +389,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                   <p className="text-zinc-400 mb-6">لقد حصلوا على أكبر عدد من الأصوات.</p>
                   <button 
                     onClick={startVotingRound}
-                    className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-8 py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+                    className="bg-brand-pink hover:bg-brand-pink text-brand-black px-8 py-3 rounded-xl font-bold shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
                   >
                     الجولة التالية
                   </button>
@@ -398,7 +398,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                 <div className="text-center flex flex-col items-center">
                   <h3 className="text-3xl font-bold text-white mb-4">صوت للإقصاء!</h3>
                   <p className="text-xl text-zinc-400 mb-6">
-                    اكتب <span className="text-brand-cyan font-bold">اسم الفاكهة</span> أو <span className="text-brand-cyan font-bold">الرمز التعبيري</span> في الدردشة للتصويت.
+                    اكتب <span className="text-brand-pink font-bold">اسم الفاكهة</span> أو <span className="text-brand-pink font-bold">الرمز التعبيري</span> في الدردشة للتصويت.
                   </p>
                   <button
                     onClick={handleVotingRoundEnd}
@@ -416,7 +416,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
                     <h3 className="text-3xl font-bold text-white mb-6">أدر لاختيار الجلاد</h3>
                     <button 
                       onClick={spinRoulette}
-                      className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-12 py-4 rounded-xl font-bold text-xl w-full flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+                      className="bg-brand-pink hover:bg-brand-pink text-brand-black px-12 py-4 rounded-xl font-bold text-xl w-full flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
                     >
                       <Dices className="w-6 h-6" /> تدوير الروليت
                     </button>
@@ -529,7 +529,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
             </button>
             <button 
               onClick={onLeave}
-              className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+              className="bg-brand-pink hover:bg-brand-pink text-brand-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
             >
               العودة للألعاب
             </button>

@@ -64,7 +64,7 @@ export const TeamPlayer: React.FC = () => {
     return (
       <div className="h-screen w-full bg-brand-black text-white flex items-center justify-center p-6 font-arabic" dir="rtl">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-[32px] shadow-[0_0_50px_rgba(0, 229, 255,0.1)] ">
-          <h1 className="text-3xl font-black mb-8 text-center text-brand-cyan italic glow-cyan-text">انضم للعبة الفريق</h1>
+          <h1 className="text-3xl font-black mb-8 text-center text-brand-pink italic glow-cyan-text">انضم للعبة الفريق</h1>
           <form onSubmit={joinGame} className="space-y-6">
             <div>
               <label className="block text-sm font-bold text-brand-cyan/50 mb-2 mr-2">اسمك المستعار</label>
@@ -114,7 +114,7 @@ export const TeamPlayer: React.FC = () => {
                 className={`p-8 rounded-3xl border-4 transition-all flex flex-col items-center gap-4 ${myPlayer?.team === 'gold' ? 'border-brand-cyan bg-brand-cyan/20 shadow-[0_0_20px_rgba(0, 229, 255,0.3)]' : 'border-brand-cyan/10 bg-brand-black/70 opacity-50 hover:opacity-80'}`}
               >
                 <Shield className="w-12 h-12 text-brand-cyan" />
-                <span className="font-black text-brand-cyan">ذهبي</span>
+                <span className="font-black text-brand-pink">ذهبي</span>
               </button>
               <button 
                 onClick={() => switchTeam('black')}
@@ -183,7 +183,7 @@ export const TeamPlayer: React.FC = () => {
           <div className="space-y-8">
             {state.gameType === 'teamfeud' && (
               <div className="space-y-6">
-                <div className={`p-6 rounded-3xl border-4 text-center ${state.data.currentTurn === myPlayer?.team ? 'border-brand-cyan bg-brand-cyan/10 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' : 'border-brand-cyan/10 opacity-50'}`}>
+                <div className={`p-6 rounded-3xl border-4 text-center ${state.data.currentTurn === myPlayer?.team ? 'border-brand-cyan bg-brand-indigo/10 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' : 'border-brand-indigo/10 opacity-50'}`}>
                   <h3 className="text-xl font-bold text-brand-cyan">{state.data.currentTurn === myPlayer?.team ? 'دور فريقك!' : 'دور الفريق الآخر'}</h3>
                   <p className="text-3xl font-black mt-2 text-white">{state.data.question}</p>
                 </div>
@@ -201,7 +201,7 @@ export const TeamPlayer: React.FC = () => {
                       <button type="submit" className="w-full bg-brand-cyan hover:bg-brand-pink text-brand-black py-4 rounded-2xl font-black shadow-[0_0_15px_rgba(0, 229, 255,0.3)]">إرسال</button>
                     </form>
                   ) : (
-                    <div className="bg-brand-cyan/10 border border-brand-cyan/20 p-6 rounded-2xl text-center">
+                    <div className="bg-brand-indigo/10 border border-brand-indigo/20 p-6 rounded-2xl text-center">
                       <p className="text-brand-cyan font-bold">أخبر القائد بإجابتك!</p>
                       <p className="text-sm text-brand-cyan/60 mt-2">القائد فقط من يمكنه كتابة الإجابة النهائية</p>
                     </div>
@@ -213,7 +213,7 @@ export const TeamPlayer: React.FC = () => {
             {state.gameType === 'codenames' && (
               <div className="space-y-6">
                 {state.data.currentHint && (
-                  <div className="bg-brand-cyan/20 border-2 border-brand-cyan p-4 rounded-2xl text-center shadow-[0_0_15px_rgba(0, 229, 255,0.3)] animate-pulse">
+                  <div className="bg-brand-pink/20 border-2 border-brand-cyan p-4 rounded-2xl text-center shadow-[0_0_15px_rgba(0, 229, 255,0.3)] animate-pulse">
                     <p className="text-sm text-brand-cyan/80 mb-1">تلميح Spymaster الجديد:</p>
                     <p className="text-2xl font-black text-brand-cyan mb-2">{state.data.currentHint.word} - {state.data.currentHint.count}</p>
                     {state.data.guessesLeft !== undefined && (
@@ -261,7 +261,7 @@ export const TeamPlayer: React.FC = () => {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-                        className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0a] border-l border-brand-cyan/30 p-5 z-50 overflow-y-auto shadow-2xl flex flex-col gap-4"
+                        className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-[#0a0a0a] border-l border-brand-indigo/30 p-5 z-50 overflow-y-auto shadow-2xl flex flex-col gap-4"
                       >
                         <div className="flex items-center justify-between border-b border-brand-cyan/20 pb-4">
                           <h3 className="text-xl font-bold text-brand-cyan flex items-center gap-2">
@@ -311,7 +311,7 @@ export const TeamPlayer: React.FC = () => {
                 </AnimatePresence>
 
                 {state.data.spymasters?.[myPlayer?.team!] === myPlayer?.name && (
-                  <div className="bg-brand-cyan/10 border border-brand-cyan p-4 rounded-xl space-y-4">
+                  <div className="bg-brand-indigo/10 border border-brand-indigo p-4 rounded-xl space-y-4">
                     <div className="text-center">
                       <p className="font-bold text-brand-cyan text-lg">أنت قائد الفريق!</p>
                       <p className="text-sm text-brand-cyan/70 mt-1">اكتب التلميح (كلمة واحدة) وعدد الكلمات المرتبطة به.</p>
@@ -346,7 +346,7 @@ export const TeamPlayer: React.FC = () => {
                         className="w-20 bg-brand-black/80 border border-brand-cyan/30 p-3 rounded-xl text-center focus:border-brand-cyan outline-none text-white font-bold"
                         required
                       />
-                      <button type="submit" className="bg-brand-cyan hover:bg-brand-pink text-brand-black px-4 rounded-xl font-black transition-all">إرسال</button>
+                      <button type="submit" className="bg-brand-pink hover:bg-brand-pink text-brand-black px-4 rounded-xl font-black transition-all">إرسال</button>
                     </form>
                   </div>
                 )}
@@ -386,7 +386,7 @@ export const TeamPlayer: React.FC = () => {
                           </span>
                         )}
                         {!card.revealed && card.votes?.includes(myPlayer?.name) && (
-                          <span className="absolute bottom-1 left-0 right-0 text-[8px] sm:text-[10px] text-brand-cyan font-bold opacity-80 pointer-events-none">تأكيد؟</span>
+                          <span className="absolute bottom-1 left-0 right-0 text-[8px] sm:text-[10px] text-brand-pink font-bold opacity-80 pointer-events-none">تأكيد؟</span>
                         )}
                       </button>
                     );

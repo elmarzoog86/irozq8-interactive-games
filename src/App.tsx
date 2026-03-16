@@ -322,10 +322,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="absolute top-0 left-0 right-0 p-6 flex items-center justify-between z-20 max-w-7xl mx-auto w-full">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -380,7 +380,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               </label>
               <div className="relative" dir="ltr">
                 <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
-                  <span className="text-brand-cyan/30 font-mono text-sm">twitch.tv/</span>
+                  <span className="text-brand-pink/30 font-mono text-sm">twitch.tv/</span>
                 </div>
                 <input
                   type="text"
@@ -431,10 +431,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -478,10 +478,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -525,10 +525,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -572,10 +572,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -619,10 +619,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -701,10 +701,10 @@ const ENABLE_COMING_SOON_PAGE = false;
         {/* Top Bar */}
         <div className="w-full max-w-6xl flex items-center justify-between mb-8 relative z-20">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
               <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+            <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
           </div>
           <div className="flex items-center gap-4">
             <a 
@@ -831,10 +831,10 @@ const ENABLE_COMING_SOON_PAGE = false;
       {/* Top Bar */}
   <div className="w-full max-w-[96vw] flex items-center justify-between mb-4 relative z-20">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+          <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
             <img src="/roz.png" alt="Logo" className="w-12 h-12 object-contain" />
           </div>
-          <h1 className="text-3xl font-bold text-brand-cyan tracking-wider glow-cyan-text">iRozQ8</h1>
+          <h1 className="text-3xl font-bold text-brand-pink tracking-wider glow-cyan-text">iRozQ8</h1>
         </div>
         <div className="flex items-center gap-4">
           <a 
@@ -940,7 +940,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                       <div 
                         key={game.id}
                         onClick={() => { if (game.status === 'active' || game.status === 'testing') setActiveGame(game.id); }} 
-                        className={`group relative bg-brand-black/70  border-2 border-brand-cyan/10 hover:border-brand-cyan/50 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
+                        className={`group relative bg-brand-black/70  border-2 border-brand-indigo/40 hover:border-brand-pink/60 p-7 rounded-[34px] text-right transition-all duration-500 flex flex-col h-full shadow-xl hover:shadow-brand-cyan/10 hover:-translate-y-2 cursor-pointer ${game.status === 'coming_soon' ? 'opacity-40 grayscale cursor-not-allowed' : ''}`}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[30px]" />
                         
@@ -967,7 +967,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                         </div>
                         
                         <div className="mt-6 pt-6 border-t border-brand-cyan/10 flex items-center justify-between">
-                          <span className="text-[10px] font-black text-brand-cyan/30 uppercase tracking-widest">{game.type}</span>
+                          <span className="text-[10px] font-black text-brand-pink/30 uppercase tracking-widest">{game.type}</span>
                           <div className="flex items-center gap-2">
                             <button 
                               onClick={(e) => {
@@ -1018,7 +1018,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-brand-black/90 border border-brand-cyan/30 rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
+              className="bg-brand-black/90 border border-brand-indigo/30 rounded-3xl p-8 max-w-md w-full shadow-2xl relative"
             >
               <button 
                 onClick={() => setShowUpdateModal(false)}
@@ -1028,16 +1028,16 @@ const ENABLE_COMING_SOON_PAGE = false;
               </button>
 
               <div className="flex justify-center mb-6">
-                <div className="w-16 h-16 bg-brand-cyan/10 rounded-full flex items-center justify-center border border-brand-cyan/30">
+                <div className="w-16 h-16 bg-brand-indigo/10 rounded-full flex items-center justify-center border border-brand-indigo/30">
                   <Sparkles className="w-8 h-8 text-brand-cyan" />
                 </div>
               </div>
 
               <h2 className="text-3xl font-black text-white text-center mb-2 tracking-tight">
-                تحديث <span className="text-brand-cyan">جديد!</span>
+                تحديث <span className="text-brand-pink">جديد!</span>
               </h2>
               <div className="flex justify-center mb-2">
-                <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
+                <span className="bg-brand-pink/20 text-brand-cyan px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
                   16/3/2026
                 </span>
               </div>
@@ -1046,7 +1046,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
 
                 <div className="flex items-start gap-3">
-                   <div className="bg-brand-cyan/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-cyan" /></div>
+                   <div className="bg-brand-pink/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-cyan" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">لعبة الكراسي الموسيقية</h3>
                      <p className="text-sm text-zinc-400">لعبة الكراسي الموسيقية مع المتابعين، اجلس بسرعة قبل توقف الموسيقى لتجنب الإقصاء!</p>
@@ -1078,7 +1078,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                   </div>
 
                   <div className="flex items-start gap-3">
-                   <div className="bg-brand-cyan/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-cyan" /></div>
+                   <div className="bg-brand-pink/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-cyan" /></div>
                    <div>
                      <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
                      <p className="text-sm text-zinc-400">اربط 3 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
@@ -1130,7 +1130,7 @@ const ENABLE_COMING_SOON_PAGE = false;
               <div className="flex items-start gap-3 mb-8 bg-brand-cyan/5 border border-brand-cyan/10 p-4 rounded-xl">
                  <Info className="w-5 h-5 text-brand-cyan shrink-0 mt-0.5" />
                  <p className="text-xs text-brand-cyan/80 leading-relaxed text-right">
-                   هذه الألعاب حالياً في <span className="font-bold text-brand-cyan">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:M@irozq8.com" className="text-white hover:underline transition-colors hover:text-brand-cyan" dir="ltr">M@irozq8.com</a>.
+                   هذه الألعاب حالياً في <span className="font-bold text-brand-pink">وضع تجريبي</span> وقد تحتوي على أخطاء. في حال واجهت أي مشكلة، يرجى التواصل معنا عبر الإيميل <a href="mailto:M@irozq8.com" className="text-white hover:underline transition-colors hover:text-brand-cyan" dir="ltr">M@irozq8.com</a>.
                  </p>
               </div>
 
@@ -1149,12 +1149,12 @@ const ENABLE_COMING_SOON_PAGE = false;
       <div className="absolute bottom-4 left-0 right-0 text-center z-20 pointer-events-none">
         <p className="text-brand-cyan/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
           <span>Done by:</span>
-          <span className="text-brand-cyan/60 font-bold">iRozQ8</span>
+          <span className="text-brand-pink/60 font-bold">iRozQ8</span>
           <span>•</span>
-          <span className="text-brand-cyan/60 font-bold">iSari9</span>
+          <span className="text-brand-pink/60 font-bold">iSari9</span>
           <span>•</span>
-          <span className="text-brand-cyan/60 font-bold">iMythQ8</span>
-          <span className="text-brand-cyan/40 text-xs ml-2">(v1.1)</span>
+          <span className="text-brand-pink/60 font-bold">iMythQ8</span>
+          <span className="text-brand-pink/40 text-xs ml-2">(v1.1)</span>
         </p>
         <p className="text-brand-cyan/40 text-xs mt-1 pointer-events-auto">
           Support: <a href="mailto:M@irozq8.com" className="hover:text-brand-cyan transition-colors">M@irozq8.com</a>

@@ -242,7 +242,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
         <div className="h-20 border-b border-brand-cyan/10 flex items-center justify-between px-8 bg-brand-black/20">
           <div className="flex items-center gap-4">
             <h2 className="text-3xl font-black text-white italic tracking-tighter">
-              حرف <span className="text-brand-cyan">وفئة</span>
+              حرف <span className="text-brand-pink">وفئة</span>
             </h2>
           </div>
           <div className="flex items-center gap-2">
@@ -277,18 +277,18 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="flex flex-col items-center text-center max-w-2xl"
               >
-                <div className="w-32 h-32 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border-2 border-brand-cyan mb-8 shadow-[0_0_50px_rgba(0, 229, 255,0.2)] transform rotate-6">
-                  <Languages className="w-16 h-16 text-brand-cyan -rotate-6" />
+                <div className="w-32 h-32 bg-brand-indigo/10 rounded-3xl flex items-center justify-center border-2 border-brand-indigo mb-8 shadow-[0_0_50px_rgba(0, 229, 255,0.2)] transform rotate-6">
+                  <Languages className="w-16 h-16 text-brand-pink -rotate-6" />
                 </div>
                 <h1 className="text-5xl font-black text-white mb-4 tracking-tight">سرعة البديهة والكلمات!</h1>
                 
-                <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-6 text-right mb-8 w-full">
+                <div className="bg-brand-pink/5 border border-brand-cyan/20 rounded-2xl p-6 text-right mb-8 w-full">
                     <h3 className="text-brand-cyan font-bold mb-2 flex items-center gap-2">
                         <Tag className="w-5 h-5" /> طريقة اللعب:
                     </h3>
                     <ul className="text-zinc-300 space-y-2 text-sm">
                         <li>1. <span className="text-red-400 font-bold">لا داعي</span> لكتابة !join في هذه اللعبة! الردهة مفتوحة للجميع.</li>
-                        <li>2. ستظهر <span className="text-brand-cyan font-bold">فئة وحرف</span> على الشاشة.</li>
+                        <li>2. ستظهر <span className="text-brand-pink font-bold">فئة وحرف</span> على الشاشة.</li>
                         <li>3. أسرع شخص في الشات يكتب كلمة صحيحة تنتمي للفئة وتبدأ بالحرف سيحصل على النقطة تلقائياً!</li>
                     </ul>
                 </div>
@@ -314,7 +314,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
 
                 <button
                   onClick={startGame}
-                  className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.3)] hover:shadow-[0_0_40px_rgba(0, 229, 255,0.5)] flex items-center gap-3 transform hover:scale-105"
+                  className="bg-brand-pink hover:bg-brand-pink text-brand-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.3)] hover:shadow-[0_0_40px_rgba(0, 229, 255,0.5)] flex items-center gap-3 transform hover:scale-105"
                 >
                   <Play className="w-6 h-6 fill-black" /> ابدأ اللعبة الآن
                 </button>
@@ -354,14 +354,14 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                 </div>
 
                 <div className="flex gap-8 mb-12 w-full justify-center">
-                    <div className="bg-zinc-900 border-2 border-brand-cyan/30 rounded-3xl p-8 flex flex-col items-center shadow-2xl w-64">
+                    <div className="bg-zinc-900 border-2 border-brand-indigo/30 rounded-3xl p-8 flex flex-col items-center shadow-2xl w-64">
                          <span className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm">الفئة المطلوبة</span>
                          <span className="text-4xl font-black text-white">{questions[currentRoundIndex].category}</span>
                     </div>
 
-                    <div className="bg-brand-cyan/10 border-2 border-brand-cyan rounded-3xl p-8 flex flex-col items-center shadow-[0_0_50px_rgba(0, 229, 255,0.3)] w-64 transform scale-110">
-                         <span className="text-brand-cyan/60 font-bold mb-4 uppercase tracking-widest text-sm">تبدأ بحرف</span>
-                         <span className="text-6xl font-black text-brand-cyan">{questions[currentRoundIndex].letter}</span>
+                    <div className="bg-brand-indigo/10 border-2 border-brand-indigo rounded-3xl p-8 flex flex-col items-center shadow-[0_0_50px_rgba(0, 229, 255,0.3)] w-64 transform scale-110">
+                         <span className="text-brand-pink/60 font-bold mb-4 uppercase tracking-widest text-sm">تبدأ بحرف</span>
+                         <span className="text-6xl font-black text-brand-pink">{questions[currentRoundIndex].letter}</span>
                     </div>
                 </div>
 
@@ -379,7 +379,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                 exit={{ scale: 0.8, opacity: 0 }}
                 className="flex flex-col items-center text-center bg-brand-black/80 p-12 rounded-[40px] border-2 border-brand-cyan shadow-[0_0_50px_rgba(0, 229, 255,0.2)]"
               >
-                <div className="bg-brand-cyan text-brand-black font-black text-2xl px-8 py-2 rounded-xl mb-8 transform -rotate-2">
+                <div className="bg-brand-pink text-brand-black font-black text-2xl px-8 py-2 rounded-xl mb-8 transform -rotate-2">
                     « {roundWinner.word} »
                 </div>
                 
@@ -410,7 +410,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                 animate={{ scale: 1, opacity: 1 }}
                 className="flex flex-col items-center text-center max-w-2xl bg-brand-black/80 p-12 rounded-[40px] border border-brand-cyan/30"
               >
-                <Trophy className="w-32 h-32 text-brand-cyan mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
+                <Trophy className="w-32 h-32 text-brand-indigo mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
                 <h1 className="text-5xl font-black text-white mb-4">انتهت اللعبة!</h1>
                 {getWinner() ? (
                   <>
@@ -418,7 +418,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                     <div className="w-40 h-40 rounded-full border-[6px] border-brand-cyan overflow-hidden mb-6 mx-auto shadow-[0_0_50px_rgba(0, 229, 255,0.4)] relative">
                        <img src={getWinner()?.avatar} alt={getWinner()?.username} className="w-full h-full object-cover" />
                     </div>
-                    <div className="text-5xl font-black text-brand-cyan mb-2">{getWinner()?.username}</div>
+                    <div className="text-5xl font-black text-brand-pink mb-2">{getWinner()?.username}</div>
                     <div className="text-2xl text-white font-bold bg-white/10 px-6 py-2 rounded-xl inline-block">{getWinner()?.score} نقاط</div>
                   </>
                 ) : (
@@ -460,7 +460,7 @@ export function ScattergoriesGame({ messages, onLeave, channelName }: Props) {
                 key={p.username} 
                 className={`p-3 rounded-2xl flex items-center gap-4 border transition-all ${
                   i === 0 && p.score > 0
-                    ? 'bg-brand-cyan/10 border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.1)]' 
+                    ? 'bg-brand-indigo/10 border-brand-indigo shadow-[0_0_15px_rgba(0, 229, 255,0.1)]' 
                     : 'bg-brand-black/40 border-white/5'
                 }`}
               >

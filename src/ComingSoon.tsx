@@ -16,7 +16,7 @@ export default function ComingSoon() {
           transition={{ duration: 0.8 }}
           className="flex justify-center mb-8"
         >
-          <div className="w-32 h-32 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border border-brand-cyan/20 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
+          <div className="w-32 h-32 bg-brand-indigo/10 rounded-3xl flex items-center justify-center border border-brand-indigo/20 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
             <img src="/roz.png" alt="Logo" className="w-24 h-24 object-contain" />
           </div>
         </motion.div>

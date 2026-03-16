@@ -288,7 +288,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
-            className="p-3 bg-brand-cyan/5 hover:bg-brand-cyan/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
+            className="p-3 bg-brand-cyan/5 hover:bg-brand-indigo/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-indigo/20 hover:border-brand-cyan/40"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
@@ -344,9 +344,9 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
               </div>
 
               <div className="relative z-10">
-                <DollarSign className="w-32 h-32 text-brand-cyan mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.3)]" />
+                <DollarSign className="w-32 h-32 text-brand-indigo mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.3)]" />
                 <h3 className="text-3xl font-bold text-white mb-4">لعبة خمن السعر</h3>
-                <p className="text-zinc-400 mb-8 text-lg">سيتم اختيار منتج عشوائي عند البدء. اطلب من المتابعين كتابة <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 py-1 rounded-lg border border-brand-cyan/20">!join</span> للمشاركة.</p>
+                <p className="text-zinc-400 mb-8 text-lg">سيتم اختيار منتج عشوائي عند البدء. اطلب من المتابعين كتابة <span className="text-brand-pink font-bold bg-brand-indigo/10 px-2 py-1 rounded-lg border border-brand-indigo/20">!join</span> للمشاركة.</p>
                 
                 <div className="mb-10 text-right">
                   <label className="block text-zinc-400 mb-3 font-bold">عدد الجولات</label>
@@ -358,7 +358,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                         className={`flex-1 py-3 rounded-xl font-bold border transition-all ${
                           totalRounds === num 
                           ? 'bg-brand-cyan border-brand-cyan text-brand-black shadow-[0_0_15px_rgba(0, 229, 255,0.4)]' 
-                          : 'bg-brand-black/70 border-brand-cyan/20 text-brand-cyan/70 hover:bg-brand-cyan/10 hover:border-brand-cyan/40'
+                          : 'bg-brand-black/70 border-brand-cyan/20 text-brand-cyan/70 hover:bg-brand-indigo/10 hover:border-brand-indigo/40'
                         }`}
                       >
                         {num}
@@ -397,7 +397,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   )}
                   <h3 className="text-4xl font-bold text-white mb-2">{item.nameAr}</h3>
                   <p className="text-base text-zinc-400 mb-4" dir="ltr">{item.name}</p>
-                  <p className="text-xl text-zinc-400 mb-4">اكتب <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 py-1 rounded-lg border border-brand-cyan/20">!join</span> للمشاركة، ثم خمن السعر!</p>
+                  <p className="text-xl text-zinc-400 mb-4">اكتب <span className="text-brand-pink font-bold bg-brand-indigo/10 px-2 py-1 rounded-lg border border-brand-indigo/20">!join</span> للمشاركة، ثم خمن السعر!</p>
                   
                   {status === 'guessing' && (
                     <div className="mt-8 bg-brand-black/70 p-6 rounded-2xl border border-brand-cyan/20 max-w-sm mx-auto">
@@ -439,13 +439,13 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                   className="w-full text-center"
                 >
                   {winner ? (
-                    <div className="bg-brand-cyan/20 border border-brand-cyan/50 rounded-3xl p-8 relative overflow-hidden">
+                    <div className="bg-brand-pink/20 border border-brand-cyan/50 rounded-3xl p-8 relative overflow-hidden">
                       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay" />
                       <Trophy className="w-20 h-20 text-brand-cyan mx-auto mb-4 drop-shadow-[0_0_20px_rgba(0, 229, 255,0.5)] glow-cyan" />
                       <h4 className="text-2xl text-brand-cyan font-bold mb-2">فائز الجولة</h4>
                       <div className="text-5xl font-bold text-white mb-4">{winner.username}</div>
                       <div className="text-xl text-zinc-300">
-                        خمن: <span className="text-brand-cyan font-bold mx-2">${winner.guess}</span>
+                        خمن: <span className="text-brand-pink font-bold mx-2">${winner.guess}</span>
                         (الفرق: ${winner.diff})
                       </div>
                     </div>
@@ -474,7 +474,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center w-full max-w-2xl"
             >
-              <Trophy className="w-32 h-32 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
+              <Trophy className="w-32 h-32 text-brand-indigo mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
               <h3 className="text-4xl font-bold text-white mb-8">انتهت اللعبة!</h3>
               
               <div className="bg-brand-black/70 border border-brand-cyan/20 rounded-3xl p-8 mb-8">
@@ -529,11 +529,11 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="bg-brand-cyan/20 border border-brand-cyan/50 rounded-xl p-4 flex items-center justify-between"
+                  className="bg-brand-pink/20 border border-brand-cyan/50 rounded-xl p-4 flex items-center justify-between"
                 >
                   <div className="flex flex-col">
                     <span className="font-bold text-white">أنت (الستريمر)</span>
-                    <span className="text-xs text-brand-cyan font-bold italic">تم التخمين (سري)</span>
+                    <span className="text-xs text-brand-pink font-bold italic">تم التخمين (سري)</span>
                   </div>
                   <div className="w-10 h-6 bg-brand-cyan/30 rounded-md animate-pulse" />
                 </motion.div>
@@ -552,15 +552,15 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
                       animate={{ opacity: 1, x: 0 }}
                       className={`border rounded-xl p-4 flex items-center justify-between transition-colors ${
                         isWinner ? 'bg-brand-cyan/20 border-brand-cyan/50' :
-                        isStreamer ? 'bg-brand-cyan/10 border-brand-cyan/30' :
+                        isStreamer ? 'bg-brand-indigo/10 border-brand-indigo/30' :
                         'bg-brand-black/70 border-brand-cyan/10'
                       }`}
                     >
                       <div className="flex flex-col">
                         <span className="font-bold text-white truncate max-w-[120px]">{username}</span>
-                        {isWinner && <span className="text-xs text-brand-cyan font-bold">الفائز!</span>}
-                        {isStreamer && <span className="text-xs text-brand-cyan font-bold">للعرض فقط</span>}
-                        {isGuessing && <span className="text-xs text-brand-cyan font-bold italic">تم التخمين (سري)</span>}
+                        {isWinner && <span className="text-xs text-brand-pink font-bold">الفائز!</span>}
+                        {isStreamer && <span className="text-xs text-brand-pink font-bold">للعرض فقط</span>}
+                        {isGuessing && <span className="text-xs text-brand-pink font-bold italic">تم التخمين (سري)</span>}
                       </div>
                       {isGuessing ? (
                         <div className="w-10 h-6 bg-brand-cyan/20 rounded-md animate-pulse" />
@@ -589,7 +589,7 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
 
               {joinedPlayers.size === 0 && !streamerGuess && (
                 <div className="text-center text-zinc-500 py-8">
-                  لا يوجد مشاركون بعد.<br/>اكتب <span className="text-brand-cyan font-bold">!join</span> للمشاركة!
+                  لا يوجد مشاركون بعد.<br/>اكتب <span className="text-brand-pink font-bold">!join</span> للمشاركة!
                 </div>
               )}
             </AnimatePresence>

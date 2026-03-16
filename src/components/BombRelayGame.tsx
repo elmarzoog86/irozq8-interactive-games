@@ -79,7 +79,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
         {/* Header */}
         <div className="flex justify-between items-start mb-8">
           <div className="space-y-1">
-            <h1 className="text-4xl font-black italic tracking-tighter text-brand-cyan uppercase glow-cyan-text">سباق القنبلة</h1>
+            <h1 className="text-4xl font-black italic tracking-tighter text-brand-pink uppercase glow-cyan-text">سباق القنبلة</h1>
             <p className="text-brand-cyan/60">تعاون مع فريقك لتفكيك القنبلة</p>
           </div>
           <div className="flex gap-4">
@@ -100,10 +100,10 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 bg-brand-cyan/10 border border-brand-cyan/30 p-4 rounded-2xl flex items-center justify-between"
+            className="mb-8 bg-brand-indigo/10 border border-brand-indigo/30 p-4 rounded-2xl flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
-              <div className="bg-brand-cyan p-2 rounded-xl">
+              <div className="bg-brand-pink p-2 rounded-xl">
                 <Users className="w-6 h-6 text-brand-black" />
               </div>
               <div>
@@ -118,12 +118,12 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
         <AnimatePresence mode="wait">
           {state.status === 'waiting' && (
             <motion.div key="waiting" className="grid grid-cols-2 gap-12 w-full max-w-6xl">
-              <div className="bg-brand-cyan/5 border border-brand-cyan/20 p-8 rounded-[40px] text-center">
-                <Shield className="w-16 h-16 text-brand-cyan mx-auto mb-4" />
-                <h2 className="text-3xl font-black text-brand-cyan mb-6">فريق التفكيك</h2>
+              <div className="bg-brand-pink/5 border border-brand-cyan/20 p-8 rounded-[40px] text-center">
+                <Shield className="w-16 h-16 text-brand-pink mx-auto mb-4" />
+                <h2 className="text-3xl font-black text-brand-pink mb-6">فريق التفكيك</h2>
                 <div className="space-y-2 min-h-[200px] max-h-[300px] overflow-y-auto custom-scrollbar">
                   {state.players.map(p => (
-                    <div key={p.id} className="bg-brand-cyan/10 p-3 rounded-xl flex justify-between items-center border border-brand-cyan/10">
+                    <div key={p.id} className="bg-brand-indigo/10 p-3 rounded-xl flex justify-between items-center border border-brand-indigo/10">
                       <span>{p.name}</span>
                       <button onClick={() => switchTeam(p.id, 'gold')} className="text-[10px] bg-brand-cyan/20 px-2 py-1 rounded border border-brand-cyan/20">تثبيت</button>
                     </div>
@@ -132,8 +132,8 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
               </div>
 
               <div className="flex flex-col items-center justify-center gap-8">
-                <Bomb className="w-32 h-32 text-brand-cyan animate-pulse" />
-                <button onClick={startGame} className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)]">
+                <Bomb className="w-32 h-32 text-brand-indigo animate-pulse" />
+                <button onClick={startGame} className="bg-brand-pink hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all shadow-[0_0_30px_rgba(0, 229, 255,0.4)]">
                   ابدأ المهمة
                 </button>
               </div>
@@ -169,7 +169,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
                         {task.target ? (
                           <button 
                             onClick={() => submitTask(task.id)}
-                            className="bg-brand-cyan text-brand-black px-8 py-4 rounded-2xl font-black hover:bg-brand-pink"
+                            className="bg-brand-pink text-brand-black px-8 py-4 rounded-2xl font-black hover:bg-brand-pink"
                           >
                             تفكيك!
                           </button>

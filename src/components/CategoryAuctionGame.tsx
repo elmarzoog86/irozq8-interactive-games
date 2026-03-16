@@ -195,7 +195,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="w-24 h-24 bg-brand-cyan/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-brand-cyan/30 shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
+            className="w-24 h-24 bg-brand-indigo/10 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-brand-indigo/30 shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
           >
             <Gavel className="w-12 h-12 text-brand-cyan" />
           </motion.div>
@@ -212,7 +212,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
             animate={{ opacity: 1, y: 0 }}
             className="bg-brand-black/50 border border-brand-cyan/30 rounded-3xl p-8 w-full max-w-2xl text-center backdrop-blur-sm shadow-[0_0_50px_rgba(0, 229, 255,0.05)]"
           >
-            <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-6 mb-8 text-right">
+            <div className="bg-brand-pink/5 border border-brand-cyan/20 rounded-2xl p-6 mb-8 text-right">
               <div className="flex items-center gap-3 mb-4 justify-end">
                 <h3 className="text-xl font-bold text-brand-cyan">طريقة اللعب</h3>
                 <Tag className="w-6 h-6 text-brand-cyan" />
@@ -227,7 +227,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
                 </li>
                 <li className="flex items-center gap-2 justify-end text-right mt-1">
-                  <span>صاحب أعلى مزايدة يكتب إجاباته <span className="text-brand-cyan font-bold">مباشرة في الشات</span> (كل إجابة برسالة عادية) قبل انتهاء الوقت!</span>
+                  <span>صاحب أعلى مزايدة يكتب إجاباته <span className="text-brand-pink font-bold">مباشرة في الشات</span> (كل إجابة برسالة عادية) قبل انتهاء الوقت!</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan" />
                 </li>
               </ul>
@@ -269,9 +269,9 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
                   <div className="text-2xl text-zinc-300 mb-4 animate-pulse">اكتب رقماً في الشات للمزايدة!</div>
                   <div className="flex flex-col items-center gap-2 mt-6">
                     {highestBidder ? (
-                      <div className="bg-brand-cyan/20 border border-brand-cyan/50 px-8 py-4 rounded-2xl">
+                      <div className="bg-brand-pink/20 border border-brand-cyan/50 px-8 py-4 rounded-2xl">
                         <span className="text-xl text-zinc-400">أعلى مزايدة: </span>
-                        <span className="text-3xl font-bold text-brand-cyan mx-2">{highestBidder.amount}</span>
+                        <span className="text-3xl font-bold text-brand-pink mx-2">{highestBidder.amount}</span>
                         <span className="text-xl text-white">من {highestBidder.username}</span>
                       </div>
                     ) : (
@@ -283,9 +283,9 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
 
               {gameState === 'playing' && highestBidder && (
                 <div>
-                  <div className="bg-brand-cyan/10 border border-brand-cyan/30 rounded-2xl p-6 mb-6">
-                     <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-cyan font-bold">{highestBidder.username}</span></p>
-                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-cyan text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
+                  <div className="bg-brand-indigo/10 border border-brand-indigo/30 rounded-2xl p-6 mb-6">
+                     <p className="text-2xl text-white mb-2">الدور على <span className="text-brand-pink font-bold">{highestBidder.username}</span></p>
+                     <p className="text-xl text-zinc-300">يجب أن يكتب <span className="text-brand-pink text-3xl font-bold mx-2">{highestBidder.amount}</span> إجابات صحيحة في الشات!</p>
                      
                      {lastBidderMessage && (
                         <div className="mt-4 p-3 bg-white/5 border border-white/10 rounded-xl">
@@ -332,12 +332,12 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-brand-black/50 border border-brand-cyan/30 rounded-3xl p-12 text-center shadow-2xl w-full max-w-2xl"
+            className="bg-brand-black/50 border border-brand-indigo/30 rounded-3xl p-12 text-center shadow-2xl w-full max-w-2xl"
           >
             <Trophy className="w-24 h-24 text-brand-cyan mx-auto mb-6" />
             <h2 className="text-4xl font-bold text-white mb-4">انتهت اللعبة!</h2>
             {winner ? (
-              <div className="bg-brand-cyan/10 rounded-2xl p-6 mb-8 border border-brand-cyan/20">
+              <div className="bg-brand-indigo/10 rounded-2xl p-6 mb-8 border border-brand-indigo/20">
                 <p className="text-xl text-zinc-300 mb-2">الفائز هو</p>
                 <p className="text-4xl font-black text-brand-cyan">{winner.username}</p>
                 <p className="text-2xl text-white mt-2">{winner.score} نقطة</p>
@@ -378,7 +378,7 @@ export default function CategoryAuctionGame({ channelName, messages, onLeave }: 
         <div className="flex gap-4">
           <button
             onClick={startGame}
-            className="bg-brand-cyan text-brand-black px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.3)] flex items-center gap-2"
+            className="bg-brand-pink text-brand-black px-4 py-2 rounded-full font-bold text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.3)] flex items-center gap-2"
           >
             <Play className="w-5 h-5" />
             إعادة تشغيل

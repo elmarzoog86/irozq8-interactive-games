@@ -448,10 +448,10 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
            <div className="h-20 border-b border-brand-cyan/10 flex items-center justify-between px-8 bg-brand-black/20">
               <div className="flex items-center gap-4">
                  <h2 className="text-3xl font-black text-white italic tracking-tighter">
-                   سلالم <span className="text-brand-cyan">وثعابين</span>
+                   سلالم <span className="text-brand-pink">وثعابين</span>
                  </h2>
                  {phase === 'playing' && (
-                   <div className="bg-brand-cyan/10 px-6 py-2 rounded-xl border border-brand-cyan/30 text-brand-cyan font-bold animate-[pulse_2s_infinite] shadow-[0_0_15px_rgba(255,215,0,0.2)]">
+                   <div className="bg-brand-indigo/10 px-6 py-2 rounded-xl border border-brand-indigo/30 text-brand-cyan font-bold animate-[pulse_2s_infinite] shadow-[0_0_15px_rgba(255,215,0,0.2)]">
                       🎲 الدور على: <span className="text-white text-lg">{players[currentPlayerIndex]?.username}</span>
                    </div>
                  )}
@@ -471,12 +471,12 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                      <div className="flex flex-col items-center justify-center text-center bg-brand-black/70 p-6 rounded-3xl border border-white/5  shadow-xl w-full h-full flex-1 min-h-0">
                         <Dice5 className="w-24 h-24 text-brand-cyan mb-6 animate-bounce shrink-0" />
                         <h3 className="text-2xl font-bold text-white mb-2 shrink-0">في انتظار اللاعبين...</h3>
-                        <p className="text-zinc-400 mb-4 shrink-0">اكتب <span className="text-brand-cyan font-bold bg-brand-cyan/10 px-2 rounded">!join</span> للانضمام</p>
+                        <p className="text-zinc-400 mb-4 shrink-0">اكتب <span className="text-brand-pink font-bold bg-brand-cyan/10 px-2 rounded">!join</span> للانضمام</p>
                         
                         <div className="flex-1 w-full bg-brand-black/50 rounded-2xl border border-white/5 mb-4 overflow-hidden flex flex-col min-h-[150px]">
                            <div className="bg-white/5 p-3 border-b border-white/5 font-bold text-zinc-300 flex justify-between shrink-0">
                               <span>اللاعبين المنضمين</span>
-                              <span className="text-brand-cyan">{players.length}</span>
+                              <span className="text-brand-pink">{players.length}</span>
                            </div>
                            <div className="flex-1 overflow-y-auto p-2 space-y-2 custom-scrollbar">
                               {players.map((p, i) => (
@@ -498,7 +498,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                             <button
                              onClick={startGame} 
                              disabled={players.length < 2}
-                             className="bg-brand-cyan hover:bg-brand-pink disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-8 py-4 rounded-xl text-xl transition-all shadow-lg w-full"
+                             className="bg-brand-pink hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-8 py-4 rounded-xl text-xl transition-all shadow-lg w-full"
                            >
                              بدء اللعبة
                            </button>
@@ -553,7 +553,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                           <button 
                              disabled={isRolling}
                              onClick={() => handleRoll(players[currentPlayerIndex].username)}
-                             className="bg-brand-cyan/10 hover:bg-brand-cyan/20 border border-brand-cyan/50 text-brand-cyan px-6 py-3 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full hover:shadow-[0_0_15px_rgba(255,215,0,0.1)] mb-4"
+                             className="bg-brand-indigo/10 hover:bg-brand-cyan/20 border border-brand-indigo/50 text-brand-cyan px-6 py-3 rounded-xl font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full hover:shadow-[0_0_15px_rgba(255,215,0,0.1)] mb-4"
                            >
                              🎲 ارمي النرد
                            </button>
@@ -585,7 +585,7 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                                    <div className="flex-1 min-w-0">
                                       <div className="flex justify-between items-center mb-1">
                                          <span className="font-bold text-white text-xs truncate max-w-[80px]">{p.username}</span>
-                                         <span className="font-bold text-brand-cyan text-xs">{p.position}</span>
+                                         <span className="font-bold text-brand-pink text-xs">{p.position}</span>
                                       </div>
                                       <div className="w-full h-1 bg-brand-black/50 rounded-full overflow-hidden">
                                          <div className="h-full bg-brand-cyan transition-all duration-500" style={{ width: `${p.position}%` }} />
@@ -659,13 +659,13 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
                     }
                  }}
                  disabled={phase !== 'playing' || isRolling}
-                 className="flex-1 bg-brand-cyan hover:bg-brand-pink disabled:opacity-50 disabled:cursor-not-allowed text-brand-black py-2 rounded-lg text-xs font-bold transition-all"
+                 className="flex-1 bg-brand-pink hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed text-brand-black py-2 rounded-lg text-xs font-bold transition-all"
                >
                  🎲 رمي النرد
                </button>
             </div>
             <div className="text-[10px] text-zinc-500 text-center">
-               يمكنك أيضاً كتابة <span className="text-brand-cyan">!join</span> أو <span className="text-brand-cyan">join</span> في الشات
+               يمكنك أيضاً كتابة <span className="text-brand-pink">!join</span> أو <span className="text-brand-pink">join</span> في الشات
             </div>
          </div>
         </div>

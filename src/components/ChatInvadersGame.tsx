@@ -246,7 +246,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
         <div className="flex items-center gap-4">
           <button
             onClick={onLeave}
-            className="p-3 bg-brand-cyan/5 hover:bg-brand-cyan/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-cyan/20 hover:border-brand-cyan/40"
+            className="p-3 bg-brand-cyan/5 hover:bg-brand-indigo/10 text-brand-cyan/70 hover:text-brand-cyan rounded-xl transition-colors border border-brand-indigo/20 hover:border-brand-cyan/40"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
@@ -309,7 +309,7 @@ export const ChatInvadersGame: React.FC<Props> = ({ messages, onLeave }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center"
           >
-            <Trophy className="w-32 h-32 text-brand-cyan mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
+            <Trophy className="w-32 h-32 text-brand-indigo mx-auto mb-6 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)] glow-cyan" />
             <h3 className="text-4xl font-bold text-white mb-4">انتهت اللعبة!</h3>
             <p className="text-2xl text-brand-cyan font-bold mb-8">النقاط: {score}</p>
             

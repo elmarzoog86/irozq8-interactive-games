@@ -334,10 +334,10 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
         <AnimatePresence>
           {mode === 'lobby' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-brand-black/80 to-brand-black">
-              <div className="w-32 h-32 mb-6 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border border-brand-cyan/30 shadow-[0_0_50px_rgba(0, 229, 255,0.3)]">
-                <Banknote className="w-16 h-16 text-brand-cyan" />
+              <div className="w-32 h-32 mb-6 bg-brand-indigo/10 rounded-3xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_50px_rgba(0, 229, 255,0.3)]">
+                <Banknote className="w-16 h-16 text-brand-pink" />
               </div>
-              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">???? <span className="text-brand-cyan">??????</span></h1>
+              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">???? <span className="text-brand-pink">??????</span></h1>
               <p className="text-brand-cyan/60 text-xl font-medium mb-12 max-w-2xl text-center">
                 ????? ??? ???????: ?? ????????? ??????? ?????? ?????? ?? ???????? ????? ????? ????? ??? ???? ??????
               </p>
@@ -374,7 +374,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
         {mode !== 'lobby' && (
           <div className="p-8 pb-4 flex justify-between items-center z-10 border-b border-brand-cyan/10 bg-brand-black/70">
             <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-brand-cyan/10 rounded-2xl flex items-center justify-center border border-brand-cyan/30">
+              <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30">
                 {gameType === 'coop' ? <Lock className="w-8 h-8 text-blue-400" /> : <AlertTriangle className="w-8 h-8 text-red-500" />}
               </div>
               <div>
@@ -383,7 +383,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                 </h2>
                 <div className="flex items-center gap-2 mt-1">
                   <Activity className="w-4 h-4 text-brand-cyan/50" />
-                  <span className="text-brand-cyan/70 font-semibold text-lg">
+                  <span className="text-brand-pink/70 font-semibold text-lg">
                     {mode === 'game_over' ? '????? ???????' : '???? ???????...'}
                   </span>
                 </div>
@@ -427,7 +427,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                   <>
                     <div className="relative mb-12">
                       <div className={`w-64 h-64 rounded-full flex items-center justify-center border-8 ${vaultHP <= 0 ? 'bg-green-500/20 border-green-500' : 'bg-brand-black border-brand-cyan shadow-[0_0_80px_rgba(0, 229, 255,0.4)]'}`}>
-                        {vaultHP <= 0 ? <Unlock className="w-32 h-32 text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,1)]" /> : <DoorClosed className="w-32 h-32 text-brand-cyan drop-shadow-[0_0_15px_rgba(0, 229, 255,1)]" />}
+                        {vaultHP <= 0 ? <Unlock className="w-32 h-32 text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,1)]" /> : <DoorClosed className="w-32 h-32 text-brand-indigo drop-shadow-[0_0_15px_rgba(0, 229, 255,1)]" />}
                       </div>
                     </div>
                     <div className="w-full max-w-2xl text-center">
@@ -464,7 +464,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
                     <div className="relative mb-12">
                       <div className="w-64 h-64 rounded-full bg-brand-cyan/5 border-4 border-brand-cyan/50 flex flex-col items-center justify-center shadow-[0_0_100px_rgba(0, 229, 255,0.2)]">
                          <HandCoins className="w-24 h-24 text-brand-cyan mb-4" />
-                         <span className="text-4xl font-black text-brand-cyan font-numeric">$$$</span>
+                         <span className="text-4xl font-black text-brand-pink font-numeric">$$$</span>
                       </div>
                     </div>
                   </>
@@ -498,7 +498,7 @@ export function BankRobberyGame({ messages = [], onLeave, channelName, isConnect
             </div>
 
             <div className="w-[400px] bg-brand-black/70 border border-brand-cyan/10 rounded-3xl p-6 flex flex-col shadow-xl z-10">
-              <div className="flex items-center gap-3 mb-6 bg-brand-cyan/10 p-4 rounded-2xl border border-brand-cyan/20">
+              <div className="flex items-center gap-3 mb-6 bg-brand-indigo/10 p-4 rounded-2xl border border-brand-indigo/20">
                 <Trophy className="w-6 h-6 text-brand-cyan" />
                 <h3 className="text-xl font-black text-brand-cyan tracking-wider">
                   {gameType === 'coop' ? '???? ?????????' : '???? ??????'}

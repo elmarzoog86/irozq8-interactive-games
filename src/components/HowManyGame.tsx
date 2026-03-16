@@ -167,7 +167,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           {/* Header */}
         <div className="flex justify-between items-start mb-8 shrink-0">
           <div className="space-y-1">
-            <h1 className="text-4xl font-black italic tracking-tighter text-brand-cyan uppercase">كم تقدر تسمي؟</h1>
+            <h1 className="text-4xl font-black italic tracking-tighter text-brand-pink uppercase">كم تقدر تسمي؟</h1>
             <div className="flex items-center gap-2 text-xs text-zinc-500 font-mono">
               <Users className="w-3 h-3" /> {state.players.length} لاعبين متصلين
             </div>
@@ -206,10 +206,10 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 shrink-0 bg-brand-cyan/10 border border-brand-cyan/30 p-4 rounded-2xl flex items-center justify-between"
+            className="mb-8 shrink-0 bg-brand-indigo/10 border border-brand-indigo/30 p-4 rounded-2xl flex items-center justify-between"
           >
             <div className="flex items-center gap-4">
-              <div className="bg-brand-cyan p-2 rounded-xl">
+              <div className="bg-brand-pink p-2 rounded-xl">
                 <Users className="w-6 h-6 text-brand-black" />
               </div>
               <div>
@@ -230,7 +230,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               exit={{ opacity: 0, scale: 1.1 }}
               className="text-center space-y-8"
             >
-              <div className="bg-brand-cyan/5 border border-brand-cyan/20 p-12 rounded-[40px] shadow-2xl">
+              <div className="bg-brand-pink/5 border border-brand-cyan/20 p-12 rounded-[40px] shadow-2xl">
                 <Users className="w-20 h-20 text-brand-cyan mx-auto mb-6" />
                 <h2 className="text-5xl font-black mb-4 italic">ردهة الانتظار</h2>
                 <p className="text-zinc-400 text-xl max-w-md mx-auto">
@@ -266,7 +266,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <button 
                   onClick={startGame}
                   disabled={state.players.length < 2}
-                  className="bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all uppercase italic tracking-tighter shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
+                  className="bg-brand-pink hover:bg-pink-400 disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-black px-16 py-5 rounded-2xl text-2xl transition-all uppercase italic tracking-tighter shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
                 >
                   ابدأ اللعبة
                 </button>
@@ -296,7 +296,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               </div>
               <button 
                 onClick={generateCategories}
-                className="bg-brand-cyan text-brand-black font-black px-12 py-4 rounded-2xl text-xl hover:bg-brand-pink transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+                className="bg-brand-pink text-brand-black font-black px-12 py-4 rounded-2xl text-xl hover:bg-brand-pink transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
               >
                 اختر الفئات
               </button>
@@ -316,7 +316,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                     onClick={() => chooseCategory(cat)}
                     className="bg-brand-black/70 border-2 border-brand-cyan/10 hover:border-brand-cyan p-12 rounded-[40px] transition-all group"
                   >
-                    <span className="text-3xl font-black group-hover:text-brand-cyan">{cat}</span>
+                    <span className="text-3xl font-black group-hover:text-brand-pink">{cat}</span>
                   </button>
                 ))}
               </div>
@@ -328,8 +328,8 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               key="gambling"
               className="text-center space-y-8 w-full max-w-4xl"
             >
-              <div className="bg-brand-cyan/10 border border-brand-cyan/20 p-8 rounded-3xl inline-block mb-8">
-                <span className="text-2xl font-bold text-brand-cyan">الفئة: {state.selectedCategory}</span>
+              <div className="bg-brand-indigo/10 border border-brand-indigo/20 p-8 rounded-3xl inline-block mb-8">
+                <span className="text-2xl font-bold text-brand-pink">الفئة: {state.selectedCategory}</span>
               </div>
 
                <div className="bg-brand-black/70 border border-brand-cyan/20 p-8 rounded-3xl min-w-[300px]">
@@ -376,7 +376,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                           <button 
                             onClick={placeBid}
                             disabled={bidInput <= state.bid}
-                            className="bg-brand-cyan disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-8 py-4 rounded-xl text-xl hover:bg-brand-pink transition-colors shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+                            className="bg-brand-pink disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-8 py-4 rounded-xl text-xl hover:bg-brand-pink transition-colors shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
                           >
                              تأكيد
                           </button>
@@ -431,7 +431,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                       key={i}
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="bg-brand-cyan text-brand-black font-black px-6 py-3 rounded-2xl text-xl italic"
+                      className="bg-brand-pink text-brand-black font-black px-6 py-3 rounded-2xl text-xl italic"
                     >
                       {ans}
                     </motion.div>
@@ -452,7 +452,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 </div>
               </div>
               
-              <div className="text-3xl font-black text-brand-cyan animate-pulse">
+              <div className="text-3xl font-black text-brand-pink animate-pulse">
                 {state.players.find(p => p.id === state.gamblerId)?.name} يكتب الآن...
               </div>
             </motion.div>
@@ -469,7 +469,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
                 <h3 className="text-zinc-400 mb-4 font-bold">الإجابات المقدمة ({state.currentCount} / {state.targetCount})</h3>
                 <div className="flex flex-wrap gap-3 justify-center">
                   {state.answers.map((ans, i) => (
-                    <span key={i} className="bg-brand-cyan/20 border border-brand-cyan/30 text-brand-cyan px-4 py-2 rounded-xl text-lg font-bold">
+                    <span key={i} className="bg-brand-pink/20 border border-brand-cyan/30 text-brand-cyan px-4 py-2 rounded-xl text-lg font-bold">
                       {ans}
                     </span>
                   ))}
@@ -500,7 +500,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               key="result"
               className="text-center space-y-12"
             >
-              <Trophy className="w-32 h-32 text-brand-cyan mx-auto glow-cyan" />
+              <Trophy className="w-32 h-32 text-brand-indigo mx-auto glow-cyan" />
               <h2 className="text-7xl font-black italic">
                 {state.currentCount >= state.targetCount ? 'نجح التحدي!' : 'فشل التحدي!'}
               </h2>
@@ -509,7 +509,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               </div>
               <button 
                 onClick={nextRound}
-                className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+                className="bg-brand-pink hover:bg-brand-pink text-brand-black font-black px-16 py-5 rounded-2xl text-2xl shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
               >
                 الجولة التالية
               </button>
@@ -526,7 +526,7 @@ export const HowManyGame: React.FC<{ onLeave: () => void; channelName: string; m
               <h3 className="text-9xl font-black text-brand-cyan drop-shadow-[0_0_50px_rgba(0, 229, 255,0.5)]">{state.winner}</h3>
               <button 
                 onClick={() => window.location.reload()}
-                className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-black px-12 py-4 rounded-2xl text-xl mt-12 shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
+                className="bg-brand-pink hover:bg-brand-pink text-brand-black font-black px-12 py-4 rounded-2xl text-xl mt-12 shadow-[0_0_30px_rgba(0, 229, 255,0.3)]"
               >
                 العودة للرئيسية
               </button>

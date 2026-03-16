@@ -34,7 +34,7 @@ export const TwitchChat: React.FC<TwitchChatProps> = ({ channelName, messages, i
           <div className={`w-2.5 h-2.5 rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${isConnected ? 'bg-emerald-500 shadow-emerald-500/50' : 'bg-red-500 shadow-red-500/50'}`} />
           <h3 className="font-black text-white tracking-tight">دردشة البث</h3>
         </div>
-        <span className="text-[10px] text-brand-cyan/50 font-black uppercase tracking-widest" dir="ltr">#{channelName}</span>
+        <span className="text-[10px] text-brand-pink/50 font-black uppercase tracking-widest" dir="ltr">#{channelName}</span>
       </div>
 
       <div ref={containerRef} className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar scroll-smooth">

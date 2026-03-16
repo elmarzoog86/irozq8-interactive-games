@@ -347,13 +347,13 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
         <div className="flex flex-col items-center justify-center h-full w-full font-arabic" dir="rtl">
           <h2 className="text-4xl font-bold text-white mb-4">بانتظار اللاعبين</h2>
           <p className="text-xl text-zinc-400 mb-8">
-            اكتب <span className="text-brand-cyan font-mono bg-brand-cyan/10 px-3 py-1 rounded-lg border border-brand-cyan/20">!join</span> في الدردشة للعب
+            اكتب <span className="text-brand-pink font-mono bg-brand-indigo/10 px-3 py-1 rounded-lg border border-brand-indigo/20">!join</span> في الدردشة للعب
           </p>
           
           <div className="bg-brand-black/70  border border-brand-cyan/20 rounded-2xl p-6 w-full max-w-4xl mb-8 min-h-[300px] max-h-[500px] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-zinc-300">اللاعبون المنضمون</h3>
-              <span className="bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
+              <span className="bg-brand-pink/20 text-brand-cyan px-3 py-1 rounded-full text-sm font-bold border border-brand-cyan/30">
                 المجموع {allPlayersList.length}
               </span>
             </div>
@@ -404,7 +404,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             <button
               onClick={startGame}
               disabled={allPlayersList.length < 2}
-              className="bg-brand-cyan hover:bg-brand-pink disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
+              className="bg-brand-pink hover:bg-pink-400 disabled:bg-zinc-800 disabled:text-zinc-600 text-brand-black font-bold py-4 px-12 rounded-xl transition-colors flex items-center justify-center gap-2 text-lg shadow-[0_0_30px_rgba(0, 229, 255,0.2)]"
             >
               بدء اللعبة <Play className="w-5 h-5" />
             </button>
@@ -583,7 +583,7 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
             </button>
             <button 
               onClick={onLeave}
-              className="bg-brand-cyan hover:bg-brand-pink text-brand-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
+              className="bg-brand-pink hover:bg-brand-pink text-brand-black font-bold py-4 px-8 rounded-xl transition-colors text-lg shadow-[0_0_20px_rgba(0, 229, 255,0.2)]"
             >
               العودة للألعاب
             </button>

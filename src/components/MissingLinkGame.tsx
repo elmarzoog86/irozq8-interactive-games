@@ -558,7 +558,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
         <div className="h-20 border-b border-brand-cyan/10 flex items-center justify-between px-8 bg-brand-black/20">
           <div className="flex items-center gap-4">
             <h2 className="text-3xl font-black text-white italic tracking-tighter">
-              الرابط <span className="text-brand-cyan">العجيب</span>
+              الرابط <span className="text-brand-pink">العجيب</span>
             </h2>
           </div>
           <div className="flex items-center gap-2">
@@ -593,26 +593,26 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="flex flex-col items-center text-center max-w-2xl"
               >
-                <div className="w-32 h-32 bg-brand-cyan/10 rounded-3xl flex items-center justify-center border-2 border-brand-cyan mb-8 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
-                  <BrainCircuit className="w-16 h-16 text-brand-cyan" />
+                <div className="w-32 h-32 bg-brand-indigo/10 rounded-3xl flex items-center justify-center border-2 border-brand-indigo mb-8 shadow-[0_0_50px_rgba(0, 229, 255,0.2)]">
+                  <BrainCircuit className="w-16 h-16 text-brand-pink" />
                 </div>
                 <h1 className="text-5xl font-black text-white mb-4 tracking-tight">ابحث عن الرابط المشترك!</h1>
                 
-                <div className="bg-brand-cyan/5 border border-brand-cyan/20 rounded-2xl p-6 text-right mb-8 w-full">
+                <div className="bg-brand-pink/5 border border-brand-cyan/20 rounded-2xl p-6 text-right mb-8 w-full">
                     <h3 className="text-xl font-bold text-brand-cyan mb-3 flex items-center gap-2">
                           <Tag className="w-5 h-5" /> كيف تلعب؟
                       </h3>
                       <ul className="text-zinc-300 space-y-2 text-sm">
-                          <li>1. اكتب <span className="text-brand-cyan font-bold">!join</span> لدخول الردهة الآن.</li>
+                          <li>1. اكتب <span className="text-brand-pink font-bold">!join</span> لدخول الردهة الآن.</li>
                           <li>2. ستظهر مجموعة من الكلمات والصور على الشاشة تبدو مختلفة (3 صور).</li>
-                          <li>3. فكر بسرعة! ما هو <span className="text-brand-cyan font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
+                          <li>3. فكر بسرعة! ما هو <span className="text-brand-pink font-bold">الرابط العجيب التصنيفي أو المشترك</span> بينهم؟</li>
                           <li>4. أول شخص يكتب الإجابة المطلوبة الصحيحة في الشات سيفوز بنقطة الجولة!</li>
                       </ul>
                   </div>
                 
                 <div className="flex items-center gap-6 mb-12">
                   <div className="bg-brand-black/50 border border-white/10 px-8 py-4 rounded-2xl flex flex-col items-center">    
-                    <span className="text-3xl font-black text-brand-cyan mb-1">{players.length}</span>
+                    <span className="text-3xl font-black text-brand-pink mb-1">{players.length}</span>
                     <span className="text-sm font-bold text-zinc-500">عدد اللاعبين</span>
                   </div>
                   
@@ -624,7 +624,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                       >
                         -
                       </button>
-                      <span className="text-3xl font-black text-brand-cyan min-w-[2rem] text-center">{maxRounds}</span>
+                      <span className="text-3xl font-black text-brand-pink min-w-[2rem] text-center">{maxRounds}</span>
                       <button 
                         onClick={() => setMaxRounds(prev => Math.min(ROUNDS.length, prev + 1))}
                         className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-white font-bold transition-colors"
@@ -638,7 +638,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                   <button
                     onClick={startGame}
                     disabled={players.length === 0}
-                    className="bg-brand-cyan hover:bg-brand-pink disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-lg flex items-center gap-3"
+                    className="bg-brand-pink hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed text-brand-black font-black px-12 py-5 rounded-2xl text-xl transition-all shadow-lg flex items-center gap-3"
                   >
                     <Play className="w-6 h-6" /> ابدأ اللعبة
                   </button>
@@ -668,7 +668,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col items-center w-full"
               >
-                <div className="bg-brand-cyan/10 px-6 py-2 rounded-xl border border-brand-cyan/30 text-brand-cyan font-black mb-12 animate-pulse flex items-center gap-2">
+                <div className="bg-brand-indigo/10 px-6 py-2 rounded-xl border border-brand-indigo/30 text-brand-cyan font-black mb-12 animate-pulse flex items-center gap-2">
                   <Timer className="w-5 h-5" /> أسرع واكتب في الشات!
                 </div>
                 
@@ -704,7 +704,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                   {!showHint ? (
                     <button
                       onClick={() => setShowHint(true)}
-                      className="bg-brand-cyan/10 hover:bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
+                      className="bg-brand-indigo/10 hover:bg-brand-cyan/20 text-brand-cyan border border-brand-indigo/30 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
                     >
                       <Lightbulb className="w-5 h-5" /> إظهار تلميح
                     </button>
@@ -737,7 +737,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 exit={{ scale: 0.8, opacity: 0 }}
                 className="flex flex-col items-center text-center bg-brand-black/80 p-12 rounded-[40px] border-2 border-brand-cyan shadow-[0_0_50px_rgba(0, 229, 255,0.2)]"
               >
-                <h2 className="text-3xl font-bold text-white mb-6">الرابط هو: <span className="text-brand-cyan font-black">{gameRounds[currentRoundIndex].answer[0]}</span></h2>
+                <h2 className="text-3xl font-bold text-white mb-6">الرابط هو: <span className="text-brand-pink font-black">{gameRounds[currentRoundIndex].answer[0]}</span></h2>
                 <div className="relative">
                   <div className="w-32 h-32 rounded-full border-4 border-brand-cyan overflow-hidden mb-6 mx-auto shadow-2xl relative z-10">
                     <img src={roundWinner.avatar} alt={roundWinner.username} className="w-full h-full object-cover" />
@@ -762,7 +762,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 animate={{ scale: 1, opacity: 1 }}
                 className="flex flex-col items-center text-center max-w-2xl bg-brand-black/80 p-12 rounded-[40px] border border-brand-cyan/30"
               >
-                <Trophy className="w-32 h-32 text-brand-cyan mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
+                <Trophy className="w-32 h-32 text-brand-indigo mb-8 drop-shadow-[0_0_30px_rgba(0, 229, 255,0.5)]" />
                 <h1 className="text-5xl font-black text-white mb-4">انتهت اللعبة!</h1>
                 {getWinner() ? (
                   <>
@@ -770,7 +770,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                     <div className="w-40 h-40 rounded-full border-[6px] border-brand-cyan overflow-hidden mb-6 mx-auto shadow-[0_0_50px_rgba(0, 229, 255,0.4)] relative">
                        <img src={getWinner()?.avatar} alt={getWinner()?.username} className="w-full h-full object-cover" />
                     </div>
-                    <div className="text-5xl font-black text-brand-cyan mb-2">{getWinner()?.username}</div>
+                    <div className="text-5xl font-black text-brand-pink mb-2">{getWinner()?.username}</div>
                     <div className="text-2xl text-white font-bold bg-white/10 px-6 py-2 rounded-xl inline-block">{getWinner()?.score} نقاط</div>
                   </>
                 ) : (
@@ -812,7 +812,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
                 key={p.username} 
                 className={`p-3 rounded-2xl flex items-center gap-4 border transition-all ${
                   i === 0 && p.score > 0
-                    ? 'bg-brand-cyan/10 border-brand-cyan shadow-[0_0_15px_rgba(0, 229, 255,0.1)]' 
+                    ? 'bg-brand-indigo/10 border-brand-indigo shadow-[0_0_15px_rgba(0, 229, 255,0.1)]' 
                     : 'bg-brand-black/40 border-white/5'
                 }`}
               >

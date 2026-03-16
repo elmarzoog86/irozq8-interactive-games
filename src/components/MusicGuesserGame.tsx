@@ -257,10 +257,10 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
 
       {gameState === 'setup' && (
         <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-brand-black/80  border border-brand-cyan/30 p-8 rounded-[40px] max-w-lg w-full text-center space-y-6 shadow-[0_0_50px_rgba(0, 229, 255,0.1)] z-10">
-            <div className="w-20 h-20 bg-brand-cyan/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-cyan/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+            <div className="w-20 h-20 bg-brand-indigo/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-indigo/30 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
                 <Music className="w-10 h-10 text-brand-cyan" />
             </div>
-            <h1 className="text-4xl font-black mb-1 text-brand-cyan glow-cyan-text">خمن الموسيقى</h1>
+            <h1 className="text-4xl font-black mb-1 text-brand-pink glow-cyan-text">خمن الموسيقى</h1>
             <p className="text-brand-cyan/60 text-sm mb-4 font-bold flex items-center justify-center gap-2">
                 <Music size={14} /> مجموع الأغاني: {songs.filter(s => s.id).length} أغنية
             </p>
@@ -288,7 +288,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                     />
                 </div>
                 <div className="flex items-center justify-center gap-4 bg-brand-black/20 p-4 rounded-xl border border-brand-cyan/10">
-                    <span className="text-brand-cyan/70 font-bold">النقاط للفوز:</span>
+                    <span className="text-brand-pink/70 font-bold">النقاط للفوز:</span>
                     <input 
                         type="number" 
                         value={pointsToWin}
@@ -339,7 +339,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             {/* Header / Controls */}
             <div className="flex justify-between items-center bg-brand-black/70 border border-brand-cyan/20 p-6 rounded-2xl mb-8  shadow-[0_0_30px_rgba(0, 229, 255,0.05)]">
                 <div className="flex items-center gap-6 w-1/3">
-                    <div className="bg-brand-cyan/10 p-3 rounded-full">
+                    <div className="bg-brand-pink/10 p-3 rounded-full">
                         <Volume2 className="text-brand-cyan" size={24} />
                     </div>
                     <input 
@@ -385,7 +385,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                         </>
                     )}
                     {gameState === 'revealed' ? (
-                       <button onClick={() => nextRound()} className="bg-brand-cyan text-brand-black px-8 py-3 rounded-xl font-black flex items-center gap-2 hover:bg-brand-cyan/80 hover:scale-105 transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
+                       <button onClick={() => nextRound()} className="bg-brand-pink text-brand-black px-8 py-3 rounded-xl font-black flex items-center gap-2 hover:bg-brand-cyan/80 hover:scale-105 transition-all shadow-[0_0_20px_rgba(0, 229, 255,0.2)]">
                            <SkipForward size={20} className="fill-current" /> جولة تالية
                        </button>
                     ) : (
@@ -413,7 +413,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[0].score += 1;
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-indigo/10 border border-brand-indigo/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
                            <span className="text-3xl font-black mb-1">+</span>
                         </button>
                         <div className="text-7xl font-black text-brand-cyan glow-cyan-text drop-shadow-2xl leading-none w-16 text-center">{teams[0].score}</div>
@@ -421,7 +421,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[0].score = Math.max(0, newTeams[0].score - 1);
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-indigo/10 border border-brand-indigo/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
                            <span className="text-3xl font-black mb-1">-</span>
                         </button>
                     </div>
@@ -558,7 +558,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[1].score += 1;
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-indigo/10 border border-brand-indigo/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="إضافة نقطة">
                            <span className="text-3xl font-black mb-1">+</span>
                         </button>
                         <div className="text-7xl font-black text-brand-cyan glow-cyan-text drop-shadow-2xl leading-none w-16 text-center">{teams[1].score}</div>
@@ -566,7 +566,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
                             const newTeams = [...teams];
                             newTeams[1].score = Math.max(0, newTeams[1].score - 1);
                             setTeams(newTeams);
-                        }} className="w-12 h-12 flex items-center justify-center bg-brand-cyan/10 border border-brand-cyan/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
+                        }} className="w-12 h-12 flex items-center justify-center bg-brand-indigo/10 border border-brand-indigo/20 hover:bg-brand-cyan/30 rounded-xl text-brand-cyan transition-all hover:scale-110 active:scale-95 shadow-lg" title="خصم نقطة">
                            <span className="text-3xl font-black mb-1">-</span>
                         </button>
                     </div>
@@ -639,7 +639,7 @@ export function MusicGuesserGame({ onLeave }: MusicGuesserGameProps) {
             <button onClick={() => {
                 setGameState('setup');
                 setTeams(teams.map(t => ({...t, score: 0, lifelines: {doublePoints: true, block: true, hint: true}})));
-            }} className="bg-brand-cyan text-brand-black px-12 py-6 rounded-2xl text-2xl font-black hover:bg-green-500 hover:text-white transition-all shadow-[0_0_50px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.4)] hover:scale-105">
+            }} className="bg-brand-pink text-brand-black px-12 py-6 rounded-2xl text-2xl font-black hover:bg-green-500 hover:text-white transition-all shadow-[0_0_50px_rgba(0, 229, 255,0.4)] hover:shadow-[0_0_50px_rgba(34,197,94,0.4)] hover:scale-105">
                 لعبة جديدة
             </button>
         </div>
