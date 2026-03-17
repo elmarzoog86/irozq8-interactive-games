@@ -146,7 +146,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'النسخة الرقمية من اللعبة الكلاسيكية. اكتب رقم الكرسي بسرعة في الدردشة لتضمن مكانك قبل أن تتوقف الموسيقى!',
     tutorial: 'عندما تتوقف الموسيقى، اكتب رقم الكرسي الخالي في الدردشة فوراً. من يتبقى بدون كرسي يخرج من اللعبة.',
     image: '/chairs.png',
-    status: 'testing',
+    status: 'active',
     type: 'action',
     color: 'yellow'
   },
@@ -156,7 +156,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'لعبة الحظ والإقصاء. انضم للعجلة وانتظر دورك. إذا تم اختيارك، ستمتلك القوة لإقصاء منافسيك أو المخاطرة بالبقاء.',
     tutorial: 'انضم للردهة ليظهر اسمك. إذا اختارتك العجلة، يمكنك اختيار لاعب لإقصائه أو المخاطرة بفرصة إضافية.',
     image: '/roulette.png',
-    status: 'testing',
+    status: 'active',
     type: 'action',
     color: 'yellow'
   },
@@ -1047,13 +1047,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-brand-pink/20 p-2 rounded-lg mt-1 shrink-0"><Armchair className="w-5 h-5 text-brand-cyan" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">لعبة الكراسي الموسيقية</h3>
-                     <p className="text-sm text-zinc-400">لعبة الكراسي الموسيقية مع المتابعين، اجلس بسرعة قبل توقف الموسيقى لتجنب الإقصاء!</p>
-                   </div>
-                </div>
+                
 
                 <div className="flex items-start gap-3">
                    <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Music className="w-5 h-5 text-green-500" /></div>
@@ -1063,13 +1057,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                    </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Skull className="w-5 h-5 text-red-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">روليت البقاء</h3>
-                     <p className="text-sm text-zinc-400">لعبة تفاعلية جديدة كلياً! العجلة تختار شخصاً، ليُطلق النار على لاعب آخر أو يُنعشه.</p>
-                   </div>
-                </div>
+                
 
                 <div className="flex items-start gap-3">
                      <div className="bg-blue-500/20 p-2 rounded-lg mt-1 shrink-0"><Tag className="w-5 h-5 text-blue-500" /></div>
