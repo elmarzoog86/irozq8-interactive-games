@@ -13,6 +13,7 @@ interface RouletteGameProps {
 
 interface Player {
   id: number;
+  displayNum: number;
   username: string;
   color: string;
   status: 'alive' | 'eliminated';
@@ -104,7 +105,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     if (gameState === 'lobby' && (text === '!join' || text === '!انضمام')) {
       setPlayers(prev => {
         if (prev.some(p => p.username === latestMessage.username)) return prev;
-        return [...prev, { id: prev.length + 1, username: latestMessage.username, color: latestMessage.color || '#00e5ff', status: 'alive', survivedShots: 0 }];
+        return [...prev, { id: prev.length + 1, displayNum: prev.length + 1, username: latestMessage.username, color: latestMessage.color || '#00e5ff', status: 'alive', survivedShots: 0 }];
       });
     }
 
@@ -112,7 +113,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
       const match = text.match(/\d+/);
       if (match) {
         const num = parseInt(match[0]);
-        const selected = players.find(p => p.id === num);
+        const selected = players.find(p => p.displayNum === num);
         if (selected && selected.id !== actor.id) {
           handleAction(selected);
         }
@@ -120,7 +121,23 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     }
   }, [messages, testMessages, gameState, actor, players]);
 
+  
+  useEffect(() => {
+    if (gameState === 'wheel') {
+      setPlayers(prev => {
+        if (prev.length === 0) return prev;
+        if (gameMode === 'shakhsana') {
+           return prev.map(p => ({ ...p, displayNum: p.id }));
+        } else {
+           const numbers = prev.map((_, i) => i + 1).sort(() => Math.random() - 0.5);
+           return prev.map((p, i) => ({ ...p, displayNum: numbers[i] }));
+        }
+      });
+    }
+  }, [gameState, gameMode]);
+
   // Handle result timer
+
   useEffect(() => {
     if (gameState === 'result') {
       const t = setTimeout(() => {
@@ -232,7 +249,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
     
     setPlayers(prev => [
       ...prev, 
-      { id: prev.length + 1, username: randomName, color: randomColor, status: 'alive', survivedShots: 0 }
+      { id: prev.length + 1, displayNum: prev.length + 1, username: randomName, color: randomColor, status: 'alive', survivedShots: 0 }
     ]);
   };
 
@@ -363,8 +380,8 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                             key={p.id} 
                             startAngle={i * slice} 
                             endAngle={(i + 1) * slice} 
-                            color={p.color || '#444'} 
-                            label={p.username.substring(0, 10)} 
+                            color={gameMode === 'shakhsana' ? (p.color || '#444') : `hsl(${(p.displayNum * 50) % 360}, 70%, 50%)`} 
+                            label={gameMode === 'shakhsana' ? p.username.substring(0, 10) : p.displayNum.toString()} 
                           />
                         ));
                      })()}
@@ -405,9 +422,7 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                    <div key={p.id} className={`p-4 rounded-xl border-2 flex flex-col items-center text-center transition-all relative overflow-hidden ${p.status === 'alive' ? 'bg-zinc-900 border-zinc-700' : 'bg-red-950/20 border-red-900/30 opacity-70'}`}>
                       
                       
-                      <div className="text-3xl font-black bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-inner">
-                        {p.id}
-                      </div>
+                      <div className="text-3xl font-black bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-inner">{p.displayNum}</div>
                       
                       {gameMode === 'shakhsana' && <span className="font-bold text-lg mb-2 truncate w-full" style={{color: p.color}}>{p.username}</span>}
                       

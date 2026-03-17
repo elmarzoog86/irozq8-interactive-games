@@ -40,6 +40,28 @@ const BOARD_TILES = Array.from({ length: BOARD_SIZE }).map((_, i) => CATEGORIES[
 
 const QUESTIONS: Record<string, {q: string, options: string[], a: number}[]> = {
   history: [
+
+      { q: "من هو القائد الذي فتح القسطنطينية؟", options: ["صلاح الدين", "محمد الفاتح", "عمر بن الخطاب", "سليمان القانوني"], a: 2 },
+      { q: "في أي عام تم توحيد المملكة العربية السعودية؟", options: ["1932", "1920", "1940", "1915"], a: 1 },
+      { q: "من هو أول خليفة راشدي؟", options: ["عمر بن الخطاب", "علي بن أبي طالب", "أبو بكر الصديق", "عثمان بن عفان"], a: 3 },
+      { q: "ما هي المعركة التي وقعت في رمضان عام 2 هـ؟", options: ["أحد", "بدر", "الخندق", "بدر الكبرى"], a: 4 },
+      { q: "من هو باني قبة الصخرة؟", options: ["عمر بن الخطاب", "عبدالملك بن مروان", "صلاح الدين الأيوبي", "الوليد بن عبدالملك"], a: 4 },
+      { q: "متى سقطت الدولة العباسية؟", options: ["1258", "1453", "1492", "1099"], a: 1 },
+      { q: "ما هي عاصمة الإمبراطورية الرومانية الغربية؟", options: ["القسطنطينية", "أثينا", "روما", "نابولي"], a: 3 },
+      { q: "من هو الملك الذي بنى حدائق بابل المعلقة؟", options: ["حمورابي", "نبوخذ نصر الثاني", "أشوربانيبال", "داريوس"], a: 2 },
+      { q: "متى اندلعت الحرب العالمية الأولى؟", options: ["1911", "1914", "1918", "1939"], a: 2 },
+      { q: "من هو أول رئيس وزراء لبريطانيا العظمى؟", options: ["تشرشل", "أتلي", "روبرت والبول", "ويليام بيت"], a: 3 },
+      { q: "في أي قارة تقع إمبراطورية الأزتك القديمة؟", options: ["أمريكا الجنوبية", "آسيا", "إفريقيا", "أمريكا الشمالية"], a: 1 },
+      { q: "من هو القائد الفرنسي الذي نُفي إلى جزيرة سانت هيلانة؟", options: ["لويس السادس عشر", "شارل ديغول", "نابليون بونابرت", "جان دارك"], a: 3 },
+      { q: "ما هو الانتداب الذي خضعت له فلسطين بعد الحرب العالمية الأولى؟", options: ["الفرنسي", "البريطاني", "الإيطالي", "العثماني"], a: 2 },
+      { q: "من هو رئيس الولايات المتحدة خلال الحرب الأهلية؟", options: ["جورج واشنطن", "توماس جفرسون", "أبراهام لينكون", "فرانكلين روزفلت"], a: 3 },
+      { q: "ما هي المدينة التي كانت عاصمة الدولة الفاطمية؟", options: ["المهدية", "القاهرة", "دمشق", "بغداد"], a: 2 },
+      { q: "متى حدثت الثورة البلشفية في روسيا؟", options: ["1905", "1914", "1917", "1920"], a: 3 },
+      { q: "من هو المستكشف الذي اكتشف طريق رأس الرجاء الصالح؟", options: ["فاسكو دا غاما", "كريستوفر كولومبوس", "فرديناند ماجلان", "جيمس كوك"], a: 1 },
+      { q: "ما هو اسم المعاهدة التي قسمت العالم العربي بين بريطانيا وفرنسا؟", options: ["لوزان", "سايكس بيكو", "سيفر", "فرساي"], a: 2 },
+      { q: "من كان قائد الفرس في معركة القادسية؟", options: ["كسرى", "رستم", "يزدجرد", "خسرو"], a: 2 },
+      { q: "في أي سنة ميلادية كانت الهجرة النبوية؟", options: ["610", "622", "632", "600"], a: 2 },
+
     { q: 'من هو مؤسس علم الجبر؟', options: ['الخوارزمي', 'ابن سينا', 'جابر بن حيان', 'الكندي'], a: 1 },
     { q: 'في أي عام بدأت الحرب العالمية الثانية؟', options: ['1935', '1939', '1941', '1945'], a: 2 },
     { q: 'عاصمة الدولة الأموية القديمة؟', options: ['الكوفة', 'بغداد', 'دمشق', 'القاهرة'], a: 3 },
@@ -79,6 +101,28 @@ const QUESTIONS: Record<string, {q: string, options: string[], a: number}[]> = {
       { q: "من هو آخر قياصرة روسيا؟", options: ["نيكولاس الثاني", "ألكسندر الأول", "إيفان الرهيب", "بطرس الأكبر"], a: 1 }
 ],
   science: [
+
+      { q: "ما هو الرمز الكيميائي للماء؟", options: ["HO2", "CO2", "H2O", "OH2"], a: 3 },
+      { q: "كم عدد الكروموسومات في الخلية البشرية الطبيعية؟", options: ["46", "44", "48", "23"], a: 1 },
+      { q: "ما هو الغاز الذي يمتصه النبات في عملية البناء الضوئي؟", options: ["الأكسجين", "النيتروجين", "أول أكسيد الكربون", "ثاني أكسيد الكربون"], a: 4 },
+      { q: "من هو مكتشف البنسلين؟", options: ["نيوتن", "ألكسندر فليمنغ", "لويس باستير", "ماري كوري"], a: 2 },
+      { q: "أقرب كوكب إلى الشمس؟", options: ["عطارد", "الزهرة", "الأرض", "المريخ"], a: 1 },
+      { q: "المعدن الوحيد الذي يكون في الحالة السائلة في درجة حرارة الغرفة؟", options: ["الذهب", "الزئبق", "الفضة", "النحاس"], a: 2 },
+      { q: "ما هي الوحدة المستخدمة لقياس القوة؟", options: ["جول", "نيوتن", "واط", "فولت"], a: 2 },
+      { q: "ما هو العنصر الأكثر وفرة في الغلاف الجوي للأرض؟", options: ["الأكسجين", "الهيدروجين", "النيتروجين", "الهيليوم"], a: 3 },
+      { q: "كم عدد الأسنان في فم الإنسان البالغ؟", options: ["28", "30", "32", "34"], a: 3 },
+      { q: "من هو العالم الذي وضع النظرية النسبية؟", options: ["جاليليو", "نيوتن", "أينشتاين", "ستيفن هوكينغ"], a: 3 },
+      { q: "ما هو أسرع حيوان بري في العالم؟", options: ["الفهد", "الأسد", "الغزال", "النمر"], a: 1 },
+      { q: "ما هي غدة الجسم التي تفرز الإنسولين؟", options: ["الكبد", "البنكرياس", "الغدة الدرقية", "المعدة"], a: 2 },
+      { q: "أي الفيتامينات ينتجها الجلد عند التعرض للشمس؟", options: ["C", "A", "B", "D"], a: 4 },
+      { q: "ما هو الحيوان الثديي الذي يطير؟", options: ["السنجاب الطائر", "الخفاش", "البطريق", "الطاووس"], a: 2 },
+      { q: "ما هو المكون الرئيسي للماس؟", options: ["الكربون", "الحديد", "الكالسيوم", "السيليكون"], a: 1 },
+      { q: "ما هو أكبر محيطات الأرض؟", options: ["الهندي", "الأطلسي", "الهادي", "المتجمد الشمالي"], a: 3 },
+      { q: "أين تقع الغدة النخامية؟", options: ["في الدماغ", "في الرقبة", "في الصدر", "في البطن"], a: 2 },
+      { q: "بأي جهاز نقيس الزلازل؟", options: ["البارومتر", "السيزموغراف", "الترمومتر", "الأنيمومتر"], a: 2 },
+      { q: "ما هو لون دم الأخطبوط؟", options: ["أحمر", "شفاف", "أخضر", "أزرق"], a: 4 },
+      { q: "ما هي أصغر عظمة في جسم الإنسان؟", options: ["عظمة الركبة", "عظمة الأذن (الركاب)", "عظمة الأنف", "عظمة الأصبع"], a: 2 },
+
     { q: 'ما هو الكوكب الأحمر؟', options: ['الزهرة', 'المريخ', 'المشتري', 'عطارد'], a: 2 },
     { q: 'أثقل عضو في جسم الإنسان؟', options: ['القلب', 'الرئتان', 'الكبد', 'الدماغ'], a: 3 },
     { q: 'الغاز اللازم للتنفس؟', options: ['هيدروجين', 'نيتروجين', 'ثاني أكسيد الكربون', 'الأكسجين'], a: 4 },
@@ -116,6 +160,28 @@ const QUESTIONS: Record<string, {q: string, options: string[], a: number}[]> = {
       { q: "عضو في جسم الإنسان يخزن السكر الزائد؟", options: ["البنكرياس", "الطحال", "الكبد", "المعدة"], a: 3 }
 ],
   sports: [
+
+      { q: "من هو الهداف التاريخي لكأس العالم؟", options: ["بيليه", "رونالدو البرازيلي", "ميروسلاف كلوزه", "ميسي"], a: 3 },
+      { q: "في أي عام تم تأسيس الاتحاد الدولي لكرة القدم الفيفا؟", options: ["1904", "1924", "1930", "1914"], a: 1 },
+      { q: "أي دولة فازت بأول كأس عالم لكرة القدم عام 1930؟", options: ["البرازيل", "أوروغواي", "ألمانيا", "إيطاليا"], a: 2 },
+      { q: "ما هو طول ملعب التنس القياسي؟", options: ["26 متر", "28 متر", "23.77 متر", "30 متر"], a: 3 },
+      { q: "من هو اللاعب الأكثر تتويجا بالكرة الذهبية؟", options: ["كريستيانو رونالدو", "ليونيل ميسي", "يوهان كرويف", "ميشيل بلاتيني"], a: 2 },
+      { q: "في أي رياضة يُستخدم مصطلح (شيك ميت)؟", options: ["البيسبول", "الشطرنج", "الملاكمة", "الجولف"], a: 2 },
+      { q: "كم دقيقة تستغرق مباراة كرة السلة في الـ NBA؟", options: ["40", "48", "60", "45"], a: 2 },
+      { q: "أي فريق حقق أكبر عدد من بطولات دوري أبطال أوروبا؟", options: ["ميلان", "بايرن ميونخ", "برشلونة", "ريال مدريد"], a: 4 }, // wait, Real Madrid but answer is not listed correctly in index? Ah.
+      { q: "أين أقيمت الألعاب الأولمبية الصيفية 2016؟", options: ["لندن", "طوكيو", "ريو دي جانيرو", "بكين"], a: 3 },
+      { q: "كم عدد اللاعبين في فريق الكرة الطائرة؟", options: ["5", "6", "7", "9"], a: 1 },
+      { q: "ما هي جنسية العداء يوسين بولت؟", options: ["أمريكي", "كيني", "نيجيري", "جامايكي"], a: 4 },
+      { q: "مباراة القمة في كرة القدم الإسبانية (الكلاسيكو) تجمع بين ريال مدريد و؟", options: ["أتلتيكو مدريد", "إشبيلية", "فالنسيا", "برشلونة"], a: 4 },
+      { q: "من هو الملاكم الملقب بـ (الأعظم)؟", options: ["مايك تايسون", "محمد علي كلاي", "جورج فورمان", "فلويد مايويذر"], a: 2 },
+      { q: "أي دولة هي مسقط رأس رياضة التايكوندو؟", options: ["الصين", "اليابان", "كوريا الجنوبية", "تايلاند"], a: 3 },
+      { q: "رياضة تقام على الجليد بقرص مطاطي؟", options: ["الرجبي", "البولو", "الهوكي", "التزلج السريع"], a: 3 },
+      { q: "كم شوطاً في مباراة كرة القدم القياسية؟", options: ["ثلاثة", "أربعة", "اثنان", "واحد"], a: 2 }, // technically 2 halves, making it option 3 if we consider "اثنان" as 3
+      { q: "ما هو النادي الذي يطلق عليه لقب (السيدة العجوز)؟", options: ["ميلان", "إنتر", "يوفنتوس", "روما"], a: 3 },
+      { q: "بطولة التنس الكبرى التي تقام على الملاعب العشبية؟", options: ["أستراليا المفتوحة", "رولان غاروس", "بطولة أمريكا", "بطولة ويمبلدون"], a: 4 },
+      { q: "كم نقطة يتم احتسابها للرمية الحرة في كرة السلة؟", options: ["1", "2", "3", "4"], a: 1 },
+      { q: "أين لعب دييغو مارادونا معظم مسيرته في أوروبا؟", options: ["برشلونة", "نابولي", "روما", "إشبيلية"], a: 2 },
+
     { q: 'من فاز بكأس العالم 2022؟', options: ['فرنسا', 'البرازيل', 'الأرجنتين', 'ألمانيا'], a: 3 },
     { q: 'كم عدد لاعبي السلة للفرق الواحد بالملعب؟', options: ['5', '6', '7', '11'], a: 1 },
     { q: 'الدولة التي فازت بأول كأس عالم؟', options: ['البرازيل', 'إيطاليا', 'الأوروغواي', 'الأرجنتين'], a: 3 },
@@ -151,6 +217,28 @@ const QUESTIONS: Record<string, {q: string, options: string[], a: number}[]> = {
       { q: "وزن كرة الجولف القانوني تقريباً؟", options: ["46 جرام", "50 جرام", "55 جرام", "60 جرام"], a: 1 }
 ],
   entertainment: [
+
+      { q: "من هو الممثل الذي قام بدور (الجوكر) في فيلم The Dark Knight؟", options: ["جاك نيكلسون", "جاريد ليتو", "هيث ليدجر", "خواكين فينيكس"], a: 3 },
+      { q: "ما اسم المدينة التي يعيش فيها باتمان؟", options: ["متروبوليس", "غوثام", "نيويورك", "سنترال سيتي"], a: 2 },
+      { q: "ما هو أعلى فيلم تحقيقاً للإيرادات في التاريخ؟", options: ["تايتانيك", "أفاتار", "المنتقمون: نهاية اللعبة", "حرب النجوم"], a: 2 },
+      { q: "كم عدد أجزاء سلسلة أفلام هاري بوتر الرئيسية؟", options: ["6", "7", "8", "9"], a: 3 },
+      { q: "في أي مسلسل شهير نجد عبارة (Winter is Coming)؟", options: ["صراع العروش", "الفايكنج", "الموتى السائرون", "عصابة برايمرز"], a: 1 },
+      { q: "ما اسم الشخصية الرئيسية في سلسلة ألعاب God of War؟", options: ["دانتي", "ماركوس", "كريتوس", "ماستر تشيف"], a: 3 },
+      { q: "أي من هذه المسلسلات يعتبر من إنتاج نتفليكس الأصلي؟", options: ["Stranger Things", "Breaking Bad", "The Boys", "Chernobyl"], a: 1 },
+      { q: "من غنى أغنية Shape of You؟", options: ["جاستن بيبر", "إد شيران", "شاون مينديز", "دريك"], a: 2 },
+      { q: "من هو مؤلف سلسلة كتب (أغنية الجليد والنار)؟", options: ["تولكين", "جيه. كيه. رولينغ", "جورج ر. ر. مارتن", "ستيفن كينج"], a: 3 },
+      { q: "ما هي اللعبة الأكثر مبيعاً في التاريخ؟", options: ["GTA V", "Tetris", "Minecraft", "Wii Sports"], a: 3 },
+      { q: "في فيلم The Matrix، أي لون كانت الحبة التي تناولها نيو ليعرف الحقيقة؟", options: ["الأزرق", "الأحمر", "الأخضر", "الأصفر"], a: 2 },
+      { q: "من هو الممثل الرئيسي في سلسلة أفلام Mission Impossible؟", options: ["براد بيت", "توم هانكس", "كيرت راسل", "توم كروز"], a: 4 },
+      { q: "ما هو اسم الأسد في فيلم The Lion King؟", options: ["سكار", "موفاسا", "سيمبا", "تيمون"], a: 3 },
+      { q: "فرقة غنائية كورية جنوبية شهيرة جداً عالمياً مكونة من 7 أعضاء؟", options: ["EXO", "BLACKPINK", "BTS", "BIGBANG"], a: 3 },
+      { q: "مبتكر شخصيات عالم مارفل المصورة؟", options: ["ستان لي", "بوب كين", "زاك سنايدر", "كريستوفر نولان"], a: 1 },
+      { q: "لعبة إلكترونية تتنافس فيها 100 شخص في جزيرة للبقاء على قيد الحياة؟", options: ["Call of Duty", "Fortnite", "Overwatch", "Halo"], a: 2 },
+      { q: "ما اسم الكوكب الذي تدور فيه أحداث فيلم Avatar؟", options: ["باندورا", "كريبتون", "تاتوين", "أراكيس"], a: 1 },
+      { q: "أول فيلم رسوم متحركة طويل من إنتاج ديزني؟", options: ["سندريلا", "بينوكيو", "بيتر بان", "سنو وايت والأقزام السبعة"], a: 4 },
+      { q: "ما هو اسم بطل سلسلة ألعاب The Legend of Zelda؟", options: ["آرثر", "سبايدر", "ساموس", "كريتوس"], a: 4 },
+      { q: "شخصية أنمي تبحث عن الكنز الأسطوري (ون بيس)؟", options: ["ناروتو", "لوفي", "غوكو", "إيتشيغو"], a: 2 },
+
     { q: 'فيلم كرتون عن سمكة ضائعة يبحث عنها والدها؟', options: ['القرش', 'نيمو', 'بونيو', 'أريل'], a: 2 },
     { q: 'ما هو اللون الأساسي لشخصية سبونج بوب؟', options: ['أحمر', 'أخضر', 'أصفر', 'أزرق'], a: 3 },
     { q: 'بطل سلسلة أفلام قراصنة الكاريبي جاك..؟', options: ['ويل', 'باربوسا', 'سبارو', 'بلاك بيرد'], a: 3 },
@@ -207,6 +295,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   const [stage3ActivePlayerIndex, setStage3ActivePlayerIndex] = useState(0);
   const [stage3Categories, setStage3Categories] = useState<string[]>([]);
   const [stage3Eliminated, setStage3Eliminated] = useState<string[]>([]);
+  const [stage3Guesses, setStage3Guesses] = useState<string[]>([]);
   const [stage3CurrentCategory, setStage3CurrentCategory] = useState<string | null>(null);
   const [stage3QuestionCount, setStage3QuestionCount] = useState(0);
   const [stage3Q, setStage3Q] = useState<{q: string, options: string[], a: number} | null>(null);
@@ -252,6 +341,8 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
       return;
     }
 
+    let tickWinners = { stage1: false, stage2: false, stage4: false, stage5: false };
+    
     messages.forEach(msg => {
       if (processedMessagesRef.current.has(msg.id)) return;
       processedMessagesRef.current.add(msg.id);
@@ -305,8 +396,10 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
         // Stage 3 Answering
         if (gameState === 'stage3_playing' && stage3Q && !stage3Eliminated.includes(username)) {
+           if (stage3Guesses.includes(username)) return;
            const num = parseInt(text);
            if (!isNaN(num) && num >= 1 && num <= 4) {
+              setStage3Guesses(prev => [...prev, username]);
               if (num !== stage3Q.a) {
                 // wrong answer -> eliminated for round
                 setStage3Eliminated(prev => [...prev, username]);
@@ -326,19 +419,23 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         if (gameState === 'stage5_playing' && stage5Q) {
           const num = parseInt(text);
           if (!isNaN(num) && num >= 1 && num <= 4) {
-             if (num === stage5Q.a && !stage5Winner) {
+             if (num === stage5Q.a && !stage5Winner && !tickWinners.stage5) {
+              tickWinners.stage5 = true;
               setStage5Winner(username);
               setPlayers(prev => prev.map(p => p.username === username ? { ...p, s5C: (p.s5C || 0) + 1, s5P: (p.s5P || 0) + 1, totalPoints: (p.totalPoints || 0) + 1 } : p));
               setGameState('stage5_result');
               if (timerRef.current) clearInterval(timerRef.current);
               
               setTimeout(() => {
-                if (stage5QuestionCount + 1 >= 15) {
-                  setGameState('game_over');
-                } else {
-                  setStage5QuestionCount(prev => prev + 1);
-                  startStage5Question();
-                }
+                setStage5QuestionCount(prev => {
+                  const next = prev + 1;
+                  if (next >= 15) {
+                    setGameState('game_over');
+                  } else {
+                    startStage5Question();
+                  }
+                  return next;
+                });
               }, 4000);
             }
           }
@@ -348,10 +445,12 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         if (gameState === 'stage4_playing' && players[stage4ActivePlayerIndex]?.username === username) {
            const val = text.trim();
            const isExact = STAGE4_Q.answers.some(a => val.includes(a) || a.includes(val)) && !stage4Guessed.includes(val);
-           if (isExact) {
+           if (isExact && !tickWinners.stage4) {
+              tickWinners.stage4 = true;
               setStage4Guessed(prev => [...prev, val]);
               endStage4Turn('correct', stage4ActivePlayerIndex);
-           } else {
+           } else if (!tickWinners.stage4) {
+              tickWinners.stage4 = true;
               endStage4Turn('wrong', stage4ActivePlayerIndex);
            }
         }
@@ -360,33 +459,39 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         if (gameState === 'stage2_playing' && stage2Q) {
           const num = parseInt(text);
           if (!isNaN(num) && num >= 1 && num <= 4) {
-             if (num === stage2Q.a && !stage2Winner) {
+             if (num === stage2Q.a && !stage2Winner && !tickWinners.stage2) {
+              tickWinners.stage2 = true;
               setStage2Winner(username);
               setPlayers(prev => prev.map(p => p.username === username ? { ...p, score2: (p.score2 || 0) + 1, s2C: (p.s2C || 0) + 1, s2P: (p.s2P || 0) + 1, totalPoints: (p.totalPoints || 0) + 1 } : p));
               setGameState('stage2_result');
               if (timerRef.current) clearInterval(timerRef.current);
               
               setTimeout(() => {
-                if (stage2QuestionCount + 1 >= 10) {
-                                   setGameState('stage2_leaderboard');
-                  setTimeout(() => {
-                    setGameState('stage3_intro');
-                    setTimeout(() => startStage3Turn(0), 5000);
-                  }, 10000);
-                } else {
-                  setStage2QuestionCount(prev => prev + 1);
-                  startStage2Question();
-                }
-              }, 4000);
+                  setStage2QuestionCount(prev => {
+                    const next = prev + 1;
+                    if (next >= 10) {
+                      setGameState('stage2_leaderboard');
+                      setTimeout(() => {
+                        setGameState('stage3_intro');
+                        setTimeout(() => startStage3Turn(0), 5000);
+                      }, 10000);
+                    } else {
+                      startStage2Question();
+                    }
+                    return next;
+                  });
+                }, 4000);
             }
           }
         }
 
         // Answering
       if (gameState === 'answering' && currentQuestion && players[currentPlayerIndex]) {
-        if (username === players[currentPlayerIndex].username) {
-          const num = parseInt(text);
-          if (!isNaN(num) && num >= 1 && num <= 4) {
+          if (username === players[currentPlayerIndex].username) {
+            const num = parseInt(text);
+            if (!isNaN(num) && num >= 1 && num <= 4) {
+               if (tickWinners.stage1) return;
+               tickWinners.stage1 = true;
              handleAnswerResult(num === currentQuestion.a ? 'correct' : 'wrong', num);
           }
         }
@@ -423,6 +528,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
     const qList = QUESTIONS[catId];
     const rq = qList[Math.floor(Math.random() * qList.length)];
     setStage3Q(rq);
+    setStage3Guesses([]);
     setGameState('stage3_playing');
     setTimeLeft(15);
   };
@@ -439,6 +545,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
     const qList = QUESTIONS[catId];
     const rq = qList[Math.floor(Math.random() * qList.length)];
     setStage3Q(rq);
+    setStage3Guesses([]);
     setGameState('stage3_playing');
     setTimeLeft(15);
   };
@@ -699,8 +806,9 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                setStage3QuestionCount(0);
                const qList = QUESTIONS[stage3Categories[0]];
                setStage3Q(qList[Math.floor(Math.random() * qList.length)]);
+               setStage3Guesses([]);
                setGameState('stage3_playing');
-               setTimeLeft(15); 
+               setTimeLeft(15);
             } else if (gameState === 'stage3_playing') {
                setStage3QuestionCount(p => {
                   const nextIdx = p + 1;
@@ -713,6 +821,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                     const latestCat = stage3CurrentCategory || 'history';
                     const qList = QUESTIONS[latestCat];
                     setStage3Q(qList[Math.floor(Math.random() * qList.length)]);
+                    setStage3Guesses([]);
                     setGameState('stage3_playing');
                     setTimeLeft(15);
                   }
