@@ -24,9 +24,10 @@ import { MissingLinkGame } from './components/MissingLinkGame';
 import { ScattergoriesGame } from './components/ScattergoriesGame';
 import CategoryAuctionGame from './components/CategoryAuctionGame';
 import TrivialPursuitGame from './components/TrivialPursuitGame';
+import { HotPotatoGame } from './components/HotPotatoGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
-import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull, Music } from 'lucide-react';
+import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull, Music, Bomb } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
@@ -78,6 +79,17 @@ const ENABLE_COMING_SOON_PAGE = false;
       </Routes>
     );
   }const GAMES = [
+  {
+    id: 'hotpotato',
+    name: 'البطاطا الساخنة',
+    description: 'لعبة السرعة والأسئلة! أجب بسرعة لتمرير القنبلة الموقوتة قبل أن تنقضي ٢٠ ثانية!',
+    tutorial: 'عندما تكون القنبلة بيدك، أجب على السؤال في الشات لتمريرها للاعب آخر.',
+    image: '/bomb.png',
+    status: 'testing',
+    type: 'action',
+    color: 'red',
+    isNew: true
+  },
   {
     id: 'trivia',
     name: 'سين جيم',
@@ -822,6 +834,18 @@ const ENABLE_COMING_SOON_PAGE = false;
     );
   }
 
+  if (activeGame === 'hotpotato') {
+    return (
+      <HotPotatoGame
+        messages={messages}
+        onLeave={leaveGame}
+        channelName={activeChannel}
+        isConnected={isConnected}
+        error={error}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-brand-black text-white font-sans flex flex-col relative overflow-hidden" dir="rtl">
       <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0">
@@ -1040,18 +1064,20 @@ const ENABLE_COMING_SOON_PAGE = false;
               </h2>
               <div className="flex justify-center mb-2">
                 <span className="bg-brand-pink/20 text-brand-cyan px-3 py-1 rounded-full text-xs font-bold font-mono text-center">
-                  16/3/2026
+                  17/3/2026
                 </span>
               </div>
               <p className="text-brand-cyan/60 flex items-center justify-center gap-2 mb-6 text-sm">تم تحديث الألعاب وإضافة المزيد</p>
 
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
 
-                
-
-
-
-                
+                <div className="flex items-start gap-3">
+                   <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Bomb className="w-5 h-5 text-red-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">البطاطا الساخنة</h3>
+                     <p className="text-sm text-zinc-400">لعبة السرعة والأسئلة! أجب بسرعة لتمرير القنبلة الموقوتة قبل أن تنقضي ٢٠ ثانية!</p>
+                   </div>
+                </div>
 
                 <div className="flex items-start gap-3">
                      <div className="bg-blue-500/20 p-2 rounded-lg mt-1 shrink-0"><Tag className="w-5 h-5 text-blue-500" /></div>

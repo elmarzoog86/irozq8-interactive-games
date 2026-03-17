@@ -6,6 +6,14 @@ import { Gamepad2, ArrowLeft, Play, Lock } from 'lucide-react';
 
 const games = [
   {
+    id: 'hotpotato',
+    title: 'البطاطا الساخنة',
+    description: 'لعبة السرعة والأسئلة! أجب بسرعة لتمرير القنبلة الموقوتة قبل أن تنقضي ٢٠ ثانية!',
+    icon: '💣',
+    path: '/games/hotpotato',
+    status: 'testing',
+  },
+  {
     id: 'questions',
     title: 'سين جيم',
     description: 'لعبة أسئلة تفاعلية متنوعة للاعبين الأسرع في الإجابة',
