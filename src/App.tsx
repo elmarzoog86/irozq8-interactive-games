@@ -84,7 +84,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     name: 'البطاطا الساخنة',
     description: 'لعبة السرعة والأسئلة! أجب بسرعة لتمرير القنبلة الموقوتة قبل أن تنقضي ٢٠ ثانية!',
     tutorial: 'عندما تكون القنبلة بيدك، أجب على السؤال في الشات لتمريرها للاعب آخر.',
-    image: '/bomb.png',
+    image: '/HotPotato.png',
     status: 'testing',
     type: 'action',
     color: 'red',
