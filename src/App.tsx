@@ -1049,13 +1049,7 @@ const ENABLE_COMING_SOON_PAGE = false;
 
                 
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Music className="w-5 h-5 text-green-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">خمن الموسيقى</h3>
-                     <p className="text-sm text-zinc-400">تحدي لفرقك لمعرفة اسم الأغنية التي تعمل لتجميع النقاط والفوز!</p>
-                   </div>
-                </div>
+
 
                 
 

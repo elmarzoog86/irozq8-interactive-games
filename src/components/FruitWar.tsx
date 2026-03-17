@@ -542,7 +542,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
   };
 
   return (
-    <div className="flex gap-8 h-full bg-brand-black w-full max-w-[1600px] mx-auto">
+    <div className="flex gap-8 h-full bg-transparent w-full max-w-[1600px] mx-auto">
       {/* Main Game Area */}
       <div className="flex-1 bg-brand-black/80  rounded-[40px] border border-brand-cyan/20 p-8 flex flex-col relative overflow-hidden shadow-2xl font-arabic" dir="rtl">
         <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
