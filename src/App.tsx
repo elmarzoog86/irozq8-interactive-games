@@ -166,7 +166,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     description: 'اختبار لسرعة البديهة والمفردات. ابدأ بكلمة، وعلى اللاعب التالي أن يأتي بكلمة تبدأ بآخر حرف. لا تتوقف!',
     tutorial: 'اكتب كلمة تبدأ بآخر حرف من الكلمة السابقة. لديك وقت محدود للرد قبل أن تخسر.',
     image: '/wordchain.png',
-    status: 'testing',
+    status: 'active',
     type: 'puzzles',
     color: 'blue'
   },
@@ -196,7 +196,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       description: 'لعبة السرعة الانعكاسية! كن أول من يكتب الجملة المعروضة على الشاشة للانطلاق نحو خط النهاية.',
       tutorial: 'اكتب !join للانضمام. وعندما تظهر الجملة على الشاشه، اكتبها في الشات حرفيا بأسرع مايمكن.',
       image: '/typingderby.png',
-      status: 'testing',
+      status: 'active',
       type: 'action',
       color: 'blue'
     },
@@ -216,7 +216,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       description: 'استنتج الرابط بين الكلمات والصور المعروضة أمامك بأسرع وقت ممكن.',
       tutorial: 'اكتب !join للانضمام. وعندما تظهر مجموعة صور، اكتب التصنيف الذي يجمعهم للحصول على نقطة.',
       image: '/missinglink.png',
-      status: 'testing',
+      status: 'active',
       type: 'puzzles',
       color: 'yellow'
     },
@@ -236,7 +236,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       description: 'راهن على عدد الإجابات التي يمكنك تذكرها لفئة معينة... وأثبت ذلك!',
       tutorial: 'يظهر تصنيف معين، وتكتب رقم بالشات للمزايدة. أعلى مزايد يكتب الإجابات المطلوبة مباشرة في الشات (إجابة تلو الأخرى، أو كلها في رسالة واحدة) قبل انتهاء الوقت.',
       image: '/categoryauction.png',
-      status: 'testing',
+      status: 'active',
       type: 'strategy',
       color: 'yellow'
     },
@@ -1067,21 +1067,9 @@ const ENABLE_COMING_SOON_PAGE = false;
                      </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                   <div className="bg-brand-pink/20 p-2 rounded-lg mt-1 shrink-0"><Target className="w-5 h-5 text-brand-cyan" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">الرابط العجيب</h3>
-                     <p className="text-sm text-zinc-400">اربط 3 صور بكلمة واحدة! اختبر معلوماتك واستنتاجك.</p>
-                   </div>
-                </div>
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-purple-500/20 p-2 rounded-lg mt-1 shrink-0"><MessageCircle className="w-5 h-5 text-purple-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">سلسلة الكلمات</h3>
-                     <p className="text-sm text-zinc-400">اختبار لسرعة البديهة! ابدأ بكلمة وعلى اللاعب التالي أن يبدأ بآخر حرف.</p>
-                   </div>
-                </div>
+
+
 
                 <div className="flex items-start gap-3">
                    <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Crown className="w-5 h-5 text-red-500" /></div>
@@ -1091,23 +1079,11 @@ const ENABLE_COMING_SOON_PAGE = false;
                    </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-blue-500/20 p-2 rounded-lg mt-1 shrink-0"><Tag className="w-5 h-5 text-blue-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">مزاد الفئات</h3>
-                     <p className="text-sm text-zinc-400">راهن على عدد الإجابات التي يمكنك تذكرها لفئة معينة... وأثبت ذلك!</p>
-                   </div>
-                </div>
+
 
                 
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Rocket className="w-5 h-5 text-green-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">سباق الكتابة</h3>
-                     <p className="text-sm text-zinc-400">لعبة السرعة الانعكاسية! كن أول من يكتب الجملة بدقة.</p>
-                   </div>
-                </div>
+
 
               </div>
 
