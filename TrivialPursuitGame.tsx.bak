@@ -198,7 +198,6 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   const [stage2QuestionCount, setStage2QuestionCount] = useState(0);
   const [stage2Q, setStage2Q] = useState<{q: string, options: string[], a: number} | null>(null);
   const [stage2Winner, setStage2Winner] = useState<string | null>(null);
-    const [stage2Guesses, setStage2Guesses] = useState<{username: string, answer: number}[]>([]);
   const [stage5QuestionCount, setStage5QuestionCount] = useState(0);
   const [stage5Q, setStage5Q] = useState<{q: string, options: string[], a: number} | null>(null);
   const [stage5Winner, setStage5Winner] = useState<string | null>(null);
@@ -491,7 +490,6 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   const startStage2Question = () => {
     setGameState('stage2_playing');
     setStage2Winner(null);
-      setStage2Guesses([]);
     setTimeLeft(15);
     const cats = ['history', 'science', 'sports', 'entertainment'];
     const randomCat = cats[Math.floor(Math.random() * cats.length)];
@@ -682,17 +680,19 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
             } else if (gameState === 'stage2_playing') {
                setGameState('stage2_result');
                setTimeout(() => {
-                 setStage2QuestionCount(p => p + 1);
-                   const currentCount = stage2QuestionCount;
-                   if (currentCount + 1 >= 10) {
-                      setGameState('stage2_leaderboard');
-                      setTimeout(() => {
+                 setStage2QuestionCount(p => {
+                    const next = p + 1;
+                    if (next >= 10) {
+                       setGameState('stage2_leaderboard');
+                       setTimeout(() => {
                          setGameState('stage3_intro');
                          setTimeout(() => startStage3Turn(0), 5000);
-                      }, 10000);
-                   } else {
-                      startStage2Question();
-                   }
+                       }, 10000);
+                    } else {
+                       startStage2Question();
+                    }
+                    return next;
+                 });
                }, 4000);
             } else if (gameState === 'stage3_category_pick') {
                setStage3CurrentCategory(stage3Categories[0]);
@@ -1092,65 +1092,23 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                               </motion.div>
                             )}
 
-                                                        {gameState === 'stage2_playing' && stage2Q && (
-                                <motion.div key="s2_q" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-row p-8 bg-[#0a0a0a] z-50">
-                                   
-                                   {/* Main Question Area */}
-                                   <div className="flex-1 flex flex-col pr-8">
-                                     <div className="flex justify-between items-center mb-6">
-                                       <div className="bg-brand-pink/20 text-brand-cyan px-4 py-2 rounded-xl font-bold">سؤال سريع {stage2QuestionCount + 1}/10</div>
-                                       <div className="text-4xl font-mono text-white flex items-center gap-2"><Timer className="w-10 h-10 text-brand-red animate-pulse" /> {timeLeft}</div>
+                            {gameState === 'stage2_playing' && stage2Q && (
+                              <motion.div key="s2_q" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex-1 flex flex-col p-8 bg-[#0a0a0a] z-50">
+                                 <div className="flex justify-between items-center mb-6">
+                                   <div className="bg-brand-pink/20 text-brand-cyan px-4 py-2 rounded-xl font-bold">سؤال سريع {stage2QuestionCount + 1}/10</div>
+                                   <div className="text-3xl font-mono text-white flex items-center gap-2"><Timer className="w-8 h-8 text-brand-red animate-pulse" /> {timeLeft}</div>
+                                 </div>
+                                 <h2 className="text-3xl font-bold text-white text-center mb-8 leading-relaxed bg-white/5 p-6 rounded-2xl border border-white/10">{stage2Q.q}</h2>
+                                 <div className="grid grid-cols-2 gap-4">
+                                   {stage2Q.options.map((opt, i) => (
+                                     <div key={i} className="bg-[#1a1a1a] border border-white/5 rounded-2xl p-4 flex items-center gap-4">
+                                       <span className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl font-black text-brand-pink">{i + 1}</span>
+                                       <span className="text-xl text-white font-bold">{opt}</span>
                                      </div>
-                                     <h2 className="text-4xl font-bold text-white text-center mb-10 leading-relaxed bg-white/5 p-8 rounded-3xl border border-white/10">{stage2Q.q}</h2>
-                                     
-                                     <div className="grid grid-cols-2 gap-6 relative">
-                                       {stage2Q.options.map((opt, i) => (
-                                         <div key={i} className="bg-[#1a1a1a] border-2 border-brand-indigo/30 rounded-2xl p-6 flex flex-col items-start gap-4 relative overflow-hidden h-40">
-                                           <div className="flex items-center gap-4 w-full">
-                                             <span className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-2xl font-black text-brand-pink shrink-0">{i + 1}</span>
-                                             <span className="text-2xl text-white font-bold">{opt}</span>
-                                           </div>
-                                           {/* Show who guessed this option */}
-                                           <div className="flex flex-wrap gap-2 mt-auto">
-                                              {stage2Guesses.filter(g => g.answer === i + 1).map((g, idx) => {
-                                                 const p = players.find(x => x.username === g.username);
-                                                 return (
-                                                    <div key={idx} className="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-full border border-white/10">
-                                                       <img src={p?.avatar || `https://ui-avatars.com/api/?name=${g.username}&background=random`} alt="" className="w-6 h-6 rounded-full" />
-                                                       <span className="text-white text-sm font-bold">{g.username}</span>
-                                                    </div>
-                                                 );
-                                              })}
-                                           </div>
-                                         </div>
-                                       ))}
-                                     </div>
-                                   </div>
-
-                                   {/* Stage 2 Leaderboard Sidebar */}
-                                   <div className="w-80 bg-black/40 border-r border-white/10 rounded-2xl p-6 flex flex-col shrink-0">
-                                     <div className="flex items-center gap-3 mb-6">
-                                        <Trophy className="w-6 h-6 text-brand-cyan" />
-                                        <h3 className="text-xl font-bold text-white">ترتيب اللاعبين</h3>
-                                     </div>
-                                     <div className="flex-1 overflow-y-auto space-y-4">
-                                        {[...players].sort((a,b) => (b.score2 || 0) - (a.score2 || 0)).map((p, i) => (
-                                           <div key={i} className="bg-white/5 p-4 rounded-xl border border-white/10 flex items-center justify-between">
-                                              <div className="flex items-center gap-3">
-                                                 <img src={p.avatar || `https://ui-avatars.com/api/?name=${p.username}&background=random`} alt="" className="w-10 h-10 rounded-full" />
-                                                 <div className="flex flex-col">
-                                                   <span className="text-white font-bold truncate max-w-[100px]">{p.username}</span>
-                                                 </div>
-                                              </div>
-                                              <div className="font-black text-2xl text-brand-pink tabular-nums">
-                                                 {p.score2 || 0}
-                                              </div>
-                                           </div>
-                                        ))}
-                                     </div>
-                                   </div>
-                                </motion.div>
-                              )}
+                                   ))}
+                                 </div>
+                              </motion.div>
+                            )}
 
                             {gameState === 'stage2_result' && stage2Q && (
                               <motion.div key="s2_res" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a] z-50">
