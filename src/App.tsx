@@ -206,7 +206,7 @@ const ENABLE_COMING_SOON_PAGE = false;
       description: 'باتل رويال الكتابة! بطولات من 3 جولات، الأبطأ سيتم إقصاؤه حتى يبقى ناجٍ واحد.',
       tutorial: 'اكتب الكلمة بأقصر وقت ممكن، تجنب أن تكون الأبطأ بين الجميع للنجاة من الإقصاء!',
       image: '/typingroyale.png',
-      status: 'testing',
+      status: 'active',
       type: 'action',
       color: 'red'
     },
@@ -1099,13 +1099,7 @@ const ENABLE_COMING_SOON_PAGE = false;
                    </div>
                 </div>
 
-                <div className="flex items-start gap-3">
-                   <div className="bg-purple-500/20 p-2 rounded-lg mt-1 shrink-0"><Swords className="w-5 h-5 text-purple-500" /></div>
-                   <div>
-                     <h3 className="font-bold text-white mb-1">معركة الكلمات (Royale)</h3>
-                     <p className="text-sm text-zinc-400">باتل رويال الكتابة! الأبطأ يتم إقصاؤه حتى يبقى ناجٍ واحد.</p>
-                   </div>
-                </div>
+                
 
                 <div className="flex items-start gap-3">
                    <div className="bg-green-500/20 p-2 rounded-lg mt-1 shrink-0"><Rocket className="w-5 h-5 text-green-500" /></div>
