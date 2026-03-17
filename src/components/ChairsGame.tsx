@@ -446,39 +446,35 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
               )}
             </AnimatePresence>
 
-            {/* Chairs */}
-            {(roundState === 'active' || roundState === 'round_end') && chairs.map((chair, i) => {
-              const pos = getPosition(i, chairs.length, 15);
-              return (
-                <div 
-                  key={chair.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-10"
-                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                >
-                  <Armchair className={`w-10 h-10 ${chair.claimedBy ? 'text-zinc-600' : 'text-brand-cyan'}`} />
-                  {roundState === 'active' && !chair.claimedBy && (
-                    <div className="bg-brand-black/80 text-brand-cyan font-bold px-2 py-1 rounded text-sm mt-1 absolute -bottom-6 border border-brand-cyan/30">
-                      {chair.number}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-
-              {/* Players */}
+              {/* Chairs */}
+              {(roundState === 'active' || roundState === 'round_end') && chairs.map((chair, i) => {
+                const pos = getPosition(i, chairs.length, 28);
+                return (
+                  <div
+                    key={chair.id}
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center z-10"
+                    style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+                  >
+                    <Armchair className={`w-14 h-14 ${chair.claimedBy ? 'text-zinc-600' : 'text-brand-cyan drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]'}`} />
+                    {roundState === 'active' && !chair.claimedBy && (
+                      <div className="bg-brand-black/90 text-white font-black px-3 py-1.5 rounded-lg text-lg mt-1 absolute -bottom-9 border border-brand-cyan/50 shadow-lg z-20">
+                        {chair.number}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}              {/* Players */}
               {alivePlayers.map((player, i) => {
                 const isCircling = roundState === 'music';
                 let pos = getPosition(i, alivePlayers.length, 45, isCircling);
 
-                // If player has a chair, move them to the chair
-                if (player.chairId) {
-                  const chairIndex = chairs.findIndex(c => c.id === player.chairId);
-                  if (chairIndex !== -1) {
-                    pos = getPosition(chairIndex, chairs.length, 15, false);
-                  }
-                }
-
-                return (
+                  // If player has a chair, move them to the chair
+                  if (player.chairId) {
+                    const chairIndex = chairs.findIndex(c => c.id === player.chairId);
+                    if (chairIndex !== -1) {
+                      pos = getPosition(chairIndex, chairs.length, 28, false);
+                    }
+                  }                return (
                   <motion.div
                     key={player.username}
                     animate={{ left: `${pos.x}%`, top: `${pos.y}%` }}
@@ -522,17 +518,17 @@ export const ChairsGame: React.FC<ChairsGameProps> = ({ messages, onLeave, chann
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 1.2, opacity: 0 }}
-                  className={`absolute bottom-[20%] text-6xl font-black drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] z-30 ${activeTimer <= 5 ? 'text-red-500 animate-pulse' : 'text-brand-cyan'}`}
+                  className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-8xl font-black drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-30 ${activeTimer <= 5 ? 'text-red-500 animate-pulse' : 'text-brand-cyan'}`}
                 >
                   {activeTimer}
                 </motion.div>
               )}
 
               {roundState === 'round_end' && eliminatedPlayer && (
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="absolute bg-red-600/90 text-white px-8 py-4 rounded-2xl font-bold text-2xl  z-30 shadow-2xl"
+                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-600/90 text-white px-8 py-4 rounded-2xl font-bold text-2xl z-30 shadow-2xl"
                   dir="rtl"
                 >
                   {eliminatedPlayer} تم إقصاؤه!
