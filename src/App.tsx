@@ -28,7 +28,7 @@ import TrivialPursuitGame from './components/TrivialPursuitGame';
 import { HotPotatoGame } from './components/HotPotatoGame';
 import { useTwitchChat } from './hooks/useTwitchChat';
 import { motion, AnimatePresence } from 'motion/react';
-import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull, Music, Bomb } from 'lucide-react';
+import { Target, Crown, Info, Sparkles, ArrowLeft, HelpCircle, Swords, Armchair, Hourglass, Twitch, Heart, MessageCircle, MessageSquareText, Rocket, Tag, Skull, Music, Bomb, Banknote } from 'lucide-react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AdminControlBoard from './pages/Admin';
 import ComingSoon from './ComingSoon';
@@ -1103,6 +1103,14 @@ const GAMES = [
               <p className="text-brand-cyan/60 flex items-center justify-center gap-2 mb-6 text-sm">تم تحديث الألعاب وإضافة المزيد</p>
 
               <div className="space-y-4 mb-8 text-right bg-white/5 p-5 rounded-2xl border border-white/5 max-h-[300px] overflow-y-auto custom-scrollbar">
+
+                <div className="flex items-start gap-3">
+                   <div className="bg-emerald-500/20 p-2 rounded-lg mt-1 shrink-0"><Banknote className="w-5 h-5 text-emerald-500" /></div>
+                   <div>
+                     <h3 className="font-bold text-white mb-1">شرطي حرامي</h3>
+                     <p className="text-sm text-zinc-400">لعبة خداع وتصويت! كونوا فريقاً لسرقة البنك، لكن احذروا من الشرطة المتخفين بينكم.</p>
+                   </div>
+                </div>
 
                 <div className="flex items-start gap-3">
                    <div className="bg-red-500/20 p-2 rounded-lg mt-1 shrink-0"><Bomb className="w-5 h-5 text-red-500" /></div>

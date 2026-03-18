@@ -146,9 +146,19 @@ export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) 
               {players.length < 3 && (
                 <p className="mt-8 text-neutral-400 font-bold text-lg">بانتظار انضمام 3 لاعبين على الأقل...</p>
               )}
+
+              <div className="mt-8 bg-brand-black/40 border border-brand-cyan/20 p-5 rounded-3xl w-full max-w-xl shadow-inner">
+                <h3 className="text-xl font-bold text-brand-pink mb-2 flex items-center justify-center gap-2">
+                  <Shield className="w-6 h-6" />
+                  طريقة اللعب
+                </h3>
+                <p className="text-brand-cyan/80 text-lg leading-relaxed text-center font-medium">
+                  لعبة خداع وتصويت! امسح الكود لتصبح جزءاً من العصابة. إذا كنت <span className="text-emerald-400 font-bold">لصاً</span>، حاول سرقة الخزنات وتجنب جرس الإنذار. أما إذا كنت <span className="text-blue-400 font-bold">شرطياً متخفياً</span>، فحاول تمرير الإنذارات وإفشال المهمة دون أن تثير الشبهات!
+                </p>
+              </div>
             </div>
 
-            <div className="w-1/3 bg-brand-black/60 p-6 rounded-[40px] border border-brand-cyan/20 shadow-[0_0_20px_rgba(0,229,255,0.05)] relative overflow-hidden backdrop-blur-sm">
+            <div className="w-1/3 bg-brand-black/60 p-6 rounded-[40px] border border-brand-cyan/20 shadow-[0_0_20px_rgba(0,229,255,0.05)] relative overflow-hidden backdrop-blur-sm flex flex-col">
               <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent pointer-events-none" />
               <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3 relative z-10">
                 <Users className="text-brand-cyan w-8 h-8" />
