@@ -4,12 +4,11 @@ import { Shield, Timer, Lock, Unlock, AlertTriangle, Users, Trophy, Bomb, Bankno
 import { socket } from '../socket';
 import { QRCodeSVG } from 'qrcode.react';
 
-export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
-  const [roomId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
-  const [gameState, setGameState] = useState<any>(null);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-
-  // Sounds
+  export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
+    const [roomId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
+    const [gameState, setGameState] = useState<any>(null);
+    const [soundEnabled, setSoundEnabled] = useState(true);
+    const [heistAlert, setHeistAlert] = useState<'success' | 'alarm' | null>(null);  // Sounds
   const playSound = useCallback((type: 'alarm' | 'success' | 'fail' | 'click') => {
     if (!soundEnabled) return;
     try {
@@ -57,15 +56,20 @@ export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) 
       setGameState(state);
     });
 
-    socket.on('br_heist_result', ({ alarms, success, totalSuccess, totalFails }) => {
-      if (success) {
-        playSound('success');
-      } else {
-        playSound('alarm');
-      }
-    });
+      socket.on('br_heist_result', ({ alarms, success, totalSuccess, totalFails }) => {
+        if (success) {
+          setHeistAlert('success');
+          playSound('success'); // Fallback/additional synth
+        } else {
+          setHeistAlert('alarm');
+          const siren = new Audio('/policesiren.mp3');
+          if (soundEnabled) siren.play().catch(e => console.error(e));
+        }
 
-    return () => {
+        setTimeout(() => {
+          setHeistAlert(null);
+        }, 5000);
+      });    return () => {
       socket.off('br_state_update');
       socket.off('br_heist_result');
     };
@@ -299,6 +303,55 @@ export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) 
              </button>
            </div>
         )}
+
+        {/* --- DYNAMIC ALERTS OVERLAY --- */}
+        <AnimatePresence>
+          {heistAlert === 'success' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-emerald-900/30 backdrop-blur-[2px]"
+            >
+              <video 
+                src="/moneysplash.mp4" 
+                autoPlay 
+                muted 
+                className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-90"
+              />
+              <motion.div 
+                initial={{ scale: 0.5, y: 50 }}
+                animate={{ scale: 1, y: 0 }}
+                className="relative z-10 bg-emerald-600/90 border-4 border-emerald-400 p-12 rounded-[50px] shadow-[0_0_100px_rgba(16,185,129,0.8)] text-center transform -rotate-2"
+              >
+                <Banknote className="w-32 h-32 text-white mx-auto mb-6 drop-shadow-lg" />
+                <h2 className="text-8xl font-black text-white drop-shadow-[0_5px_10px_rgba(0,0,0,0.5)]">تمت السرقة بنجاح! 💸</h2>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {heistAlert === 'alarm' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-red-900/40 backdrop-blur-[2px]"
+            >
+              <div className="absolute inset-0 bg-red-600/30 animate-[pulse_0.5s_ease-in-out_infinite]" />
+              <div className="absolute inset-0 bg-blue-600/20 animate-[pulse_0.6s_ease-in-out_infinite_alternate-reverse]" />
+              
+              <motion.div 
+                initial={{ scale: 0.5, y: 50 }}
+                animate={{ scale: 1, y: 0 }}
+                className="relative z-10 bg-red-700/90 border-4 border-white p-12 rounded-[50px] shadow-[0_0_100px_rgba(239,68,68,1)] text-center transform rotate-2"
+              >
+                <Siren className="w-32 h-32 text-white mx-auto mb-6 animate-spin drop-shadow-lg" />
+                <h2 className="text-8xl font-black text-white drop-shadow-[0_5px_10px_rgba(0,0,0,0.5)]">إنذار الشرطة! 🚨</h2>
+                <p className="text-4xl text-red-200 font-bold mt-4">فشلت السرقة وتم القبض عليكم!</p>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </div>
