@@ -168,16 +168,25 @@ export default function BankRobberyController() {
         {gameState.status === 'role_reveal' && (
            <div className="bg-neutral-800 rounded-xl p-6 text-center shadow-xl border border-neutral-700">
              <h2 className="text-2xl font-bold mb-4">هذه شخصيتك السرية!</h2>
-             <div className={`p-6 rounded-xl mb-6 \${headerDetails?.color}`}>
-                <h1 className="text-3xl font-black mb-2">{headerDetails?.title}</h1>
-                <p>{headerDetails?.desc}</p>
-             </div>
-             <button
-                onClick={handleReady}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-xl py-4 rounded-xl transition-all"
-             >
-                جاهز 👍
-             </button>
+             {headerDetails ? (
+               <>
+                 <div className={`p-6 rounded-xl mb-6 ${headerDetails.color}`}>
+                    <h1 className="text-3xl font-black mb-2">{headerDetails.title}</h1>
+                    <p>{headerDetails.desc}</p>
+                 </div>
+                 <button
+                    onClick={handleReady}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-bold text-xl py-4 rounded-xl transition-all"
+                 >
+                    جاهز 👍
+                 </button>
+               </>
+             ) : (
+                <div className="p-6">
+                  <div className="animate-spin text-red-500 mx-auto mb-4"><Lock size={48} /></div>
+                  <p className="text-neutral-400">جاري استلام دورك السري...</p>
+                </div>
+             )}
            </div>
         )}
 
@@ -312,7 +321,7 @@ export default function BankRobberyController() {
             <p className="mb-6">حاولوا معرفة من هو "العرّاب" لاغتياله وسرقة الفوز!</p>
             
             <div className="space-y-2">
-              {gameState.players.filter((p: any) => p.role !== 'cop').map((p: any) => (
+              {gameState.players.filter((p: any) => !myRoleData?.copList?.includes(p.id)).map((p: any) => (
                 <button
                   key={p.id}
                   onClick={() => handleAssassinate(p.id)}
