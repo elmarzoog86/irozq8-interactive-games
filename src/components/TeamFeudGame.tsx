@@ -28,7 +28,13 @@ interface GameState {
   };
 }
 
-export const TeamFeudGame: React.FC<{ onLeave: () => void; messages: any[] }> = ({ onLeave, messages }) => {
+export const TeamFeudGame: React.FC<{ 
+  onLeave: () => void; 
+  messages: any[];
+  channelName?: string;
+  isConnected?: boolean;
+  error?: string | null;
+}> = ({ onLeave, messages, channelName, isConnected, error }) => {
   const [showChat, setShowChat] = useState(true);
   const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);

@@ -1,612 +1,296 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shield, Timer, Lock, Unlock, AlertTriangle, Users, Trophy, Crosshair, Bomb, Banknote, XCircle, HandCoins, Activity, Siren, DoorClosed, Volume2, VolumeX , MessageSquare, MessageSquareOff} from "lucide-react";
-import { ChatMessage } from '../types';
-import { TwitchChat } from './TwitchChat';
+import { Shield, Timer, Lock, Unlock, AlertTriangle, Users, Trophy, Bomb, Banknote, Siren, Crown, DoorClosed, Volume2, VolumeX, HandCoins } from "lucide-react";
+import { socket } from '../socket';
+import { QRCodeSVG } from 'qrcode.react';
 
-interface BankRobberyProps {
-  messages?: ChatMessage[];
-  onLeave: () => void;
-  channelName: string;
-  isConnected: boolean;
-  error: string | null;
-}
-
-type Mode = 'lobby' | 'coop' | 'pvp' | 'game_over';
-
-interface PlayerState {
-  money: number;
-  jailTime: number;
-  escaped: boolean;
-  shields: number;
-  contribs: number;
-  lastActionTime: number;
-  shieldEndTime: number;
-}
-
-// Simple Web Audio API Synthesizer for high-tier game sounds
-const playSound = (type: 'alarm' | 'success' | 'fail' | 'hit' | 'cash' | 'click', volumeLevel = 0.5) => {
-  try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gainNode = ctx.createGain();
-    
-    osc.connect(gainNode);
-    gainNode.connect(ctx.destination);
-    
-    if (type === 'alarm') {
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(400, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.5);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.3, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.5);
-    } else if (type === 'hit') {
-      osc.type = 'square';
-      osc.frequency.setValueAtTime(150, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.5, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.1);
-    } else if (type === 'cash') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1200, ctx.currentTime);
-      osc.frequency.setValueAtTime(1600, ctx.currentTime + 0.1);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.4, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.2);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.2);
-    } else if (type === 'success') {
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(440, ctx.currentTime);
-      osc.frequency.setValueAtTime(554, ctx.currentTime + 0.1);
-      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.2);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.4, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.4);
-    } else if (type === 'fail') {
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(300, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.3);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.4, ctx.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.3);
-    } else if (type === 'click') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
-      gainNode.gain.setValueAtTime(volumeLevel * 0.2, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.05);
-    }
-  } catch (e) {
-    // Ignore if audio context fails
-  }
-};
-
-export function BankRobberyGame({ messages = [], onLeave, channelName, isConnected, error }: BankRobberyProps) {
-  const [showChat, setShowChat] = useState(true);
-  const [mode, setMode] = useState<Mode>('lobby');
-  const [gameType, setGameType] = useState<'coop'|'pvp'>('coop');
-  const [timeLeft, setTimer] = useState(180);
-  const [vaultHP, setVaultHP] = useState(1000000);
-  const [securityLevel, setSecurityLevel] = useState(0); // 0-100%
-  const [players, setPlayers] = useState<Record<string, PlayerState>>({});
-  const [actionFeed, setActionFeed] = useState<{id: string, text: string, type: 'good'|'bad'|'neutral'}[]>([]);
+export const BankRobberyGame: React.FC<{ onLeave: () => void }> = ({ onLeave }) => {
+  const [roomId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
+  const [gameState, setGameState] = useState<any>(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  
-  const processedMessageIds = useRef<Set<string>>(new Set());
-  const timerRef = useRef<number | null>(null);
 
-  const isAlarmPhase = gameType === 'pvp' && timeLeft <= 30 && timeLeft > 0;
-
-  useEffect(() => {
-    if (isAlarmPhase && soundEnabled && timeLeft % 2 === 0) {
-      playSound('alarm');
-    }
-  }, [timeLeft, isAlarmPhase, soundEnabled]);
-
-  const startGame = (selectedMode: 'coop'|'pvp') => {
-    if (soundEnabled) playSound('click');
-    setGameType(selectedMode);
-    setMode(selectedMode);
-    setTimer(selectedMode === 'coop' ? 180 : 180);
-    setVaultHP(1000000);
-    setSecurityLevel(0); // Reset Security
-    setPlayers({});
-    setActionFeed([]);
-    processedMessageIds.current.clear();
-  };
-
-  const addLog = useCallback((text: string, type: 'good'|'bad'|'neutral') => {
-    setActionFeed(p => [{id: Math.random().toString(), text, type}, ...p].slice(0, 8));
-  }, []);
-
-  useEffect(() => {
-    if (mode === 'lobby' || mode === 'game_over') {
-      if (timerRef.current) window.clearInterval(timerRef.current);
-      return;
-    }
-
-    timerRef.current = window.setInterval(() => {
-      setTimer(p => {
-        if (p <= 1) {
-          window.clearInterval(timerRef.current!);
-          setMode('game_over');
-          if (soundEnabled) playSound('success');
-          return 0;
-        }
-        return p - 1;
-      });
-
-      if (gameType === 'coop') {
-         setSecurityLevel(l => Math.min(100, l + 0.5));
-      }
-
-      setPlayers(prev => {
-        let changed = false;
-        const now = Date.now();
-        const next = { ...prev };
-        Object.keys(next).forEach(username => {
-          // Jail Logic
-          if (next[username].jailTime > 0) {
-            changed = true;
-            next[username] = { ...next[username], jailTime: next[username].jailTime - 1 };
-            if (next[username].jailTime === 0) {
-              addLog(`${username} ??? ?? ?????!`, 'neutral');
-            }
-          }
-          // Shield Expiration Logic
-          if (next[username].shields > 0 && next[username].shieldEndTime < now) {
-              changed = true;
-              next[username] = { ...next[username], shields: 0 };
-              addLog(`??? ????? ????? ??? ${username}!`, 'neutral');
-          }
-        });
-        return changed ? next : prev;
-      });
-    }, 1000);
-
-    return () => {
-      if (timerRef.current) window.clearInterval(timerRef.current);
-    };
-  }, [mode, addLog, soundEnabled]);
-
-  // Handle messages concurrently avoiding stale state
-  useEffect(() => {
-    if (mode === 'lobby' || mode === 'game_over') return;
-
-    const newMessages = messages.filter(msg => !processedMessageIds.current.has(msg.id));
-    if (newMessages.length === 0) return;
-
-    newMessages.forEach(msg => processedMessageIds.current.add(msg.id));
-
-    setPlayers(prevPlayers => {
-      let currentPlayers = { ...prevPlayers };
-      let vaultDamage = 0;
-      const now = Date.now();
+  // Sounds
+  const playSound = useCallback((type: 'alarm' | 'success' | 'fail' | 'click') => {
+    if (!soundEnabled) return;
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
       
-      newMessages.forEach(msg => {
-        const text = msg.message.trim().toLowerCase();
-        const username = msg.username;
-        const pState: PlayerState = currentPlayers[username] || { 
-            money: 0, 
-            jailTime: 0, 
-            escaped: false, 
-            shields: 0, 
-            contribs: 0,
-            lastActionTime: 0,
-            shieldEndTime: 0
-        };
-        
-        if (pState.escaped) return;
-        if (pState.jailTime > 0) return;
-
-        // Cooldown Check (5 seconds)
-        if (now - pState.lastActionTime < 5000) return;
-
-        let actionTaken = false;
-
-        if (gameType === 'coop') {
-          let dmg = 0;
-          if (text === '!hack') dmg = 5000 + Math.floor(Math.random() * 5000);
-          else if (text === '!drill') dmg = 8000 + Math.floor(Math.random() * 8000);
-          else if (text === '!cut') dmg = 10000 + Math.floor(Math.random() * 2000);
-          else if (text === '!distract') {
-              setSecurityLevel(l => Math.max(0, l - 5));
-              currentPlayers[username] = { ...pState, contribs: pState.contribs + 2000, lastActionTime: now };
-              actionTaken = true;
-              addLog(`?? ${username} ??? ?????? ??????! (-5% ????)`, 'good');
-              if (soundEnabled) playSound('click');
-          }
-
-          if (dmg > 0) {
-            // Damage reduced by security level
-            const effectiveDmg = Math.floor(dmg * (1 - securityLevel / 100));
-            vaultDamage += effectiveDmg;
-            currentPlayers[username] = { ...pState, contribs: pState.contribs + effectiveDmg, lastActionTime: now };
-            actionTaken = true;
-            if (soundEnabled && Math.random() > 0.7) playSound('hit');
-          }
-        }
-        else if (gameType === 'pvp') {
-          if (text === '!escape' && isAlarmPhase) {
-            currentPlayers[username] = { ...pState, escaped: true, lastActionTime: now };
-            actionTaken = true;
-            addLog(`??? ${username} ?????? ?? $${pState.money}! `, 'good');
-            if (soundEnabled) playSound('success');
-          }
-          else if (text === '!rob' && !isAlarmPhase) {
-            actionTaken = true;
-            const risk = Math.random();
-            if (risk < 0.15) {
-               const lost = Math.floor(pState.money * 0.5);
-               currentPlayers[username] = { ...pState, money: pState.money - lost, jailTime: 15, lastActionTime: now };
-               addLog(` ???? ?????? ????? ??? ${username}! ??? $${lost}`, 'bad');
-               if (soundEnabled) playSound('fail');
-            } else {
-               const gain = Math.floor(Math.random() * 3000) + 1000;
-               currentPlayers[username] = { ...pState, money: pState.money + gain, lastActionTime: now };
-               if (soundEnabled && Math.random() > 0.8) playSound('cash');
-            }
-          }
-          else if (text.startsWith('!steal ') && !isAlarmPhase) {
-            // Robust target finding (ignore @, trim, case-insensitive check against keys)
-            const targetInput = text.replace('!steal ', '').replace('@', '').trim().toLowerCase();
-            if (!targetInput) return;
-
-            // Find target key
-            const targetKey = Object.keys(currentPlayers).find(k => k.toLowerCase() === targetInput);
-
-            if (targetKey && targetKey !== username) {
-               const tState = currentPlayers[targetKey];
-               if (!tState.escaped) {
-                   actionTaken = true;
-                   if (tState.shields > 0) {
-                     currentPlayers[targetKey] = { ...tState, shields: 0, shieldEndTime: 0 };
-                     currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
-                     addLog(`??? ??? ${targetKey} ?? ???? ${username}! (${username} ?? ?????)`, 'neutral');
-                     if (soundEnabled) playSound('hit');
-                   } else {
-                     const risk = Math.random();
-                     if (risk < 0.3) {
-                       currentPlayers[username] = { ...pState, jailTime: 10, lastActionTime: now };
-                       addLog(` ??? ${username} ?? ???? ${targetKey} ???? ?????!`, 'bad');
-                       if (soundEnabled) playSound('fail');
-                     } else {
-                       const stolen = Math.floor(tState.money * 0.25);
-                       if (stolen > 0) {
-                         currentPlayers[targetKey] = { ...tState, money: tState.money - stolen };
-                         currentPlayers[username] = { ...pState, money: pState.money + stolen, lastActionTime: now };
-                         addLog(` ??? ${username} $${stolen} ?? ${targetKey}!`, 'neutral');
-                         if (soundEnabled) playSound('cash');
-                       } else {
-                           // Target has no money, still counts as action? Yes.
-                           currentPlayers[username] = { ...pState, lastActionTime: now };
-                       }
-                     }
-                   }
-               }
-            }
-          }
-          else if (text === '!defend' && !isAlarmPhase) {
-            actionTaken = true;
-            currentPlayers[username] = { ...pState, shields: 1, shieldEndTime: now + 15000, lastActionTime: now };
-            addLog(`??? ${username} ??? ?????? ??? ??????! (15 ?????)`, 'good');
-          }
-        }
-      });
-      
-      if (vaultDamage > 0) {
-        setVaultHP(hp => {
-          const nhp = Math.max(0, hp - vaultDamage);
-          if (nhp === 0 && hp > 0) {
-            setMode('game_over');
-            if (soundEnabled) playSound('success');
-          }
-          return nhp;
-        });
+      switch(type) {
+        case 'alarm':
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(400, ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(800, ctx.currentTime + 0.3);
+          osc.frequency.linearRampToValueAtTime(400, ctx.currentTime + 0.6);
+          gain.gain.setValueAtTime(0.5, ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1);
+          osc.start(); osc.stop(ctx.currentTime + 1);
+          break;
+        case 'success':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, ctx.currentTime);
+          osc.frequency.setValueAtTime(554.37, ctx.currentTime + 0.1);
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+          osc.start(); osc.stop(ctx.currentTime + 0.5);
+          break;
+        case 'fail':
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(150, ctx.currentTime + 0.5);
+          gain.gain.setValueAtTime(0.4, ctx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+          osc.start(); osc.stop(ctx.currentTime + 0.5);
+          break;
       }
+    } catch(e) {}
+  }, [soundEnabled]);
 
-      return currentPlayers;
+  useEffect(() => {
+    socket.emit('br_host_lobby', { roomId });
+
+    socket.on('br_state_update', (state) => {
+      setGameState(state);
     });
 
-  }, [messages, mode, gameType, isAlarmPhase, addLog, soundEnabled]);
+    socket.on('br_heist_result', ({ alarms, success, totalSuccess, totalFails }) => {
+      if (success) {
+        playSound('success');
+      } else {
+        playSound('alarm');
+      }
+    });
 
-  const topPlayers = Object.entries(players)
-    .map(([username, s]) => ({ username, ...s }))
-    .sort((a, b) => gameType === 'coop' ? b.contribs - a.contribs : b.money - a.money)
-    .slice(0, 10);
+    return () => {
+      socket.off('br_state_update');
+      socket.off('br_heist_result');
+    };
+  }, [roomId, playSound]);
+
+  const startGame = () => {
+    playSound('success');
+    socket.emit('br_start_game', roomId);
+  };
+
+  const joinUrl = `${window.location.protocol}//${window.location.host}/br/${roomId}`;
+
+  if (!gameState) {
+    return <div className="text-white text-center p-12">يتم تجهيز البنك...</div>;
+  }
+
+  const { status, players, mastermindId, roundHeists, currentTeam, votes, heistVotesCount, heistResults } = gameState;
+
+  const successes = roundHeists.filter((h: boolean) => h === true).length;
+  const fails = roundHeists.filter((h: boolean) => h === false).length;
 
   return (
-    <div className="flex w-full h-full gap-8 bg-brand-black/50 overflow-hidden font-arabic" dir="rtl">
-      <div className="flex-1 rounded-[40px] border border-brand-cyan/20 bg-brand-black/80  flex flex-col relative overflow-hidden">
-        <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
-            {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
-            {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
-          </button>
+    <div className="absolute inset-0 bg-brand-black/90 overflow-hidden font-sans border-t-4 border-brand-cyan/50 rounded-2xl shadow-[0_0_50px_rgba(0,229,255,0.15)] flex flex-col" dir="rtl">
+      
+      {/* Background elements to match the site themes */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.05)_0%,transparent_70%)] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-pink/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-cyan/10 blur-[100px] rounded-full pointer-events-none" />
 
-        
-        <AnimatePresence>
-          {mode === 'lobby' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -20 }} className="absolute inset-0 z-20 flex flex-col items-center justify-center p-8 bg-gradient-to-b from-brand-black/80 to-brand-black">
-              <div className="w-32 h-32 mb-6 bg-brand-indigo/10 rounded-3xl flex items-center justify-center border border-brand-indigo/30 shadow-[0_0_50px_rgba(0, 229, 255,0.3)]">
-                <Banknote className="w-16 h-16 text-brand-pink" />
-              </div>
-              <h1 className="text-6xl font-black text-white mb-4 tracking-tighter">???? <span className="text-brand-pink">??????</span></h1>
-              <p className="text-brand-cyan/60 text-xl font-medium mb-12 max-w-2xl text-center">
-                ????? ??? ???????: ?? ????????? ??????? ?????? ?????? ?? ???????? ????? ????? ????? ??? ???? ??????
-              </p>
-              
-              <div className="grid grid-cols-2 gap-8 w-full max-w-4xl">
-                <button onClick={() => startGame('coop')} className="group flex flex-col items-center p-8 rounded-[40px] bg-gradient-to-b from-blue-900/40 to-brand-black border-2 border-blue-500/20 hover:border-blue-400 hover:shadow-[0_0_40px_rgba(59,130,246,0.3)] transition-all cursor-pointer">
-                  <div className="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Users className="w-10 h-10 text-blue-400" />
-                  </div>
-                  <h2 className="text-3xl font-black text-white mb-2">?????? ?????????</h2>
-                  <p className="text-blue-200/50 text-center font-medium">??? ?????? ??? ???????? !hack ? !drill</p>
-                </button>
-                <button onClick={() => startGame('pvp')} className="group flex flex-col items-center p-8 rounded-[40px] bg-gradient-to-b from-red-900/40 to-brand-black border-2 border-red-500/20 hover:border-red-400 hover:shadow-[0_0_40px_rgba(239,68,68,0.3)] transition-all cursor-pointer">
-                  <div className="w-20 h-20 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Crosshair className="w-10 h-10 text-red-400" />
-                  </div>
-                  <h2 className="text-3xl font-black text-white mb-2">???? ??????</h2>
-                  <p className="text-red-200/50 text-center font-medium">???? ????? ?? ??????? ???????? !rob ? !steal</p>
-                </button>
-              </div>
-
-              <div className="absolute top-8 right-8 flex items-center gap-4">
-                <button onClick={() => setSoundEnabled(!soundEnabled)} className="text-white/50 hover:text-brand-cyan transition-colors p-3 bg-white/5 rounded-xl border border-white/10 hover:border-brand-cyan/30">
-                  {soundEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
-                </button>
-                <button onClick={onLeave} className="text-white/50 hover:text-white flex items-center gap-2 font-bold px-6 py-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                  <XCircle className="w-5 h-5" /> ?????
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {mode !== 'lobby' && (
-          <div className="p-8 pb-4 flex justify-between items-center z-10 border-b border-brand-cyan/10 bg-brand-black/70">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-brand-indigo/10 rounded-2xl flex items-center justify-center border border-brand-indigo/30">
-                {gameType === 'coop' ? <Lock className="w-8 h-8 text-blue-400" /> : <AlertTriangle className="w-8 h-8 text-red-500" />}
-              </div>
-              <div>
-                <h2 className="text-3xl font-black text-white tracking-tight">
-                  {gameType === 'coop' ? '?????? ??????' : '???? ?????? (PvP)'}
-                </h2>
-                <div className="flex items-center gap-2 mt-1">
-                  <Activity className="w-4 h-4 text-brand-cyan/50" />
-                  <span className="text-brand-pink/70 font-semibold text-lg">
-                    {mode === 'game_over' ? '????? ???????' : '???? ???????...'}
-                  </span>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-8">
-              <div className={`flex items-center gap-3 px-6 py-3 rounded-2xl border-2 ${isAlarmPhase || timeLeft < 10 ? 'bg-red-500/20 border-red-500 animate-pulse text-red-400' : 'bg-brand-black/50 border-brand-cyan/30 text-brand-cyan'}`}>
-                <Timer className="w-6 h-6" />
-                <span className="text-3xl font-mono font-black font-numeric">
-                  {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-                </span>
-              </div>
-              <button onClick={() => setSoundEnabled(!soundEnabled)} className="text-white/50 hover:text-brand-cyan transition-colors p-3 bg-brand-black/50 rounded-xl border border-white/10 hover:border-brand-cyan/30 cursor-pointer">
-                  {soundEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
-                </button>
-              <button onClick={onLeave} className="text-white/50 hover:text-red-400 transition-colors p-3 bg-brand-black/50 rounded-xl border border-white/10 hover:border-red-500/30 cursor-pointer">
-                <XCircle className="w-6 h-6" />
-              </button>
-            </div>
+      {/* HEADER */}
+      <div className="flex justify-between items-center p-6 bg-brand-black/60 border-b border-brand-cyan/20 relative z-10 backdrop-blur-md">
+        <div className="flex items-center gap-4">
+          <Banknote className="text-brand-pink w-10 h-10 drop-shadow-[0_0_10px_rgba(255,0,128,0.5)]" />
+          <h1 className="text-3xl font-black text-brand-pink tracking-wider glow-cyan-text">شرطي حرامي</h1>
+        </div>
+        <div className="flex gap-4">
+          <div className="px-6 py-2 bg-brand-cyan/10 border border-brand-cyan/50 rounded-xl text-brand-cyan font-bold text-xl flex gap-2 shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+            تمت السرقة: {successes}/3
           </div>
-        )}
+          <div className="px-6 py-2 bg-brand-pink/10 border border-brand-pink/50 rounded-xl text-brand-pink font-bold text-xl flex gap-2 shadow-[0_0_15px_rgba(255,0,128,0.2)]">
+            جرس الإنذار: {fails}/3
+          </div>
+        </div>
+        <button onClick={onLeave} className="text-brand-pink/70 hover:text-brand-pink transition-colors bg-brand-pink/5 hover:bg-brand-pink/20 p-3 rounded-xl border border-brand-pink/20 hover:border-brand-pink/50">
+          <DoorClosed size={32} />
+        </button>
+      </div>
 
-        {mode !== 'lobby' && (
-          <div className="flex-1 flex gap-6 p-8 overflow-hidden z-10">
-            <div className="flex-1 flex flex-col items-center justify-center relative bg-brand-black/30 rounded-3xl border border-white/5 p-8 overflow-hidden shadow-inner">
+      <div className="p-8 h-[calc(100%-100px)] overflow-y-auto w-full max-w-6xl mx-auto flex flex-col items-center relative z-10 custom-scrollbar">
+
+        {/* === LOBBY === */}
+        {status === 'lobby' && (
+          <div className="flex flex-col md:flex-row w-full gap-8 h-full">
+            <div className="flex-1 bg-brand-black/60 p-8 rounded-[40px] border border-brand-cyan/30 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(0,229,255,0.1)] relative overflow-hidden">
+               <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 to-transparent pointer-events-none" />
+              <h2 className="text-4xl font-black text-white mb-6 text-center tracking-tight">امسح الكود وادخل كحرامي!</h2>
               
-              {isAlarmPhase && (
-                <div className="absolute inset-0 bg-red-500/10 pointer-events-none z-0">
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-500/20 via-transparent to-transparent animate-ping" />
-                  <div className="absolute top-8 left-1/2 -translate-x-1/2 bg-red-600 border border-red-400 text-white font-black px-12 py-3 rounded-full flex items-center gap-4 shadow-[0_0_30px_rgba(220,38,38,0.8)] z-10">
-                    <Siren className="w-8 h-8 animate-spin" />
-                    ?????? ?? ??????! ???? !escape ??????!
-                    <Siren className="w-8 h-8 animate-spin" />
-                  </div>
-                </div>
-              )}
-
-              <div className="relative z-10 flex flex-col items-center justify-center">
-                {gameType === 'coop' ? (
-                  <>
-                    <div className="relative mb-12">
-                      <div className={`w-64 h-64 rounded-full flex items-center justify-center border-8 ${vaultHP <= 0 ? 'bg-green-500/20 border-green-500' : 'bg-brand-black border-brand-cyan shadow-[0_0_80px_rgba(0, 229, 255,0.4)]'}`}>
-                        {vaultHP <= 0 ? <Unlock className="w-32 h-32 text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,1)]" /> : <DoorClosed className="w-32 h-32 text-brand-indigo drop-shadow-[0_0_15px_rgba(0, 229, 255,1)]" />}
-                      </div>
-                    </div>
-                    <div className="w-full max-w-2xl text-center">
-                      <div className="flex justify-between text-brand-cyan mb-2 font-bold text-xl font-numeric">
-                        <span>HP</span>
-                        <span>{Math.floor(vaultHP).toLocaleString()} / 1,000,000</span>
-                      </div>
-                      <div className="h-8 bg-brand-black/80 rounded-full border border-brand-cyan/30 p-1 overflow-hidden shadow-inner flex mb-6">
-                        <motion.div 
-                          className="h-full bg-gradient-to-r from-red-500 via-orange-500 to-green-500 rounded-full"
-                          initial={{ width: '100%' }}
-                          animate={{ width: `${Math.max(0, (vaultHP / 1000000) * 100)}%` }}
-                          transition={{ type: "spring" }}
-                        />
-                      </div>
-                      
-                      <div className="flex flex-col items-center gap-2">
-                          <div className="flex items-center gap-3 bg-red-900/20 px-4 py-2 rounded-xl border border-red-500/30">
-                              <Siren className={`w-5 h-5 ${securityLevel > 70 ? 'text-red-500 animate-ping' : 'text-red-400'}`} />
-                              <span className="text-red-200 font-bold">????? ?????? ??????</span>
-                              <div className="w-32 h-2 bg-brand-black/50 rounded-full overflow-hidden">
-                                  <div className={`h-full transition-all ${securityLevel > 80 ? 'bg-red-500' : securityLevel > 40 ? 'bg-cyan-500' : 'bg-green-500'}`} style={{ width: `${securityLevel}%` }} />
-                              </div>
-                              <span className="font-mono text-red-300">{Math.floor(securityLevel)}%</span>
-                          </div>
-                          <p className="text-white/40 text-xs animate-pulse">
-                              {securityLevel > 50 ? '?????: ??????? ?????! ?????? !distract' : '??????? ?????? ???? ????!'}
-                          </p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="relative mb-12">
-                      <div className="w-64 h-64 rounded-full bg-brand-cyan/5 border-4 border-brand-cyan/50 flex flex-col items-center justify-center shadow-[0_0_100px_rgba(0, 229, 255,0.2)]">
-                         <HandCoins className="w-24 h-24 text-brand-cyan mb-4" />
-                         <span className="text-4xl font-black text-brand-pink font-numeric">$$$</span>
-                      </div>
-                    </div>
-                  </>
-                )}
+              <div className="bg-white p-4 rounded-3xl border-4 border-brand-cyan shadow-[0_0_30px_rgba(0,229,255,0.3)] transform transition-transform hover:scale-105">
+                <QRCodeSVG value={joinUrl} size={280} level="H" />
+              </div>
+              
+              <div className="mt-8 bg-brand-black/80 px-8 py-4 rounded-2xl text-brand-cyan font-bold text-2xl border border-brand-cyan/40 shadow-[0_0_20px_rgba(0,229,255,0.2)] flex items-center gap-3" dir="ltr">
+                <span className="text-brand-cyan/50 text-xl font-mono relative">
+                   <div className="w-3 h-3 bg-brand-pink rounded-full absolute -left-6 top-2 animate-ping" />
+                   <div className="w-3 h-3 bg-brand-pink rounded-full absolute -left-6 top-2" />
+                </span>
+                <span className="font-mono text-white">{joinUrl.replace('http://', '').replace('https://', '')}</span>
               </div>
 
-              {gameType === 'pvp' && (
-                <div className="w-full max-w-2xl mt-12 bg-brand-black/80 border border-white/10 rounded-3xl p-6 relative z-10 h-64 overflow-hidden">
-                  <h3 className="text-zinc-500 font-bold mb-4 uppercase tracking-widest text-sm">??? ????????</h3>
-                  <div className="flex flex-col gap-3">
-                    <AnimatePresence>
-                      {actionFeed.map(feed => (
-                        <motion.div 
-                          key={feed.id} 
-                          initial={{ opacity: 0, x: -20 }} 
-                          animate={{ opacity: 1, x: 0 }} 
-                          exit={{ opacity: 0, scale: 0.9 }}
-                          className={`px-4 py-3 rounded-xl font-bold flex items-center gap-3 ${
-                            feed.type === 'good' ? 'bg-green-500/20 text-green-300' :
-                            feed.type === 'bad' ? 'bg-red-500/20 text-red-300' :
-                            'bg-blue-500/20 text-blue-300'
-                          }`}
-                        >
-                          <span className="text-lg">{feed.text}</span>
-                        </motion.div>
-                      ))}
-                    </AnimatePresence>
-                  </div>
-                </div>
+              {players.length >= 3 && (
+                <button
+                  onClick={startGame}
+                  className="mt-10 px-16 py-5 bg-brand-cyan hover:bg-brand-pink text-brand-black font-black text-2xl rounded-2xl transition-all duration-300 shadow-[0_10px_20px_rgba(0,229,255,0.3)] hover:shadow-[0_10px_20px_rgba(255,0,128,0.3)] hover:scale-105 active:scale-95"
+                >
+                  بدء اللعبة!
+                </button>
+              )}
+              {players.length < 3 && (
+                <p className="mt-8 text-neutral-400 font-bold text-lg">بانتظار انضمام 3 لاعبين على الأقل...</p>
               )}
             </div>
 
-            <div className="w-[400px] bg-brand-black/70 border border-brand-cyan/10 rounded-3xl p-6 flex flex-col shadow-xl z-10">
-              <div className="flex items-center gap-3 mb-6 bg-brand-indigo/10 p-4 rounded-2xl border border-brand-indigo/20">
-                <Trophy className="w-6 h-6 text-brand-cyan" />
-                <h3 className="text-xl font-black text-brand-cyan tracking-wider">
-                  {gameType === 'coop' ? '???? ?????????' : '???? ??????'}
-                </h3>
-              </div>
-              <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-3">
+            <div className="w-1/3 bg-brand-black/60 p-6 rounded-[40px] border border-brand-cyan/20 shadow-[0_0_20px_rgba(0,229,255,0.05)] relative overflow-hidden backdrop-blur-sm">
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent pointer-events-none" />
+              <h3 className="text-2xl font-black text-white mb-6 flex items-center gap-3 relative z-10">
+                <Users className="text-brand-cyan w-8 h-8" />
+                العصابة ({players.length})
+              </h3>
+              <div className="space-y-3 relative z-10 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
                 <AnimatePresence>
-                  {topPlayers.map((p, i) => {
-                    const isJailed = p.jailTime > 0;
-                    const isEscaped = p.escaped;
-                    return (
-                      <motion.div
-                        key={p.username}
-                        layout
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className={`p-4 rounded-xl flex items-center justify-between border transition-colors ${
-                          i === 0 ? 'bg-brand-cyan/20 border-brand-cyan/50 shadow-[0_0_20px_rgba(0, 229, 255,0.2)]' :
-                          isEscaped ? 'bg-green-900/30 border-green-500/30 opacity-70' :
-                          isJailed ? 'bg-red-900/30 border-red-500/30 opacity-70' :
-                          'bg-white/5 border-white/10'
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${
-                            i === 0 ? 'bg-brand-cyan text-brand-black' : 'bg-brand-black/50 text-white/50'
-                          }`}>
-                            {i + 1}
-                          </div>
-                          <div className="flex flex-col">
-                            <span className={`font-bold flex items-center gap-1 ${i === 0 ? 'text-brand-cyan' : 'text-white'}`}>
-                              {p.username} 
-                              {p.shields > 0 && <Shield className="w-5 h-5 text-blue-400 animate-pulse drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />}
-                            </span>
-                            {isJailed && <span className="text-xs text-red-500 font-bold">?? ????? ({p.jailTime}?)</span>}
-                            {isEscaped && <span className="text-xs text-green-400 font-bold">??? ?????</span>}
-                          </div>
-                        </div>
-                        <span className={`font-black text-lg font-numeric ${
-                          i === 0 ? 'text-brand-cyan' : isEscaped ? 'text-green-400' : isJailed ? 'text-red-400' : 'text-brand-cyan/80'
-                        }`}>
-                          ${gameType === 'coop' ? p.contribs.toLocaleString() : p.money.toLocaleString()}
-                        </span>
-                      </motion.div>
-                    );
-                  })}
-                  {topPlayers.length === 0 && (
-                    <div className="text-center text-white/30 py-8 font-medium">?? ???? ?? ???? ??? ????...</div>
-                  )}
+                  {players.map((p: any) => (
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0, x: -20 }}
+                      animate={{ scale: 1, opacity: 1, x: 0 }}
+                      className="bg-brand-black/80 p-4 rounded-2xl font-bold text-xl border border-brand-cyan/30 shadow-md text-white flex items-center justify-between group hover:border-brand-cyan transition-colors"
+                      key={p.id}
+                    >
+                      <span>{p.name}</span>
+                      <div className="w-2 h-2 rounded-full bg-brand-cyan/50 group-hover:bg-brand-cyan shadow-[0_0_5px_rgba(0,229,255,0.5)]" />
+                    </motion.div>
+                  ))}
                 </AnimatePresence>
               </div>
             </div>
           </div>
         )}
 
-        <AnimatePresence>
-          {mode === 'game_over' && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute inset-0 z-50 bg-brand-black/90  flex flex-col items-center justify-center p-8">
-              <div className="mb-8">
-                {gameType === 'coop' ? (
-                   vaultHP <= 0 ? <Trophy className="w-40 h-40 text-brand-cyan drop-shadow-[0_0_50px_rgba(0, 229, 255,1)]" /> : <Lock className="w-40 h-40 text-red-500 drop-shadow-[0_0_50px_rgba(239,68,68,1)]" />
-                ) : (
-                   <Banknote className="w-40 h-40 text-green-500 drop-shadow-[0_0_50px_rgba(34,197,94,1)]" />
-                )}
-              </div>
-              <h2 className="text-5xl font-black text-white mb-4">
-                {gameType === 'coop' ? (vaultHP <= 0 ? '?? ?????? ?????? ?????!' : '???? ??????!') : '????? ???????!'}
-              </h2>
-              <div className="w-full max-w-2xl bg-white/5 border border-white/10 rounded-3xl p-6 mt-8 max-h-[400px] overflow-y-auto custom-scrollbar">
-                <h3 className="text-2xl font-bold text-center mb-6 text-brand-cyan">??????? ????????</h3>
-                <div className="space-y-3">
-                  {topPlayers.slice(0, 10).map((p, i) => (
-                    <div key={p.username} className={`flex justify-between items-center p-4 rounded-xl border ${gameType === 'pvp' ? (p.escaped ? 'bg-green-900/40 border-green-500/50' : 'bg-red-900/40 border-red-500/50') : 'bg-brand-black/50 border-brand-cyan/20'}`}>
-                      <div className="flex flex-col">
-                          <span className={`${gameType === 'pvp' && !p.escaped ? 'text-red-200 line-through opacity-70' : 'text-white'} font-bold text-lg`}>
-                              #{i+1} {p.username}
-                          </span>
-                          {gameType === 'pvp' && !p.escaped && <span className="text-xs text-red-400 font-bold">?? ????! (?? ????? ????)</span>}
-                          {gameType === 'pvp' && p.escaped && <span className="text-xs text-green-400 font-bold">??? ?????</span>}
-                      </div>
-                      <span className={`font-black text-xl font-numeric ${gameType === 'pvp' && !p.escaped ? 'text-red-300' : 'text-brand-cyan'}`}>
-                        ${gameType === 'coop' ? p.contribs.toLocaleString() : (p.escaped ? p.money.toLocaleString() : Math.floor(p.money/2).toLocaleString())}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button onClick={() => setMode('lobby')} className="mt-10 bg-brand-cyan text-brand-black font-black px-12 py-4 rounded-full hover:scale-105 transition-transform text-xl shadow-[0_0_30px_rgba(0, 229, 255,0.4)] cursor-pointer">
-                ?????? ???????
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      
-      {showChat && mode !== 'lobby' && (
-        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
-            <TwitchChat
-            channelName={channelName}
-            messages={messages}
-            isConnected={isConnected}
-            error={error}
-          />
+        {/* === ROLE REVEAL === */}
+        {status === 'role_reveal' && (
+          <div className="text-center w-full flex flex-col items-center justify-center h-full">
+            <Lock className="w-32 h-32 text-amber-500 mx-auto mb-8 animate-pulse" />
+            <h2 className="text-6xl font-black text-white mb-6">جارٍ توزيع المهام...</h2>
+            <p className="text-3xl text-neutral-400">انظروا إلى هواتفكم! لا تدعوا أحداً يرى شاشتكم السرية.</p>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* === PLANNING === */}
+        {status === 'planning' && (
+          <div className="w-full text-center">
+             <Crown className="w-24 h-24 text-amber-500 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]" />
+             <h2 className="text-5xl font-black text-white mb-4">الزعيم يخطط للسرقة...</h2>
+             <p className="text-3xl text-amber-400 font-bold mb-12">
+               ({players.find((p:any) => p.id === mastermindId)?.name || 'الزعيم'}) يقوم باختيار فريقه عبر هاتفه!
+             </p>
+
+             <div className="flex flex-wrap justify-center gap-4 mt-8">
+               {players.map((p:any) => (
+                  <div key={p.id} className={`px-6 py-3 rounded-full text-xl font-bold border-2 ${p.id === mastermindId ? 'bg-amber-600 border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.5)]' : 'bg-neutral-800 border-neutral-700'}`}>
+                    {p.name} {p.id === mastermindId && '👑'}
+                  </div>
+               ))}
+             </div>
+          </div>
+        )}
+
+        {/* === VOTING === */}
+        {status === 'voting' && (
+           <div className="w-full text-center">
+             <h2 className="text-5xl font-black text-white mb-8">التصويت على الفريق!</h2>
+             <div className="flex justify-center gap-4 mb-12">
+                {currentTeam.map((id:string) => (
+                   <div key={id} className="bg-amber-600 px-8 py-4 rounded-xl font-bold text-3xl shadow-lg border-2 border-amber-300 transform rotate-1">
+                     {players.find((p:any) => p.id === id)?.name}
+                   </div>
+                ))}
+             </div>
+             <p className="text-3xl text-blue-400 font-bold mb-8">
+               صوتوا بهواتفكم! هل توافقون على إرسالهم للخزنة؟
+             </p>
+             
+             <div className="w-full max-w-2xl bg-neutral-800 rounded-full h-8 overflow-hidden mx-auto border-2 border-neutral-700 relative">
+               <div 
+                 className="absolute top-0 right-0 bottom-0 bg-blue-500 transition-all duration-1000 ease-out"
+                 style={{ width: `${(Object.keys(votes).length / players.length) * 100}%` }}
+               />
+             </div>
+             <p className="mt-4 text-2xl font-bold text-neutral-400">صَوَّت {Object.keys(votes).length} من {players.length}</p>
+           </div>
+        )}
+
+        {/* === HEIST === */}
+        {status === 'heist' && (
+           <div className="w-full text-center flex flex-col items-center">
+             <div className="relative">
+               <motion.div 
+                 animate={{ scale: [1, 1.1, 1], rotate: [-2, 2, -2] }} 
+                 transition={{ repeat: Infinity, duration: 1.5 }}
+               >
+                 <Lock className="w-48 h-48 text-emerald-500 drop-shadow-[0_0_30px_rgba(16,185,129,0.4)]" />
+               </motion.div>
+             </div>
+             <h2 className="text-6xl font-black text-white mt-12 mb-6 tracking-wide">الخزنة تـفـتـح...</h2>
+             <p className="text-3xl text-red-400 font-bold">
+               الفريق يتخذ قراره الآن! الشرطة فقط يمكنهم دَق الإنذار 🚨
+             </p>
+
+             <p className="mt-12 text-3xl font-bold text-emerald-400">
+               قرر {heistVotesCount} من {currentTeam.length} أعضاء
+             </p>
+           </div>
+        )}
+
+         {/* === ASSASSINATION === */}
+         {status === 'assassination' && (
+           <div className="w-full text-center flex flex-col items-center">
+             <Siren className="w-32 h-32 text-purple-600 mb-8 animate-spin" />
+             <h2 className="text-5xl font-black text-red-500 mb-6 uppercase tracking-widest">تـوَقَّـفـوا !</h2>
+             <div className="bg-red-900/40 p-8 rounded-3xl border-2 border-red-500 max-w-3xl">
+               <h3 className="text-3xl font-bold text-white mb-4">العصابة سرقت 3 خزنات، ولكن...</h3>
+               <p className="text-2xl text-purple-300 leading-relaxed font-bold">
+                 الشرطة لديهم فرصة أخيرة لسرقة الفوز! لديهم 60 ثانية للنقاش...<br/><br/>
+                 ابحثوا عن "العرّاب" واغتالوه فوراً من هواتفكم!
+               </p>
+             </div>
+           </div>
+        )}
+
+        {/* === GAME OVER === */}
+        {(status === 'cops_won' || status === 'cops_won_assassination' || status === 'robbers_won') && (
+           <div className="w-full text-center pt-12">
+             {status === 'robbers_won' ? (
+                <>
+                  <Banknote className="w-32 h-32 text-emerald-500 mx-auto mb-6" />
+                  <h2 className="text-6xl font-black text-emerald-400 mb-4">العصابة تفوز! 💵</h2>
+                  <p className="text-2xl text-emerald-200">العراب خدعكم ونجحتم بسرقة البنك بالكامل!</p>
+                </>
+             ) : (
+                <>
+                  <Shield className="w-32 h-32 text-blue-500 mx-auto mb-6" />
+                  <h2 className="text-6xl font-black text-blue-400 mb-4">الشرطة تفوز! 👮‍♂️</h2>
+                  {status === 'cops_won_assassination' && <p className="text-2xl text-red-300 mb-4">نجحوا باغتيال العرّاب في اللحظة الأخيرة!</p>}
+                   <p className="text-xl text-neutral-400">الخونة كانوا يعملون بذكاء.</p>
+                </>
+             )}
+             
+             <button 
+               onClick={startGame}
+               className="mt-12 bg-white text-black px-12 py-4 rounded-full font-black text-2xl hover:bg-neutral-200"
+             >
+               لعب جولة أخرى
+             </button>
+           </div>
+        )}
+
+      </div>
     </div>
   );
-}
-
+};

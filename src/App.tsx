@@ -17,6 +17,7 @@ import { MusicGuesserGame } from './components/MusicGuesserGame';
   import { ChatRoyaleGame } from './components/ChatRoyaleGame';
  import { TurfWarsGame } from './components/TurfWarsGame';
   import { TeamPlayer } from './components/TeamPlayer';
+import BankRobberyController from './pages/BankRobberyController';
 import { SnakesAndLaddersGame } from './components/SnakesAndLaddersGame';
 import { TypingDerbyGame } from './components/TypingDerbyGame';
 import { TypingRoyaleGame } from './components/TypingRoyaleGame';
@@ -55,6 +56,7 @@ const ENABLE_COMING_SOON_PAGE = false;
         <Route path="/add-music" element={<AddMusic />} />
         <Route path="/howmany/:roomId" element={<HowManyPlayer />} />
         <Route path="/team/:roomId" element={<TeamPlayer />} />
+        <Route path="/br/:roomId" element={<BankRobberyController />} />
         <Route path="/games/guess-song" element={
           <div className="relative">
             <AnimatePresence>
@@ -78,7 +80,19 @@ const ENABLE_COMING_SOON_PAGE = false;
         <Route path="*" element={<MainApp />} />
       </Routes>
     );
-  }const GAMES = [
+  }
+
+const GAMES = [
+  {
+    id: 'bankrobbery',
+    name: 'شرطي حرامي',
+    description: 'لعبة خداع وتصويت! كونوا فريقاً لسرقة البنك، لكن احذروا من الشرطة المتخفين بينكم.',
+    tutorial: 'امسح الكود للدخول كحرامي. إذا كنت ضمن العصابة، حاول سرقة الخزنات. إذا كنت شرطي، حاول إفشال المهمة دون أن تُكشف.',
+    image: '/bankrobbery.png',
+    status: 'testing',
+    type: 'strategy',
+    color: 'red'
+  },
   {
     id: 'hotpotato',
     name: 'البطاطا الساخنة',
@@ -87,8 +101,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     image: '/HotPotato.png',
     status: 'testing',
     type: 'action',
-    color: 'red',
-    isNew: true
+    color: 'red'
   },
   {
     id: 'trivia',
@@ -139,8 +152,7 @@ const ENABLE_COMING_SOON_PAGE = false;
     image: '/howmany.png',
     status: 'active',
     type: 'puzzles',
-    color: 'blue',
-    isNew: true
+    color: 'blue'
   },
   {
     id: 'codenames',
@@ -160,7 +172,8 @@ const ENABLE_COMING_SOON_PAGE = false;
     image: '/chairs.png',
     status: 'active',
     type: 'action',
-    color: 'yellow'
+    color: 'yellow',
+      isNew: true
   },
   {
     id: 'roulette',
@@ -170,7 +183,8 @@ const ENABLE_COMING_SOON_PAGE = false;
     image: '/roulette.png',
     status: 'active',
     type: 'action',
-    color: 'yellow'
+    color: 'yellow',
+      isNew: true
   },
   {
     id: 'wordchain',
@@ -180,7 +194,8 @@ const ENABLE_COMING_SOON_PAGE = false;
     image: '/wordchain.png',
     status: 'active',
     type: 'puzzles',
-    color: 'blue'
+    color: 'blue',
+      isNew: true
   },
     {
       id: 'guessmusic',
@@ -210,7 +225,8 @@ const ENABLE_COMING_SOON_PAGE = false;
       image: '/typingderby.png',
       status: 'active',
       type: 'action',
-      color: 'blue'
+      color: 'blue',
+      isNew: true
     },
     {
       id: 'typingroyale',
@@ -220,7 +236,8 @@ const ENABLE_COMING_SOON_PAGE = false;
       image: '/typingroyale.png',
       status: 'active',
       type: 'action',
-      color: 'red'
+      color: 'red',
+      isNew: true
     },
     {
       id: 'missinglink',
@@ -230,7 +247,8 @@ const ENABLE_COMING_SOON_PAGE = false;
       image: '/missinglink.png',
       status: 'active',
       type: 'puzzles',
-      color: 'yellow'
+      color: 'yellow',
+      isNew: true
     },
     {
       id: 'scattergories',
@@ -250,7 +268,8 @@ const ENABLE_COMING_SOON_PAGE = false;
       image: '/categoryauction.png',
       status: 'active',
       type: 'strategy',
-      color: 'yellow'
+      color: 'yellow',
+      isNew: true
     },
     {
       id: 'trivialpursuit',
@@ -433,6 +452,20 @@ const ENABLE_COMING_SOON_PAGE = false;
   }
 
   // Full screen games
+  if (activeGame === 'bankrobbery') {
+    return (
+      <div className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center relative bg-brand-black font-arabic" dir="rtl">
+        <video autoPlay loop muted playsInline className="fixed inset-0 w-full h-full object-cover z-0 opacity-100">
+          <source src="/background.webm?v=1773683360769" type="video/webm" />
+          <source src="/background.mp4" type="video/mp4" />
+        </video>
+        <div className="relative z-10 w-full h-full">
+          <BankRobberyGame onLeave={leaveGame} />
+        </div>
+      </div>
+    );
+  }
+
   if (activeGame === 'trivia') {
     return (
       <div className="h-screen overflow-hidden flex flex-col text-white p-8 font-arabic flex flex-col items-center relative overflow-hidden bg-brand-black" dir="rtl">
