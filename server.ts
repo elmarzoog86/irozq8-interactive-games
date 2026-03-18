@@ -177,10 +177,18 @@ const connectedStreamers = new Map<string, StreamerInfo>();
 function getBrSafeState(roomId) {
   const room = bankRobberyRooms.get(roomId);
   if (!room) return null;
+  
+  const isGameOver = room.status === 'cops_won' || room.status === 'cops_won_assassination' || room.status === 'robbers_won';
+
   return {
     roomId: room.roomId,
     status: room.status,
-    players: room.players.map(p => ({ id: p.id, name: p.name, benched: p.benched })), // hide roles
+    players: room.players.map(p => ({ 
+      id: p.id, 
+      name: p.name, 
+      benched: p.benched,
+      role: isGameOver ? p.role : undefined 
+    })),
     mastermindId: room.mastermindId,
     currentTeam: room.currentTeam,
     votes: room.votes,
@@ -978,6 +986,15 @@ io.on("connection", (socket) => {
       io.to(roomId).emit("br_heist_result", { alarms, success, totalSuccess: successes, totalFails: fails });
       setTimeout(() => {
          io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
+         if (bankRobberyRooms.get(roomId)?.status === 'assassination') {
+             setTimeout(() => {
+               const checkRoom = bankRobberyRooms.get(roomId);
+               if (checkRoom && checkRoom.status === 'assassination') {
+                 checkRoom.status = 'robbers_won';
+                 io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
+               }
+             }, 60000);
+           }
       }, 5000);
     }
   });

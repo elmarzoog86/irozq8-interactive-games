@@ -8,7 +8,10 @@ import { QRCodeSVG } from 'qrcode.react';
     const [roomId] = useState(() => Math.random().toString(36).substring(7).toUpperCase());
     const [gameState, setGameState] = useState<any>(null);
     const [soundEnabled, setSoundEnabled] = useState(true);
-    const [heistAlert, setHeistAlert] = useState<'success' | 'alarm' | null>(null);  // Sounds
+    const [heistAlert, setHeistAlert] = useState<'success' | 'alarm' | null>(null);
+    const [assassinationTimeLeft, setAssassinationTimeLeft] = useState(60);
+
+  // Sounds
   const playSound = useCallback((type: 'alarm' | 'success' | 'fail' | 'click') => {
     if (!soundEnabled) return;
     try {
@@ -59,7 +62,7 @@ import { QRCodeSVG } from 'qrcode.react';
       socket.on('br_heist_result', ({ alarms, success, totalSuccess, totalFails }) => {
         if (success) {
           setHeistAlert('success');
-          playSound('success'); // Fallback/additional synth
+          // Let the moneysplash.webm video play its own sound
         } else {
           setHeistAlert('alarm');
           const siren = new Audio('/policesiren.mp3');
@@ -79,6 +82,22 @@ import { QRCodeSVG } from 'qrcode.react';
     playSound('success');
     socket.emit('br_start_game', roomId);
   };
+
+  // Assassination timer
+  useEffect(() => {
+    if (gameState?.status === 'assassination') {
+      setAssassinationTimeLeft(60);
+    }
+  }, [gameState?.status]);
+
+  useEffect(() => {
+    if (gameState?.status === 'assassination' && assassinationTimeLeft > 0) {
+      const timer = setInterval(() => {
+        setAssassinationTimeLeft(prev => prev - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [gameState?.status, assassinationTimeLeft]);
 
   const joinUrl = `${window.location.protocol}//${window.location.host}/br/${roomId}`;
 
@@ -266,11 +285,11 @@ import { QRCodeSVG } from 'qrcode.react';
          {status === 'assassination' && (
            <div className="w-full text-center flex flex-col items-center">
              <Siren className="w-32 h-32 text-purple-600 mb-8 animate-spin" />
-             <h2 className="text-5xl font-black text-red-500 mb-6 uppercase tracking-widest">تـوَقَّـفـوا !</h2>
+             <h2 className="text-5xl font-black text-red-500 mb-6 uppercase tracking-widest">تَـوَقَّـفُـوا !</h2>
              <div className="bg-red-900/40 p-8 rounded-3xl border-2 border-red-500 max-w-3xl">
                <h3 className="text-3xl font-bold text-white mb-4">العصابة سرقت 3 خزنات، ولكن...</h3>
                <p className="text-2xl text-purple-300 leading-relaxed font-bold">
-                 الشرطة لديهم فرصة أخيرة لسرقة الفوز! لديهم 60 ثانية للنقاش...<br/><br/>
+                 الشرطة لديهم فرصة أخيرة لسرقة الفوز! لديهم <span className="text-white bg-red-600 px-3 py-1 rounded-xl mx-2 text-4xl">{assassinationTimeLeft}</span> ثانية للنقاش...<br/><br/>
                  ابحثوا عن "العرّاب" واغتالوه فوراً من هواتفكم!
                </p>
              </div>
@@ -279,11 +298,11 @@ import { QRCodeSVG } from 'qrcode.react';
 
         {/* === GAME OVER === */}
         {(status === 'cops_won' || status === 'cops_won_assassination' || status === 'robbers_won') && (
-           <div className="w-full text-center pt-12">
+           <div className="w-full text-center pt-12 pb-24">
              {status === 'robbers_won' ? (
                 <>
                   <Banknote className="w-32 h-32 text-emerald-500 mx-auto mb-6" />
-                  <h2 className="text-6xl font-black text-emerald-400 mb-4">العصابة تفوز! 💵</h2>
+                  <h2 className="text-6xl font-black text-emerald-400 mb-4">العصابة تفوز! 💸</h2>
                   <p className="text-2xl text-emerald-200">العراب خدعكم ونجحتم بسرقة البنك بالكامل!</p>
                 </>
              ) : (
@@ -291,13 +310,47 @@ import { QRCodeSVG } from 'qrcode.react';
                   <Shield className="w-32 h-32 text-blue-500 mx-auto mb-6" />
                   <h2 className="text-6xl font-black text-blue-400 mb-4">الشرطة تفوز! 👮‍♂️</h2>
                   {status === 'cops_won_assassination' && <p className="text-2xl text-red-300 mb-4">نجحوا باغتيال العرّاب في اللحظة الأخيرة!</p>}
-                   <p className="text-xl text-neutral-400">الخونة كانوا يعملون بذكاء.</p>
+                  <p className="text-xl text-neutral-400">الخونة كانوا يعملون بذكاء.</p>
                 </>
              )}
-             
-             <button 
+
+             <div className="mt-12 bg-neutral-900/80 rounded-3xl p-8 border border-neutral-700 max-w-4xl mx-auto backdrop-blur-md">
+               <h3 className="text-3xl font-bold text-white mb-6 border-b border-neutral-700 pb-4">أدوار اللاعبين 🎭</h3>
+               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                 {players.map((p) => {
+                   let roleTranslation = 'غير معروف';
+                   let roleColor = 'bg-neutral-800 text-neutral-300 border-neutral-600';
+                   let roleIcon = '❓';
+
+                   if (p.role === 'boss') {
+                     roleTranslation = 'العرّاب';
+                     roleColor = 'bg-purple-900/60 text-purple-300 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.3)]';
+                     roleIcon = '🕴️';
+                   } else if (p.role === 'cop') {
+                     roleTranslation = 'شرطي متخفي';
+                     roleColor = 'bg-blue-900/60 text-blue-300 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]';
+                     roleIcon = '👮‍♂️';
+                   } else if (p.role === 'robber') {
+                     roleTranslation = 'لص عادي';
+                     roleColor = 'bg-neutral-800 text-neutral-300 border-neutral-600';
+                     roleIcon = '🦹‍♂️';
+                   }
+
+                   return (
+                     <div key={p.id} className={`p-4 rounded-xl flex flex-col items-center justify-center border-2 transition-all hover:scale-105 ${roleColor}`}>
+                       <span className="font-black text-xl mb-2 text-white/90 truncate w-full text-center">{p.name}</span>
+                       <span className="px-3 py-1 bg-black/40 rounded-full font-bold text-sm flex gap-2 items-center">
+                         {roleIcon} {roleTranslation}
+                       </span>
+                     </div>
+                   );
+                 })}
+               </div>
+             </div>
+
+             <button
                onClick={startGame}
-               className="mt-12 bg-white text-black px-12 py-4 rounded-full font-black text-2xl hover:bg-neutral-200"
+               className="mt-12 bg-white text-black px-12 py-4 rounded-full font-black text-2xl hover:bg-neutral-200 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all hover:scale-105 active:scale-95"      
              >
                لعب جولة أخرى
              </button>
@@ -313,10 +366,9 @@ import { QRCodeSVG } from 'qrcode.react';
               exit={{ opacity: 0 }}
               className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-emerald-900/30 backdrop-blur-[2px]"
             >
-              <video 
-                src="/moneysplash.mp4" 
-                autoPlay 
-                muted 
+              <video
+                src="/moneysplash.webm"
+                autoPlay
                 className="absolute inset-0 w-full h-full object-cover mix-blend-screen opacity-90"
               />
               <motion.div 
