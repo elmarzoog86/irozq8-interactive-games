@@ -11,6 +11,7 @@ export default function BankRobberyController() {
   const [joined, setJoined] = useState(false);
   const [gameState, setGameState] = useState<any>(null);
   const [myRoleData, setMyRoleData] = useState<any>(null);
+  const [selectedForTeam, setSelectedForTeam] = useState<string[]>([]);
   
   useEffect(() => {
     // If not in a browser environment, return early
@@ -98,7 +99,6 @@ export default function BankRobberyController() {
   const isMastermind = gameState.mastermindId === socket?.id;
   const amIOnTeam = gameState.currentTeam?.includes(socket?.id);
   const myVote = gameState.votes?.[socket?.id || ''];
-  const [selectedForTeam, setSelectedForTeam] = useState<string[]>([]);
 
   const submitProposedTeam = () => {
     if (!socket) return;
