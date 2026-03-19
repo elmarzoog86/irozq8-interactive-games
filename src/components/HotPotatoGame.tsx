@@ -27,6 +27,15 @@ interface Player {
   joinedAt: number;
 }
 
+const normalizeArabic = (text: string) => {
+  if (!text) return text;
+  return text
+    .replace(/[أإآا]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/[َُِّْٰ]/g, '');
+};
+
 export function HotPotatoGame({ messages, onLeave, channelName, isConnected, error }: HotPotatoGameProps) {
   const [phase, setPhase] = useState<GamePhase>('joining');
   const [players, setPlayers] = useState<Player[]>([]);
@@ -37,8 +46,12 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
   const [winner, setWinner] = useState<Player | null>(null);
   const [usedQuestions, setUsedQuestions] = useState<Set<number>>(new Set());
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const processedMessagesRef = useRef<Set<string>>(new Set());
+  const currentPlayerRef = useRef<Player | null>(null);
+
+  useEffect(() => {
+    currentPlayerRef.current = currentPlayer;
+  }, [currentPlayer]);
 
   useEffect(() => {
     if (phase !== 'joining') return;
@@ -48,7 +61,7 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
 
     messages.forEach(msg => {
       if (processedMessagesRef.current.has(msg.id)) return;
-      
+
       const text = msg.message.toLowerCase().trim();
       if (text === '!join' || text === '!مشاركة') {
         if (!newPlayers.find(p => p.username === msg.username)) {
@@ -78,8 +91,13 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
 
       if (msg.username === currentPlayer.username) {
         const text = msg.message.toLowerCase().trim();
-        const isCorrect = currentQuestion.a.some(ans => text === ans.toLowerCase() || text.includes(ans.toLowerCase()));
-        
+        const normText = normalizeArabic(text);
+
+        const isCorrect = currentQuestion.a.some(ans => {
+          const normAns = normalizeArabic(ans.toLowerCase().trim());
+          return normText === normAns || normText.includes(normAns);
+        });
+
         if (isCorrect) {
           answeredCorrectly = true;
           processedMessagesRef.current.add(msg.id);
@@ -92,18 +110,29 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
     }
   }, [messages, phase, currentPlayer, currentQuestion]);
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (phase === 'playing' && currentPlayer && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (phase === 'playing' && currentPlayer && timeLeft <= 0) {
+      handleExplosion();
+    }
+    return () => clearInterval(interval);
+  }, [phase, currentPlayer, timeLeft]);
+
   const startGame = () => {
     if (players.length < 2) return;
     setPhase('playing');
     setUsedQuestions(new Set());
-    
+
     const randomIndex = Math.floor(Math.random() * players.length);
     const firstPlayer = players[randomIndex];
     setCurrentPlayer(firstPlayer);
-    
+
     pickNewQuestion(new Set());
     setTimeLeft(20);
-    startTimer();
   };
 
   const pickNewQuestion = (used: Set<number>) => {
@@ -118,42 +147,26 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
     setUsedQuestions(used);
   };
 
-  const startTimer = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) {
-          handleExplosion();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-  };
-
   const passBomb = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    
     const alivePlayers = players.filter(p => p.isAlive);
     if (alivePlayers.length <= 1) return;
 
     const others = alivePlayers.filter(p => p.username !== currentPlayer?.username);
     const nextPlayer = others[Math.floor(Math.random() * others.length)];
-    
+
     setCurrentPlayer(nextPlayer);
     pickNewQuestion(usedQuestions);
     setTimeLeft(20);
-    startTimer();
   };
 
   const handleExplosion = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
+    const explodingPlayer = currentPlayerRef.current;
     
     setPlayers(prev => {
-      const updated = prev.map(p => 
-        p.username === currentPlayer?.username ? { ...p, isAlive: false } : p
+      const updated = prev.map(p =>
+        p.username === explodingPlayer?.username ? { ...p, isAlive: false } : p
       );
-      
+
       const alive = updated.filter(p => p.isAlive);
       if (alive.length === 1) {
         setWinner(alive[0]);
@@ -164,27 +177,23 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
           setCurrentPlayer(nextPlayer);
           pickNewQuestion(usedQuestions);
           setTimeLeft(20);
-          startTimer();
         }, 3000);
       } else {
         setPhase('winner');
       }
-      
+
       return updated;
     });
-    
+
     setCurrentPlayer(null);
     setCurrentQuestion(null);
-  };
-
-  useEffect(() => {
+  };  useEffect(() => {
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      // Cleanup for unmount
     };
   }, []);
 
   const resetGame = () => {
-    if (timerRef.current) clearInterval(timerRef.current);
     setPlayers([]);
     setCurrentPlayer(null);
     setCurrentQuestion(null);
