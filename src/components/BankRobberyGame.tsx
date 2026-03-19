@@ -296,6 +296,31 @@ import { QRCodeSVG } from 'qrcode.react';
            </div>
         )}
 
+        {/* === INTERROGATION === */}
+        {(status === 'interrogation' || status === 'interrogation_result') && (
+           <div className="w-full text-center flex flex-col items-center">
+             <div className="relative">
+               <motion.div
+                 animate={{ opacity: [0.5, 1, 0.5] }}
+                 transition={{ repeat: Infinity, duration: 2 }}
+               >
+                 <Shield className="w-48 h-48 text-cyan-500 drop-shadow-[0_0_30px_rgba(6,182,212,0.4)]" />
+               </motion.div>
+             </div>
+             <h2 className="text-6xl font-black text-white mt-12 mb-6 tracking-wide">غرفة التحقيق السري...</h2>  
+             <div className="bg-cyan-900/30 p-8 rounded-3xl border-2 border-cyan-500 max-w-3xl mt-8">
+               <p className="text-3xl text-cyan-300 leading-relaxed font-bold">
+                 الزعيم يقوم باستجواب أحد اللاعبين سراً لمعرفة هويته الحقيقية!
+               </p>
+               {status === 'interrogation_result' && gameState.interrogationTargetId && (
+                 <p className="mt-8 text-2xl text-white font-bold animate-pulse">
+                   تم التحقيق مع <span className="text-amber-400">{players.find((p:any) => p.id === gameState.interrogationTargetId)?.name}</span>! النتيجة تظهر فقط على هاتف الزعيم...
+                 </p>
+               )}
+             </div>
+           </div>
+        )}
+
         {/* === GAME OVER === */}
         {(status === 'cops_won' || status === 'cops_won_assassination' || status === 'robbers_won') && (
            <div className="w-full text-center pt-12 pb-24">

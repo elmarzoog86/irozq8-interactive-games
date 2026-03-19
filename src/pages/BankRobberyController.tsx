@@ -12,7 +12,8 @@ export default function BankRobberyController() {
   const [gameState, setGameState] = useState<any>(null);
   const [myRoleData, setMyRoleData] = useState<any>(null);
   const [selectedForTeam, setSelectedForTeam] = useState<string[]>([]);
-  
+  const [interrogationResult, setInterrogationResult] = useState<{targetId: string, role: string} | null>(null);
+
   useEffect(() => {
     // If not in a browser environment, return early
     if (typeof window === 'undefined') return;
@@ -26,6 +27,10 @@ export default function BankRobberyController() {
 
     newSocket.on('br_private_role', (roleData) => {
       setMyRoleData(roleData);
+    });
+
+    newSocket.on('br_interrogation_data', (data) => {
+      setInterrogationResult(data);
     });
 
     return () => {
@@ -226,6 +231,16 @@ export default function BankRobberyController() {
             >
               طرح الفريق للتصويت!
             </button>
+
+            {!gameState.interrogationUsed && (
+              <button
+                onClick={() => socket?.emit('br_start_interrogation', { roomId })}
+                className="w-full mt-4 bg-cyan-900 border-2 border-cyan-500 hover:bg-cyan-800 text-cyan-100 font-bold text-lg py-3 rounded-xl transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2"
+              >
+                <Shield size={20} />
+                غرفة التحقيق السرية (مرة واحدة)
+              </button>
+            )}
           </div>
         )}
 
@@ -310,12 +325,85 @@ export default function BankRobberyController() {
             <div className="animate-pulse flex justify-center text-red-500">
               <Lock size={64} />
             </div>
-            <p className="text-neutral-400 mt-4">انظر للشاشة الكبيرة لتعرف النتيجة!</p>
+            <p className="text-neutral-400 mt-4">انظر للشاشة الكبيرة لتعرف النتيجة!</p>      
           </div>
         )}
 
-        {/* ASSASSINATION PHASE (COPS ONLY) */}
-        {gameState.status === 'assassination' && myRoleData?.role === 'cop' && (
+        {/* INTERROGATION PHASE */}
+        {gameState.status === 'interrogation' && isMastermind && (
+          <div className="bg-cyan-900/40 rounded-xl p-6 border-2 border-cyan-500 text-center shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+            <Shield className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
+            <h2 className="text-2xl font-black text-cyan-300 mb-2">غرفة التحقيق</h2>
+            <p className="text-sm text-cyan-100/70 mb-6">من تريد أن تكشف هويته سراً؟ هذه فرصتك الوحيدة!</p>
+
+            <div className="space-y-3">
+              {gameState.players.filter((p: any) => p.id !== socket?.id).map((p: any) => (
+                <button
+                  key={p.id}
+                  onClick={() => socket?.emit('br_interrogate_player', { roomId, targetId: p.id })}
+                  className="w-full bg-cyan-950 hover:bg-cyan-800 border border-cyan-600/50 text-white font-bold text-lg py-4 rounded-xl transition-all"
+                >
+                  استجواب {p.name} 🔍
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {gameState.status === 'interrogation' && !isMastermind && (
+          <div className="bg-neutral-800 rounded-xl p-6 text-center border border-cyan-500/30">
+            <div className="animate-spin-slow mb-4 text-cyan-500 flex justify-center">
+              <Shield size={48} />
+            </div>
+            <h2 className="text-xl font-bold mb-2 text-cyan-300">يوجد تحقيق جارٍ...</h2>
+            <p className="text-neutral-400">الزعيم يحقق مع أحد اللاعبين في غرفة سرية، انظر للشاشة الكبيرة!</p>
+          </div>
+        )}
+
+        {/* INTERROGATION RESULT */}
+        {gameState.status === 'interrogation_result' && isMastermind && interrogationResult && (
+          <div className="bg-neutral-800 rounded-xl p-6 border-2 border-cyan-500 text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-cyan-500/10 animate-pulse pointer-events-none" />
+            <h2 className="text-3xl font-black text-white mb-6 relative z-10">نتيجة التحقيق 📑</h2>
+            
+            <div className="bg-neutral-900 p-6 rounded-xl border border-neutral-700 mb-8 relative z-10">
+              <p className="text-xl text-neutral-300 mb-2">اللاعب</p>
+              <p className="text-3xl font-bold text-amber-400 mb-6">
+                {gameState.players.find((p:any) => p.id === interrogationResult.targetId)?.name}
+              </p>
+              
+              <p className="text-xl text-neutral-300 mb-2">هويته الحقيقية هي:</p>
+              {interrogationResult.role === 'cop' ? (
+                <div className="bg-blue-900/60 border-2 border-blue-500 p-4 rounded-xl shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+                  <span className="text-4xl">👮‍♂️</span>
+                  <p className="text-2xl font-black text-blue-300 mt-2">شرطي متخفي!</p>
+                </div>
+              ) : (
+                <div className="bg-neutral-800 border-2 border-neutral-500 p-4 rounded-xl">
+                  <span className="text-4xl">🦹‍♂️</span>
+                  <p className="text-2xl font-black text-neutral-300 mt-2">لص عادي من العصابة</p>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => socket?.emit('br_end_interrogation', { roomId })}
+              className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xl py-4 rounded-xl transition-all relative z-10"
+            >
+              إنهاء التحقيق والعودة للتخطيط
+            </button>
+          </div>
+        )}
+
+        {gameState.status === 'interrogation_result' && !isMastermind && (
+          <div className="bg-neutral-800 rounded-xl p-6 text-center border border-cyan-500/30">
+            <h2 className="text-xl font-bold mb-2 text-cyan-300">التحقيق انتهى!</h2>
+            <p className="text-neutral-400">الزعيم يعرف الآن هوية {gameState.players.find((p:any) => p.id === gameState.interrogationTargetId)?.name} الحقيقية...</p>
+          </div>
+        )}
+
+         {/* ASSASSINATION PHASE (COPS ONLY) */}
+         {gameState.status === 'assassination' && myRoleData?.role === 'cop' && (
           <div className="bg-neutral-800 rounded-xl p-6 border-2 border-purple-500 text-center">
             <h2 className="text-2xl font-black text-purple-400 mb-2">الفرصة الأخيرة!</h2>
             <p className="mb-6">حاولوا معرفة من هو "العرّاب" لاغتياله وسرقة الفوز!</p>

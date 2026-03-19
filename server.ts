@@ -194,10 +194,11 @@ function getBrSafeState(roomId) {
     votes: room.votes,
     heistVotesCount: Object.keys(room.heistVotes || {}).length,
     roundHeists: room.roundHeists,
-    heistResults: room.heistResults
+    heistResults: room.heistResults,
+    interrogationUsed: room.interrogationUsed,
+    interrogationTargetId: room.interrogationTargetId
   };
 }
-
 
 io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
@@ -846,7 +847,9 @@ io.on("connection", (socket) => {
         roundHeists: [],
         heistResults: [],
         mafiaTarget: null,
-        mafiaStatus: null // 'won' | 'lost' | null
+        mafiaStatus: null, // 'won' | 'lost' | null
+        interrogationUsed: false,
+        interrogationTargetId: null
       });
     }
     io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
@@ -1009,6 +1012,39 @@ io.on("connection", (socket) => {
     } else {
        room.status = 'robbers_won';
     }
+    io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
+  });
+
+  socket.on("br_start_interrogation", ({ roomId }) => {
+    const room = bankRobberyRooms.get(roomId);
+    if (!room || room.status !== 'planning' || room.interrogationUsed) return;
+    
+    room.status = 'interrogation';
+    room.interrogationUsed = true;
+    io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
+  });
+
+  socket.on("br_interrogate_player", ({ roomId, targetId }) => {
+    const room = bankRobberyRooms.get(roomId);
+    if (!room || room.status !== 'interrogation') return;
+
+    room.interrogationTargetId = targetId;
+    room.status = 'interrogation_result';
+    
+    const target = room.players.find(p => p.id === targetId);
+    if (target) {
+      socket.emit("br_interrogation_data", { targetId, role: target.role });
+    }
+    
+    io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
+  });
+
+  socket.on("br_end_interrogation", ({ roomId }) => {
+    const room = bankRobberyRooms.get(roomId);
+    if (!room || room.status !== 'interrogation_result') return;
+
+    room.status = 'planning';
+    room.interrogationTargetId = null;
     io.to(roomId).emit("br_state_update", getBrSafeState(roomId));
   });
 
