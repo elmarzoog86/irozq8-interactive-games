@@ -151,40 +151,50 @@ export const PriceIsRightGame: React.FC<Props> = ({ messages, onLeave }) => {
   useEffect(() => {
     if (messages.length === 0) return;
 
-    const latestMessage = messages[messages.length - 1];
-    if (processedMessageIds.current.has(latestMessage.id)) return;
-    processedMessageIds.current.add(latestMessage.id);
+    messages.forEach(msg => {
+      if (processedMessageIds.current.has(msg.id)) return;
+      processedMessageIds.current.add(msg.id);
 
-    const text = latestMessage.message.trim().toLowerCase();
-    
-    // Handle !join - works in both setup and guessing states
-    if (text === '!join') {
-      setJoinedPlayers(prev => {
-        const next = new Set(prev);
-        next.add(latestMessage.username);
-        return next;
-      });
-      return;
-    }
+      const text = msg.message.trim().toLowerCase();
 
-    if (status !== 'guessing') return;
+      // Handle !join and !مشاركة
+      if (text === '!join' || text === '!مشاركة') {
+        setJoinedPlayers(prev => {
+          const next = new Set(prev);
+          next.add(msg.username);
+          return next;
+        });
+        return;
+      }
 
-      // Only accept guesses from joined players
-      if (!joinedPlayers.has(latestMessage.username)) return;
+      if (status !== 'guessing') return;
 
       // Extract standalone number from message, converting Arabic numerals if any
       const englishText = text.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
       const match = englishText.match(/\b\d+\b/);
+      
       if (match) {
         const guess = parseInt(match[0], 10);
-      if (!isNaN(guess) && guess > 0) {
-        setGuesses(prev => ({
-          ...prev,
-          [latestMessage.username]: guess
-        }));
+        if (!isNaN(guess) && guess > 0) {
+          
+          // Auto-join the player if they guess a number
+          setJoinedPlayers(prev => {
+            if (!prev.has(msg.username)) {
+              const next = new Set(prev);
+              next.add(msg.username);
+              return next;
+            }
+            return prev;
+          });
+
+          setGuesses(prev => ({
+            ...prev,
+            [msg.username]: guess
+          }));
+        }
       }
-    }
-  }, [messages, status, joinedPlayers]);
+    });
+  }, [messages, status]);
 
   useEffect(() => {
     if (status === 'guessing') {
