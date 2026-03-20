@@ -440,14 +440,14 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                         </div>
                       )}
                       
-                      {/* Chambers display */}
-                      {p.status === 'alive' && (
-                        <div className="flex gap-1 mt-auto bg-brand-black/50 p-2 rounded-lg w-full justify-center border border-zinc-800">
-                          {[...Array(6)].map((_, i) => (
-                             <div key={i} className={`w-2 h-4 rounded-sm ${i < (6 - p.survivedShots) ? 'bg-zinc-300' : 'bg-red-600/30'}`} />
-                          ))}
-                        </div>
-                      )}
+                        {/* Chambers display */}
+                        {p.status === 'alive' && gameMode === 'shakhsana' && (
+                          <div className="flex gap-1 mt-auto bg-brand-black/50 p-2 rounded-lg w-full justify-center border border-zinc-800">
+                            {[...Array(6)].map((_, i) => (
+                               <div key={i} className={`w-2 h-4 rounded-sm ${i < (6 - p.survivedShots) ? 'bg-zinc-300' : 'bg-red-600/30'}`} />
+                            ))}
+                          </div>
+                        )}
                    </div>
                  ))}
               </div>
