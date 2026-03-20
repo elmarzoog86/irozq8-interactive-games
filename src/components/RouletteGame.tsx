@@ -417,11 +417,9 @@ export const RouletteGame: React.FC<RouletteGameProps> = ({ messages, onLeave, c
                  </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full max-w-6xl overflow-y-auto custom-scrollbar p-2 pb-16">
-                 {players.map(p => (
-                   <div key={p.id} className={`p-4 rounded-xl border-2 flex flex-col items-center text-center transition-all relative overflow-hidden ${p.status === 'alive' ? 'bg-zinc-900 border-zinc-700' : 'bg-red-950/20 border-red-900/30 opacity-70'}`}>
-                      
-                      
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full max-w-6xl overflow-y-auto custom-scrollbar p-2 pb-16">
+                   {[...players].sort((a, b) => a.displayNum - b.displayNum).map(p => (
+                     <div key={p.id} className={`p-4 rounded-xl border-2 flex flex-col items-center text-center transition-all relative overflow-hidden ${p.status === 'alive' ? 'bg-zinc-900 border-zinc-700' : 'bg-red-950/20 border-red-900/30 opacity-70'}`}>                      
                       <div className="text-3xl font-black bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-3 shadow-inner">{p.displayNum}</div>
                       
                       {gameMode === 'shakhsana' && <span className="font-bold text-lg mb-2 truncate w-full" style={{color: p.color}}>{p.username}</span>}
