@@ -31,6 +31,8 @@ const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
 
+const musicRequests: { name: string; time: string; added: boolean }[] = [];
+
 // Music Game API
 app.get('/api/music/playlist', async (req, res) => {
   try {
@@ -94,6 +96,12 @@ app.post('/api/music/add', async (req, res) => {
 
     console.log(`Adding new song request: ${name}`);
     
+    const newRequest = { name, time: new Date().toISOString(), added: false };
+    musicRequests.unshift(newRequest); // Add to beginning of recent list
+    
+    // Limit memory footprint to last 100 requests
+    if (musicRequests.length > 100) musicRequests.pop();
+
     // Find song on youtube directly so we get the ID immediately
     try {
       const r = await yts(name);
@@ -107,7 +115,8 @@ app.post('/api/music/add', async (req, res) => {
         });
         
         fs.writeFileSync(musicFile, JSON.stringify(songs, null, 2));
-        
+        newRequest.added = true;
+
         // Broadcast to all clients that playlist updated
         io.emit('playlist_updated');
         
@@ -125,6 +134,9 @@ app.post('/api/music/add', async (req, res) => {
   }
 });
 
+app.get('/api/music/requests', (req, res) => {
+  res.json(musicRequests);
+});
 
 // How Many Can You Name Game State
 interface HowManyGameState {
