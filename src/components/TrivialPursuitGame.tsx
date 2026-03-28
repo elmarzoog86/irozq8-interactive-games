@@ -321,6 +321,13 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const isFirstRun = useRef(true);
 
+  // Helpers
+  const isStage2 = gameState.toString().includes('stage2');
+  const singleNumberFrom = (s: string): number | null => {
+    const m = s.match(/^\s*(\d+)\s*$/);
+    return m ? parseInt(m[1], 10) : null;
+  };
+
   // Layout calculations for 7x7 outer grid (24 tiles total)
   const getBoardCoordinates = (index: number) => {
     if(index <= 6) return { row: 0, col: index };
@@ -387,17 +394,21 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
       
         
         // Stage 3 Category Pick
-        if (gameState === 'stage3_category_pick' && players[stage3ActivePlayerIndex]?.username === username) {
-             const num = parseInt(text);
-             if (!isNaN(num) && num >= 1 && num <= 3) {
-                 selectStage3Category(stage3Categories[num - 1]);
-             }
-        }
+    if (gameState === 'stage3_category_pick' && players[stage3ActivePlayerIndex]?.username === username) {
+       const mNum = text.match(/^\s*(\d+)\s*$/);
+       if (!mNum) return;
+       const num = parseInt(mNum[1], 10);
+       if (!isNaN(num) && num >= 1 && num <= 3) {
+         selectStage3Category(stage3Categories[num - 1]);
+       }
+    }
 
         // Stage 3 Answering
         if (gameState === 'stage3_playing' && stage3Q && !stage3Eliminated.includes(username)) {
            if (stage3Guesses.includes(username)) return;
-           const num = parseInt(text);
+           const mNum = text.match(/^\s*(\d+)\s*$/);
+           if (!mNum) return;
+           const num = parseInt(mNum[1], 10);
            if (!isNaN(num) && num >= 1 && num <= 4) {
               setStage3Guesses(prev => [...prev, username]);
               if (num !== stage3Q.a) {
@@ -417,7 +428,9 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         
         // Stage 5 Answering
         if (gameState === 'stage5_playing' && stage5Q) {
-          const num = parseInt(text);
+          const mNum = text.match(/^\s*(\d+)\s*$/);
+          if (!mNum) return;
+          const num = parseInt(mNum[1], 10);
           if (!isNaN(num) && num >= 1 && num <= 4) {
              if (num === stage5Q.a && !stage5Winner && !tickWinners.stage5) {
               tickWinners.stage5 = true;
@@ -457,7 +470,9 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
         // Stage 2 Answering
         if (gameState === 'stage2_playing' && stage2Q) {
-          const num = parseInt(text);
+          const mNum = text.match(/^\s*(\d+)\s*$/);
+          if (!mNum) return;
+          const num = parseInt(mNum[1], 10);
           if (!isNaN(num) && num >= 1 && num <= 4) {
              if (num === stage2Q.a && !stage2Winner && !tickWinners.stage2) {
               tickWinners.stage2 = true;
@@ -488,7 +503,9 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
         // Answering
       if (gameState === 'answering' && currentQuestion && players[currentPlayerIndex]) {
           if (username === players[currentPlayerIndex].username) {
-            const num = parseInt(text);
+            const mNum = text.match(/^\s*(\d+)\s*$/);
+            if (!mNum) return;
+            const num = parseInt(mNum[1], 10);
             if (!isNaN(num) && num >= 1 && num <= 4) {
                if (tickWinners.stage1) return;
                tickWinners.stage1 = true;
@@ -1000,7 +1017,7 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                       style={{ gridTemplateColumns: 'repeat(7, 1fr)', gridTemplateRows: 'repeat(7, 1fr)', gap: '8px' }}
                  >
                     {/* The Outer Pathway Tiles */}
-                    {BOARD_TILES.map((tile, i) => {
+                    {!isStage2 && BOARD_TILES.map((tile, i) => {
                         const rc = getBoardCoordinates(i);
                         const isCollected = players[currentPlayerIndex]?.tokens.includes(tile.id);
                         const tileStyle = isCollected && (gameState === 'turn_start' || gameState === 'rolling' || gameState === 'answering' || gameState === 'result') ? 'bg-zinc-900 border-zinc-800 opacity-40 grayscale' : tile.color;
@@ -1034,6 +1051,8 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
                         </div>
                       );
                     })}
+
+                    {/* When playing Stage 2, hide the outer board tiles and use a focused question UI */}
 
                     {/* Center Action/Question Panel */}
                     <div className="col-start-2 col-end-7 row-start-2 row-end-7 m-3 bg-[#0f0f0f] border-4 border-white/5 rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col z-10">
@@ -1090,6 +1109,33 @@ export default function TrivialPursuitGame({ channelName, messages, onLeave }: T
 
                           
                             
+                            {/** Stage 2 UI */}
+                            {isStage2 && (
+                              <motion.div
+                                key="stage2"
+                                initial={{ y: 50, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -50, opacity: 0 }}
+                                className="flex-1 flex flex-col w-full"
+                              >
+                                <div className="flex-1 flex flex-col justify-center p-6 text-center">
+                                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-8 leading-normal px-2">{stage2Q?.q || '...'}
+                                  </h3>
+                                  <div className="grid grid-cols-1 gap-3 lg:gap-4 w-full px-2 sm:px-6 max-w-md mx-auto">
+                                    {stage2Q?.options.map((opt, idx) => {
+                                      const isCorrect = gameState === 'stage2_result' && stage2Q && (idx + 1 === stage2Q.a);
+                                      return (
+                                        <div key={idx} className={`p-4 rounded-2xl border ${isCorrect ? 'bg-green-600 text-white' : 'bg-white/5 text-white'} shadow-lg`}>
+                                          <div className="text-lg font-bold">{idx + 1}. {opt}</div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                  <p className="text-zinc-400 mt-6">Ø§Ø¬Ø¨ Ø¨Ø§Ù„Ø±Ù‚Ù… (1 - 4)</p>
+                                </div>
+                              </motion.div>
+                            )}
+
                             {gameState === 'stage3_intro' && (
                               <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#0a0a0a] z-50">
                                 <Users className="w-24 h-24 text-brand-cyan mb-6 animate-bounce" />
