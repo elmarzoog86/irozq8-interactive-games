@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Timer, MessageSquare, XCircle, Search, Key, Shield, Eye, EyeOff, Info, Users, Copy, MessageSquareOff } from 'lucide-react';
+import { Trophy, Timer, XCircle, Search, Key, Shield, Eye, EyeOff, Info, Users, Copy , MessageSquare} from 'lucide-react';
 import { socket } from '../socket';
-import { TwitchChat } from './TwitchChat';
 
 interface Player {
   id: string;
