@@ -384,19 +384,7 @@ export function HotPotatoGame({ messages, onLeave, channelName, isConnected, err
         </div>
       </div>
 
-      {showChat && (
-        <div className="w-[450px] shrink-0 flex flex-col gap-4 z-50">
-          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent pointer-events-none" />
-            <TwitchChat
-              channelName={channelName}
-              messages={messages}
-              isConnected={isConnected}
-              error={error}
-            />
-          </div>
-        </div>
-      )}
+      {/* Twitch chat removed per streamer request */}
     </div>
   );
 }

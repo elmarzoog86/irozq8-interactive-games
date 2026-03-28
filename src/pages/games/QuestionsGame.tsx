@@ -248,18 +248,7 @@ export function QuestionsGame() {
             </div>
           </div>
 
-          {/* Twitch Chat */}
-          <div className="flex-1 min-h-0">
-            {user ? (
-              <TwitchChat channelName={user.login} messages={[]} isConnected={true} error={null} />
-            ) : (
-              <div className="h-full bg-zinc-900/50 rounded-2xl border border-zinc-800 flex items-center justify-center p-6 text-center">
-                <p className="text-zinc-500 font-arabic">
-                  يرجى تسجيل الدخول لعرض الشات
-                </p>
-              </div>
-            )}
-          </div>
+          {/* Twitch chat removed per streamer request */}
         </div>
       </main>
     </div>

@@ -620,19 +620,9 @@ const getWavyPath = (start: {x: number, y: number}, end: {x: number, y: number})
              </div>
           </div>
 
-            {/* Twitch Chat Sidebar */}
-            <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-             {showChat && (
-               <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl transition-all duration-300">
-               <TwitchChat 
-                 channelName={channelName}
-                 messages={messages}
-                 isConnected={isConnected}
-                 error={error}
-               />
-             </div>
-           )}         {/* Debug/Manual Controls */}
-         <div className="bg-brand-black/80  rounded-[20px] border border-brand-cyan/20 p-4 shadow-xl">
+            {/* Debug/Manual Controls (chat removed to expand layout) */}
+            <div className="w-full mt-4">
+              <div className="bg-brand-black/80 rounded-[20px] border border-brand-cyan/20 p-4 shadow-xl">
             <h4 className="text-brand-cyan font-bold mb-2 text-sm">تحكم يدوي (للتجربة)</h4>
             <div className="flex gap-2 mb-2">
                <button 

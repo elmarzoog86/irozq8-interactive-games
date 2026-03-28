@@ -187,18 +187,7 @@ export function TypingDerbyGame({
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 flex-1 flex p-6 gap-6 min-h-0">
-        <div className="w-[350px] flex-shrink-0">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col">
-            <TwitchChat 
-              channelName={channelName}
-              messages={messages}
-              error={error}
-              isConnected={isConnected}
-            />
-          </div>
-        </div>
-
+      <main className="relative z-10 flex-1 flex p-6 min-h-0">
         <div className="flex-1 flex flex-col">
           {phase === 'lobby' && (
             <div className="flex-1 flex flex-col items-center justify-center p-12 overflow-y-auto custom-scrollbar">

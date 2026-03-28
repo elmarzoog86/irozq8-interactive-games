@@ -367,11 +367,7 @@ export function RussianRouletteChatGame({ messages = [], onLeave, channelName, i
         </AnimatePresence>
       </div>
       
-      {mode !== 'lobby' && (
-        <div className="w-80 h-full flex flex-col bg-black/60 backdrop-blur-xl rounded-[40px] border border-zinc-800 overflow-hidden shadow-2xl shrink-0">
-          <TwitchChat channelName={channelName} messages={messages} isConnected={isConnected} error={error} />
-        </div>
-      )}
+      {/* Twitch chat removed per streamer request */}
     </div>
   );
 }

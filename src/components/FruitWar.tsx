@@ -602,19 +602,7 @@ export const FruitWar: React.FC<FruitWarProps> = ({ messages, onLeave, channelNa
         </div>
       </div>
 
-        {/* Twitch Chat Sidebar */}
-      {showChat && (
-        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300">
-          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl">
-            <TwitchChat 
-            channelName={channelName} 
-            messages={messages} 
-            isConnected={isConnected} 
-            error={error} 
-          />
-          </div>
-        </div>
-      )}
+        {/* chat removed to expand layout */}
     </div>
   );
 };

@@ -338,19 +338,7 @@ export function TypingRoyaleGame({
       </header>
 
       {/* Main Layout */}
-      <main className="relative z-10 flex-1 flex p-6 gap-6 min-h-0">
-        {/* Chat Sidebar */}
-        <div className="w-[350px] flex-shrink-0 z-20">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl h-full flex flex-col">
-            <TwitchChat 
-              channelName={channelName}
-              messages={messages}
-              error={error}
-              isConnected={isConnected}
-            />
-          </div>
-        </div>
-
+      <main className="relative z-10 flex-1 flex p-6 min-h-0">
         {/* Game Area */}
         <div className="flex-1 flex flex-col relative z-10 items-center justify-center">
           

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Trophy, Timer, MessageSquare, XCircle, Bomb, Zap, Activity, Shield, CheckCircle2, Info, MessageSquareOff } from 'lucide-react';
+import { Users, Trophy, Timer, XCircle, Bomb, Zap, Activity, Shield, CheckCircle2, Info } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
-import { ChatSidebar } from './ChatSidebar';
+// ChatSidebar removed — chat UI hidden globally
 
 interface Player {
   id: string;
@@ -22,7 +22,7 @@ interface GameState {
 }
 
 export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> = ({ onLeave, messages }) => {
-  const [showChat, setShowChat] = useState(true);
+  // chat removed — site-wide chat hidden per user request
   const [socket, setSocket] = useState<Socket | null>(null);
   const [state, setState] = useState<GameState | null>(null);
   const [roomId] = useState(() => Math.random().toString(36).substring(7));
@@ -69,10 +69,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
   return (
     <div className="flex h-full w-full bg-brand-black overflow-hidden font-arabic text-white" dir="rtl">
 
-      <button onClick={() => setShowChat(!showChat)} className="absolute bottom-6 left-6 text-brand-cyan/70 hover:text-brand-cyan flex items-center gap-2 transition-colors z-[90] bg-brand-black/50 backdrop-blur-md px-4 py-2 rounded-xl border border-brand-cyan/20 hover:border-brand-cyan/40 shadow-xl">
-            {showChat ? <MessageSquareOff className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
-            {showChat ? 'إخفاء الشات' : 'إظهار الشات'}
-          </button>
+  {/* chat toggle removed to keep UI full-width */}
   
       {/* Main Game Area */}
       <div className="flex-1 relative p-8 overflow-y-auto">
@@ -241,20 +238,7 @@ export const BombRelayGame: React.FC<{ onLeave: () => void; messages: any[] }> =
       </div>
     </div>
 
-      {/* Sidebar */}
-      {showChat && (
-        <div className="w-[500px] flex flex-col gap-4 shrink-0 transition-all duration-300 p-6 z-[80]">
-          <div className="flex-1 min-h-0 bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative backdrop-blur-md">
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 via-transparent to-brand-black/60 pointer-events-none" />
-            <div className="relative h-full flex flex-col">
-              <ChatSidebar messages={messages} instructions={[
-          "اكتب !join للانضمام لفريق التفكيك",
-          "انضم عبر الرابط للعب",
-        ]} />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* chat removed to expand layout */}
     </div>
   );
 };

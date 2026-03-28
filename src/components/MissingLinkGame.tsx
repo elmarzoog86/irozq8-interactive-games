@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Trophy, Play, Users, ArrowLeft, ArrowRight, BrainCircuit, Timer, CheckCircle2, Crown, MessageSquare, MessageSquareOff, Tag, Lightbulb } from 'lucide-react';
+import { Trophy, Play, Users, ArrowLeft, ArrowRight, BrainCircuit, Timer, CheckCircle2, Crown, Tag, Lightbulb } from 'lucide-react';
 
 interface Player {
   username: string;
@@ -250,7 +250,8 @@ const ROUNDS: Round[] = [
       { text: 'حزن', image: '😢' },
       { text: 'غضب', image: '😠' }
     ]
-  },
+  }
+,
   {
     answer: ['ألوان', 'الوان', 'لون'],
     items: [
@@ -440,7 +441,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
   const [countdown, setCountdown] = useState(3);
   const [roundWinner, setRoundWinner] = useState<Player | null>(null);
   const [showHint, setShowHint] = useState(false);
-  const [showChat, setShowChat] = useState(true);
+  // chat removed — site-wide chat hidden per user request
   const [maxRounds, setMaxRounds] = useState(5);
 
 
@@ -562,20 +563,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
             </h2>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setShowChat(!showChat)}
-              className={`p-3 rounded-xl transition-all flex items-center gap-2 font-bold ${
-                showChat 
-                  ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
-                  : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
-              }`}
-            >
-              {showChat ? (
-                <><MessageSquareOff className="w-5 h-5" /> إخفاء الشات</>
-              ) : (
-                <><MessageSquare className="w-5 h-5" /> إظهار الشات</>
-              )}
-            </button>
+            {/* chat toggle removed to keep UI full-width */}
             <button onClick={onLeave} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-colors">
               <ArrowLeft className="w-6 h-6 text-white/50 hover:text-white" />
             </button>
@@ -583,7 +571,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
         </div>
 
         {/* Content Area */}
-        <div className="flex-1 relative flex flex-col items-center justify-center p-8">
+          <div className="flex-1 relative flex flex-col items-center justify-center p-8">
           <AnimatePresence mode="wait">
             {phase === 'lobby' && (
               <motion.div
@@ -798,7 +786,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
       </div>
 
       {/* Sidebar Leaderboard */}
-      <div className={`w-[350px] flex flex-col gap-4 transition-all duration-300 ${!showChat ? 'w-[500px]' : ''}`}>
+  <div className="w-[350px] flex flex-col gap-4 transition-all duration-300">
         <div className="bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative">
           <div className="absolute top-0 right-0 p-4 opacity-5">
             <Trophy className="w-32 h-32" />
@@ -850,46 +838,7 @@ export function MissingLinkGame({ messages, onLeave, channelName }: Props) {
           </div>
         </div>
 
-        {showChat && (
-          <div className="h-[400px] bg-brand-black/80 rounded-[40px] border border-brand-cyan/20 overflow-hidden shadow-2xl relative flex flex-col pt-16">
-            <div className="absolute top-0 right-0 left-0 h-16 bg-gradient-to-b from-brand-black/80 to-transparent z-10 flex items-center px-6">
-              <MessageSquare className="w-5 h-5 text-brand-cyan ml-2" />
-              <span className="text-white font-bold">الشات المباشر</span>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto flex flex-col-reverse p-4 pt-20 custom-scrollbar relative z-0">
-              <AnimatePresence>
-                {messages.slice().reverse().map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="mb-3 bg-white/5 rounded-2xl p-3 border border-white/5"
-                  >
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0 bg-brand-cyan/20 flex items-center justify-center text-xs relative">
-                        <img 
-                          src={`https://decapi.me/twitch/avatar/${msg.username}`} 
-                          alt={msg.username}
-                          className="w-full h-full object-cover absolute inset-0 z-10"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                        <span className="relative z-0">{msg.username.charAt(0).toUpperCase()}</span>
-                      </div>
-                      <span className="font-bold text-sm" style={{ color: msg.color || '#fff' }}>
-                        {msg.username}
-                      </span>
-                    </div>
-                    <p className="text-zinc-300 text-sm pl-8 font-arabic break-words">{msg.message}</p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-          </div>
-        )}
+        {/* chat removed to expand layout */}
       </div>
     </div>
   );
