@@ -437,23 +437,15 @@ const GAMES = [
         </motion.div>
 
         {/* Credits */}
-        <div className="absolute bottom-6 left-0 right-0 text-center z-20">
-          <div className="inline-flex flex-col items-center gap-2" dir="ltr">
-            <p className="text-cyan-500/40 text-sm font-mono flex items-center justify-center gap-2">
-              <span>Done by :</span>
-              <span className="text-cyan-500/60 font-bold">StigQ8</span>
-            </p>
-
-            <a
-              href="https://www.twitch.tv/stigq8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pointer-events-auto flex items-center gap-2 bg-[#9146FF]/20 hover:bg-[#9146FF]/40 text-white px-4 py-2 rounded-xl border border-[#9146FF]/50 transition-all font-bold text-sm"
-            >
-              <Twitch className="w-4 h-4 text-[#9146FF]" />
-              <span className="hidden sm:inline">@stigq8</span>
-            </a>
-          </div>
+        <div className="absolute bottom-6 left-0 right-0 text-center z-20 pointer-events-none">
+          <p className="text-cyan-500/40 text-sm font-mono flex items-center justify-center gap-2" dir="ltr">
+            <span>Done by:</span>
+            <span className="text-cyan-500/60 font-bold">iRozQ8</span>
+            <span>•</span>
+            <span className="text-cyan-500/60 font-bold">iSari9</span>
+            <span>•</span>
+            <span className="text-cyan-500/60 font-bold">iMythQ8</span>
+          </p>
         </div>
       </div>
     );
